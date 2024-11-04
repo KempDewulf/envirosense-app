@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = true;
+  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
 }
