@@ -3,11 +3,12 @@ import 'package:envirosense/views/home_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  bool isFirstTime = true;
 
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
 }
@@ -15,7 +16,7 @@ void main() async {
 class EnviroSenseApp extends StatelessWidget {
   final bool isFirstTime;
 
-  const EnviroSenseApp({required this.isFirstTime});
+  const EnviroSenseApp({super.key, required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class EnviroSenseApp extends StatelessWidget {
           primary: AppColors.primaryColor,
           secondary: AppColors.secondaryColor,
         ),
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: isFirstTime ? OnboardingScreen() : HomeScreen(),
     );

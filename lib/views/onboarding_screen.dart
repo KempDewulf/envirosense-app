@@ -8,37 +8,44 @@ class OnboardingScreen extends StatelessWidget {
   final List<PageViewModel> pages = [
     PageViewModel(
       title: "Convenience",
-      body:
-          "Control your home device using a single app from anywhere in the world",
-      image: Center(
-        child: Image.asset('assets/images/convenience.png', height: 175),
+      body: "Control your home device using a single app from anywhere in the world",
+      image: Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: Image.asset('assets/images/convenience.png', height: 350),
       ),
       decoration: const PageDecoration(
         pageColor: AppColors.whiteColor,
+        bodyTextStyle: TextStyle(fontSize: 16, color: AppColors.accentColor),
       ),
     ),
     PageViewModel(
       title: "Automate",
       body:
           "Switch through different scenes and quick actions for fast management of your home",
-      image: Center(
-        child: Image.asset('assets/images/automate.png', height: 175),
+      image: Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: Image.asset('assets/images/automate.png', height: 350),
       ),
       decoration: const PageDecoration(
         pageColor: AppColors.whiteColor,
+        bodyTextStyle: TextStyle(fontSize: 16, color: AppColors.accentColor),
       ),
     ),
     PageViewModel(
       title: "Stay Informed",
       body: "Instant notifications about any activity or alerts",
-      image: Center(
-        child: Image.asset('assets/images/stay_informed.png', height: 175),
+      image: Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: Image.asset('assets/images/stay_informed.png', height: 350),
       ),
       decoration: const PageDecoration(
         pageColor: AppColors.whiteColor,
+        bodyTextStyle: TextStyle(fontSize: 16, color: AppColors.accentColor),
       ),
     ),
   ];
+
+  OnboardingScreen({super.key});
 
   void _onIntroEnd(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,12 +62,20 @@ class OnboardingScreen extends StatelessWidget {
       onDone: () => _onIntroEnd(context),
       onSkip: () => _onIntroEnd(context),
       showSkipButton: true,
-      skip: const Text('Skip', style: TextStyle(color: AppColors.accentColor)),
+      skip: const Text('Skip', style: TextStyle(color: AppColors.accentColor, fontWeight: FontWeight.bold)),
       next:
-          const Text('Next', style: TextStyle(color: AppColors.secondaryColor)),
-      done:
-          const Text("Done", style: TextStyle(color: AppColors.secondaryColor)),
-      dotsDecorator: const DotsDecorator(
+          const Text('Next', style: TextStyle(color: AppColors.secondaryColor, fontWeight: FontWeight.bold)),
+      done: const Text("Let's start",
+          style: TextStyle(color: AppColors.secondaryColor, fontWeight: FontWeight.bold)),
+      dotsDecorator: DotsDecorator(
+        size: const Size(20.0, 4.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        activeSize: const Size(30.0, 4.0),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
         activeColor: AppColors.secondaryColor,
         color: AppColors.accentColor,
       ),

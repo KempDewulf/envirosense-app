@@ -2,6 +2,8 @@ import 'package:envirosense/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,14 @@ class HomeScreen extends StatelessWidget {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          )
           // Add other items
         ],
       ),
