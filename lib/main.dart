@@ -1,4 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/views/home_screen.dart';
+import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
