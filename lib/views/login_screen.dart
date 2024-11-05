@@ -21,21 +21,27 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 40.0),
               // Username field
               const TextField(
+                style: TextStyle(color: AppColors.whiteColor),
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  filled: true,
-                  fillColor: AppColors.whiteColor,
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                  labelStyle: TextStyle(color: AppColors.accentColor),
+                  border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
+                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
                 ),
               ),
               const SizedBox(height: 10.0),
               // Password field
               const TextField(
+                style: TextStyle(color: AppColors.whiteColor),
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  filled: true,
-                  fillColor: AppColors.whiteColor,
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                  labelStyle: TextStyle(color: AppColors.accentColor),
+                  border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
+                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
                 ),
                 obscureText: true,
               ),
@@ -67,27 +73,39 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               // First button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryColor,
-                  foregroundColor: AppColors.whiteColor
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondaryColor,
+                    foregroundColor: AppColors.whiteColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Handle enter your house
+                  },
+                  child: const Text('Enter your house'),
                 ),
-                onPressed: () {
-                  // Handle enter your house
-                },
-                child: const Text('Enter your house'),
               ),
               const SizedBox(height: 10.0),
               // Second button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.whiteColor,
-                  foregroundColor: AppColors.blackColor
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.whiteColor,
+                    foregroundColor: AppColors.blackColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Handle new resident
+                  },
+                  child: const Text('New resident'),
                 ),
-                onPressed: () {
-                  // Handle new resident
-                },
-                child: const Text('New resident'),
               ),
             ],
           ),
