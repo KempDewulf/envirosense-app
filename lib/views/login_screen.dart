@@ -29,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
               // Logo
               Image.asset(
                 'assets/logos/envirosense_logo.png',
-                width: 100.0,
-                height: 100.0,
+                width: 200.0,
+                height: 200.0,
               ),
               const SizedBox(height: 60.0),
               // Username field
@@ -66,8 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _togglePasswordVisibility,
                   ),
                 ),
-                obscureText: _obscureText,
-                keyboardType: TextInputType.text,
+                obscureText: _obscureText
               ),
               const SizedBox(height: 10.0),
               // Forgot password text
