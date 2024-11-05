@@ -4,6 +4,7 @@ import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:envirosense/views/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,11 @@ class EnviroSenseApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: isFirstTime ? const OnboardingScreen() : const HomeScreen(),
+      home: isFirstTime ? const OnboardingScreen() : const LoginScreen(),
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        // Add other routes here
+      },
     );
   }
 }
