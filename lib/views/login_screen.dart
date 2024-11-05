@@ -1,4 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/widgets/CustomButton.dart';
+import 'package:envirosense/widgets/CustomTextField.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -7,6 +9,7 @@ class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
 
@@ -26,47 +29,29 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo
+              // Custom Image
               Image.asset(
-                'assets/logos/envirosense_logo.png',
-                width: 200.0,
-                height: 200.0,
+                'assets/your_image.png', // Replace with your image path
+                width: 100.0,
+                height: 100.0,
               ),
-              const SizedBox(height: 60.0),
+              const SizedBox(height: 40.0),
               // Username field
-              const TextField(
-                style: TextStyle(color: AppColors.whiteColor),
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  labelStyle: TextStyle(color: AppColors.accentColor),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
-                  border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
-                ),
+              const CustomTextField(
+                labelText: 'Username',
               ),
               const SizedBox(height: 10.0),
               // Password field
-              TextField(
-                style: const TextStyle(color: AppColors.whiteColor),
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(color: AppColors.accentColor),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  floatingLabelStyle: const TextStyle(color: AppColors.secondaryColor),
-                  border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: AppColors.whiteColor,
-                    ),
-                    onPressed: _togglePasswordVisibility,
+              CustomTextField(
+                labelText: 'Password',
+                obscureText: _obscureText,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.whiteColor,
                   ),
+                  onPressed: _togglePasswordVisibility,
                 ),
-                obscureText: _obscureText
               ),
               const SizedBox(height: 10.0),
               // Forgot password text
@@ -96,41 +81,23 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20.0),
               // First button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.secondaryColor,
-                    foregroundColor: AppColors.whiteColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  ),
-                  onPressed: () {
-                    // Handle enter your house
-                  },
-                  child: const Text('Enter your house'),
-                ),
+              CustomButton(
+                text: 'Enter your house',
+                backgroundColor: AppColors.secondaryColor,
+                textColor: AppColors.whiteColor,
+                onPressed: () {
+                  // Handle enter your house
+                },
               ),
               const SizedBox(height: 10.0),
               // Second button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.whiteColor,
-                    foregroundColor: AppColors.blackColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  ),
-                  onPressed: () {
-                    // Handle new resident
-                  },
-                  child: const Text('New resident'),
-                ),
+              CustomButton(
+                text: 'New resident',
+                backgroundColor: AppColors.whiteColor,
+                textColor: AppColors.blackColor,
+                onPressed: () {
+                  // Handle new resident
+                },
               ),
             ],
           ),
