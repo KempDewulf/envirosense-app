@@ -41,7 +41,7 @@ class EnviroSenseApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: isFirstTime ? OnboardingScreen() : const HomeScreen(),
+      home: isFirstTime ? const OnboardingScreen() : const HomeScreen(),
     );
   }
 }
