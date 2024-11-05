@@ -1,8 +1,20 @@
 import 'package:envirosense/colors/colors.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obscureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +37,34 @@ class LoginScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Username',
                   labelStyle: TextStyle(color: AppColors.accentColor),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
                   border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
                   enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
-                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
                 ),
               ),
               const SizedBox(height: 10.0),
               // Password field
-              const TextField(
-                style: TextStyle(color: AppColors.whiteColor),
+              TextField(
+                style: const TextStyle(color: AppColors.whiteColor),
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: AppColors.accentColor),
-                  border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
-                  floatingLabelStyle: TextStyle(color: AppColors.secondaryColor),
+                  labelStyle: const TextStyle(color: AppColors.accentColor),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  floatingLabelStyle: const TextStyle(color: AppColors.secondaryColor),
+                  border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+                  focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: AppColors.whiteColor,
+                    ),
+                    onPressed: _togglePasswordVisibility,
+                  ),
                 ),
-                obscureText: true,
+                obscureText: _obscureText,
               ),
               const SizedBox(height: 10.0),
               // Forgot password text
