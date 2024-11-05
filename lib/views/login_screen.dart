@@ -27,10 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              const FlutterLogo(
-                size: 100.0,
+              Image.asset(
+                'assets/logos/envirosense_logo.png',
+                width: 100.0,
+                height: 100.0,
               ),
-              const SizedBox(height: 40.0),
+              const SizedBox(height: 60.0),
               // Username field
               const TextField(
                 style: TextStyle(color: AppColors.whiteColor),
@@ -65,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 obscureText: _obscureText,
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 10.0),
               // Forgot password text
@@ -103,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                   ),
                   onPressed: () {
                     // Handle enter your house
@@ -121,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                   ),
                   onPressed: () {
                     // Handle new resident
