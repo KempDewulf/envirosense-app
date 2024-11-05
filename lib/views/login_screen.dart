@@ -31,9 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               // Custom Image
               Image.asset(
-                'assets/your_image.png', // Replace with your image path
-                width: 100.0,
-                height: 100.0,
+                'assets/logos/envirosense_logo.png', // Replace with your image path
+                width: 200.0,
+                height: 200.0,
               ),
               const SizedBox(height: 40.0),
               // Username field
