@@ -1,6 +1,7 @@
 import 'package:envirosense/colors/colors.dart';
 import 'package:envirosense/widgets/CustomButton.dart';
 import 'package:envirosense/widgets/CustomTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,12 +12,40 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
 
   void _togglePasswordVisibility() {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  Future<void> _signIn() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future<void> _register() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Handle successful registration
+    } on FirebaseAuthException catch (e) {
+      // Handle registration error
+      print(e.message);
+    }
   }
 
   @override
@@ -85,9 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: 'Enter your house',
                 backgroundColor: AppColors.secondaryColor,
                 textColor: AppColors.whiteColor,
-                onPressed: () {
-                  // Handle enter your house
-                },
+                onPressed: _signIn,
               ),
               const SizedBox(height: 10.0),
               // Second button
@@ -95,9 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: 'New resident',
                 backgroundColor: AppColors.whiteColor,
                 textColor: AppColors.blackColor,
-                onPressed: () {
-                  // Handle new resident
-                },
+                onPressed: _register,
               ),
             ],
           ),
