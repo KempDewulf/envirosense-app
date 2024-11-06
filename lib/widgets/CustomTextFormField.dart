@@ -30,21 +30,22 @@ class CustomTextFormField extends StatelessWidget {
         labelStyle: const TextStyle(color: AppColors.accentColor),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         floatingLabelStyle: const TextStyle(color: AppColors.whiteColor),
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.whiteColor)),
-        enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.whiteColor)),
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.secondaryColor)),
-        errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.redColor)),
-        focusedErrorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.redColor)),
+        border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
+        errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        focusedErrorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
         suffixIcon: suffixIcon,
       ),
       keyboardType: TextInputType.text,
       validator: validator,
       focusNode: focusNode,
+      onChanged: (value) {
+        if (focusNode != null && focusNode!.hasFocus) {
+          // Reset the error state when the user starts typing
+          Form.of(context)?.validate();
+        }
+      },
     );
   }
 }

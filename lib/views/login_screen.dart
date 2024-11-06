@@ -1,11 +1,11 @@
 import 'package:envirosense/colors/colors.dart';
-import 'package:envirosense/services/auth_service.dart';
-import 'package:envirosense/services/validation_service.dart';
-import 'package:envirosense/views/home_screen.dart';
 import 'package:envirosense/widgets/CustomButton.dart';
 import 'package:envirosense/widgets/CustomTextFormField.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:envirosense/services/auth_service.dart';
+import 'package:envirosense/services/validation_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:envirosense/views/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
