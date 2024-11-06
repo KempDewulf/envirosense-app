@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "88539640615",
+    "firebase_url": "https://envirosense-heartbeat-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "envirosense-heartbeat",
+    "storage_bucket": "envirosense-heartbeat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88539640615:android:8c5df3498058ff609daf02",
+        "android_client_info": {
+          "package_name": "com.example.envirosense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-kojo1we0TCulwQtzwUSj5WwJst3dDvo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
