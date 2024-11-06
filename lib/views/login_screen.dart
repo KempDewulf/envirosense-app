@@ -23,6 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _signIn() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      _showErrorDialog('Please enter both email and password.');
+      return;
+    }
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -30,11 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text,
       );
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      _showErrorDialog(e.message ?? 'An error occurred during sign-in.');
     }
   }
 
   Future<void> _register() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      _showErrorDialog('Please enter both email and password.');
+      return;
+    }
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -43,9 +53,28 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       // Handle successful registration
     } on FirebaseAuthException catch (e) {
-      // Handle registration error
-      print(e.message);
+      _showErrorDialog(e.message ?? 'An error occurred during registration.');
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -66,13 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 40.0),
               // Username field
-              const CustomTextField(
-                labelText: 'Username',
+              CustomTextField(
+                labelText: 'Email',
+                controller: _emailController,
               ),
               const SizedBox(height: 10.0),
               // Password field
               CustomTextField(
                 labelText: 'Password',
+                controller: _passwordController,
                 obscureText: _obscureText,
                 suffixIcon: IconButton(
                   icon: Icon(

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "88539640615",
+    "firebase_url": "https://envirosense-heartbeat-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "envirosense-heartbeat",
     "storage_bucket": "envirosense-heartbeat.firebasestorage.app"
   },

@@ -26,12 +26,9 @@ class CustomTextField extends StatelessWidget {
         labelStyle: const TextStyle(color: AppColors.accentColor),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         floatingLabelStyle: const TextStyle(color: AppColors.whiteColor),
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.whiteColor)),
-        enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.whiteColor)),
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.secondaryColor)),
+        border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.whiteColor)),
+        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryColor)),
         suffixIcon: suffixIcon,
       ),
       keyboardType: TextInputType.text,
