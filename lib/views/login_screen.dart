@@ -1,6 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
-import 'package:envirosense/widgets/CustomButton.dart';
-import 'package:envirosense/widgets/CustomTextFormField.dart';
+import 'package:envirosense/widgets/custom_button.dart';
+import 'package:envirosense/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/services/validation_service.dart';
