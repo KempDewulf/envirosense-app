@@ -1,4 +1,5 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/widgets/CustomButton.dart';
 import 'package:envirosense/widgets/CustomTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
   bool _obscureText = true;
 
   void _togglePasswordVisibility() {
@@ -29,11 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+      UserCredential userCredential = await _authService.signIn(
+        _emailController.text,
+        _passwordController.text,
       );
+      // Handle successful sign-in
     } on FirebaseAuthException catch (e) {
       _showErrorDialog(e.message ?? 'An error occurred during sign-in.');
     }
@@ -46,10 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+      UserCredential userCredential = await _authService.register(
+        _emailController.text,
+        _passwordController.text,
       );
       // Handle successful registration
     } on FirebaseAuthException catch (e) {
