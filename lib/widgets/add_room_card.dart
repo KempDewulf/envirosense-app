@@ -18,11 +18,11 @@ class AddRoomCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 Icons.add,
                 color: Colors.white,
