@@ -1,5 +1,8 @@
 // home_screen.dart
 
+import 'package:envirosense/widgets/add_room_card.dart';
+import 'package:envirosense/widgets/header.dart';
+import 'package:envirosense/widgets/room_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/colors/colors.dart';
 
@@ -15,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> _filteredRooms = [];
 
+//TODO: later just use _rooms as getting it from service
   final List<Map<String, dynamic>> _rooms = [
     {'icon': Icons.chair, 'name': '3.108', 'devices': 1},
     {'icon': Icons.meeting_room, 'name': '3.109', 'devices': 2},
@@ -54,86 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.whiteColor,
       body: Column(
         children: [
-          _buildHeader(),
+          Header(
+            selectedTabIndex: _selectedTabIndex,
+            onTabSelected: (index) {
+              setState(() {
+                _selectedTabIndex = index;
+              });
+            },
+          ),
           if (_selectedTabIndex == 0) _buildRoomsPage(),
           if (_selectedTabIndex == 1) _buildDevicesPage(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      color: AppColors.primaryColor,
-      padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Howest University',
-            style: TextStyle(
-              color: AppColors.whiteColor,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Row(
-            children: [
-              Icon(
-                Icons.location_on,
-                color: AppColors.accentColor,
-                size: 16,
-              ),
-              SizedBox(width: 4),
-              Text(
-                'Campus Brugge Station - Building A',
-                style: TextStyle(
-                  color: AppColors.accentColor,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _buildTabButton('ROOMS', 0),
-              const SizedBox(width: 32),
-              _buildTabButton('DEVICES', 1),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabButton(String text, int index) {
-    bool isSelected = _selectedTabIndex == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedTabIndex = index;
-        });
-      },
-      child: Column(
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.accentColor,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            height: 6,
-            width: 70,
-            decoration: BoxDecoration(
-              color: isSelected ? AppColors.secondaryColor : Colors.transparent,
-            ),
-          ),
         ],
       ),
     );
@@ -180,93 +114,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   if (index < _filteredRooms.length) {
                     var room = _filteredRooms[index];
-                    return _buildRoomCard(room);
+                    return RoomCard(room: room);
                   } else {
-                    return _buildAddRoomCard();
+                    return const AddRoomCard();
                   }
                 },
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRoomCard(Map<String, dynamic> room) {
-    return GestureDetector(
-        onTap: () {
-          // Handle room tap
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          elevation: 18,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  room['icon'],
-                  color: AppColors.secondaryColor,
-                  size: 52,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  room['name'],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'x${room['devices']} device${room['devices'] > 1 ? 's' : ''}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.accentColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
-
-  Widget _buildAddRoomCard() {
-    return GestureDetector(
-      onTap: () {
-        // Handle add room
-      },
-      child: Card(
-        color: AppColors.secondaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        elevation: 2,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 72,
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Add a room',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
