@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   bool _obscureText = true;
+  bool _formSubmitted = false;
 
   @override
   void initState() {
@@ -54,6 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _signIn() async {
+    setState(() {
+      _formSubmitted = true;
+    });
+
     if (_formKey.currentState?.validate() ?? false) {
       try {
         UserCredential userCredential = await _authService.signIn(
@@ -72,6 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _register() async {
+    setState(() {
+      _formSubmitted = true;
+    });
+
     if (_formKey.currentState?.validate() ?? false) {
       try {
         UserCredential userCredential = await _authService.register(
@@ -104,6 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
+            autovalidateMode: _formSubmitted
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

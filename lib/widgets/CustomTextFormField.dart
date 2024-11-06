@@ -40,12 +40,6 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: TextInputType.text,
       validator: validator,
       focusNode: focusNode,
-      onChanged: (value) {
-        if (focusNode != null && focusNode!.hasFocus) {
-          // Reset the error state when the user starts typing
-          Form.of(context)?.validate();
-        }
-      },
     );
   }
 }
