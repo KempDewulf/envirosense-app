@@ -12,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedTabIndex = 0;
+  final TextEditingController _searchController = TextEditingController();
+  List<Map<String, dynamic>> _filteredRooms = [];
 
   final List<Map<String, dynamic>> _rooms = [
     {'icon': Icons.chair, 'name': '3.108', 'devices': 1},
@@ -21,6 +23,30 @@ class _HomeScreenState extends State<HomeScreen> {
     {'icon': Icons.tv, 'name': '3.112', 'devices': 0},
     {'icon': Icons.headphones, 'name': '3.113', 'devices': 2},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredRooms = _rooms;
+    _searchController.addListener(_filterRooms);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_filterRooms);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterRooms() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredRooms = _rooms.where((room) {
+        final roomName = room['name'].toLowerCase();
+        return roomName.contains(query);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +142,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildRoomsPage() {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
+            TextFormField(
+              controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Search a room',
                 prefixIcon: const Icon(Icons.search),
@@ -143,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             Expanded(
               child: GridView.builder(
-                itemCount: _rooms.length + 1,
+                itemCount: _filteredRooms.length + 1,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1.2,
@@ -151,8 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) {
-                  if (index < _rooms.length) {
-                    var room = _rooms[index];
+                  if (index < _filteredRooms.length) {
+                    var room = _filteredRooms[index];
                     return _buildRoomCard(room);
                   } else {
                     return _buildAddRoomCard();
@@ -167,41 +194,46 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildRoomCard(Map<String, dynamic> room) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              room['icon'],
-              color: AppColors.secondaryColor,
-              size: 48,
+    return GestureDetector(
+        onTap: () {
+          // Handle room tap
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          elevation: 18,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  room['icon'],
+                  color: AppColors.secondaryColor,
+                  size: 52,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  room['name'],
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'x${room['devices']} device${room['devices'] > 1 ? 's' : ''}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.accentColor,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              room['name'],
-              style: const TextStyle(
-                fontSize: 18,
-                color: AppColors.blackColor,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'x${room['devices']} device(s)',
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.accentColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget _buildAddRoomCard() {
@@ -223,13 +255,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(
                 Icons.add,
                 color: Colors.white,
-                size: 48,
+                size: 72,
               ),
               SizedBox(height: 8),
               Text(
                 'Add a room',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.white,
                 ),
               ),
