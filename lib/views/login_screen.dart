@@ -1,5 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
 import 'package:envirosense/services/auth_service.dart';
+import 'package:envirosense/services/validation_service.dart';
 import 'package:envirosense/views/home_screen.dart';
 import 'package:envirosense/widgets/CustomButton.dart';
 import 'package:envirosense/widgets/CustomTextFormField.dart';
@@ -50,40 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _obscureText = !_obscureText;
     });
-  }
-
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
-    }
-    if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'Password must contain at least one lowercase letter';
-    }
-    if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
-    }
-    if (!RegExp(r'[!@#\$&*~]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
-    }
-    
-    return null;
   }
 
   Future<void> _signIn() async {
@@ -151,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomTextFormField(
                   labelText: 'Email',
                   controller: _emailController,
-                  validator: _validateEmail,
+                  validator: ValidationService.validateEmail,
                   focusNode: _emailFocusNode,
                 ),
                 const SizedBox(height: 10.0),
@@ -167,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     onPressed: _togglePasswordVisibility,
                   ),
-                  validator: _validatePassword,
+                  validator: ValidationService.validatePassword,
                   focusNode: _passwordFocusNode,
                 ),
                 const SizedBox(height: 10.0),
