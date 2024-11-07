@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
         // Navigate to home page on successful sign-in
-        Navigator.pushReplacementNamed(context, '/homescreen',);
+        Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
         _showErrorDialog(e.message ?? 'An error occurred during sign-in.');
       }
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
         // Navigate to home page on successful registration
-        Navigator.pushReplacementNamed(context, '/homescreen',);
+        Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
         _showErrorDialog(e.message ?? 'An error occurred during registration.');
       }

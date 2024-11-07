@@ -1,5 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
 import 'package:envirosense/views/home_screen.dart';
+import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:envirosense/views/settings_screen.dart';
 import 'package:envirosense/views/statistics_screen.dart';
@@ -51,10 +52,9 @@ class EnviroSenseApp extends StatelessWidget {
       ),
       home: isFirstTime ? const OnboardingScreen() : const LoginScreen(),
       routes: {
-        '/homescreen': (context) => const HomeScreen(),
+        '/main': (context) => const MainScreen(),
         '/login': (context) => const LoginScreen(),
-        '/statistics': (context) => const StatisticsScreen(),
-        '/settings': (context) => const SettingsScreen(),
+        // Remove other routes related to Home, Statistics, and Settings
       },
     );
   }

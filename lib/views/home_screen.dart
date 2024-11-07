@@ -16,11 +16,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedTabIndex = 0;
-  int _selectedBottomNavIndex = 0;
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> _filteredRooms = [];
 
-//TODO: later just use _rooms as getting it from service
   final List<Map<String, dynamic>> _rooms = [
     {'icon': Icons.chair, 'name': '3.108', 'devices': 1},
     {'icon': Icons.meeting_room, 'name': '3.109', 'devices': 2},
@@ -54,22 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onBottomNavTap(int index) {
+  void _onTabSelected(int index) {
     setState(() {
-      _selectedBottomNavIndex = index;
+      _selectedTabIndex = index;
     });
-
-    switch (index) {
-      case 0:
-        Navigator.pushReplacementNamed(context, '/homescreen');
-        break;
-      case 1:
-        Navigator.pushReplacementNamed(context, '/statistics');
-        break;
-      case 2:
-        Navigator.pushReplacementNamed(context, '/settings');
-        break;
-    }
   }
 
   @override
@@ -80,18 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Header(
             selectedTabIndex: _selectedTabIndex,
-            onTabSelected: (index) {
-              setState(() {
-                _selectedTabIndex = index;
-              });
-            },
+            onTabSelected: _onTabSelected,
           ),
           if (_selectedTabIndex == 0) _buildRoomsPage(),
           if (_selectedTabIndex == 1) _buildDevicesPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-          currentIndex: _selectedBottomNavIndex, onTap: _onBottomNavTap),
     );
   }
 
