@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:envirosense/colors/colors.dart';
 
 class AddRoomCard extends StatelessWidget {
-  const AddRoomCard({super.key});
+  final VoidCallback onTap;
+
+  const AddRoomCard({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Handle add room
-      },
+      onTap: onTap,
       child: Card(
         color: AppColors.secondaryColor,
         shape: RoundedRectangleBorder(
