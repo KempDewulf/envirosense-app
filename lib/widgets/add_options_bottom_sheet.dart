@@ -7,69 +7,121 @@ class AddOptionsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.4,
+      heightFactor: 0.35,
       child: Container(
         decoration: const BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
         ),
-        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
-            const Text(
-              'Add New',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
+            // Title with padding
+            const Padding(
+              padding: EdgeInsets.only(top: 28.0, bottom: 16.0, left: 32),
+              child: Text(
+                'Add new',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.blackColor,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            // Separator Line
-            Divider(
-              color: AppColors.accentColor,
+            // Divider without padding
+            const Divider(
+              color: AppColors.lightGrayColor,
               thickness: 1,
+              height: 1,
             ),
-            const SizedBox(height: 16),
             // Options
-            ListTile(
-              leading: Icon(
-                Icons.meeting_room,
-                color: AppColors.secondaryColor,
-                size: 32,
+            Expanded(
+              child: Column(
+                children: [
+                  // First Option
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/addRoom');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              color: AppColors.secondaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.meeting_room,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          const Text(
+                            'Add New Room',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.secondaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Divider with padding
+                  const Divider(
+                    color: AppColors.lightGrayColor,
+                    thickness: 1,
+                    indent: 32.0,
+                    endIndent: 32.0,
+                    height: 1,
+                  ),
+                  // Second Option
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/addDevice');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              color: AppColors.lightGrayColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.devices,
+                              color: AppColors.accentColor,
+                              size: 30,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          const Text(
+                            'Add New Device',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.accentColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              title: const Text(
-                'Add New Room',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.whiteColor,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/addRoom');
-              },
-            ),
-            const SizedBox(height: 16),
-            ListTile(
-              leading: Icon(
-                Icons.devices,
-                color: AppColors.secondaryColor,
-                size: 32,
-              ),
-              title: const Text(
-                'Add New Device',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.whiteColor,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/addDevice');
-              },
             ),
           ],
         ),
