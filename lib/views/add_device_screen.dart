@@ -73,7 +73,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.blackColor,
+        foregroundColor: AppColors.whiteColor,
         title: const Text(
           'Add Device',
           style: TextStyle(
@@ -84,20 +84,20 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Instruction Text
             const Text(
               'Scan the QR Code on the device.\nYour device will connect automatically.',
               style: TextStyle(
-                fontSize: 16,
-                color: AppColors.lightGrayColor,
-              ),
+                  fontSize: 16,
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
-            // Camera Preview or Placeholder
+            const SizedBox(height: 28.0),
             Expanded(
               child: Center(
                 child: DottedBorder(
@@ -108,8 +108,11 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                   dashPattern: const [6, 3],
                   child: Container(
                     width: double.infinity,
+                    height:
+                        double.infinity, // Fill the available vertical space
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9E6), // Pastel yellow background
+                      color:
+                          const Color(0xFFFFF9E6), // Pastel yellow background
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: _isPermissionGranted
@@ -135,7 +138,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: AppColors.lightGrayColor,
+                                  color: AppColors.blackColor,
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -157,6 +160,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
