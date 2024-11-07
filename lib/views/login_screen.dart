@@ -65,6 +65,20 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
 
+        final user = userCredential.user;
+
+        if (user != null && !user.emailVerified) {
+          await user.sendEmailVerification();
+
+          if (!mounted) return;
+
+          Navigator.pushReplacementNamed(context, '/emailVerification',
+              arguments: {
+                'email': _emailController.text.trim(),
+              });
+          return;
+        }
+
         if (!mounted) return;
 
         // Navigate to home page on successful sign-in
@@ -87,11 +101,17 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
 
+        await userCredential.user?.sendEmailVerification();
+
         if (!mounted) return;
 
         // Navigate to home page on successful registration
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/emailVerification',
+            arguments: {
+              'email': _emailController.text.trim(),
+            });
       } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
         _showErrorDialog(e.message ?? 'An error occurred during registration.');
       }
     }

@@ -1,4 +1,5 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/views/email_verification_screen.dart';
 import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -51,7 +52,10 @@ class EnviroSenseApp extends StatelessWidget {
       routes: {
         '/main': (context) => const MainScreen(),
         '/login': (context) => const LoginScreen(),
-        // Remove other routes related to Home, Statistics, and Settings
+        '/emailVerification': (context) => EmailVerificationScreen(
+              email: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['email'],
+            ),
       },
     );
   }
