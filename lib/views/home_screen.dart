@@ -1,6 +1,7 @@
 // home_screen.dart
 
 import 'package:envirosense/widgets/add_room_card.dart';
+import 'package:envirosense/widgets/bottom_nav_bar.dart';
 import 'package:envirosense/widgets/header.dart';
 import 'package:envirosense/widgets/room_card.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedTabIndex = 0;
+  int _selectedBottomNavIndex = 0;
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> _filteredRooms = [];
 
@@ -52,6 +54,20 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _onBottomNavTap(int index) {
+    setState(() {
+      _selectedBottomNavIndex = index;
+    });
+    // Handle navigation based on the selected index
+    // For example, navigate to different screens
+  }
+
+  bool _shouldShowBottomNavBar() {
+    // Define the logic to determine when to show the bottom navigation bar
+    // For example, show it only on the home screen
+    return _selectedTabIndex == 0 || _selectedTabIndex == 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (_selectedTabIndex == 1) _buildDevicesPage(),
         ],
       ),
+      bottomNavigationBar: _shouldShowBottomNavBar()
+          ? BottomNavBar(
+              currentIndex: _selectedBottomNavIndex,
+              onTap: _onBottomNavTap,
+            )
+          : null,
     );
   }
 
