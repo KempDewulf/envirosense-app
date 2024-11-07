@@ -1,5 +1,6 @@
 // home_screen.dart
 
+import 'package:envirosense/widgets/add_options_bottom_sheet.dart';
 import 'package:envirosense/widgets/add_room_card.dart';
 import 'package:envirosense/widgets/header.dart';
 import 'package:envirosense/widgets/room_card.dart';
@@ -117,7 +118,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     var room = _filteredRooms[index];
                     return RoomCard(room: room);
                   } else {
-                    return const AddRoomCard();
+                    return AddRoomCard(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (_) => const AddOptionsBottomSheet(),
+                        );
+                      },
+                    );
                   }
                 },
               ),

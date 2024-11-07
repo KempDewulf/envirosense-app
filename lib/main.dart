@@ -1,4 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/views/add_device_screen.dart';
+import 'package:envirosense/views/add_room_screen.dart';
 import 'package:envirosense/views/email_verification_screen.dart';
 import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
@@ -107,6 +109,8 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
               email: (ModalRoute.of(context)?.settings.arguments
                   as Map<String, dynamic>)['email'],
             ),
+        '/addRoom': (context) => const AddRoomScreen(),
+        '/addDevice': (context) => const AddDeviceScreen(),
       },
     );
   }
