@@ -1,4 +1,5 @@
 import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -8,9 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:envirosense/views/login_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(
-
-  );
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -50,8 +49,9 @@ class EnviroSenseApp extends StatelessWidget {
       ),
       home: isFirstTime ? const OnboardingScreen() : const LoginScreen(),
       routes: {
+        '/main': (context) => const MainScreen(),
         '/login': (context) => const LoginScreen(),
-        // Add other routes here
+        // Remove other routes related to Home, Statistics, and Settings
       },
     );
   }
