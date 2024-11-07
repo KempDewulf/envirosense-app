@@ -1,9 +1,6 @@
 import 'package:envirosense/colors/colors.dart';
-import 'package:envirosense/views/home_screen.dart';
 import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
-import 'package:envirosense/views/settings_screen.dart';
-import 'package:envirosense/views/statistics_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';

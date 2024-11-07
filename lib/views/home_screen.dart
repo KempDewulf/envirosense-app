@@ -1,7 +1,6 @@
 // home_screen.dart
 
 import 'package:envirosense/widgets/add_room_card.dart';
-import 'package:envirosense/widgets/bottom_nav_bar.dart';
 import 'package:envirosense/widgets/header.dart';
 import 'package:envirosense/widgets/room_card.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {

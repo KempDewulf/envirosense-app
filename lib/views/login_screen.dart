@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -64,6 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
           _emailController.text,
           _passwordController.text,
         );
+
+        if (!mounted) return;
+
         // Navigate to home page on successful sign-in
         Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
@@ -83,6 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
           _emailController.text,
           _passwordController.text,
         );
+
+        if (!mounted) return;
+
         // Navigate to home page on successful registration
         Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
