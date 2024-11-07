@@ -58,14 +58,18 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedBottomNavIndex = index;
     });
-    // Handle navigation based on the selected index
-    // For example, navigate to different screens
-  }
 
-  bool _shouldShowBottomNavBar() {
-    // Define the logic to determine when to show the bottom navigation bar
-    // For example, show it only on the home screen
-    return _selectedTabIndex == 0 || _selectedTabIndex == 1;
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/homescreen');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/statistics');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/settings');
+        break;
+    }
   }
 
   @override
@@ -86,12 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
           if (_selectedTabIndex == 1) _buildDevicesPage(),
         ],
       ),
-      bottomNavigationBar: _shouldShowBottomNavBar()
-          ? BottomNavBar(
-              currentIndex: _selectedBottomNavIndex,
-              onTap: _onBottomNavTap,
-            )
-          : null,
+      bottomNavigationBar: BottomNavBar(
+          currentIndex: _selectedBottomNavIndex, onTap: _onBottomNavTap),
     );
   }
 

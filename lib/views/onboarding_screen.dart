@@ -65,8 +65,9 @@ class OnboardingScreen extends StatelessWidget {
   void _onIntroEnd(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isFirstTime', false);
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    Navigator.pushReplacementNamed(
+      context,
+      '/login',
     );
   }
 
