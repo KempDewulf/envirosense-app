@@ -39,9 +39,6 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   void _saveRoom() {
     // Implement the save logic here
-    // For now, just print the values
-    print('Room Name: ${_roomNameController.text}');
-    print('Selected Room Type: $_selectedRoomType');
     Navigator.pop(context);
   }
 
@@ -65,7 +62,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         centerTitle: true,
         elevation: 0,
         // Removed the SAVE button from the AppBar
-        actions: [],
+        actions: const [],
       ),
       body: Padding(
         padding:
