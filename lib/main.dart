@@ -2,6 +2,7 @@ import 'package:envirosense/colors/colors.dart';
 import 'package:envirosense/views/email_verification_screen.dart';
 import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,60 @@ void main() async {
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
 }
 
-class EnviroSenseApp extends StatelessWidget {
+class EnviroSenseApp extends StatefulWidget {
   final bool isFirstTime;
 
   const EnviroSenseApp({super.key, required this.isFirstTime});
+
+  @override
+  State<EnviroSenseApp> createState() => _EnviroSenseAppState();
+}
+
+class _EnviroSenseAppState extends State<EnviroSenseApp> {
+  Widget _initialScreen = const LoginScreen();
+
+  @override
+  void initState() {
+    super.initState();
+    _determineInitialScreen();
+  }
+
+  Future<void> _determineInitialScreen() async {
+    if (widget.isFirstTime) {
+      setState(() {
+        _initialScreen = const OnboardingScreen();
+      });
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? timestamp = prefs.getInt('loginTimestamp');
+
+    if (timestamp != null) {
+      DateTime loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      DateTime now = DateTime.now();
+      Duration difference = now.difference(loginTime);
+
+      if (difference.inDays < 2) {
+        User? currentUser = FirebaseAuth.instance.currentUser;
+        if (currentUser != null) {
+          setState(() {
+            _initialScreen = const MainScreen();
+          });
+          return;
+        }
+      }
+
+      // If login is expired or user is not authenticated
+      prefs.remove('loginTimestamp');
+      await FirebaseAuth.instance.signOut();
+    }
+
+    // Default to LoginScreen
+    setState(() {
+      _initialScreen = const LoginScreen();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +99,7 @@ class EnviroSenseApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: isFirstTime ? const OnboardingScreen() : const LoginScreen(),
+      home: _initialScreen,
       routes: {
         '/main': (context) => const MainScreen(),
         '/login': (context) => const LoginScreen(),
