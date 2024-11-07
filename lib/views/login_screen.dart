@@ -70,12 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setInt(
-          'loginTimestamp',
-          DateTime.now().millisecondsSinceEpoch,
-        );
-
         final user = userCredential.user;
 
         if (user != null && !user.emailVerified) {
@@ -89,6 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
               });
           return;
         }
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setInt(
+          'loginTimestamp',
+          DateTime.now().millisecondsSinceEpoch,
+        );
 
         if (!mounted) return;
 
