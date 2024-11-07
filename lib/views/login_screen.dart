@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/services/validation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,12 +15,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthService _authService = AuthService();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
-  final _formKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+
   bool _obscureText = true;
   bool _formSubmitted = false;
 
@@ -65,12 +70,22 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text,
         );
 
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setInt(
+          'loginTimestamp',
+          DateTime.now().millisecondsSinceEpoch,
+        );
+
         if (!mounted) return;
 
         // Navigate to home page on successful sign-in
         Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
         _showErrorDialog(e.message ?? 'An error occurred during sign-in.');
+      } catch (e) {
+        if (!mounted) return;
+        _showErrorDialog('An unexpected error occurred.');
       }
     }
   }
