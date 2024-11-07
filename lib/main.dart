@@ -53,8 +53,8 @@ class EnviroSenseApp extends StatelessWidget {
       routes: {
         '/homescreen': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
-        '/statistics': (context) => const StatisticsPage(),
-        '/settings': (context) => const SettingsPage(),
+        '/statistics': (context) => const StatisticsScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
     );
   }
