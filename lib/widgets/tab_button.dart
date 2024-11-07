@@ -32,7 +32,7 @@ class TabButton extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Container(
+          SizedBox(
             height: 4,
             child: Align(
               alignment: Alignment.centerLeft,
