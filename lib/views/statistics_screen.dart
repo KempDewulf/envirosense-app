@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:envirosense/colors/colors.dart';
+import 'package:fl_chart/fl_chart.dart';
+
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
 
@@ -63,6 +65,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
                   ),
+                  child: EnviroScoreChart(selectedPeriod: _selectedPeriod),
                 ),
                 Positioned(
                   top: 343,
@@ -230,6 +233,137 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class EnviroScoreChart extends StatelessWidget {
+  final String selectedPeriod;
+
+  EnviroScoreChart({required this.selectedPeriod});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 60, top: 16),
+      child: LineChart(
+        LineChartData(
+          gridData: FlGridData(
+            show: true,
+            drawVerticalLine: false,
+            horizontalInterval: 20,
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: Colors.grey.withOpacity(0.3),
+              strokeWidth: 1,
+              dashArray: [5, 5],
+            ),
+          ),
+          titlesData: FlTitlesData(
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 1,
+                reservedSize: 22,
+                getTitlesWidget: (value, _) {
+                  switch (selectedPeriod) {
+                    case 'Day':
+                      final hours = ["12 AM", "4 AM", "8 AM", "12 PM", "4 PM", "8 PM"];
+                      return Text(
+                        hours[value.toInt() % hours.length],
+                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      );
+                    case 'Week':
+                      final daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                      return Text(
+                        daysOfWeek[value.toInt() % daysOfWeek.length],
+                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      );
+                    case 'Month':
+                      return Text(
+                        '${value.toInt() + 1}',
+                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      );
+                    default:
+                      return Container();
+                  }
+                },
+              ),
+            ),
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 20,
+                getTitlesWidget: (value, _) {
+                  if (value % 20 == 0 && value >= 0 && value <= 100) {
+                    return Text(
+                      value.toInt().toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ),
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          ),
+          borderData: FlBorderData(
+            show: false,
+          ),
+          minX: 0,
+          maxX: selectedPeriod == 'Month' ? 30 : 6, // Adjusts based on period
+          minY: 0,
+          maxY: 100,
+          lineBarsData: [
+            LineChartBarData(
+              spots: [
+                FlSpot(0, 30),
+                FlSpot(1, 50),
+                FlSpot(2, 40),
+                FlSpot(3, 52),
+                FlSpot(4, 30),
+                FlSpot(5, 70),
+                FlSpot(6, 50),
+                FlSpot(7, 30),
+              ],
+              isCurved: true,
+              gradient: LinearGradient(
+                colors: [
+                  Colors.red.withOpacity(0.8),
+                  Colors.red.withOpacity(0.2),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              barWidth: 4,
+              belowBarData: BarAreaData(
+                show: true,
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.red.withOpacity(0.4),
+                    Colors.red.withOpacity(0.05),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              dotData: FlDotData(
+                show: true,
+                getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+                  radius: 4,
+                  color: Colors.orange,
+                  strokeWidth: 2,
+                  strokeColor: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
