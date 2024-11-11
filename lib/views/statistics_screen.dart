@@ -182,7 +182,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 style: TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                                  color: AppColors.blackColor,
                                 ),
                               ),
                               const SizedBox(width: 2),
@@ -247,7 +247,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 style: TextStyle(
                                   fontSize: 100,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                                  color: AppColors.blackColor,
                                 ),
                               ),
                               Text(
@@ -255,7 +255,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 style: TextStyle(
                                   fontSize: 42,
                                   fontWeight: FontWeight.normal,
-                                  color: Colors.black87,
+                                  color: AppColors.blackColor,
                                 ),
                               ),
                             ],
@@ -265,7 +265,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                             child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.blueColor,
+                                backgroundColor: AppColors.secondaryColor,
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
@@ -276,7 +276,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: AppColors.whiteColor,
                                 ),
                               ),
                             ),
@@ -310,13 +310,13 @@ class EnviroScoreChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 50),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
       child: LineChart(
         LineChartData(
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,
-            horizontalInterval: 20,
+            horizontalInterval: 25,
             getDrawingHorizontalLine: (value) => FlLine(
               color: Colors.grey.withOpacity(0.3),
               strokeWidth: 1,
@@ -324,13 +324,13 @@ class EnviroScoreChart extends StatelessWidget {
             ),
           ),
           titlesData: FlTitlesData(
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: _selectedPeriod == 'Day' ? 4 : (_selectedPeriod == 'Week' ? 1 : 5),
-                reservedSize: 30,
+                reservedSize: 80,
                 getTitlesWidget: (value, _) {
                   int index = value.toInt();
                   if (index >= 0 && index < labels.length) {
@@ -339,7 +339,7 @@ class EnviroScoreChart extends StatelessWidget {
                     }
                     return Text(
                       labels[index],
-                      style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: AppColors.whiteColor, fontSize: 12, fontWeight: FontWeight.bold),
                     );
                   } else {
                     return const SizedBox.shrink();
@@ -350,12 +350,13 @@ class EnviroScoreChart extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: 20,
-                reservedSize: 40,
+                interval: 25,
+                reservedSize: 25,
+                minIncluded: false,
                 getTitlesWidget: (value, _) {
                   return Text(
                     value.toInt().toString(),
-                    style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: AppColors.whiteColor, fontSize: 12, fontWeight: FontWeight.bold),
                   );
                 },
               ),
@@ -363,7 +364,7 @@ class EnviroScoreChart extends StatelessWidget {
           ),
           borderData: FlBorderData(show: false),
           minX: 0,
-          maxX: scoreData.length > 0 ? scoreData.length - 1 : 0,
+          maxX: scoreData.isNotEmpty ? scoreData.length - 1 : 0,
           minY: 0,
           maxY: 100,
           lineBarsData: [
@@ -371,7 +372,7 @@ class EnviroScoreChart extends StatelessWidget {
               spots: scoreData,
               isCurved: true,
               gradient: LinearGradient(
-                colors: [Colors.red.withOpacity(0.8), Colors.red.withOpacity(0.2)],
+                colors: [AppColors.secondaryColor.withOpacity(0.8), AppColors.secondaryColor.withOpacity(0.2)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -379,12 +380,12 @@ class EnviroScoreChart extends StatelessWidget {
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
-                  colors: [Colors.red.withOpacity(0.4), Colors.red.withOpacity(0.05)],
+                  colors: [AppColors.secondaryColor.withOpacity(0.4), AppColors.secondaryColor.withOpacity(0.05)],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
               ),
-              dotData: FlDotData(show: false),
+              dotData: const FlDotData(show: false),
             ),
           ],
         ),
