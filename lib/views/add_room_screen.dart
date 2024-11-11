@@ -52,7 +52,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.blackColor,
+        foregroundColor: AppColors.whiteColor,
         title: const Text(
           'Add Room',
           style: TextStyle(
