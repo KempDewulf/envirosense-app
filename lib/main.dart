@@ -4,6 +4,7 @@ import 'package:envirosense/views/add_room_screen.dart';
 import 'package:envirosense/views/email_verification_screen.dart';
 import 'package:envirosense/views/main_screen.dart';
 import 'package:envirosense/views/onboarding_screen.dart';
+import 'package:envirosense/views/statistics_detail_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -111,6 +112,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
             ),
         '/addRoom': (context) => const AddRoomScreen(),
         '/addDevice': (context) => const AddDeviceScreen(),
+        '/statisticsDetail': (context) => const StatisticsDetailScreen(),
       },
     );
   }

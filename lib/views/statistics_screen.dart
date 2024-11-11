@@ -203,7 +203,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         title: const Text(
                                           'About EnviroScore',
@@ -218,10 +219,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                         ),
                                         actions: [
                                           TextButton(
-                                            onPressed: () => Navigator.pop(context),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
                                             child: const Text(
                                               'Got it',
-                                              style: TextStyle(color: AppColors.primaryColor),
+                                              style: TextStyle(
+                                                  color:
+                                                      AppColors.primaryColor),
                                             ),
                                           ),
                                         ],
@@ -263,12 +267,16 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/statisticsDetail');
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.secondaryColor,
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+                                  borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(15)),
                                 ),
                               ),
                               child: const Text(
