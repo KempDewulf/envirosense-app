@@ -94,7 +94,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Text(
           period,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -232,8 +232,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               ),
                             ],
                           ),
-                          Divider(
-                            color: Colors.grey[300],
+                          const Divider(
+                            color: AppColors.lightGrayColor,
                             thickness: 1,
                             height: 0,
                           ),
@@ -318,7 +318,7 @@ class EnviroScoreChart extends StatelessWidget {
             drawVerticalLine: false,
             horizontalInterval: 25,
             getDrawingHorizontalLine: (value) => FlLine(
-              color: Colors.grey.withOpacity(0.3),
+              color: AppColors.accentColor.withOpacity(0.3),
               strokeWidth: 1,
               dashArray: [5, 5],
             ),
