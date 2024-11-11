@@ -61,7 +61,6 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         ),
         centerTitle: true,
         elevation: 0,
-        // Removed the SAVE button from the AppBar
         actions: const [],
       ),
       body: Padding(
