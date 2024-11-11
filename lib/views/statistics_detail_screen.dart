@@ -8,10 +8,20 @@ class StatisticsDetailScreen extends StatelessWidget {
   // Sample data for rooms
   final List<Map<String, dynamic>> rooms = const [
     {'name': '3.108', 'enviroScore': 61},
-    {'name': '3.109', 'enviroScore': 75},
+    {'name': '3.109', 'enviroScore': 14},
     {'name': '3.110', 'enviroScore': 82},
     // Add more rooms as needed
   ];
+
+  Color _getScoreColor(int score) {
+    if (score >= 75) {
+      return AppColors.greenColor;
+    } else if (score >= 50) {
+      return AppColors.secondaryColor;
+    } else {
+      return AppColors.redColor;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,18 +84,17 @@ class StatisticsDetailScreen extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            // ROOMS Header
                             Container(
                               width: double.infinity,
                               decoration: const BoxDecoration(
-                                color:
-                                    AppColors.accentColor, // Orange background
+                                color: AppColors.secondaryColor,
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(15),
                                   topRight: Radius.circular(15),
                                 ),
                               ),
-                              padding: const EdgeInsets.all(8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 14.0),
                               child: const Text(
                                 'ROOMS',
                                 style: TextStyle(
@@ -118,18 +127,21 @@ class StatisticsDetailScreen extends StatelessWidget {
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 8),
+                                        vertical: 10, horizontal: 10),
                                     child: Row(
                                       children: [
                                         // EnviroScore Percentage
                                         Container(
-                                          width: 50,
-                                          height: 50,
+                                          width: 60,
+                                          height: 60,
                                           decoration: BoxDecoration(
-                                            color: AppColors
-                                                .accentColor, // Orange background
+                                            color: _getScoreColor(room[
+                                                'enviroScore']), // Dynamic color based on score
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(15),
+                                              bottomLeft: Radius.circular(15),
+                                            ),
                                           ),
                                           alignment: Alignment.center,
                                           child: Text(
@@ -148,8 +160,8 @@ class StatisticsDetailScreen extends StatelessWidget {
                                             room['name'],
                                             style: const TextStyle(
                                               color: AppColors.blackColor,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
