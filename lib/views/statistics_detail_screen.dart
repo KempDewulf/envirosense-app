@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:envirosense/colors/colors.dart';
 
 class StatisticsDetailScreen extends StatelessWidget {
-  const StatisticsDetailScreen({Key? key}) : super(key: key);
+  const StatisticsDetailScreen({super.key});
 
   // Sample data for rooms
   final List<Map<String, dynamic>> rooms = const [
@@ -67,7 +67,7 @@ class StatisticsDetailScreen extends StatelessWidget {
                   color: AppColors.whiteColor,
                   child: Column(
                     children: [
-                      SizedBox(height: 90), // Space for overlapping card
+                      const SizedBox(height: 90), // Space for overlapping card
                       // ROOMS Card
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
