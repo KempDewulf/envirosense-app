@@ -112,7 +112,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         title: const Text(
                                           'About EnviroScore',
@@ -127,10 +128,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                         ),
                                         actions: [
                                           TextButton(
-                                            onPressed: () => Navigator.pop(context),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
                                             child: const Text(
                                               'Got it',
-                                              style: TextStyle(color: AppColors.primaryColor),
+                                              style: TextStyle(
+                                                  color:
+                                                      AppColors.primaryColor),
                                             ),
                                           ),
                                         ],
@@ -172,12 +176,17 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/statisticsDetail');
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.blueColor,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
                                 shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+                                  borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(15)),
                                 ),
                               ),
                               child: const Text(
@@ -269,21 +278,45 @@ class EnviroScoreChart extends StatelessWidget {
                 getTitlesWidget: (value, _) {
                   switch (selectedPeriod) {
                     case 'Day':
-                      final hours = ["12 AM", "4 AM", "8 AM", "12 PM", "4 PM", "8 PM"];
+                      final hours = [
+                        "12 AM",
+                        "4 AM",
+                        "8 AM",
+                        "12 PM",
+                        "4 PM",
+                        "8 PM"
+                      ];
                       return Text(
                         hours[value.toInt() % hours.length],
-                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
                       );
                     case 'Week':
-                      final daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                      final daysOfWeek = [
+                        "Mon",
+                        "Tue",
+                        "Wed",
+                        "Thu",
+                        "Fri",
+                        "Sat",
+                        "Sun"
+                      ];
                       return Text(
                         daysOfWeek[value.toInt() % daysOfWeek.length],
-                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
                       );
                     case 'Month':
                       return Text(
                         '${value.toInt() + 1}',
-                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
                       );
                     default:
                       return Container();
@@ -355,7 +388,8 @@ class EnviroScoreChart extends StatelessWidget {
               ),
               dotData: FlDotData(
                 show: true,
-                getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+                getDotPainter: (spot, percent, barData, index) =>
+                    FlDotCirclePainter(
                   radius: 4,
                   color: Colors.orange,
                   strokeWidth: 2,
