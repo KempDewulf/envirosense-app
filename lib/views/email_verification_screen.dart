@@ -143,6 +143,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 onPressed: _canResendEmail ? _resendVerificationEmail : null,
                 style: TextButton.styleFrom(
                   backgroundColor: AppColors.whiteColor, // White background
+                  foregroundColor: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(8), // Small rounded corners
