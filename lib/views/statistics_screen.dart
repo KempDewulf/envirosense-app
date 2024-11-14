@@ -22,56 +22,57 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   }
 
   void _updateChartData() {
-  DateTime now = DateTime.now();
-  setState(() {
-    if (_selectedPeriod == 'Day') {
-      // Generate data for 24 hours
-      scoreData = List.generate(24, (i) {
-        if (i <= now.hour) {
-          // Mock hourly data
-          return FlSpot(i.toDouble(), 20 + Random().nextInt(30).toDouble());
-        } else {
-          // Skip future data points
-          return null; // Return null for future data
-        }
-      }).whereType<FlSpot>().toList(); // Exclude null values
-      labels = List.generate(24, (i) => "${i % 12 == 0 ? 12 : i % 12}${i < 12 ? 'AM' : 'PM'}");
-    } else if (_selectedPeriod == 'Week') {
-      // Generate data for 7 days
-      const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      scoreData = List.generate(7, (i) {
-        if (i < now.weekday) {
-          // Mock daily data
-          return FlSpot(i.toDouble(), 40 + Random().nextInt(20).toDouble());
-        } else {
-          // Skip future data points
-          return null;
-        }
-      }).whereType<FlSpot>().toList();
-      labels = weekDays;
-    } else if (_selectedPeriod == 'Month') {
-      // Generate data for all days in current month
-      int totalDaysInMonth = DateTime(now.year, now.month + 1, 0).day;
-      scoreData = List.generate(totalDaysInMonth, (i) {
-        if (i < now.day) {
-          // Mock daily data
-          return FlSpot(i.toDouble(), 50 + Random().nextInt(50).toDouble());
-        } else {
-          // Skip future data points
-          return null;
-        }
-      }).whereType<FlSpot>().toList();
-      labels = List.generate(totalDaysInMonth, (i) => (i + 1).toString());
+    DateTime now = DateTime.now();
+    setState(() {
+      if (_selectedPeriod == 'Day') {
+        // Generate data for 24 hours
+        scoreData = List.generate(24, (i) {
+          if (i <= now.hour) {
+            // Mock hourly data
+            return FlSpot(i.toDouble(), 20 + Random().nextInt(30).toDouble());
+          } else {
+            // Skip future data points
+            return null; // Return null for future data
+          }
+        }).whereType<FlSpot>().toList(); // Exclude null values
+        labels = List.generate(
+            24, (i) => "${i % 12 == 0 ? 12 : i % 12}${i < 12 ? 'AM' : 'PM'}");
+      } else if (_selectedPeriod == 'Week') {
+        // Generate data for 7 days
+        const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        scoreData = List.generate(7, (i) {
+          if (i < now.weekday) {
+            // Mock daily data
+            return FlSpot(i.toDouble(), 40 + Random().nextInt(20).toDouble());
+          } else {
+            // Skip future data points
+            return null;
+          }
+        }).whereType<FlSpot>().toList();
+        labels = weekDays;
+      } else if (_selectedPeriod == 'Month') {
+        // Generate data for all days in current month
+        int totalDaysInMonth = DateTime(now.year, now.month + 1, 0).day;
+        scoreData = List.generate(totalDaysInMonth, (i) {
+          if (i < now.day) {
+            // Mock daily data
+            return FlSpot(i.toDouble(), 50 + Random().nextInt(50).toDouble());
+          } else {
+            // Skip future data points
+            return null;
+          }
+        }).whereType<FlSpot>().toList();
+        labels = List.generate(totalDaysInMonth, (i) => (i + 1).toString());
+      }
+      // Update labels to match scoreData length
+      labels = labels.sublist(0, scoreData.length);
+    });
+    if (scoreData.length == 1) {
+      FlSpot singlePoint = scoreData[0];
+      scoreData.add(FlSpot(singlePoint.x + 1, singlePoint.y));
+      labels.add(labels[0]);
     }
-    // Update labels to match scoreData length
-    labels = labels.sublist(0, scoreData.length);
-  });
-  if (scoreData.length == 1) {
-  FlSpot singlePoint = scoreData[0];
-  scoreData.add(FlSpot(singlePoint.x + 1, singlePoint.y));
-  labels.add(labels[0]);
-}
-}
+  }
 
   Widget _buildTimeButton(String period) {
     final isSelected = _selectedPeriod == period;
@@ -88,7 +89,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           color: isSelected ? AppColors.secondaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
           boxShadow: isSelected
-              ? [BoxShadow(color: AppColors.secondaryColor.withOpacity(0.3), blurRadius: 8, spreadRadius: 1)]
+              ? [
+                  BoxShadow(
+                      color: AppColors.secondaryColor.withOpacity(0.3),
+                      blurRadius: 8,
+                      spreadRadius: 1)
+                ]
               : null,
         ),
         child: Text(
@@ -156,7 +162,10 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   decoration: const BoxDecoration(
                     color: AppColors.primaryColor,
                   ),
-                  child: EnviroScoreChart(scoreData: scoreData, labels: labels, selectedPeriod: _selectedPeriod),
+                  child: EnviroScoreChart(
+                      scoreData: scoreData,
+                      labels: labels,
+                      selectedPeriod: _selectedPeriod),
                 ),
                 Positioned(
                   top: 343,
@@ -273,7 +282,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.secondaryColor,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
                                 shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                       bottom: Radius.circular(15)),
@@ -332,12 +342,16 @@ class EnviroScoreChart extends StatelessWidget {
             ),
           ),
           titlesData: FlTitlesData(
-            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: _selectedPeriod == 'Day' ? 4 : (_selectedPeriod == 'Week' ? 1 : 5),
+                interval: _selectedPeriod == 'Day'
+                    ? 4
+                    : (_selectedPeriod == 'Week' ? 1 : 5),
                 reservedSize: 80,
                 getTitlesWidget: (value, _) {
                   int index = value.toInt();
@@ -347,7 +361,10 @@ class EnviroScoreChart extends StatelessWidget {
                     }
                     return Text(
                       labels[index],
-                      style: const TextStyle(color: AppColors.whiteColor, fontSize: 12, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: AppColors.whiteColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     );
                   } else {
                     return const SizedBox.shrink();
@@ -364,7 +381,10 @@ class EnviroScoreChart extends StatelessWidget {
                 getTitlesWidget: (value, _) {
                   return Text(
                     value.toInt().toString(),
-                    style: const TextStyle(color: AppColors.whiteColor, fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: AppColors.whiteColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
                   );
                 },
               ),
@@ -380,7 +400,10 @@ class EnviroScoreChart extends StatelessWidget {
               spots: scoreData,
               isCurved: true,
               gradient: LinearGradient(
-                colors: [AppColors.secondaryColor.withOpacity(0.8), AppColors.secondaryColor.withOpacity(0.2)],
+                colors: [
+                  AppColors.secondaryColor.withOpacity(0.8),
+                  AppColors.secondaryColor.withOpacity(0.2)
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -388,7 +411,10 @@ class EnviroScoreChart extends StatelessWidget {
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
-                  colors: [AppColors.secondaryColor.withOpacity(0.4), AppColors.secondaryColor.withOpacity(0.05)],
+                  colors: [
+                    AppColors.secondaryColor.withOpacity(0.4),
+                    AppColors.secondaryColor.withOpacity(0.05)
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
