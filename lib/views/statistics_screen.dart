@@ -178,7 +178,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     ),
                     child: Container(
                       padding: const EdgeInsets.only(top: 8),
-                      height: 270,
+                      height: 240,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -189,21 +189,20 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               const Text(
                                 'EnviroScore',
                                 style: TextStyle(
-                                  fontSize: 32,
+                                  fontSize: 28,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.blackColor,
                                 ),
                               ),
-                              const SizedBox(width: 2),
                               IconButton(
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(
-                                  minWidth: 24,
-                                  minHeight: 24,
+                                  minWidth: 20,
+                                  minHeight: 20,
                                 ),
                                 icon: const Icon(
                                   Icons.info_outline,
-                                  size: 30,
+                                  size: 26,
                                   color: AppColors.blackColor,
                                 ),
                                 onPressed: () {
@@ -258,7 +257,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               Text(
                                 '85',
                                 style: TextStyle(
-                                  fontSize: 100,
+                                  fontSize: 80,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.blackColor,
                                 ),
@@ -266,7 +265,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               Text(
                                 '%',
                                 style: TextStyle(
-                                  fontSize: 42,
+                                  fontSize: 36,
                                   fontWeight: FontWeight.normal,
                                   color: AppColors.blackColor,
                                 ),
