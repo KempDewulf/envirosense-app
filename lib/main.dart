@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:envirosense/views/login_screen.dart';
 
+import 'views/room_overview_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -113,6 +115,10 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         '/addRoom': (context) => const AddRoomScreen(),
         '/addDevice': (context) => const AddDeviceScreen(),
         '/statisticsDetail': (context) => const StatisticsDetailScreen(),
+        '/roomOverview': (context) => RoomOverviewScreen(
+              roomName: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['roomName'],
+        ),
       },
     );
   }
