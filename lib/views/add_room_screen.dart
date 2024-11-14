@@ -123,8 +123,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                 itemCount: _roomTypes.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  mainAxisSpacing: 24,
-                  crossAxisSpacing: 24,
+                  mainAxisSpacing: 25,
+                  crossAxisSpacing: 15,
                 ),
                 itemBuilder: (context, index) {
                   String roomName = _roomTypes[index]['name'];
