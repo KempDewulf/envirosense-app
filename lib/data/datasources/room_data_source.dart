@@ -49,7 +49,7 @@ class RoomDataSource {
     //TODO: Implement API call here
   }
 
-  Future<void> removeRoom(String roomId) async {
+  Future<void> removeRoom(String roomName) async {
     //TODO: Implement API call here
   }
 }

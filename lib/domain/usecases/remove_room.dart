@@ -5,7 +5,7 @@ class RemoveRoomUseCase {
 
   RemoveRoomUseCase(this.repository);
 
-  Future<void> call(String roomId) async {
-    await repository.removeRoom(roomId);
+  Future<void> call(String roomName) async {
+    await repository.removeRoom(roomName);
   }
 }
