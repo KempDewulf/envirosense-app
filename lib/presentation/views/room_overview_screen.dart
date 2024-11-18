@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import '../controllers/RoomOverviewController.dart';
 
 class RoomOverviewScreen extends StatelessWidget {
   final String roomName;
@@ -8,18 +9,7 @@ class RoomOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mock data for demonstration
-    final roomData = {
-      'Temperature': {'value': '22°C', 'status': 'good'},
-      'Humidity': {'value': '45%', 'status': 'medium'},
-      'Air Quality': {'value': '350 ppm', 'status': 'bad'},
-    };
-
-    final outsideData = {
-      'Temperature': {'value': '18°C', 'status': 'medium'},
-      'Humidity': {'value': '55%', 'status': 'good'},
-      'Air Quality': {'value': '400 ppm', 'status': 'bad'},
-    };
+    final controller = RoomOverviewController();
 
     return Scaffold(
       appBar: AppBar(
@@ -73,14 +63,14 @@ class RoomOverviewScreen extends StatelessWidget {
                 Expanded(
                   child: DataDisplayBox(
                     title: 'This Room',
-                    data: roomData,
+                    data: controller.getRoomData(roomName),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: DataDisplayBox(
                     title: 'Outside',
-                    data: outsideData,
+                    data: controller.getOutsideData(),
                   ),
                 ),
               ],
