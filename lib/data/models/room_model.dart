@@ -9,9 +9,9 @@ class RoomModel extends Room {
     required int devices,
   }) : super(id: id, name: name, icon: icon, devices: devices);
 
-  factory RoomModel.fromJson(Map<String, dynamic> json) {
+  factory RoomModel.fromJson(Map<String, dynamic> json, String roomName) {
     return RoomModel(
-      id: json['id'],
+      id: roomName,
       name: json['name'],
       icon: IconData(json['iconCode'], fontFamily: 'MaterialIcons'),
       devices: json['devices'],
@@ -20,7 +20,6 @@ class RoomModel extends Room {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'iconCode': icon.codePoint,
       'devices': devices,
