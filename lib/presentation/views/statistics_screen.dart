@@ -1,3 +1,7 @@
+import 'package:envirosense/data/datasources/statistics_data_source.dart';
+import 'package:envirosense/data/repositories/statistics_repository_impl.dart';
+import 'package:envirosense/domain/entities/building_statistics.dart';
+import 'package:envirosense/presentation/controllers/StatisticsController.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -11,14 +15,85 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  late final StatisticsController _controller;
   String _selectedPeriod = 'Day';
   List<FlSpot> scoreData = [];
   List<String> labels = [];
+  EnviroScore? buildingScore;
 
   @override
   void initState() {
     super.initState();
-    _updateChartData();
+    _controller = StatisticsController(
+      StatisticsRepositoryImpl(
+        remoteDataSource: StatisticsDataSource(),
+      ),
+    );
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      List<BuildingStatistics> stats;
+      switch (_selectedPeriod) {
+        case 'Day':
+          stats = await _controller.getDailyStatistics();
+          break;
+        case 'Week':
+          stats = await _controller.getWeeklyStatistics();
+          break;
+        case 'Month':
+          stats = await _controller.getMonthlyStatistics();
+          break;
+        default:
+          stats = [];
+      }
+
+      final score = await _controller.getBuildingEnviroScore();
+
+      setState(() {
+        scoreData = _controller.convertToSpots(stats);
+        buildingScore = score;
+        _updateLabels();
+      });
+    } catch (e) {
+      // Handle error
+    }
+  }
+
+  void _updateLabels() {
+    DateTime now = DateTime.now();
+    switch (_selectedPeriod) {
+      case 'Day':
+        // Generate 24-hour labels
+        labels = List.generate(
+            24, (i) => "${i % 12 == 0 ? 12 : i % 12}${i < 12 ? 'AM' : 'PM'}");
+        break;
+
+      case 'Week':
+        // Generate weekday labels
+        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        break;
+
+      case 'Month':
+        // Generate month day labels
+        int totalDays = DateTime(now.year, now.month + 1, 0).day;
+        labels = List.generate(totalDays, (i) => '${i + 1}/${now.month}');
+        break;
+
+      default:
+        labels = [];
+    }
+
+    // Trim labels to match data points
+    if (scoreData.isNotEmpty) {
+      labels = labels.sublist(0, scoreData.length);
+    }
+
+    // Handle single data point case
+    if (scoreData.length == 1) {
+      labels.add(labels[0]);
+    }
   }
 
   void _updateChartData() {

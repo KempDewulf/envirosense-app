@@ -1,16 +1,26 @@
 // lib/views/statistics_detail_screen.dart
+import 'package:envirosense/data/datasources/statistics_data_source.dart';
+import 'package:envirosense/data/repositories/statistics_repository_impl.dart';
+import 'package:envirosense/domain/entities/building_statistics.dart';
+import 'package:envirosense/presentation/controllers/StatisticsController.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 
-class StatisticsDetailScreen extends StatelessWidget {
+class StatisticsDetailScreen extends StatefulWidget {
   const StatisticsDetailScreen({super.key});
 
-  // Sample data for rooms
-  final List<Map<String, dynamic>> rooms = const [
-    {'name': '3.108', 'enviroScore': 61},
-    {'name': '3.109', 'enviroScore': 14},
-    {'name': '3.110', 'enviroScore': 82},
-    // Add more rooms as needed
+  @override
+  State<StatisticsDetailScreen> createState() => _StatisticsDetailScreenState();
+}
+
+class _StatisticsDetailScreenState extends State<StatisticsDetailScreen> {
+  late final StatisticsController _controller;
+  EnviroScore? buildingScore;
+  Map<String, EnviroScore> roomScores = {};
+  final List<Map<String, dynamic>> rooms = [
+    {'name': '3.108', 'enviroScore': 85},
+    {'name': '3.109', 'enviroScore': 65},
+    {'name': '3.110', 'enviroScore': 92},
   ];
 
   Color _getScoreColor(int score) {
@@ -20,6 +30,38 @@ class StatisticsDetailScreen extends StatelessWidget {
       return AppColors.secondaryColor;
     } else {
       return AppColors.redColor;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = StatisticsController(
+      StatisticsRepositoryImpl(
+        remoteDataSource: StatisticsDataSource(),
+      ),
+    );
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      final score = await _controller.getBuildingEnviroScore();
+      final roomIds = rooms.map((room) => room['name'].toString()).toList();
+      final scores = await Future.wait(
+          roomIds.map((id) => _controller.getRoomEnviroScore(id)));
+
+      setState(() {
+        buildingScore = score;
+        for (var i = 0; i < roomIds.length; i++) {
+          roomScores[roomIds[i]] = scores[i];
+          // Update the room scores in the rooms list
+          rooms[i]['enviroScore'] = scores[i].score.round();
+        }
+      });
+    } catch (e) {
+      // Handle error
+      debugPrint('Error loading data: $e');
     }
   }
 
@@ -39,7 +81,7 @@ class StatisticsDetailScreen extends StatelessWidget {
           icon: const Icon(Icons.close),
           color: AppColors.whiteColor,
           onPressed: () {
-             Navigator.pushReplacementNamed(context, '/main');
+            Navigator.pushReplacementNamed(context, '/main');
           },
         ),
         centerTitle: true,
