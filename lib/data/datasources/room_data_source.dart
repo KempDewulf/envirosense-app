@@ -1,4 +1,3 @@
-import 'package:envirosense/domain/entities/room.dart';
 import 'package:flutter/material.dart';
 
 import '../models/room_model.dart';
@@ -42,6 +41,20 @@ class RoomDataSource {
         icon: Icons.headphones,
         devices: 2,
       ),
+    ];
+  }
+
+  Future<List<Map<String, dynamic>>> getRoomTypes() async {
+    return [
+      {'name': 'Cafeteria', 'icon': Icons.coffee},
+      {'name': 'Bedroom', 'icon': Icons.bed},
+      {'name': 'Bathroom', 'icon': Icons.bathtub},
+      {'name': 'Office', 'icon': Icons.work},
+      {'name': 'TV Room', 'icon': Icons.tv},
+      {'name': 'Classroom', 'icon': Icons.class_},
+      {'name': 'Garage', 'icon': Icons.garage},
+      {'name': 'Toilet', 'icon': Icons.family_restroom},
+      {'name': 'Kid Room', 'icon': Icons.child_friendly},
     ];
   }
 

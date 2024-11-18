@@ -22,12 +22,17 @@ class RoomRepositoryImpl implements RoomRepository {
       icon: room.icon,
       devices: room.devices,
     );
-    
+
     await remoteDataSource.addRoom(roomModel);
   }
 
   @override
   Future<void> removeRoom(String roomName) async {
     await remoteDataSource.removeRoom(roomName);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getRoomTypes() async {
+    return await remoteDataSource.getRoomTypes();
   }
 }

@@ -1,5 +1,7 @@
-// lib/views/add_room_screen.dart
+// lib/presentation/views/add_room_screen.dart
 
+import 'package:envirosense/domain/entities/room.dart';
+import 'package:envirosense/presentation/controllers/RoomController.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 
@@ -11,21 +13,33 @@ class AddRoomScreen extends StatefulWidget {
 }
 
 class _AddRoomScreenState extends State<AddRoomScreen> {
+  final RoomController _roomController = RoomController();
   final TextEditingController _roomNameController = TextEditingController();
-  String? _selectedRoomType;
+  List<Map<String, dynamic>>? _roomTypes; // Store room types in state
+  Map<String, dynamic>? _selectedRoomType;
+  bool _isSaving = false;
+  bool _isLoading = true;
 
-  // List of available room types with corresponding icons
-  final List<Map<String, dynamic>> _roomTypes = [
-    {'name': 'Cafeteria', 'icon': Icons.coffee},
-    {'name': 'Bedroom', 'icon': Icons.bed},
-    {'name': 'Bathroom', 'icon': Icons.bathtub},
-    {'name': 'Office', 'icon': Icons.work},
-    {'name': 'TV Room', 'icon': Icons.tv},
-    {'name': 'Classroom', 'icon': Icons.class_},
-    {'name': 'Garage', 'icon': Icons.garage},
-    {'name': 'Toilet', 'icon': Icons.family_restroom},
-    {'name': 'Kid Room', 'icon': Icons.child_friendly},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadRoomTypes();
+  }
+
+  Future<void> _loadRoomTypes() async {
+    try {
+      final types = await _roomController.fetchRoomTypes();
+      setState(() {
+        _roomTypes = types;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      // Handle error
+    }
+  }
 
   @override
   void dispose() {
@@ -37,13 +51,42 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     return _roomNameController.text.isNotEmpty && _selectedRoomType != null;
   }
 
-  void _saveRoom() {
-    // Implement the save logic here
-    Navigator.pop(context);
+  Future<void> _saveRoom() async {
+    if (!_isFormComplete || _isSaving) return;
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    try {
+      final newRoom = Room(
+        id: '', // Let the database assign the ID
+        name: _roomNameController.text,
+        icon: _selectedRoomType!['icon'] as IconData,
+        devices: 0,
+      );
+
+      await _roomController.addRoom(newRoom);
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to add room')),
+      );
+    } finally {
+      setState(() {
+        _isSaving = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,86 +98,70 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         foregroundColor: AppColors.whiteColor,
         title: const Text(
           'Add Room',
-          style: TextStyle(
-            fontSize: 18,
-          ),
+          style: TextStyle(fontSize: 18),
         ),
         centerTitle: true,
         elevation: 0,
-        actions: const [],
       ),
       body: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Enter Room's Name Label
             const Text(
               "Enter Room's name",
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.lightGrayColor, // Gray accent color
+                color: AppColors.lightGrayColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
-            // Text Input Field
             TextField(
               controller: _roomNameController,
               decoration: InputDecoration(
                 hintText: 'e.g., Living Room',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12), // Rounded border
-                  borderSide: const BorderSide(
-                      color: AppColors.accentColor), // Accent color
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: AppColors.accentColor),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: AppColors.accentColor),
+                  borderSide: const BorderSide(color: AppColors.accentColor),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: AppColors.accentColor),
+                  borderSide: const BorderSide(color: AppColors.accentColor),
                 ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  // Update the form completeness
-                });
-              },
+              onChanged: (value) => setState(() {}),
             ),
             const SizedBox(height: 24),
-            // Select Room's Icon Label
             const Text(
               "Select Room's icon",
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.lightGrayColor, // Gray accent color
+                color: AppColors.lightGrayColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
-            // Icons Grid
             Expanded(
               child: GridView.builder(
-                itemCount: _roomTypes.length,
+                itemCount: _roomTypes?.length ?? 0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 25,
                   crossAxisSpacing: 15,
                 ),
                 itemBuilder: (context, index) {
-                  String roomName = _roomTypes[index]['name'];
-                  IconData iconData = _roomTypes[index]['icon'];
-                  bool isSelected = _selectedRoomType == roomName;
+                  final roomType = _roomTypes![index];
+                  final isSelected = _selectedRoomType == roomType;
 
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        _selectedRoomType = roomName;
+                        _selectedRoomType = roomType;
                       });
                     },
                     child: Column(
@@ -159,7 +186,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                                 : [],
                           ),
                           child: Icon(
-                            iconData,
+                            roomType['icon'] as IconData,
                             color: isSelected
                                 ? Colors.white
                                 : AppColors.accentColor,
@@ -168,14 +195,15 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          roomName,
+                          roomType['name'] as String,
                           style: TextStyle(
                             fontSize: 14,
                             color: isSelected
                                 ? AppColors.secondaryColor
                                 : AppColors.accentColor,
-                            fontWeight:
-                                isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                       ],
@@ -184,7 +212,6 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                 },
               ),
             ),
-            // SAVE Button Positioned at the Bottom
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -198,14 +225,19 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                child: const Text(
-                  'SAVE',
-                  style: TextStyle(
-                    color: AppColors.whiteColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: _isSaving
+                    ? const CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
+                      )
+                    : const Text(
+                        'SAVE',
+                        style: TextStyle(
+                          color: AppColors.whiteColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           ],
