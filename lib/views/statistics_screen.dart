@@ -29,7 +29,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         scoreData = List.generate(24, (i) {
           if (i <= now.hour) {
             // Mock hourly data
-            return FlSpot(i.toDouble(), 20 + Random().nextInt(30).toDouble());
+            return FlSpot(i.toDouble(), Random().nextInt(100).toDouble());
           } else {
             // Skip future data points
             return null; // Return null for future data
@@ -43,7 +43,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         scoreData = List.generate(7, (i) {
           if (i < now.weekday) {
             // Mock daily data
-            return FlSpot(i.toDouble(), 40 + Random().nextInt(20).toDouble());
+            return FlSpot(i.toDouble(), Random().nextInt(100).toDouble());
           } else {
             // Skip future data points
             return null;
@@ -52,17 +52,16 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         labels = weekDays;
       } else if (_selectedPeriod == 'Month') {
         // Generate data for all days in current month
-        int totalDaysInMonth = DateTime(now.year, now.month + 1, 0).day;
-        scoreData = List.generate(totalDaysInMonth, (i) {
-          if (i < now.day) {
-            // Mock daily data
-            return FlSpot(i.toDouble(), 50 + Random().nextInt(50).toDouble());
-          } else {
-            // Skip future data points
-            return null;
-          }
-        }).whereType<FlSpot>().toList();
-        labels = List.generate(totalDaysInMonth, (i) => (i + 1).toString());
+        int totalDays = now.day;
+        scoreData = List.generate(totalDays, (i) {
+          // Mock daily data up to current day
+          return FlSpot(i.toDouble(), Random().nextInt(100).toDouble());
+        });
+
+        labels = List.generate(totalDays, (i) {
+          int day = i + 1;
+          return '$day/${now.month}';
+        });
       }
       // Update labels to match scoreData length
       labels = labels.sublist(0, scoreData.length);
@@ -330,6 +329,25 @@ class EnviroScoreChart extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
       child: LineChart(
         LineChartData(
+          lineTouchData: LineTouchData(
+            enabled: true,
+            touchTooltipData: LineTouchTooltipData(
+              getTooltipItems: (touchedSpots) {
+                return touchedSpots.map((touchedSpot) {
+                  final x = touchedSpot.x.toInt();
+                  final y = touchedSpot.y;
+                  String xLabel = x >= 0 && x < labels.length ? labels[x] : '';
+                  return LineTooltipItem(
+                    '$xLabel\n${y.toStringAsFixed(2)}%',
+                    const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }).toList();
+              },
+            ),
+          ),
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,

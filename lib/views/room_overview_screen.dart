@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class RoomOverviewScreen extends StatelessWidget {
   final String roomName;
 
-  const RoomOverviewScreen({Key? key, required this.roomName}) : super(key: key);
+  const RoomOverviewScreen({Key? key, required this.roomName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +25,11 @@ class RoomOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left_rounded),
-          iconSize: 35,
-          onPressed: () => Navigator.pop(context),
-        ),
+            icon: const Icon(Icons.keyboard_arrow_left_rounded),
+            iconSize: 35,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/main');
+            }),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: AppColors.whiteColor,
         title: Text(
@@ -147,7 +149,8 @@ class RoomOverviewScreen extends StatelessWidget {
                                       onPressed: () => Navigator.pop(context),
                                       child: const Text(
                                         'Got it',
-                                        style: TextStyle(color: AppColors.primaryColor),
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor),
                                       ),
                                     ),
                                   ],
@@ -199,7 +202,8 @@ class RoomOverviewScreen extends StatelessWidget {
 
 class DataDisplayBox extends StatelessWidget {
   final String title;
-  final Map<String, Map<String, dynamic>> data; // Updated type to include status
+  final Map<String, Map<String, dynamic>>
+      data; // Updated type to include status
 
   const DataDisplayBox({
     super.key,

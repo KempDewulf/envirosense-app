@@ -39,7 +39,7 @@ class StatisticsDetailScreen extends StatelessWidget {
           icon: const Icon(Icons.close),
           color: AppColors.whiteColor,
           onPressed: () {
-            Navigator.pop(context);
+             Navigator.pushReplacementNamed(context, '/main');
           },
         ),
         centerTitle: true,
