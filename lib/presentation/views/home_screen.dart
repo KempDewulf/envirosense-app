@@ -1,7 +1,6 @@
 // home_screen.dart
 
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/domain/usecases/get_rooms.dart';
 import 'package:envirosense/presentation/controllers/RoomController.dart';
 import 'package:envirosense/presentation/widgets/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/add_room_card.dart';
