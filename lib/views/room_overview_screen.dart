@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class RoomOverviewScreen extends StatelessWidget {
   final String roomName;
 
-  const RoomOverviewScreen({Key? key, required this.roomName})
-      : super(key: key);
+  const RoomOverviewScreen({super.key, required this.roomName});
 
   @override
   Widget build(BuildContext context) {
