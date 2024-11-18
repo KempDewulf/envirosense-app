@@ -1,5 +1,4 @@
-// lib/views/add_device_screen.dart
-
+import 'package:envirosense/presentation/controllers/AddDeviceController.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,53 +13,32 @@ class AddDeviceScreen extends StatefulWidget {
 }
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
-  CameraController? _cameraController;
+  final AddDeviceController _controller = AddDeviceController();
   bool _isCameraInitialized = false;
   bool _isPermissionGranted = false;
-  late List<CameraDescription> _cameras;
 
   @override
   void initState() {
     super.initState();
-    _requestCameraPermission();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    _isPermissionGranted = await _controller.requestCameraPermission();
+    if (_isPermissionGranted) {
+      await _controller.initializeCamera();
+      setState(() {
+        _isCameraInitialized = true;
+      });
+    } else {
+      setState(() {}); // Update UI to reflect permission status
+    }
   }
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  Future<void> _requestCameraPermission() async {
-    final status = await Permission.camera.request();
-
-    if (status.isGranted) {
-      _initializeCamera();
-    } else {
-      // Handle permission denied
-      setState(() {
-        _isPermissionGranted = false;
-      });
-    }
-  }
-
-  Future<void> _initializeCamera() async {
-    _cameras = await availableCameras();
-
-    _cameraController = CameraController(
-      _cameras.first,
-      ResolutionPreset.medium,
-      enableAudio: false,
-    );
-
-    await _cameraController!.initialize();
-
-    if (!mounted) return;
-
-    setState(() {
-      _isCameraInitialized = true;
-      _isPermissionGranted = true;
-    });
   }
 
   @override
@@ -119,7 +97,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         ? _isCameraInitialized
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
-                                child: CameraPreview(_cameraController!),
+                                child: CameraPreview(_controller.cameraController!),
                               )
                             : const Center(
                                 child: CircularProgressIndicator(),
@@ -143,7 +121,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               ),
                               const SizedBox(height: 16),
                               ElevatedButton(
-                                onPressed: _requestCameraPermission,
+                                onPressed: _controller.requestCameraPermission,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.secondaryColor,
                                 ),
