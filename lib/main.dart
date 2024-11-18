@@ -1,19 +1,19 @@
-import 'package:envirosense/colors/colors.dart';
-import 'package:envirosense/views/add_device_screen.dart';
-import 'package:envirosense/views/add_room_screen.dart';
-import 'package:envirosense/views/email_verification_screen.dart';
-import 'package:envirosense/views/main_screen.dart';
-import 'package:envirosense/views/onboarding_screen.dart';
-import 'package:envirosense/views/statistics_detail_screen.dart';
+import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/views/add_device_screen.dart';
+import 'package:envirosense/presentation/views/add_room_screen.dart';
+import 'package:envirosense/presentation/views/email_verification_screen.dart';
+import 'package:envirosense/presentation/views/main_screen.dart';
+import 'package:envirosense/presentation/views/onboarding_screen.dart';
+import 'package:envirosense/presentation/views/statistics_detail_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:envirosense/views/login_screen.dart';
+import 'package:envirosense/presentation/views/login_screen.dart';
 
-import 'views/room_overview_screen.dart';
+import 'presentation/views/room_overview_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
