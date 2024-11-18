@@ -45,7 +45,7 @@ class RoomDataSource {
     ];
   }
 
-  Future<void> addRoom(Room room) async {
+  Future<void> addRoom(RoomModel room) async {
     //TODO: Implement API call here
   }
 
