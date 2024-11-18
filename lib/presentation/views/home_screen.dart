@@ -1,5 +1,8 @@
 // home_screen.dart
 
+import 'package:envirosense/domain/entities/room.dart';
+import 'package:envirosense/domain/usecases/get_rooms.dart';
+import 'package:envirosense/presentation/controllers/RoomController.dart';
 import 'package:envirosense/presentation/widgets/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/add_room_card.dart';
 import 'package:envirosense/presentation/widgets/header.dart';
@@ -17,21 +20,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedTabIndex = 0;
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _filteredRooms = [];
-
-  final List<Map<String, dynamic>> _rooms = [
-    {'icon': Icons.chair, 'name': '3.108', 'devices': 1},
-    {'icon': Icons.meeting_room, 'name': '3.109', 'devices': 2},
-    {'icon': Icons.computer, 'name': '3.110', 'devices': 3},
-    {'icon': Icons.laptop, 'name': '3.111', 'devices': 4},
-    {'icon': Icons.tv, 'name': '3.112', 'devices': 0},
-    {'icon': Icons.headphones, 'name': '3.113', 'devices': 2},
-  ];
+  List<Room> _allRooms = [];
+  List<Room> _filteredRooms = [];
+  final RoomController _roomController = RoomController();
 
   @override
   void initState() {
     super.initState();
-    _filteredRooms = _rooms;
+    _fetchRooms();
     _searchController.addListener(_filterRooms);
   }
 
@@ -42,11 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  Future<void> _fetchRooms() async {
+    final rooms = await _roomController.fetchRooms();
+    setState(() {
+      _allRooms = rooms;
+      _filteredRooms = rooms;
+    });
+  }
+
   void _filterRooms() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredRooms = _rooms.where((room) {
-        final roomName = room['name'].toLowerCase();
+      _filteredRooms = _allRooms.where((room) {
+        final roomName = room.name.toLowerCase();
         return roomName.contains(query);
       }).toList();
     });
