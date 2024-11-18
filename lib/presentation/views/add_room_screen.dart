@@ -1,7 +1,7 @@
 // lib/views/add_room_screen.dart
 
 import 'package:flutter/material.dart';
-import '../colors/colors.dart';
+import '../../core/constants/colors.dart';
 
 class AddRoomScreen extends StatefulWidget {
   const AddRoomScreen({super.key});

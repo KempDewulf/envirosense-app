@@ -1,7 +1,7 @@
 // add_room_card.dart
 
 import 'package:flutter/material.dart';
-import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/core/constants/colors.dart';
 
 class AddRoomCard extends StatelessWidget {
   final VoidCallback onTap;

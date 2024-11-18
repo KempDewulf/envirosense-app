@@ -1,7 +1,7 @@
 // tab_button.dart
 
 import 'package:flutter/material.dart';
-import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/core/constants/colors.dart';
 
 class TabButton extends StatelessWidget {
   final String text;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../colors/colors.dart';
+import '../../core/constants/colors.dart';
 
 class AddOptionsBottomSheet extends StatelessWidget {
   const AddOptionsBottomSheet({super.key});

@@ -1,5 +1,5 @@
 // lib/views/onboarding_screen.dart
-import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

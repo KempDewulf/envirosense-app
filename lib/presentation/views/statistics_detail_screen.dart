@@ -1,6 +1,6 @@
 // lib/views/statistics_detail_screen.dart
 import 'package:flutter/material.dart';
-import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/core/constants/colors.dart';
 
 class StatisticsDetailScreen extends StatelessWidget {
   const StatisticsDetailScreen({super.key});

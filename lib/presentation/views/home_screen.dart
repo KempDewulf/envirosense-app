@@ -1,11 +1,11 @@
 // home_screen.dart
 
-import 'package:envirosense/widgets/add_options_bottom_sheet.dart';
-import 'package:envirosense/widgets/add_room_card.dart';
-import 'package:envirosense/widgets/header.dart';
-import 'package:envirosense/widgets/room_card.dart';
+import 'package:envirosense/presentation/widgets/add_options_bottom_sheet.dart';
+import 'package:envirosense/presentation/widgets/add_room_card.dart';
+import 'package:envirosense/presentation/widgets/header.dart';
+import 'package:envirosense/presentation/widgets/room_card.dart';
 import 'package:flutter/material.dart';
-import 'package:envirosense/colors/colors.dart';
+import 'package:envirosense/core/constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

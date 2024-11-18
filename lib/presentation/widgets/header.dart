@@ -1,8 +1,8 @@
 // header.dart
 
 import 'package:flutter/material.dart';
-import 'package:envirosense/colors/colors.dart';
-import 'package:envirosense/widgets/tab_button.dart';
+import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/tab_button.dart';
 
 class Header extends StatelessWidget {
   final int selectedTabIndex;
