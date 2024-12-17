@@ -1,3 +1,4 @@
+import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/domain/entities/device.dart';
 
@@ -23,7 +24,7 @@ class DeviceCard extends StatelessWidget {
           children: [
             const Icon(
               Icons.sensors,
-              color: Colors.blue,
+              color: AppColors.secondaryColor,
               size: 48,
             ),
             const SizedBox(height: 8),
