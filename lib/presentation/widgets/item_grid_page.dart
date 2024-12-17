@@ -9,12 +9,12 @@ class ItemGridPage<T> extends StatefulWidget {
   final VoidCallback onAddPressed;
 
   const ItemGridPage({
-    Key? key,
+    super.key,
     required this.allItems,
     required this.itemBuilder,
     required this.getItemName,
     required this.onAddPressed,
-  }) : super(key: key);
+  });
 
   @override
   _ItemGridPageState<T> createState() => _ItemGridPageState<T>();
