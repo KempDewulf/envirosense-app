@@ -32,6 +32,15 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
   }
 
   @override
+  void didUpdateWidget(covariant ItemGridPage<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.allItems != widget.allItems) {
+      _filteredItems = widget.allItems;
+      _filterItems();
+    }
+  }
+
+  @override
   void dispose() {
     _searchController.removeListener(_filterItems);
     _searchController.dispose();
@@ -57,7 +66,8 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
           decoration: InputDecoration(
             labelText: widget.searchHintText,
             prefixIcon: const Icon(Icons.search),
-            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Colors.grey),
@@ -68,7 +78,8 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.blue, width: 2),
+              borderSide:
+                  const BorderSide(color: Colors.blue, width: 2),
             ),
           ),
         ),
