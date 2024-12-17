@@ -1,47 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../../services/api_service.dart';
 import '../models/room_model.dart';
 
 class RoomDataSource {
+  final ApiService apiService;
+
+  RoomDataSource({required this.apiService});
+  
   Future<List<RoomModel>> getRooms() async {
-    return [
-      RoomModel(
-        id: '1',
-        name: '3.108',
-        icon: Icons.chair,
-        devices: 1,
-      ),
-      RoomModel(
-        id: '2',
-        name: '3.109',
-        icon: Icons.meeting_room,
-        devices: 2,
-      ),
-      RoomModel(
-        id: '3',
-        name: '3.110',
-        icon: Icons.computer,
-        devices: 3,
-      ),
-      RoomModel(
-        id: '4',
-        name: '3.111',
-        icon: Icons.laptop,
-        devices: 4,
-      ),
-      RoomModel(
-        id: '5',
-        name: '3.112',
-        icon: Icons.tv,
-        devices: 0,
-      ),
-      RoomModel(
-        id: '6',
-        name: '3.113',
-        icon: Icons.headphones,
-        devices: 2,
-      ),
-    ];
+    try {
+      final response = await apiService.getRequest('rooms');
+      print(response);
+      List<dynamic> data = response as List<dynamic>;
+      List<RoomModel> rooms = data.map((roomJson) {
+        return RoomModel.fromJson(
+          roomJson as Map<String, dynamic>,
+      );
+    }).toList();
+      print(rooms);
+      return rooms;
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load rooms: $e');
+    }
   }
 
   Future<List<Map<String, dynamic>>> getRoomTypes() async {
