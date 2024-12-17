@@ -1,4 +1,3 @@
-import 'package:envirosense/domain/entities/room.dart';
 
 class Device {
   final String id;
