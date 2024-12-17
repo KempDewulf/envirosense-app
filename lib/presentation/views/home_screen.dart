@@ -33,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchDevices();
   }
 
+  Future<void> _refreshData() async {
+    // Fetch both rooms and devices
+    await Future.wait([
+      _fetchRooms(),
+      _fetchDevices(),
+    ]);
+  }
+
   Future<void> _fetchRooms() async {
     final rooms = await _roomController.fetchRooms();
     setState(() {
@@ -65,30 +73,35 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           if (_selectedTabIndex == 0)
             Expanded(
-              child: ItemGridPage<Room>(
-                allItems: _allRooms,
-                itemBuilder: (room) => RoomCard(room: room),
-                getItemName: (room) => room.name,
-                onAddPressed: () {
-                  // Handle add room action
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (_) => const AddOptionsBottomSheet(),
-                  );
-                },
+              child: RefreshIndicator(
+                onRefresh: _refreshData,
+                child: ItemGridPage<Room>(
+                  allItems: _allRooms,
+                  itemBuilder: (room) => RoomCard(room: room),
+                  getItemName: (room) => room.name,
+                  onAddPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => const AddOptionsBottomSheet(),
+                    );
+                  },
+                ),
               ),
             ),
           if (_selectedTabIndex == 1)
             Expanded(
-              child: ItemGridPage<Device>(
-                allItems: _allDevices,
-                itemBuilder: (device) => DeviceCard(device: device),
-                getItemName: (device) => device.name,
-                onAddPressed: () {
-                  // Handle add device action
-                },
+              child: RefreshIndicator(
+                onRefresh: _refreshData,
+                child: ItemGridPage<Device>(
+                  allItems: _allDevices,
+                  itemBuilder: (device) => DeviceCard(device: device),
+                  getItemName: (device) => device.name,
+                  onAddPressed: () {
+                    // Handle add device action
+                  },
+                ),
               ),
             ),
         ],
