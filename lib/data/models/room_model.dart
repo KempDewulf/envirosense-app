@@ -22,17 +22,19 @@ class RoomModel extends Room {
   }
 
   static IconData _getIconForRoomType(String roomType) {
-    switch (roomType.toLowerCase()) {
-      case 'classroom':
-        return Icons.class_;
-      case 'office':
-        return Icons.work;
-      case 'bathroom':
-        return Icons.bathroom;
-      // Add more cases as needed
-      default:
-        return Icons.room;
-    }
+    final Map<String, IconData> iconMap = {
+      'cafeteria': Icons.coffee,
+      'bedroom': Icons.bed,
+      'bathroom': Icons.bathtub,
+      'office': Icons.work,
+      'tv room': Icons.tv,
+      'classroom': Icons.class_,
+      'garage': Icons.garage,
+      'toilet': Icons.family_restroom,
+      'kid room': Icons.child_friendly,
+    };
+
+    return iconMap[roomType.toLowerCase()] ?? Icons.room;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,10 +47,18 @@ class RoomModel extends Room {
   }
 
   static String _getRoomTypeFromIcon(IconData icon) {
-    if (icon == Icons.class_) return 'Classroom';
-    if (icon == Icons.work) return 'Office';
-    if (icon == Icons.bathroom) return 'Bathroom';
-    // Add more cases as needed
-    return 'Room';
+    final Map<IconData, String> reverseIconMap = {
+      Icons.coffee: 'Cafeteria',
+      Icons.bed: 'Bedroom',
+      Icons.bathtub: 'Bathroom',
+      Icons.work: 'Office',
+      Icons.tv: 'TV Room',
+      Icons.class_: 'Classroom',
+      Icons.garage: 'Garage',
+      Icons.family_restroom: 'Toilet',
+      Icons.child_friendly: 'Kid Room',
+    };
+
+    return reverseIconMap[icon] ?? 'Room';
   }
 }
