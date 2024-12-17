@@ -1,16 +1,24 @@
-
-import 'package:envirosense/domain/entities/device.dart';
-import 'package:envirosense/domain/entities/room.dart';
-import 'package:flutter/material.dart';
+import '../../data/datasources/device_data_source.dart';
+import '../../data/repositories/device_repository_impl.dart';
+import '../../domain/entities/device.dart';
+import '../../domain/repositories/device_repository.dart';
+import '../../domain/usecases/get_devices.dart';
+import '../../services/api_service.dart';
 
 class DeviceController {
-  Future<List<Device>> fetchDevices() async {
-    // Fetch devices from your data source
-    // For now, return mock data
-    return [
-      Device(id: '1', name: 'Thermostat', room: new Room(id: "1", name: "2.201", icon: IconData(Icons.class_.codePoint), devices: 2)),
-      Device(id: '2', name: 'Light Sensor', room: new Room(id: "2", name: "2.202", icon: IconData(Icons.class_.codePoint), devices: 2)),
-      // Add more devices
-    ];
+  late final GetDevicesUseCase getDevicesUseCase;
+  final DeviceRepository repository;
+
+  DeviceController()
+      : repository = DeviceRepositoryImpl(
+          remoteDataSource: DeviceDataSource(apiService: ApiService()),
+        ) {
+    getDevicesUseCase = GetDevicesUseCase(repository);
   }
+
+  Future<List<Device>> fetchDevices() async {
+    return await getDevicesUseCase();
+  }
+
+  // Implement addDevice and removeDevice methods if needed
 }
