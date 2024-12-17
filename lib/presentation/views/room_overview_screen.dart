@@ -1,191 +1,243 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/device_list.dart';
+import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import '../controllers/RoomOverviewController.dart';
 
-class RoomOverviewScreen extends StatelessWidget {
+class RoomOverviewScreen extends StatefulWidget {
   final String roomName;
 
   const RoomOverviewScreen({super.key, required this.roomName});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = RoomOverviewController();
+  State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
+}
 
+class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
+  late final RoomOverviewController _controller;
+  late final TabController _tabController;
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = RoomOverviewController();
+    _tabController = TabController(length: 3, vsync: this);
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      setState(() => _isLoading = true);
+      await _controller.getRoomData(widget.roomName);
+      setState(() => _isLoading = false);
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _error = e.toString();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left_rounded),
-            iconSize: 35,
+          icon: const Icon(Icons.keyboard_arrow_left_rounded),
+          iconSize: 35,
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(widget.roomName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/main');
-            }),
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.whiteColor,
-        title: Text(
-          roomName,
-          style: const TextStyle(
-            fontSize: 18,
+              // Navigate to room settings
+            },
+          ),
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Overview'),
+            Tab(text: 'Devices'),
+            Tab(text: 'History'),
+          ],
+        ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: _loadData,
+        child: _buildBody(),
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_error != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Error: $_error'),
+            ElevatedButton(
+              onPressed: _loadData,
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return TabBarView(
+      controller: _tabController,
+      children: [
+        _buildOverviewTab(),
+        DevicesList(roomId: widget.roomName),
+        _buildHistoryTab(),
+      ],
+    );
+  }
+
+  Widget _buildOverviewTab() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        EnviroScoreCard(
+          score: _controller.getEnviroScore(),
+          onInfoPressed: _showEnviroScoreInfo,
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: () => _showTargetTemperatureSheet(context),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryColor,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.thermostat, color: AppColors.whiteColor),
+              const SizedBox(width: 8),
+              Text(
+                'Set Target Temperature (${_controller.getTargetTemperature()}°C)',
+                style: const TextStyle(color: AppColors.whiteColor),
+              ),
+            ],
           ),
         ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.accentColor.withOpacity(0.3),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: const Text(
-              'Room Overview',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.normal,
-              ),
-              textAlign: TextAlign.left,
-            ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: DataDisplayBox(
+            title: 'This Room',
+            data: _controller.getRoomData(widget.roomName),
           ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DataDisplayBox(
-                    title: 'This Room',
-                    data: controller.getRoomData(roomName),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DataDisplayBox(
-                    title: 'Outside',
-                    data: controller.getOutsideData(),
-                  ),
-                ),
-              ],
-            ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: DataDisplayBox(
+            title: 'Outside',
+            data: _controller.getOutsideData(),
           ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              elevation: 5,
-              child: Container(
-                padding: const EdgeInsets.only(top: 8),
-                height: 200, // Reduced height since removing button
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 20),
-                        const Text(
-                          'EnviroScore',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                        const SizedBox(width: 2),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(
-                            minWidth: 24,
-                            minHeight: 24,
-                          ),
-                          icon: const Icon(
-                            Icons.info_outline,
-                            size: 30,
-                            color: AppColors.blackColor,
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  title: const Text(
-                                    'About EnviroScore',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  content: const Text(
-                                    'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text(
-                                        'Got it',
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      color: AppColors.lightGrayColor,
-                      thickness: 1,
-                      height: 0,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Text(
-                          '85',
-                          style: TextStyle(
-                            fontSize: 100,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                        Text(
-                          '%',
-                          style: TextStyle(
-                            fontSize: 42,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHistoryTab() {
+    return const Center(
+      child: Text('Historical data coming soon'),
+    );
+  }
+
+  void _showEnviroScoreInfo() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('About EnviroScore'),
+        content: const Text(
+          'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Got it'),
           ),
         ],
       ),
     );
+  }
+
+  void _showTargetTemperatureSheet(BuildContext context) {
+    double currentTemp = _controller.getTargetTemperature();
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Set Target Temperature',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove_circle_outline),
+                    onPressed: () {
+                      setState(() => currentTemp = (currentTemp - 0.5).clamp(16, 30));
+                    },
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    '${currentTemp.toStringAsFixed(1)}°C',
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  const SizedBox(width: 16),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
+                    onPressed: () {
+                      setState(() => currentTemp = (currentTemp + 0.5).clamp(16, 30));
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _controller.setTargetTemperature(currentTemp);
+                  Navigator.pop(context);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }
 
