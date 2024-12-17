@@ -39,7 +39,7 @@ class RoomCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'x${room.devices} device${room.devices > 1 ? 's' : ''}',
+              '${room.devices} device${room.devices > 1 ? 's' : ''}',
               style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.accentColor,
