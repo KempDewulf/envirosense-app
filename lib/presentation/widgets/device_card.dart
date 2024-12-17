@@ -5,9 +5,9 @@ class DeviceCard extends StatelessWidget {
   final Device device;
 
   const DeviceCard({
-    Key? key,
+    super.key,
     required this.device,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,14 @@ class DeviceCard extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            // Additional device details can be added here
+            const SizedBox(height: 4),
+            Text(
+              'Room: ${device.roomName}',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
           ],
         ),
       ),
