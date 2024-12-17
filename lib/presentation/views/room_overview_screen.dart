@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   late final RoomOverviewController _controller;
   late final TabController _tabController;
   bool _isLoading = true;
+  bool _showRoomData = true;
   String? _error;
 
   @override
@@ -49,15 +51,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
           iconSize: 35,
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(widget.roomName),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to room settings
-            },
+        title: Text(
+          widget.roomName,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.whiteColor
+            ),
           ),
-        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
@@ -65,6 +65,9 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
             Tab(text: 'Devices'),
             Tab(text: 'History'),
           ],
+          labelColor: AppColors.secondaryColor,
+          indicatorColor: AppColors.secondaryColor,
+          unselectedLabelColor: AppColors.whiteColor,
         ),
       ),
       body: RefreshIndicator(
@@ -112,12 +115,12 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
           score: _controller.getEnviroScore(),
           onInfoPressed: _showEnviroScoreInfo,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 48),
         ElevatedButton(
           onPressed: () => _showTargetTemperatureSheet(context),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 18),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -125,29 +128,88 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.thermostat, color: AppColors.whiteColor),
+              const Icon(Icons.thermostat, color: AppColors.secondaryColor),
               const SizedBox(width: 8),
               Text(
                 'Set Target Temperature (${_controller.getTargetTemperature()}°C)',
-                style: const TextStyle(color: AppColors.whiteColor),
+                style: const TextStyle(color: AppColors.whiteColor, fontSize: 16),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 48),
         Container(
           padding: const EdgeInsets.all(8),
-          child: DataDisplayBox(
-            title: 'This Room',
-            data: _controller.getRoomData(widget.roomName),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: DataDisplayBox(
-            title: 'Outside',
-            data: _controller.getOutsideData(),
+          child: Column(
+            children: [
+              // Toggle buttons
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.accentColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => _showRoomData = true),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: _showRoomData 
+                                ? AppColors.secondaryColor 
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Text(
+                            'Room Data',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: _showRoomData 
+                                  ? Colors.white 
+                                  : AppColors.secondaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => _showRoomData = false),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: !_showRoomData 
+                                ? AppColors.secondaryColor 
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Text(
+                            'Outside Data',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: !_showRoomData 
+                                  ? Colors.white 
+                                  : AppColors.secondaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              DataDisplayBox(
+                key: ValueKey(_showRoomData),
+                title: _showRoomData ? 'Room Environment' : 'Outside Environment',
+                data: _showRoomData 
+                    ? _controller.getRoomData(widget.roomName)
+                    : _controller.getOutsideData(),
+              ),
+            ],
           ),
         ),
       ],
@@ -238,71 +300,5 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-}
-
-class DataDisplayBox extends StatelessWidget {
-  final String title;
-  final Map<String, Map<String, dynamic>>
-      data; // Updated type to include status
-
-  const DataDisplayBox({
-    super.key,
-    required this.title,
-    required this.data,
-  });
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'good':
-        return AppColors.greenColor;
-      case 'bad':
-        return AppColors.redColor;
-      case 'medium':
-        return AppColors.secondaryColor;
-      default:
-        return AppColors.blackColor;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.accentColor),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          ...data.entries.map((entry) => ListTile(
-                title: Text(
-                  entry.key,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.accentColor,
-                  ),
-                ),
-                trailing: Text(
-                  entry.value['value'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: _getStatusColor(entry.value['status']),
-                  ),
-                ),
-              )),
-        ],
-      ),
-    );
   }
 }
