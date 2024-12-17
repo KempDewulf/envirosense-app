@@ -3,11 +3,11 @@ import '../../domain/entities/room.dart';
 
 class RoomModel extends Room {
   RoomModel({
-    required String id,
-    required String name,
-    required IconData icon,
-    required int devices,
-  }) : super(id: id, name: name, icon: icon, devices: devices);
+    required super.id,
+    required super.name,
+    required super.icon,
+    required super.devices,
+  });
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     // Get room type to determine icon
