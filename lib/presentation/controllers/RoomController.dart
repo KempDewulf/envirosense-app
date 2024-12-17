@@ -6,6 +6,7 @@ import 'package:envirosense/domain/usecases/add_room.dart';
 import 'package:envirosense/domain/usecases/get_room_types.dart';
 import 'package:envirosense/domain/usecases/remove_room.dart';
 import '../../domain/usecases/get_rooms.dart';
+import '../../services/api_service.dart';
 
 class RoomController {
   late final GetRoomsUseCase getRoomsUseCase;
@@ -16,7 +17,7 @@ class RoomController {
 
   RoomController()
       : repository = RoomRepositoryImpl(
-          remoteDataSource: RoomDataSource(),
+          remoteDataSource: RoomDataSource(apiService: ApiService()),
         ) {
     getRoomsUseCase = GetRoomsUseCase(repository);
     addRoomUseCase = AddRoomUseCase(repository);
