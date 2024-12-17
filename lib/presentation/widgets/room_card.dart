@@ -14,40 +14,51 @@ class RoomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              room.icon,
-              color: AppColors.secondaryColor,
-              size: 48,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              room.name,
-              style: const TextStyle(
-                fontSize: 18,
-                color: AppColors.blackColor,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '${room.devices} device${room.devices > 1 ? 's' : ''}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.accentColor,
-              ),
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/roomOverview',
+          arguments: {
+            'roomName': room.name,
+          },
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
-      ),
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                room.icon,
+                color: AppColors.secondaryColor,
+                size: 48,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                room.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '${room.devices} device${room.devices > 1 ? 's' : ''}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppColors.accentColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
     );
   }
 }
