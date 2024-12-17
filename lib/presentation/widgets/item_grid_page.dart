@@ -1,9 +1,10 @@
+import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/add_item_card.dart';
 import 'package:flutter/material.dart';
 
 class ItemGridPage<T> extends StatefulWidget {
   final List<T> allItems;
   final Widget Function(T item) itemBuilder;
-  final String searchHintText;
   final String Function(T item) getItemName;
   final VoidCallback onAddPressed;
 
@@ -11,7 +12,6 @@ class ItemGridPage<T> extends StatefulWidget {
     Key? key,
     required this.allItems,
     required this.itemBuilder,
-    required this.searchHintText,
     required this.getItemName,
     required this.onAddPressed,
   }) : super(key: key);
@@ -64,7 +64,7 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
         TextFormField(
           controller: _searchController,
           decoration: InputDecoration(
-            labelText: widget.searchHintText,
+            labelText: 'Search a ${T.toString().toLowerCase()}',
             prefixIcon: const Icon(Icons.search),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
@@ -99,21 +99,12 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
                 return widget.itemBuilder(item);
               } else {
                 // 'Add' card or button
-                return GestureDetector(
+                return AddItemCard(
                   onTap: widget.onAddPressed,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    elevation: 2,
-                    child: const Center(
-                      child: Icon(
-                        Icons.add,
-                        size: 48,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
+                    title: 'Add a ${T.toString()}',
+                  backgroundColor: AppColors.secondaryColor,
+                  iconColor: Colors.white,
+                  textColor: Colors.white,
                 );
               }
             },
