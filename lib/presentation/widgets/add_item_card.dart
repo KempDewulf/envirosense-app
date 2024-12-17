@@ -1,39 +1,47 @@
-// add_room_card.dart
-
 import 'package:flutter/material.dart';
-import 'package:envirosense/core/constants/colors.dart';
 
-class AddRoomCard extends StatelessWidget {
+class AddItemCard extends StatelessWidget {
   final VoidCallback onTap;
+  final String title;
+  final Color backgroundColor;
+  final Color iconColor;
+  final Color textColor;
 
-  const AddRoomCard({super.key, required this.onTap});
+  const AddItemCard({
+    Key? key,
+    required this.onTap,
+    required this.title,
+    required this.backgroundColor,
+    required this.iconColor,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: AppColors.secondaryColor,
+        color: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
         elevation: 2,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.add,
-                color: Colors.white,
+                color: iconColor,
                 size: 48,
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
-                'Add a room',
+                title,
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: textColor,
                 ),
               ),
             ],
