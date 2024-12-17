@@ -68,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ItemGridPage<Room>(
                 allItems: _allRooms,
                 itemBuilder: (room) => RoomCard(room: room),
-                searchHintText: 'Search a room',
                 getItemName: (room) => room.name,
                 onAddPressed: () {
                   // Handle add room action
@@ -86,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ItemGridPage<Device>(
                 allItems: _allDevices,
                 itemBuilder: (device) => DeviceCard(device: device),
-                searchHintText: 'Search a device',
                 getItemName: (device) => device.name,
                 onAddPressed: () {
                   // Handle add device action
