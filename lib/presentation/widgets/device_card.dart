@@ -1,15 +1,13 @@
-// room_card.dart
-
-import 'package:envirosense/domain/entities/room.dart';
-import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:envirosense/domain/entities/device.dart';
 
-class RoomCard extends StatelessWidget {
-  final Room room;
+class DeviceCard extends StatelessWidget {
+  final Device device;
 
-  const RoomCard({
+  const DeviceCard({
     super.key,
-    required this.room,
+    required this.device,
   });
 
   @override
@@ -24,25 +22,25 @@ class RoomCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              room.icon,
+            const Icon(
+              Icons.sensors,
               color: AppColors.secondaryColor,
               size: 48,
             ),
             const SizedBox(height: 8),
             Text(
-              room.name,
+              device.name,
               style: const TextStyle(
                 fontSize: 18,
-                color: AppColors.blackColor,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              '${room.devices} device${room.devices > 1 ? 's' : ''}',
+              'Room: ${device.roomName}',
               style: const TextStyle(
                 fontSize: 14,
-                color: AppColors.accentColor,
+                color: Colors.grey,
               ),
             ),
           ],
