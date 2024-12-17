@@ -8,13 +8,13 @@ class AddItemCard extends StatelessWidget {
   final Color textColor;
 
   const AddItemCard({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.title,
     required this.backgroundColor,
     required this.iconColor,
     required this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
