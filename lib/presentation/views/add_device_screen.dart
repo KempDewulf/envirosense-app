@@ -13,16 +13,11 @@ class AddDeviceScreen extends StatefulWidget {
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final AddDeviceController _controller = AddDeviceController();
+  final TextEditingController _searchController = TextEditingController();
 
   String? _deviceIdentifierCode;
   String? _selectedRoom;
-  TextEditingController _searchController = TextEditingController();
-  List<String> _rooms = [
-    'Room 1',
-    'Room 2',
-    'Room 3',
-    'Room 4'
-  ]; // Replace with actual room names
+  final List<String> _rooms = [];
   List<String> _filteredRooms = [];
 
   void setResult(String result) {
@@ -137,7 +132,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                 borderSide: const BorderSide(
                                     color: AppColors.accentColor),
                               ),
-                              prefixIcon: Icon(Icons.search,
+                              prefixIcon: const Icon(Icons.search,
                                   color: AppColors.accentColor),
                             ),
                           ),
