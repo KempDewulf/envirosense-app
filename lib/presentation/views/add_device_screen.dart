@@ -14,6 +14,12 @@ class AddDeviceScreen extends StatefulWidget {
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final AddDeviceController _controller = AddDeviceController();
 
+  String? _deviceIdentifierCode;
+
+  void setResult(String result) {
+    setState(() => _deviceIdentifierCode = result);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -62,24 +68,42 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
             const SizedBox(height: 28.0),
             Expanded(
               child: Center(
-                child: DottedBorder(
-                  color: AppColors.secondaryColor,
-                  strokeWidth: 2,
-                  borderType: BorderType.RRect,
-                  radius: const Radius.circular(12),
-                  dashPattern: const [6, 3],
-                  child: Container(
-                    width: double.infinity,
-                    height:
-                        double.infinity, // Fill the available vertical space
-                    decoration: BoxDecoration(
-                      color:
-                          const Color(0xFFFFF9E6), // Pastel yellow background
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: QrCodeScanner(),
-                  ),
-                ),
+                child: _deviceIdentifierCode == null
+                    ? DottedBorder(
+                        color: AppColors.secondaryColor,
+                        strokeWidth: 2,
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(12),
+                        dashPattern: const [6, 3],
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF9E6),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: QrCodeScanner(setResult: setResult),
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFF9E6),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Scanned Data: $_deviceIdentifierCode',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.blackColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
               ),
             ),
             const SizedBox(height: 16),
