@@ -29,8 +29,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   void initState() {
     super.initState();
     _fetchRooms();
-    print('Rooms: $_rooms');
-    _filteredRooms = _rooms;
     _searchController.addListener(_filterRooms);
   }
 
@@ -51,9 +49,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   Future<void> _fetchRooms() async {
     final rooms = await _roomController.fetchRooms();
-
     setState(() {
       _rooms = rooms;
+      _filteredRooms = rooms;
     });
   }
 
