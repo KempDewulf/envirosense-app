@@ -1,5 +1,4 @@
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/AddDeviceController.dart';
 import 'package:envirosense/presentation/controllers/RoomController.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ class AddDeviceScreen extends StatefulWidget {
 }
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
-  final AddDeviceController _controller = AddDeviceController();
   final TextEditingController _searchController = TextEditingController();
 
   String? _deviceIdentifierCode;
@@ -36,7 +34,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
     _searchController.dispose();
     super.dispose();
   }
