@@ -96,7 +96,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         ? _isCameraInitialized
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
-                                child: CameraPreview(_controller.cameraController!),
+                                child: CameraPreview(
+                                    _controller.cameraController!),
                               )
                             : const Center(
                                 child: CircularProgressIndicator(),
