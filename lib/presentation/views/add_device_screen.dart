@@ -86,7 +86,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-            const SizedBox(height: 28.0),
+            SizedBox(height: _deviceIdentifierCode == null ? 28.0 : 12.0),
             Expanded(
               child: Center(
                 child: _deviceIdentifierCode == null
@@ -110,9 +110,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Now select a room to assign this device to:',
+                            'Select a room:',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 26,
                               color: AppColors.blackColor,
                               fontWeight: FontWeight.bold,
                             ),
