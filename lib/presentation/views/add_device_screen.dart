@@ -19,7 +19,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   String? _selectedRoom;
   List<Room> _rooms = [];
   List<Room> _filteredRooms = [];
-  RoomController _roomController = RoomController();
+  final RoomController _roomController = RoomController();
 
   void setResult(String result) {
     setState(() => _deviceIdentifierCode = result);
