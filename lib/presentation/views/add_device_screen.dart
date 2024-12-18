@@ -1,4 +1,6 @@
+import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/AddDeviceController.dart';
+import 'package:envirosense/presentation/controllers/RoomController.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -17,8 +19,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   String? _deviceIdentifierCode;
   String? _selectedRoom;
-  final List<String> _rooms = [];
-  List<String> _filteredRooms = [];
+  List<Room> _rooms = [];
+  List<Room> _filteredRooms = [];
+  RoomController _roomController = RoomController();
 
   void setResult(String result) {
     setState(() => _deviceIdentifierCode = result);
@@ -42,8 +45,16 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     setState(() {
       _filteredRooms = _rooms
           .where((room) =>
-              room.toLowerCase().contains(_searchController.text.toLowerCase()))
+              room.name.toLowerCase().contains(_searchController.text.toLowerCase()))
           .toList();
+    });
+  }
+
+  Future<void> _fetchRooms() async {
+    final rooms = await _roomController.fetchRooms();
+
+    setState(() {
+      _rooms = rooms;
     });
   }
 
@@ -143,10 +154,11 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   color: _selectedRoom == _filteredRooms[index]
-                                      ? AppColors.primaryColor.withOpacity(0.1) : AppColors.whiteColor,
+                                      ? AppColors.primaryColor.withOpacity(0.1)
+                                      : AppColors.whiteColor,
                                   child: ListTile(
                                     title: Text(
-                                      _filteredRooms[index],
+                                      _filteredRooms[index].name,
                                       style: TextStyle(
                                         color: _selectedRoom ==
                                                 _filteredRooms[index]
@@ -156,12 +168,12 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                     ),
                                     trailing:
                                         _selectedRoom == _filteredRooms[index]
-                                            ? Icon(Icons.check,
+                                            ? const Icon(Icons.check,
                                                 color: AppColors.primaryColor)
                                             : null,
                                     onTap: () {
                                       setState(() {
-                                        _selectedRoom = _filteredRooms[index];
+                                        _selectedRoom = _filteredRooms[index].name;
                                       });
                                     },
                                   ),
