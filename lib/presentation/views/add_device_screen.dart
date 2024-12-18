@@ -1,4 +1,5 @@
 import 'package:envirosense/presentation/controllers/AddDeviceController.dart';
+import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../core/constants/colors.dart';
@@ -76,7 +77,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           const Color(0xFFFFF9E6), // Pastel yellow background
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: //TODO here inject the qr code 
+                    child: QrCodeScanner(),
                   ),
                 ),
               ),
