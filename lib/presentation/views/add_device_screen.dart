@@ -15,6 +15,15 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final AddDeviceController _controller = AddDeviceController();
 
   String? _deviceIdentifierCode;
+  String? _selectedRoom;
+  TextEditingController _searchController = TextEditingController();
+  List<String> _rooms = [
+    'Room 1',
+    'Room 2',
+    'Room 3',
+    'Room 4'
+  ]; // Replace with actual room names
+  List<String> _filteredRooms = [];
 
   void setResult(String result) {
     setState(() => _deviceIdentifierCode = result);
@@ -23,12 +32,24 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   @override
   void initState() {
     super.initState();
+    _filteredRooms = _rooms;
+    _searchController.addListener(_filterRooms);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _searchController.dispose();
     super.dispose();
+  }
+
+  void _filterRooms() {
+    setState(() {
+      _filteredRooms = _rooms
+          .where((room) =>
+              room.toLowerCase().contains(_searchController.text.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -54,17 +75,17 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Instruction Text
-            const Text(
-              'Scan the QR Code on the device.\nYour device will connect automatically.',
-              style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.blackColor,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+            if (_deviceIdentifierCode == null)
+              const Text(
+                'Scan the QR Code on the device.\nYour device will connect automatically.',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             const SizedBox(height: 28.0),
             Expanded(
               child: Center(
@@ -85,24 +106,93 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           child: QrCodeScanner(setResult: setResult),
                         ),
                       )
-                    : Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFF9E6),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Scanned Data: $_deviceIdentifierCode',
-                            style: const TextStyle(
-                              fontSize: 16,
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Now select a room to assign this device to:',
+                            style: TextStyle(
+                              fontSize: 18,
                               color: AppColors.blackColor,
                               fontWeight: FontWeight.bold,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: 'Search rooms',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                              prefixIcon: Icon(Icons.search,
+                                  color: AppColors.accentColor),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: _filteredRooms.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  color: _selectedRoom == _filteredRooms[index]
+                                      ? AppColors.primaryColor.withOpacity(0.1) : AppColors.whiteColor,
+                                  child: ListTile(
+                                    title: Text(
+                                      _filteredRooms[index],
+                                      style: TextStyle(
+                                        color: _selectedRoom ==
+                                                _filteredRooms[index]
+                                            ? AppColors.primaryColor
+                                            : AppColors.blackColor,
+                                      ),
+                                    ),
+                                    trailing:
+                                        _selectedRoom == _filteredRooms[index]
+                                            ? Icon(Icons.check,
+                                                color: AppColors.primaryColor)
+                                            : null,
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedRoom = _filteredRooms[index];
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: _selectedRoom == null
+                                  ? null
+                                  : () {
+                                      // Handle device assignment to the selected room
+                                    },
+                              child: const Text('Assign Device'),
+                            ),
+                          ),
+                        ],
                       ),
               ),
             ),
