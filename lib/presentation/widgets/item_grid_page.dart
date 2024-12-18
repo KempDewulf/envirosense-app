@@ -101,7 +101,7 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
                 } else {
                   return AddItemCard(
                     onTap: widget.onAddPressed,
-                    title: 'Add a ${T.toString()}',
+                    title: 'Add a ${T.toString().toLowerCase()}',
                     backgroundColor: AppColors.secondaryColor,
                     iconColor: Colors.white,
                     textColor: Colors.white,
