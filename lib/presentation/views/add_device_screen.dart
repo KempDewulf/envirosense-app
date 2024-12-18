@@ -1,6 +1,5 @@
 import 'package:envirosense/presentation/controllers/AddDeviceController.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../core/constants/colors.dart';
 
@@ -13,25 +12,10 @@ class AddDeviceScreen extends StatefulWidget {
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final AddDeviceController _controller = AddDeviceController();
-  bool _isCameraInitialized = false;
-  bool _isPermissionGranted = false;
 
   @override
   void initState() {
     super.initState();
-    _initialize();
-  }
-
-  Future<void> _initialize() async {
-    _isPermissionGranted = await _controller.requestCameraPermission();
-    if (_isPermissionGranted) {
-      await _controller.initializeCamera();
-      setState(() {
-        _isCameraInitialized = true;
-      });
-    } else {
-      setState(() {}); // Update UI to reflect permission status
-    }
   }
 
   @override
@@ -92,48 +76,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           const Color(0xFFFFF9E6), // Pastel yellow background
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: _isPermissionGranted
-                        ? _isCameraInitialized
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: CameraPreview(
-                                    _controller.cameraController!),
-                              )
-                            : const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.camera_alt,
-                                color: AppColors.secondaryColor,
-                                size: 64,
-                              ),
-                              const SizedBox(height: 16),
-                              const Text(
-                                'Allow camera access to scan the QR code.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              ElevatedButton(
-                                onPressed: _controller.requestCameraPermission,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.secondaryColor,
-                                ),
-                                child: const Text(
-                                  'Allow Camera',
-                                  style: TextStyle(
-                                    color: AppColors.whiteColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                    child: //TODO here inject the qr code 
                   ),
                 ),
               ),
