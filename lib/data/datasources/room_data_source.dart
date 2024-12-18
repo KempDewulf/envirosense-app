@@ -7,18 +7,17 @@ class RoomDataSource {
   final ApiService apiService;
 
   RoomDataSource({required this.apiService});
-  
+
   Future<List<RoomModel>> getRooms() async {
     try {
       final response = await apiService.getRequest('rooms');
-      print(response);
       List<dynamic> data = response as List<dynamic>;
       List<RoomModel> rooms = data.map((roomJson) {
-        return RoomModel.fromJson(
-          roomJson as Map<String, dynamic>,
-      );
-    }).toList();
-      print(rooms);
+        print(roomJson);
+          return RoomModel.fromJson(
+            roomJson as Map<String, dynamic>,
+        );
+      }).toList();
       return rooms;
     } catch (e) {
       // Handle errors

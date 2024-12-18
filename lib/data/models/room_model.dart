@@ -11,7 +11,7 @@ class RoomModel extends Room {
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     // Get room type to determine icon
-    final roomType = json['room-type'] as Map<String, dynamic>;
+    final roomType = json['roomType'] as Map<String, dynamic>;
     final devices = json['devices'] as List<dynamic>;
     return RoomModel(
       id: json['documentId'] as String,
@@ -40,7 +40,7 @@ class RoomModel extends Room {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'room-type': {
+      'roomType': {
         'name': _getRoomTypeFromIcon(icon),
       },
     };
