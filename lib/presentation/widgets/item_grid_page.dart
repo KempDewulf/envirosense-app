@@ -59,58 +59,59 @@ class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            labelText: 'Search a ${T.toString().toLowerCase()}',
-            prefixIcon: const Icon(Icons.search),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide:
-                  const BorderSide(color: Colors.blue, width: 2),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              labelText: 'Search a ${T.toString().toLowerCase()}',
+              prefixIcon: const Icon(Icons.search),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.blue, width: 2),
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: GridView.builder(
-            itemCount: _filteredItems.length + 1,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            itemBuilder: (context, index) {
-              if (index < _filteredItems.length) {
-                var item = _filteredItems[index];
-                return widget.itemBuilder(item);
-              } else {
-                // 'Add' card or button
-                return AddItemCard(
-                  onTap: widget.onAddPressed,
+          const SizedBox(height: 16),
+          Expanded(
+            child: GridView.builder(
+              itemCount: _filteredItems.length + 1,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                if (index < _filteredItems.length) {
+                  var item = _filteredItems[index];
+                  return widget.itemBuilder(item);
+                } else {
+                  return AddItemCard(
+                    onTap: widget.onAddPressed,
                     title: 'Add a ${T.toString()}',
-                  backgroundColor: AppColors.secondaryColor,
-                  iconColor: Colors.white,
-                  textColor: Colors.white,
-                );
-              }
-            },
+                    backgroundColor: AppColors.secondaryColor,
+                    iconColor: Colors.white,
+                    textColor: Colors.white,
+                  );
+                }
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
