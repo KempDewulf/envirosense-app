@@ -28,6 +28,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   @override
   void initState() {
     super.initState();
+    _fetchRooms();
+    print('Rooms: $_rooms');
     _filteredRooms = _rooms;
     _searchController.addListener(_filterRooms);
   }
