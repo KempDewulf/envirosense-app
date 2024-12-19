@@ -79,7 +79,7 @@ class _DeviceCardState extends State<DeviceCard> {
                 fontSize: 16,
                 color: Colors.black,
               ),
-              maxLines: 2, // Allow up to 2 lines
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
