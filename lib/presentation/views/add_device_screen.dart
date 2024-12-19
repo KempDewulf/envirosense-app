@@ -78,7 +78,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
     try {
       await _roomController.addDeviceToRoom(_selectedRoom?.id, _deviceIdentifierCode);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Device assigned successfully')),
       );

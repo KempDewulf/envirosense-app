@@ -1,3 +1,4 @@
+import 'package:envirosense/data/models/add_device_to_room_request_model.dart';
 import 'package:envirosense/data/models/add_room_request_model.dart';
 
 import '../../services/api_service.dart';
@@ -13,9 +14,7 @@ class RoomDataSource {
       final response = await apiService.getRequest('rooms');
       List<dynamic> data = response as List<dynamic>;
       List<RoomModel> rooms = data.map((roomJson) {
-        return RoomModel.fromJson(
-          roomJson
-        );
+        return RoomModel.fromJson(roomJson);
       }).toList();
       return rooms;
     } catch (e) {
@@ -24,14 +23,26 @@ class RoomDataSource {
     }
   }
 
-  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
+  Future<void> addRoom(
+      String? name, String buildingId, String? roomTypeId) async {
     try {
       AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
 
-      final response = await apiService.postRequest('rooms', body.toJson());
+      await apiService.postRequest('rooms', body.toJson());
     } catch (e) {
       // Handle errors
       throw Exception('Failed to add room: $e');
+    }
+  }
+
+
+Future<void> addDeviceToRoom(String? roomId, String deviceId) async {
+    try {
+      AddDeviceToRoomRequest body = AddDeviceToRoomRequest(deviceId);
+      await apiService.postRequest('rooms/$roomId/devices', body.toJson());
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to add device to room: $e');
     }
   }
 }
