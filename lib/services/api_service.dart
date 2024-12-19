@@ -40,9 +40,11 @@ class ApiService {
       headers: _headers,
       body: jsonEncode(body),
     );
-    print('$baseUrl/$endpoint');
-    print("response headers ${response.headers}");
-    print("response body ${response.body}");
+    print('Raw Headers: ${response.headers}');
+    print('All Headers:');
+    response.headers.forEach((key, value) {
+      print('$key: $value');
+    });
 
     return ApiResponse(jsonDecode(response.body), response.headers);
   }
