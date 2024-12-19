@@ -23,17 +23,22 @@ class DeviceModel extends Device {
           name: 'Campus Brugge Station - Building A',
           address: 'Spoorwegstraat 4, 8200 Brugge',
         ),
-        roomType: RoomType(id: 'lorem', name: 'lorem', icon: 'lorem')
-    );
+        roomType: RoomType(id: 'lorem', name: 'lorem', icon: 'lorem'));
 
     List<DeviceData> deviceData = (json['device_data'] as List)
         .map((deviceDataJson) => DeviceData(
             id: deviceDataJson['documentId'],
             timestamp: deviceDataJson['timestamp'],
             airData: AirData(
-              temperature: double.parse(deviceDataJson['temperature']),
-              humidity: double.parse(deviceDataJson['humidity']),
-              gasPpm: double.parse(deviceDataJson['gas_ppm']),
+              temperature: deviceDataJson['temperature'] is String
+                  ? double.parse(deviceDataJson['temperature'])
+                  : (deviceDataJson['temperature'] as num).toDouble(),
+              humidity: deviceDataJson['humidity'] is String
+                  ? double.parse(deviceDataJson['humidity'])
+                  : (deviceDataJson['humidity'] as num).toDouble(),
+              gasPpm: deviceDataJson['gas_ppm'] is String
+                  ? int.parse(deviceDataJson['gas_ppm'])
+                  : (deviceDataJson['gas_ppm'] as num).toInt(),
             ),
             device: Device(
               id: json['documentId'],
