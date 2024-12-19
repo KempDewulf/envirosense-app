@@ -10,9 +10,9 @@ class RoomTypeModel extends RoomType {
     super.rooms,
   });
 
-  factory RoomTypeModel.fromJson(Map<String, dynamic> json) {
+  factory RoomTypeModel.fromJson(Map<String, dynamic> json, String buildingId) {
     List<Room> rooms = (json['rooms'] as List)
-        .map((roomJson) => Room(id: roomJson['rooms']['documentId'], name: roomJson['rooms']['name'], roomType: RoomType(id: json['documentId'], name: json['name'], icon: json['name'].toString().toLowerCase()), building: Building(id: "gox5y6bsrg640qb11ak44dh0", name: "Campus Brugge Station - Building A", address: "Spoorwegstraat 4, 8200 Brugge")))
+        .map((roomJson) => Room(id: roomJson['rooms']['documentId'], name: roomJson['rooms']['name'], roomType: RoomType(id: json['documentId'], name: json['name'], icon: json['name'].toString().toLowerCase()), building: Building(id: buildingId, name: "Campus Brugge Station - Building A", address: "Spoorwegstraat 4, 8200 Brugge")))
         .toList();
 
     return RoomTypeModel(

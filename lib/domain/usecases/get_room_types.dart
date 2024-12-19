@@ -6,7 +6,7 @@ class GetRoomTypesUseCase {
 
   GetRoomTypesUseCase(this.repository);
 
-  Future<List<RoomType>> call() async {
-    return await repository.getRoomTypes();
+  Future<List<RoomType>> call(String buildingId) async {
+    return await repository.getRoomTypes(buildingId);
   }
 }

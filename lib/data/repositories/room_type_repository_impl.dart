@@ -8,7 +8,7 @@ class RoomTypeRepositoryImpl implements RoomTypeRepository {
   RoomTypeRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<RoomType>> getRoomTypes() async {
-    return await remoteDataSource.getRoomTypes();
+  Future<List<RoomType>> getRoomTypes(String buildingId) async {
+    return await remoteDataSource.getRoomTypes(buildingId);
   }
 }

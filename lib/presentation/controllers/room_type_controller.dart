@@ -17,7 +17,7 @@ class RoomTypeController {
     getRoomTypesUseCase = GetRoomTypesUseCase(repository);
   }
 
-  Future<List<RoomType>> fetchRoomTypes() async {
-    return await getRoomTypesUseCase();
+  Future<List<RoomType>> getRoomTypes(String buildingId) async {
+    return await getRoomTypesUseCase(buildingId);
   }
 }
