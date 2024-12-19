@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -23,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
-  String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  String _buildingId =
+      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   @override
   void initState() {
@@ -60,6 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _showAddOptionsBottomSheet(AddOptionType? preferredOption) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => AddOptionsBottomSheet(
+        preferredOption: preferredOption,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (room) => RoomCard(room: room),
                   getItemName: (room) => room.name,
                   onAddPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => const AddOptionsBottomSheet(),
-                    );
+                    _showAddOptionsBottomSheet(AddOptionType.room);
                   },
                 ),
               ),
@@ -98,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (device) => DeviceCard(device: device),
                   getItemName: (device) => device.identifier,
                   onAddPressed: () {
-                    // Handle add device action
+                    _showAddOptionsBottomSheet(AddOptionType.device);
                   },
                 ),
               ),

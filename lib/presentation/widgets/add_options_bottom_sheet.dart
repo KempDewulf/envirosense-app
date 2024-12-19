@@ -1,11 +1,61 @@
+import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 
 class AddOptionsBottomSheet extends StatelessWidget {
-  const AddOptionsBottomSheet({super.key});
+  final AddOptionType? preferredOption;
+
+  const AddOptionsBottomSheet({
+    super.key,
+    this.preferredOption, // Add this line
+  });
 
   @override
   Widget build(BuildContext context) {
+    List<_AddOption> options = [
+      _AddOption(
+        title: 'Add a room',
+        icon: Icons.meeting_room,
+        backgroundColor: preferredOption == AddOptionType.room
+            ? AppColors.secondaryColor
+            : AppColors.lightGrayColor,
+        onTapRoute: '/addRoom',
+        textColor: preferredOption == AddOptionType.room
+            ? AppColors.secondaryColor
+            : AppColors.accentColor,
+        iconColor: preferredOption == AddOptionType.room
+            ? Colors.white
+            : AppColors.accentColor,
+        type: AddOptionType.room,
+      ),
+      _AddOption(
+        title: 'Add a device',
+        icon: Icons.devices,
+        backgroundColor: preferredOption == AddOptionType.device
+            ? AppColors.secondaryColor
+            : AppColors.lightGrayColor,
+        onTapRoute: '/addDevice',
+        textColor: preferredOption == AddOptionType.device
+            ? AppColors.secondaryColor
+            : AppColors.accentColor,
+        iconColor: preferredOption == AddOptionType.device
+            ? Colors.white
+            : AppColors.accentColor,
+        type: AddOptionType.device,
+      ),
+    ];
+
+    if (preferredOption != null) {
+      options.sort((a, b) {
+        if (a.type == preferredOption && b.type != preferredOption) {
+          return -1;
+        } else if (a.type != preferredOption && b.type == preferredOption) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
     return FractionallySizedBox(
       heightFactor: 0.35,
       child: Container(
@@ -37,90 +87,58 @@ class AddOptionsBottomSheet extends StatelessWidget {
             // Options
             Expanded(
               child: Column(
-                children: [
-                  // First Option
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/addRoom');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32.0, vertical: 16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                              color: AppColors.secondaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.meeting_room,
-                              color: Colors.white,
-                              size: 30,
-                            ),
+                children: List.generate(options.length, (index) {
+                  final option = options[index];
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, option.onTapRoute);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0, vertical: 16.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: option.backgroundColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  option.icon,
+                                  color: option.iconColor,
+                                  size: 30,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+                                option.title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: option.textColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 16),
-                          const Text(
-                            'Add Room',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: AppColors.secondaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  // Divider with padding
-                  const Divider(
-                    color: AppColors.lightGrayColor,
-                    thickness: 1,
-                    indent: 32.0,
-                    endIndent: 32.0,
-                    height: 1,
-                  ),
-                  // Second Option
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/addDevice');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32.0, vertical: 16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.devices,
-                              color: AppColors.accentColor,
-                              size: 30,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          const Text(
-                            'Add Device',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: AppColors.accentColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                      // Add Divider only if it's not the last option
+                      if (index != options.length - 1)
+                        const Divider(
+                          color: AppColors.lightGrayColor,
+                          thickness: 1,
+                          indent: 32.0,
+                          endIndent: 32.0,
+                          height: 1,
+                        ),
+                    ],
+                  );
+                }),
               ),
             ),
           ],
@@ -128,4 +146,24 @@ class AddOptionsBottomSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+class _AddOption {
+  final String title;
+  final IconData icon;
+  final Color backgroundColor;
+  final String onTapRoute;
+  final Color textColor;
+  final Color iconColor;
+  final AddOptionType type;
+
+  _AddOption({
+    required this.title,
+    required this.icon,
+    required this.backgroundColor,
+    required this.onTapRoute,
+    required this.textColor,
+    required this.iconColor,
+    required this.type,
+  });
 }
