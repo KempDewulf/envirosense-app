@@ -1,14 +1,18 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/data/datasources/room_data_source.dart';
+import 'package:envirosense/data/models/room_model.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
+import 'package:envirosense/services/api_service.dart';
 import 'package:flutter/material.dart';
 import '../controllers/RoomOverviewController.dart';
 
 class RoomOverviewScreen extends StatefulWidget {
   final String roomName;
+  final String roomId;
 
-  const RoomOverviewScreen({super.key, required this.roomName});
+  const RoomOverviewScreen({super.key, required this.roomName, required this.roomId});
 
   @override
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
@@ -19,12 +23,15 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   late final TabController _tabController;
   bool _isLoading = true;
   bool _showRoomData = true;
+  RoomModel? _room;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    _controller = RoomOverviewController();
+    _controller = RoomOverviewController(
+      roomDataSource: RoomDataSource(apiService: ApiService()),
+    );
     _tabController = TabController(length: 3, vsync: this);
     _loadData();
   }
@@ -32,12 +39,15 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      await _controller.getRoomData(widget.roomName);
-      setState(() => _isLoading = false);
+      final room = await _controller.getRoomById(widget.roomId);
+      setState(() {
+        _room = room;
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
-        _isLoading = false;
         _error = e.toString();
+        _isLoading = false;
       });
     }
   }
@@ -52,7 +62,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.roomName,
+          _room?.name ?? widget.roomName,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.whiteColor

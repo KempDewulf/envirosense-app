@@ -120,6 +120,8 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         '/roomOverview': (context) => RoomOverviewScreen(
               roomName: (ModalRoute.of(context)?.settings.arguments
                   as Map<String, dynamic>)['roomName'],
+              roomId: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['roomId'],
         ),
       },
     );

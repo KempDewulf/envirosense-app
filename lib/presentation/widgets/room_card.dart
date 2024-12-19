@@ -21,6 +21,7 @@ class RoomCard extends StatelessWidget {
           '/roomOverview',
           arguments: {
             'roomName': room.name,
+            'roomId': room.id,
           },
         );
       },
