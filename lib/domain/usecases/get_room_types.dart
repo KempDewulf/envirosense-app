@@ -1,4 +1,4 @@
-import 'package:envirosense/domain/repositories/room_type_repository.dart';
+import '../repositories/room_type_repository.dart';
 import '../entities/RoomType.dart';
 
 class GetRoomTypesUseCase {
