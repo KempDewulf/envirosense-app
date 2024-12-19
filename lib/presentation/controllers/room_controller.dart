@@ -23,7 +23,10 @@ class RoomController {
     return await getRoomsUseCase();
   }
 
-  Future<void> addRoom(name, buildingId, roomTypeId) async {
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
+    print(name);
+    print(buildingId);
+    print(roomTypeId);
     return await addRoomUseCase(name, buildingId, roomTypeId);
   }
 }

@@ -13,7 +13,7 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<void> addRoom(name, buildingId, roomTypeId) async {
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
     return await remoteDataSource.addRoom(name, buildingId, roomTypeId);
   }
 }

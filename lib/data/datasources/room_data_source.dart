@@ -24,9 +24,11 @@ class RoomDataSource {
     }
   }
 
-  Future<void> addRoom(name, buildingId, roomTypeId) async {
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
     try {
-      AddRoomRequest body = AddRoomRequest(name, roomTypeId, buildingId);
+      AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
+
+      print(body.toJson());
 
       await apiService.postRequest('rooms', body.toJson());
     } catch (e) {
