@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/roomtype.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
@@ -185,7 +186,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                                 : [],
                           ),
                           child: Icon(
-                            roomType.icon as IconData,
+                            getIconData(roomType.icon),
                             color: isSelected
                                 ? Colors.white
                                 : AppColors.accentColor,
