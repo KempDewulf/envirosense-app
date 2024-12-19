@@ -1,6 +1,4 @@
 import 'package:envirosense/data/datasources/room_data_source.dart';
-import 'package:envirosense/data/models/room_model.dart';
-
 import '../../domain/entities/room.dart';
 import '../../domain/repositories/room_repository.dart';
 
@@ -15,24 +13,13 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<void> addRoom(Room room) async {
-    final roomModel = RoomModel(
-      id: room.id,
-      name: room.name,
-      icon: room.icon,
-      devices: room.devices,
-    );
-
-    await remoteDataSource.addRoom(roomModel);
+  Future<void> addRoom(
+      String? name, String buildingId, String? roomTypeId) async {
+    return await remoteDataSource.addRoom(name, buildingId, roomTypeId);
   }
 
   @override
-  Future<void> removeRoom(String roomName) async {
-    await remoteDataSource.removeRoom(roomName);
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getRoomTypes() async {
-    return await remoteDataSource.getRoomTypes();
+  Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
+    return await remoteDataSource.addDeviceToRoom(roomId, deviceId);
   }
 }

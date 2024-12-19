@@ -1,0 +1,4 @@
+enum AddOptionType {
+  device,
+  room,
+}

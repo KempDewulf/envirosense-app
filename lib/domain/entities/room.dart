@@ -1,15 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:envirosense/domain/entities/building.dart';
+import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/roomtype.dart';
 
 class Room {
   final String id;
   final String name;
-  final IconData icon;
-  final int devices;
+  final Building building;
+  final RoomType roomType;
+  final List<Device>? devices;
 
   Room({
     required this.id,
     required this.name,
-    required this.icon,
-    required this.devices,
+    required this.building,
+    required this.roomType,
+    this.devices,
   });
 }

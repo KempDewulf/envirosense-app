@@ -1,7 +1,7 @@
 import 'package:envirosense/data/datasources/statistics_data_source.dart';
 import 'package:envirosense/data/repositories/statistics_repository_impl.dart';
 import 'package:envirosense/domain/entities/building_statistics.dart';
-import 'package:envirosense/presentation/controllers/StatisticsController.dart';
+import 'package:envirosense/presentation/controllers/statistics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:fl_chart/fl_chart.dart';

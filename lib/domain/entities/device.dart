@@ -1,14 +1,16 @@
+import 'package:envirosense/domain/entities/device_data.dart';
+import 'package:envirosense/domain/entities/room.dart';
 
 class Device {
   final String id;
-  final String name;
-  final String roomId;
-  final String roomName;
+  final String identifier;
+  final Room? room;
+  final List<DeviceData>? deviceData;
 
   Device({
     required this.id,
-    required this.name,
-    required this.roomId,
-    required this.roomName,
+    required this.identifier,
+    this.room,
+    this.deviceData,
   });
 }
