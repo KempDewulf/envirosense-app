@@ -35,25 +35,34 @@ class ApiService {
 
   Future<ApiResponse> postRequest(
       String endpoint, Map<String, dynamic> body) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/$endpoint'),
-      headers: _headers,
-      body: jsonEncode(body),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: _headers,
+        body: jsonEncode(body),
+      );
 
-    print('$baseUrl/$endpoint');
-    print(body);
+      print('$baseUrl/$endpoint');
+      print('sending body $body');
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
 
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      print("im in the if statement");
-      print(response.body);
-      final dynamic responseData =
-          response.body.isNotEmpty ? jsonDecode(response.body) : null;
-      print(responseData);
+      switch (response.statusCode) {
+        case 200:
+        case 201:
+          final dynamic responseData =
+              response.body.isNotEmpty ? jsonDecode(response.body) : null;
+          return ApiResponse(responseData, response.headers);
 
-      return ApiResponse(responseData, response.headers);
+        case 409:
+          throw Exception('Device already assigned to a room');
+
+        default:
+          throw Exception(
+              'POST request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Request failed: $e');
     }
-
-    throw Exception('POST request failed with status: ${response.statusCode}');
   }
 }

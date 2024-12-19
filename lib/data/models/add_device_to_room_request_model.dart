@@ -7,7 +7,7 @@ class AddDeviceToRoomRequest {
 
   Map<String, dynamic> toJson() {
     return {
-      'devices': deviceId,
+      'devices': [deviceId],
     };
   }
 }

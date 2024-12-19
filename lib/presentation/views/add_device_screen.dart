@@ -80,7 +80,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
     try {
       String deviceId = await _deviceController.addDevice(_selectedRoom?.id, _deviceIdentifierCode);
-      print("received deviceId is $deviceId");
       await _roomController.addDeviceToRoom(_selectedRoom?.id, deviceId);
 
       ScaffoldMessenger.of(context).showSnackBar(

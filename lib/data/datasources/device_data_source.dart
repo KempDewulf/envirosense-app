@@ -31,11 +31,6 @@ class DeviceDataSource {
       AddDeviceRequest body = AddDeviceRequest(roomId, deviceIdentifier);
 
       final response = await apiService.postRequest('devices', body.toJson());
-      print("-------------- ADDING A DEVICE NOW --------------");
-      print('All Headers:');
-      response.headers.forEach((key, value) {
-        print('$key: $value');
-      });
       final locationHeader = response.headers['location'];
       if(locationHeader == null) {
         throw Exception('Device ID not found in response headers');
