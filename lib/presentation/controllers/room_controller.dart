@@ -19,11 +19,12 @@ class RoomController {
     addRoomUseCase = AddRoomUseCase(repository);
   }
 
-  Future<List<Room>> fetchRooms() async {
+  Future<List<Room>> getRooms() async {
     return await getRoomsUseCase();
   }
 
-  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
+  Future<void> addRoom(
+      String? name, String buildingId, String? roomTypeId) async {
     print(name);
     print(buildingId);
     print(roomTypeId);

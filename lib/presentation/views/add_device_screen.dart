@@ -28,7 +28,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchRooms();
+    _getRooms();
     _searchController.addListener(_filterRooms);
   }
 
@@ -41,14 +41,15 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   void _filterRooms() {
     setState(() {
       _filteredRooms = _rooms
-          .where((room) =>
-              room.name.toLowerCase().contains(_searchController.text.toLowerCase()))
+          .where((room) => room.name
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
           .toList();
     });
   }
 
-  Future<void> _fetchRooms() async {
-    final rooms = await _roomController.fetchRooms();
+  Future<void> _getRooms() async {
+    final rooms = await _roomController.getRooms();
     setState(() {
       _rooms = rooms;
       _filteredRooms = rooms;
@@ -170,7 +171,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                             : null,
                                     onTap: () {
                                       setState(() {
-                                        _selectedRoom = _filteredRooms[index].name;
+                                        _selectedRoom =
+                                            _filteredRooms[index].name;
                                       });
                                     },
                                   ),

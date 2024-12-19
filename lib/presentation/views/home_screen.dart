@@ -25,31 +25,30 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
-
   @override
   void initState() {
     super.initState();
-    _fetchRooms();
-    _fetchDevices();
+    _getRooms();
+    _getDevices();
   }
 
   Future<void> _refreshData() async {
-    // Fetch both rooms and devices
+    // get both rooms and devices
     await Future.wait([
-      _fetchRooms(),
-      _fetchDevices(),
+      _getRooms(),
+      _getDevices(),
     ]);
   }
 
-  Future<void> _fetchRooms() async {
-    final rooms = await _roomController.fetchRooms();
+  Future<void> _getRooms() async {
+    final rooms = await _roomController.getRooms();
     setState(() {
       _allRooms = rooms;
     });
   }
 
-  Future<void> _fetchDevices() async {
-    final devices = await _deviceController.fetchDevices();
+  Future<void> _getDevices() async {
+    final devices = await _deviceController.getDevices();
     setState(() {
       _allDevices = devices;
     });

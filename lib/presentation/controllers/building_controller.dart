@@ -16,7 +16,7 @@ class BuildingController {
     getBuildingsUseCase = GetBuildingsUseCase(repository);
   }
 
-  Future<List<Building>> fetchBuildings() async {
+  Future<List<Building>> getBuildings() async {
     return await getBuildingsUseCase();
   }
 }

@@ -17,7 +17,7 @@ class DeviceController {
     getDevicesUseCase = GetDevicesUseCase(repository);
   }
 
-  Future<List<Device>> fetchDevices() async {
+  Future<List<Device>> getDevices() async {
     return await getDevicesUseCase();
   }
 }
