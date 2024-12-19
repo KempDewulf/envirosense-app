@@ -1,4 +1,5 @@
 import 'package:envirosense/core/helpers/icon_helper.dart';
+import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/roomtype.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
@@ -195,7 +196,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          roomType.icon,
+                          capitalizeWords(roomType.icon),
                           style: TextStyle(
                             fontSize: 14,
                             color: isSelected
