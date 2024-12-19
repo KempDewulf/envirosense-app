@@ -9,7 +9,8 @@ class RoomTypeDataSource {
   Future<List<RoomTypeModel>> getRoomTypes(String buildingId) async {
     try {
       final response = await apiService.getRequest('room-types');
-      List<dynamic> data = response as List<dynamic>;
+
+      List<dynamic> data = response.data as List<dynamic>;
       List<RoomTypeModel> roomTypes = data.map((roomTypeJson) {
         return RoomTypeModel.fromJson(
           roomTypeJson, buildingId

@@ -12,7 +12,8 @@ class RoomDataSource {
   Future<List<RoomModel>> getRooms() async {
     try {
       final response = await apiService.getRequest('rooms');
-      List<dynamic> data = response as List<dynamic>;
+
+      List<dynamic> data = response.data as List<dynamic>;
       List<RoomModel> rooms = data.map((roomJson) {
         return RoomModel.fromJson(roomJson);
       }).toList();

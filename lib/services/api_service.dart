@@ -14,20 +14,18 @@ class ApiService {
   final String? _token = dotenv.env['API_TOKEN'];
 
   Map<String, String> get _headers => {
-        'Accept': 'application/json',
-        'Accept-Encoding': 'gzip, deflate, br',
         'Authorization': 'Bearer $_token',
         'Content-Type': 'application/json',
       };
 
-  Future<dynamic> getRequest(String endpoint) async {
+  Future<ApiResponse> getRequest(String endpoint) async {
     final response = await http.get(
       Uri.parse('$baseUrl/$endpoint'),
       headers: _headers,
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return ApiResponse(jsonDecode(response.body), response.headers);
     } else {
       throw Exception('GET request failed with status: ${response.statusCode}');
     }
@@ -40,6 +38,7 @@ class ApiService {
       headers: _headers,
       body: jsonEncode(body),
     );
+
     print('Raw Headers: ${response.headers}');
     print('All Headers:');
     response.headers.forEach((key, value) {

@@ -9,7 +9,8 @@ class BuildingDataSource {
   Future<List<BuildingModel>> getBuildings() async {
     try {
       final response = await apiService.getRequest('buildings');
-      List<dynamic> data = response as List<dynamic>;
+      
+      List<dynamic> data = response.data as List<dynamic>;
       List<BuildingModel> buildings = data.map((buildingJson) {
         return BuildingModel.fromJson(
           buildingJson as Map<String, dynamic>,

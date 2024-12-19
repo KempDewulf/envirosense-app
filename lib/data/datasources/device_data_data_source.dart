@@ -10,11 +10,7 @@ class DeviceDataDataSource {
     try {
       final response = await apiService.getRequest('device-data');
 
-      if (response == null) {
-        throw Exception('Response is null');
-      }
-
-      List<dynamic> data = response as List<dynamic>;
+      List<dynamic> data = response.data as List<dynamic>;
       List<DeviceDataModel> deviceData = data.map((deviceDataJson) {
         return DeviceDataModel.fromJson(deviceDataJson as Map<String, dynamic>);
       }).toList();
