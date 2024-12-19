@@ -14,12 +14,18 @@ class AddDeviceScreen extends StatefulWidget {
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final RoomController _roomController = RoomController();
 
   String? _deviceIdentifierCode;
-  String? _selectedRoom;
+  Room? _selectedRoom;
   List<Room> _rooms = [];
   List<Room> _filteredRooms = [];
-  final RoomController _roomController = RoomController();
+
+  bool _isSaving = false;
+
+  bool get _isFormComplete {
+    return _deviceIdentifierCode != null && _selectedRoom != null;
+  }
 
   void setResult(String result) {
     setState(() => _deviceIdentifierCode = result);
@@ -49,11 +55,45 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   }
 
   Future<void> _getRooms() async {
-    final rooms = await _roomController.getRooms();
+    try {
+      final rooms = await _roomController.getRooms();
+      setState(() {
+        _rooms = rooms;
+        _filteredRooms = rooms;
+      });
+    } catch (e) {
+      print('Failed to fetch rooms: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to load rooms')),
+      );
+    }
+  }
+
+  Future<void> _addDeviceToRoom() async {
+    if (!_isFormComplete || _isSaving) return;
+
     setState(() {
-      _rooms = rooms;
-      _filteredRooms = rooms;
+      _isSaving = true;
     });
+
+    try {
+      await _roomController.addDeviceToRoom(_selectedRoom?.id, _deviceIdentifierCode);
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Device assigned successfully')),
+      );
+
+      Navigator.pop(context, true);
+    } catch (e) {
+      print('Failed to assign device: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to assign device: $e')),
+      );
+    } finally {
+      setState(() {
+        _isSaving = false;
+      });
+    }
   }
 
   @override
@@ -158,21 +198,21 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                     title: Text(
                                       _filteredRooms[index].name,
                                       style: TextStyle(
-                                        color: _selectedRoom ==
-                                                _filteredRooms[index]
+                                        color: _selectedRoom?.id ==
+                                                _filteredRooms[index].id
                                             ? AppColors.primaryColor
                                             : AppColors.blackColor,
                                       ),
                                     ),
                                     trailing:
-                                        _selectedRoom == _filteredRooms[index]
+                                        _selectedRoom?.id == _filteredRooms[index].id
                                             ? const Icon(Icons.check,
                                                 color: AppColors.primaryColor)
                                             : null,
                                     onTap: () {
                                       setState(() {
                                         _selectedRoom =
-                                            _filteredRooms[index].name;
+                                            _filteredRooms[index];
                                       });
                                     },
                                   ),
@@ -192,9 +232,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               ),
                               onPressed: _selectedRoom == null
                                   ? null
-                                  : () {
-                                      // Handle device assignment to the selected room
-                                    },
+                                  : _addDeviceToRoom(),
                               child: const Text('Assign Device'),
                             ),
                           ),

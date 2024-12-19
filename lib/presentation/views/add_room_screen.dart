@@ -67,6 +67,11 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       //harcode building Id since we will have only one for this PoC
       await _roomController.addRoom(
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room added successfully')),
+      );
+
       Navigator.pop(context, true);
     } catch (e, stackTrace) {
       print('Exception caught: $e');
