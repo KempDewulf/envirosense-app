@@ -1,6 +1,4 @@
-// lib/presentation/views/add_room_screen.dart
-
-import 'package:envirosense/domain/entities/room.dart';
+import 'package:envirosense/domain/entities/roomtype.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
@@ -14,6 +12,7 @@ class AddRoomScreen extends StatefulWidget {
 
 class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomController _roomController = RoomController();
+  final RoomTypeController _roomTypesController = RoomTypeController();
   final TextEditingController _roomNameController = TextEditingController();
   List<RoomType>? _roomTypes; // Store room types in state
   RoomType? _selectedRoomType;
@@ -28,9 +27,9 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   Future<void> _loadRoomTypes() async {
     try {
-      final types = await _roomController.fetchRooms();
+      final roomTypes = await _roomTypesController.fetchRoomTypes();
       setState(() {
-        _roomTypes = types;
+        _roomTypes = roomTypes;
         _isLoading = false;
       });
     } catch (e) {
@@ -59,7 +58,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      //TODO: later when all implemented
+      //TODO: later when all implemented, pass correct arguments (probablty name, buildingdocumentid and roomtypedocumentid)
       await _roomController.addRoom();
       Navigator.pop(context);
     } catch (e) {
@@ -180,7 +179,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                                 : [],
                           ),
                           child: Icon(
-                            roomType['icon'] as IconData,
+                            roomType.icon as IconData,
                             color: isSelected
                                 ? Colors.white
                                 : AppColors.accentColor,
@@ -189,7 +188,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          roomType['name'] as String,
+                          roomType.icon,
                           style: TextStyle(
                             fontSize: 14,
                             color: isSelected
