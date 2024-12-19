@@ -25,6 +25,7 @@ class RoomCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
+              //TODO: probably map this string to an actual IconData
               room.roomType.icon,
               color: AppColors.secondaryColor,
               size: 48,
