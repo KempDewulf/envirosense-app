@@ -7,9 +7,9 @@ class ApiService {
   final String? _token = dotenv.env['API_TOKEN'];
 
   Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer $_token',
-  };
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $_token',
+      };
 
   Future<dynamic> getRequest(String endpoint) async {
     final response = await http.get(
@@ -24,7 +24,8 @@ class ApiService {
     }
   }
 
-  Future<dynamic> postRequest(String endpoint, Map<String, dynamic> body) async {
+  Future<dynamic> postRequest(
+      String endpoint, Map<String, dynamic> body) async {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       headers: _headers,
@@ -32,9 +33,14 @@ class ApiService {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return jsonDecode(response.body);
+      if (response.body.isNotEmpty) {
+        return jsonDecode(response.body);
+      } else {
+        return null;
+      }
     } else {
-      throw Exception('POST request failed with status: ${response.statusCode}');
+      throw Exception(
+          'POST request failed with status: ${response.statusCode}');
     }
   }
 }

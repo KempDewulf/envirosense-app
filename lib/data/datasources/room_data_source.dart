@@ -28,7 +28,7 @@ class RoomDataSource {
     try {
       AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
 
-      await apiService.postRequest('rooms', body.toJson());
+      final response = await apiService.postRequest('rooms', body.toJson());
     } catch (e) {
       // Handle errors
       throw Exception('Failed to add room: $e');
