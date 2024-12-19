@@ -1,7 +1,7 @@
 // lib/presentation/views/add_room_screen.dart
 
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/RoomController.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 

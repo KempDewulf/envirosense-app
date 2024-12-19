@@ -1,5 +1,5 @@
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/RoomController.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
