@@ -53,7 +53,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   Future<void> _saveDeviceName() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? storedMappings = prefs.getString('device_mappings');
+    final String? storedMappings = prefs.getString('device_names');
     final Map<String, String> deviceMappings = storedMappings != null
         ? Map<String, String>.from(json.decode(storedMappings))
         : {};
@@ -61,7 +61,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         _deviceNameController.text.isNotEmpty) {
       deviceMappings[_deviceIdentifierCode!] = _deviceNameController.text;
 
-      await prefs.setString('device_mappings', json.encode(deviceMappings));
+      await prefs.setString('device_names', json.encode(deviceMappings));
     }
   }
 
@@ -279,15 +279,31 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.primaryColor,
+                                backgroundColor: _isFormComplete
+                                    ? AppColors.secondaryColor
+                                    : AppColors.lightGrayColor,
+                                foregroundColor: AppColors.whiteColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                disabledBackgroundColor:
+                                    AppColors.lightGrayColor,
+                                disabledForegroundColor: AppColors.accentColor,
                               ),
-                              onPressed: !_isFormComplete
-                                  ? null
-                                  : _addDeviceToRoom,
-                              child: const Text('Assign Device'),
+                              onPressed:
+                                  !_isFormComplete ? null : _addDeviceToRoom,
+                              child: Text(
+                                'Assign Device',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: _isFormComplete
+                                      ? AppColors.whiteColor
+                                      : AppColors.accentColor,
+                                ),
+                              ),
                             ),
                           ),
                         ],

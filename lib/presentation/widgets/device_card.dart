@@ -1,3 +1,4 @@
+// lib/presentation/widgets/device_card.dart
 import 'dart:convert';
 
 import 'package:envirosense/core/constants/colors.dart';
@@ -28,7 +29,7 @@ class _DeviceCardState extends State<DeviceCard> {
 
   Future<void> _fetchDeviceName() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? storedMappings = prefs.getString('device_mappings');
+    final String? storedMappings = prefs.getString('device_names');
     if (storedMappings != null) {
       final Map<String, String> deviceMappings =
           Map<String, String>.from(json.decode(storedMappings));
