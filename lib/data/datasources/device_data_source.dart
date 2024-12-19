@@ -29,7 +29,15 @@ class DeviceDataSource {
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
     try {
       AddDeviceRequest body = AddDeviceRequest(roomId, deviceIdentifier);
-      return await apiService.postRequest('rooms/$roomId/devices', body.toJson());
+
+      final response = await apiService.postRequest('rooms/$roomId/devices', body.toJson());
+      final locationHeader = response.headers['location'];
+      if(locationHeader == null) {
+        throw Exception('Device ID not found in response headers');
+      }
+
+      return locationHeader.split('/').last;
+
     } catch (e) {
       throw Exception('Failed to add device: $e');
     }
