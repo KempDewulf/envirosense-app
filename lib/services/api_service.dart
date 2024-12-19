@@ -39,12 +39,19 @@ class ApiService {
       body: jsonEncode(body),
     );
 
-    print('Raw Headers: ${response.headers}');
+    print('Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
     print('All Headers:');
     response.headers.forEach((key, value) {
       print('$key: $value');
     });
 
-    return ApiResponse(jsonDecode(response.body), response.headers);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
+
+      return ApiResponse(responseData, response.headers);
+    }
+
+    throw Exception('POST request failed with status: ${response.statusCode}');
   }
 }
