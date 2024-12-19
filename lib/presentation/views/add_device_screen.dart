@@ -284,7 +284,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: _isFormComplete
+                              onPressed: !_isFormComplete
                                   ? null
                                   : _addDeviceToRoom,
                               child: const Text('Assign Device'),
