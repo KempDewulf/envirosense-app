@@ -23,7 +23,7 @@ class RoomModel extends Room {
     RoomType roomType = RoomType(
       id: json['roomType']['documentId'],
       name: json['roomType']['name'],
-      icon: json['roomType']['icon'].toString().toLowerCase(),
+      icon: json['roomType']['name'].toString().toLowerCase(),
     );
 
     List<Device> devices = (json['devices'] as List)

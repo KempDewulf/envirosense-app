@@ -17,7 +17,6 @@ class RoomDataSource {
           roomJson
         );
       }).toList();
-      print(rooms);
       return rooms;
     } catch (e) {
       // Handle errors
