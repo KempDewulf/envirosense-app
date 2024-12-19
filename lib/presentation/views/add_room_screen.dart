@@ -64,7 +64,6 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      //harcode building Id since we will have only one for this PoC
       await _roomController.addRoom(
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
 

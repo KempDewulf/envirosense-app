@@ -16,6 +16,8 @@ class ApiService {
   Map<String, String> get _headers => {
         'Authorization': 'Bearer $_token',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Expose-Headers': '*'
       };
 
   Future<ApiResponse> getRequest(String endpoint) async {
@@ -39,15 +41,15 @@ class ApiService {
       body: jsonEncode(body),
     );
 
-    print('Status Code: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-    print('All Headers:');
-    response.headers.forEach((key, value) {
-      print('$key: $value');
-    });
+    print('$baseUrl/$endpoint');
+    print(body);
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
+      print("im in the if statement");
+      print(response.body);
+      final dynamic responseData =
+          response.body.isNotEmpty ? jsonDecode(response.body) : null;
+      print(responseData);
 
       return ApiResponse(responseData, response.headers);
     }
