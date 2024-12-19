@@ -11,4 +11,9 @@ class RoomRepositoryImpl implements RoomRepository {
   Future<List<Room>> getRooms() async {
     return await remoteDataSource.getRooms();
   }
+
+  @override
+  Future<void> addRoom(name, buildingId, roomTypeId) async {
+    return await remoteDataSource.addRoom(name, buildingId, roomTypeId);
+  }
 }
