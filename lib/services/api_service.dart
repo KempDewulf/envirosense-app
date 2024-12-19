@@ -55,7 +55,7 @@ class ApiService {
           return ApiResponse(responseData, response.headers);
 
         case 409:
-          throw Exception('Device already assigned to a room');
+          throw Exception('Entity already assigned to another entity');
 
         default:
           throw Exception(
