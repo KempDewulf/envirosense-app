@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/colors.dart';
 
 class AddDeviceScreen extends StatefulWidget {
@@ -15,6 +18,7 @@ class AddDeviceScreen extends StatefulWidget {
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _deviceNameController = TextEditingController();
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
@@ -22,11 +26,12 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   Room? _selectedRoom;
   List<Room> _rooms = [];
   List<Room> _filteredRooms = [];
-
   bool _isSaving = false;
 
   bool get _isFormComplete {
-    return _deviceIdentifierCode != null && _selectedRoom != null;
+    return _deviceIdentifierCode != null &&
+        _selectedRoom != null &&
+        _deviceNameController.text.isNotEmpty;
   }
 
   void setResult(String result) {
@@ -44,6 +49,20 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _saveDeviceName() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? storedMappings = prefs.getString('device_mappings');
+    final Map<String, String> deviceMappings = storedMappings != null
+        ? Map<String, String>.from(json.decode(storedMappings))
+        : {};
+    if (_deviceIdentifierCode != null &&
+        _deviceNameController.text.isNotEmpty) {
+      deviceMappings[_deviceIdentifierCode!] = _deviceNameController.text;
+
+      await prefs.setString('device_mappings', json.encode(deviceMappings));
+    }
   }
 
   void _filterRooms() {
@@ -79,7 +98,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     });
 
     try {
-      await _deviceController.addDevice(_selectedRoom?.id, _deviceIdentifierCode);
+      await _deviceController.addDevice(
+          _selectedRoom?.id, _deviceIdentifierCode);
+      await _saveDeviceName();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Device assigned successfully')),
@@ -156,6 +177,38 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
+                            'Enter device name:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: _deviceNameController,
+                            decoration: InputDecoration(
+                              hintText: 'Enter a name for this device',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: AppColors.accentColor),
+                              ),
+                            ),
+                            onChanged: (_) => setState(() {}),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
                             'Select a room:',
                             style: TextStyle(
                               fontSize: 26,
@@ -231,7 +284,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: _selectedRoom == null
+                              onPressed: _isFormComplete
                                   ? null
                                   : _addDeviceToRoom,
                               child: const Text('Assign Device'),
