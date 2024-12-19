@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:envirosense/data/models/add_device_to_room_request_model.dart';
+import 'package:envirosense/data/models/add_room_request_model.dart';
 
 import '../../services/api_service.dart';
 import '../models/room_model.dart';
@@ -11,11 +12,10 @@ class RoomDataSource {
   Future<List<RoomModel>> getRooms() async {
     try {
       final response = await apiService.getRequest('rooms');
-      List<dynamic> data = response as List<dynamic>;
+
+      List<dynamic> data = response.data as List<dynamic>;
       List<RoomModel> rooms = data.map((roomJson) {
-          return RoomModel.fromJson(
-            roomJson as Map<String, dynamic>,
-        );
+        return RoomModel.fromJson(roomJson);
       }).toList();
       return rooms;
     } catch (e) {
@@ -24,25 +24,26 @@ class RoomDataSource {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getRoomTypes() async {
-    return [
-      {'name': 'Cafeteria', 'icon': Icons.coffee},
-      {'name': 'Bedroom', 'icon': Icons.bed},
-      {'name': 'Bathroom', 'icon': Icons.bathtub},
-      {'name': 'Office', 'icon': Icons.work},
-      {'name': 'TV Room', 'icon': Icons.tv},
-      {'name': 'Classroom', 'icon': Icons.class_},
-      {'name': 'Garage', 'icon': Icons.garage},
-      {'name': 'Toilet', 'icon': Icons.family_restroom},
-      {'name': 'Kid Room', 'icon': Icons.child_friendly},
-    ];
+  Future<void> addRoom(
+      String? name, String buildingId, String? roomTypeId) async {
+    try {
+      AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
+
+      await apiService.postRequest('rooms', body.toJson());
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to add room: $e');
+    }
   }
 
-  Future<void> addRoom(RoomModel room) async {
-    //TODO: Implement API call here
-  }
 
-  Future<void> removeRoom(String roomName) async {
-    //TODO: Implement API call here
+Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
+    try {
+      AddDeviceToRoomRequest body = AddDeviceToRoomRequest(deviceId);
+      await apiService.postRequest('rooms/$roomId/devices', body.toJson());
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to add device to room: $e');
+    }
   }
 }

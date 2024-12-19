@@ -1,5 +1,6 @@
 // room_card.dart
 
+import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
@@ -25,7 +26,7 @@ class RoomCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              room.icon,
+              getIconData(room.roomType.icon),
               color: AppColors.secondaryColor,
               size: 48,
             ),
@@ -39,7 +40,7 @@ class RoomCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${room.devices} device${room.devices > 1 ? 's' : ''}',
+              '${room.devices?.length ?? 0} device${(room.devices?.length ?? 0) > 1 ? 's' : ''}',
               style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.accentColor,

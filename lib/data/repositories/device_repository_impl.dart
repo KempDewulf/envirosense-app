@@ -1,6 +1,7 @@
+import 'package:envirosense/data/datasources/device_data_source.dart';
+
 import '../../domain/entities/device.dart';
 import '../../domain/repositories/device_repository.dart';
-import '../datasources/device_data_source.dart';
 
 class DeviceRepositoryImpl implements DeviceRepository {
   final DeviceDataSource remoteDataSource;
@@ -8,17 +9,12 @@ class DeviceRepositoryImpl implements DeviceRepository {
   DeviceRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<Device>> getDevices() async {
-    return await remoteDataSource.getDevices();
+  Future<List<Device>> getDevices(String buildingId) async {
+    return await remoteDataSource.getDevices(buildingId);
   }
 
   @override
-  Future<void> addDevice(Device device) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> removeDevice(String deviceId) async {
-    throw UnimplementedError();
+  Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
+    return await remoteDataSource.addDevice(roomId, deviceIdentifier);
   }
 }

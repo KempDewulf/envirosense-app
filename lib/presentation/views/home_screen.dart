@@ -1,15 +1,13 @@
-// home_screen.dart
-
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/RoomController.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/device_card.dart';
 import 'package:envirosense/presentation/widgets/header.dart';
 import 'package:envirosense/presentation/widgets/item_grid_page.dart';
 import 'package:envirosense/presentation/widgets/room_card.dart';
 import 'package:flutter/material.dart';
-import 'package:envirosense/presentation/controllers/DeviceController.dart';
+import 'package:envirosense/presentation/controllers/device_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,31 +23,32 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
+  String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   @override
   void initState() {
     super.initState();
-    _fetchRooms();
-    _fetchDevices();
+    _getRooms();
+    _getDevices();
   }
 
   Future<void> _refreshData() async {
-    // Fetch both rooms and devices
+    // get both rooms and devices
     await Future.wait([
-      _fetchRooms(),
-      _fetchDevices(),
+      _getRooms(),
+      _getDevices(),
     ]);
   }
 
-  Future<void> _fetchRooms() async {
-    final rooms = await _roomController.fetchRooms();
+  Future<void> _getRooms() async {
+    final rooms = await _roomController.getRooms();
     setState(() {
       _allRooms = rooms;
     });
   }
 
-  Future<void> _fetchDevices() async {
-    final devices = await _deviceController.fetchDevices();
+  Future<void> _getDevices() async {
+    final devices = await _deviceController.getDevices(_buildingId);
     setState(() {
       _allDevices = devices;
     });
@@ -97,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ItemGridPage<Device>(
                   allItems: _allDevices,
                   itemBuilder: (device) => DeviceCard(device: device),
-                  getItemName: (device) => device.name,
+                  getItemName: (device) => device.identifier,
                   onAddPressed: () {
                     // Handle add device action
                   },

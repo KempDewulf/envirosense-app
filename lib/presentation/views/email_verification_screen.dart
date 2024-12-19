@@ -1,4 +1,4 @@
-import 'package:envirosense/presentation/controllers/EmailVerificationController.dart';
+import 'package:envirosense/presentation/controllers/email_verification_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 

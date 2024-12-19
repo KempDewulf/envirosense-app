@@ -1,6 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import '../controllers/RoomOverviewController.dart';
+import '../controllers/room_overview_controller.dart';
 
 class RoomOverviewScreen extends StatelessWidget {
   final String roomName;

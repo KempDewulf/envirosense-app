@@ -64,7 +64,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
                           ),
                           const SizedBox(width: 16),
                           const Text(
-                            'Add New Room',
+                            'Add Room',
                             style: TextStyle(
                               fontSize: 18,
                               color: AppColors.secondaryColor,
@@ -109,7 +109,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
                           ),
                           const SizedBox(width: 16),
                           const Text(
-                            'Add New Device',
+                            'Add Device',
                             style: TextStyle(
                               fontSize: 18,
                               color: AppColors.accentColor,

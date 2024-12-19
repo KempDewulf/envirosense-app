@@ -1,64 +1,42 @@
-import 'package:flutter/material.dart';
+import 'package:envirosense/domain/entities/building.dart';
+import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/roomtype.dart';
+
 import '../../domain/entities/room.dart';
 
 class RoomModel extends Room {
   RoomModel({
     required super.id,
     required super.name,
-    required super.icon,
-    required super.devices,
+    required super.building,
+    required super.roomType,
+    super.devices,
   });
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
-    // Get room type to determine icon
-    final roomType = json['roomType'] as Map<String, dynamic>;
-    final devices = json['devices'] as List<dynamic>;
-    return RoomModel(
-      id: json['documentId'] as String,
-      name: json['name'] as String,
-      icon: _getIconForRoomType(roomType['name'] as String),
-      devices: devices.length,
+    Building building = Building(
+      id: json['building']['documentId'],
+      name: json['building']['name'],
+      address: json['building']['address'],
     );
-  }
 
-  static IconData _getIconForRoomType(String roomType) {
-    final Map<String, IconData> iconMap = {
-      'cafeteria': Icons.coffee,
-      'bedroom': Icons.bed,
-      'bathroom': Icons.bathtub,
-      'office': Icons.work,
-      'tv room': Icons.tv,
-      'classroom': Icons.class_,
-      'garage': Icons.garage,
-      'toilet': Icons.family_restroom,
-      'kid room': Icons.child_friendly,
-    };
+    RoomType roomType = RoomType(
+      id: json['roomType']['documentId'],
+      name: json['roomType']['name'],
+      icon: json['roomType']['name'].toString().toLowerCase(),
+    );
 
-    return iconMap[roomType.toLowerCase()] ?? Icons.room;
-  }
+    List<Device> devices = (json['devices'] as List)
+        .map((deviceJson) => Device(
+            id: deviceJson['documentId'], identifier: deviceJson['identifier']))
+        .toList();
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'roomType': {
-        'name': _getRoomTypeFromIcon(icon),
-      },
-    };
-  }
-
-  static String _getRoomTypeFromIcon(IconData icon) {
-    final Map<IconData, String> reverseIconMap = {
-      Icons.coffee: 'Cafeteria',
-      Icons.bed: 'Bedroom',
-      Icons.bathtub: 'Bathroom',
-      Icons.work: 'Office',
-      Icons.tv: 'TV Room',
-      Icons.class_: 'Classroom',
-      Icons.garage: 'Garage',
-      Icons.family_restroom: 'Toilet',
-      Icons.child_friendly: 'Kid Room',
-    };
-
-    return reverseIconMap[icon] ?? 'Room';
+    return RoomModel(
+      id: json['documentId'],
+      name: json['name'],
+      building: building,
+      roomType: roomType,
+      devices: devices,
+    );
   }
 }
