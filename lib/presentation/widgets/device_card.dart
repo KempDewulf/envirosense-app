@@ -1,4 +1,3 @@
-// lib/presentation/widgets/device_card.dart
 import 'dart:convert';
 
 import 'package:envirosense/core/constants/colors.dart';
@@ -10,9 +9,9 @@ class DeviceCard extends StatefulWidget {
   final Device device;
 
   const DeviceCard({
-    super.key,
+    Key? key,
     required this.device,
-  });
+  }) : super(key: key);
 
   @override
   State<DeviceCard> createState() => _DeviceCardState();
@@ -27,15 +26,27 @@ class _DeviceCardState extends State<DeviceCard> {
     _fetchDeviceName();
   }
 
+  @override
+  void didUpdateWidget(DeviceCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.device.identifier != widget.device.identifier) {
+      _fetchDeviceName();
+    }
+  }
+
   Future<void> _fetchDeviceName() async {
     final prefs = await SharedPreferences.getInstance();
     final String? storedMappings = prefs.getString('device_names');
     if (storedMappings != null) {
-      final Map<String, String> deviceMappings =
-          Map<String, String>.from(json.decode(storedMappings));
+      final Map<String, dynamic> deviceMappings =
+          Map<String, dynamic>.from(json.decode(storedMappings));
 
       setState(() {
-        _customDeviceName = deviceMappings[widget.device.identifier];
+        _customDeviceName = deviceMappings[widget.device.identifier] as String?;
+      });
+    } else {
+      setState(() {
+        _customDeviceName = null;
       });
     }
   }
@@ -43,6 +54,7 @@ class _DeviceCardState extends State<DeviceCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      key: ValueKey(widget.device.identifier), // Ensure unique key
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -67,7 +79,7 @@ class _DeviceCardState extends State<DeviceCard> {
                 fontSize: 16,
                 color: Colors.black,
               ),
-              maxLines: 1,
+              maxLines: 2, // Allow up to 2 lines
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
