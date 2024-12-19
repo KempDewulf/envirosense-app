@@ -41,7 +41,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       setState(() {
         _isLoading = false;
       });
-      
+
       print('Error loading room types: $e');
     }
   }
@@ -69,7 +69,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room added successfully')),
+        const SnackBar(content: Text('Room added successfully. Drag down to refresh.')),
       );
 
       Navigator.pop(context, true);
