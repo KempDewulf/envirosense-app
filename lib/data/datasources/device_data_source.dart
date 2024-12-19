@@ -6,7 +6,7 @@ class DeviceDataSource {
 
   DeviceDataSource({required this.apiService});
 
-  Future<List<DeviceModel>> getDeviceData() async {
+  Future<List<DeviceModel>> getDevices() async {
     try {
       final response = await apiService.getRequest('devices');
 
