@@ -40,6 +40,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       setState(() {
         _isLoading = false;
       });
+      print('Error loading room types: $e');
       // Handle error
     }
   }
