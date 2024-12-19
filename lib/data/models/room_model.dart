@@ -11,8 +11,8 @@ class RoomModel extends Room {
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
-      id: json['documentId'] as String,
-      name: json['name'] as String,
+      id: json['documentId'],
+      name: json['name'],
       building: json['building'],
       roomType: json['roomType'],
       devices: json['devices'],
