@@ -16,6 +16,7 @@ class ApiService {
   Map<String, String> get _headers => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $_token',
+        'Accept': '*/*',
       };
 
   Future<dynamic> getRequest(String endpoint) async {
@@ -38,6 +39,9 @@ class ApiService {
       headers: _headers,
       body: jsonEncode(body),
     );
+    print('$baseUrl/$endpoint');
+    print("response headers ${response.headers}");
+    print("response body ${response.body}");
 
     return ApiResponse(jsonDecode(response.body), response.headers);
   }
