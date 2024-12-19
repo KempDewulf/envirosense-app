@@ -11,14 +11,4 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<List<Device>> getDevices() async {
     return await remoteDataSource.getDevices();
   }
-
-  @override
-  Future<void> addDevice(Device device) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> removeDevice(String deviceId) async {
-    throw UnimplementedError();
-  }
 }

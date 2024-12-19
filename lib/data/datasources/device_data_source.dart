@@ -9,7 +9,7 @@ class DeviceDataSource {
   Future<List<DeviceModel>> getDevices() async {
     try {
       final response = await apiService.getRequest('devices');
-      
+
       if (response == null) {
         throw Exception('Response is null');
       }
@@ -23,13 +23,5 @@ class DeviceDataSource {
     } catch (e) {
       throw Exception('Failed to load devices: $e');
     }
-  }
-
-  Future<void> addDevice(DeviceModel device) async {
-    // TODO: Implement API call to add device
-  }
-
-  Future<void> removeDevice(String deviceId) async {
-    // TODO: Implement API call to remove device
   }
 }
