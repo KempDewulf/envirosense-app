@@ -23,7 +23,10 @@ class AddOptionsBottomSheet extends StatelessWidget {
         textColor: preferredOption == AddOptionType.room
             ? AppColors.secondaryColor
             : AppColors.accentColor,
-        iconColor: Colors.white,
+        iconColor: preferredOption == AddOptionType.room
+            ? Colors.white
+            : AppColors.accentColor,
+        type: AddOptionType.room,
       ),
       _AddOption(
         title: 'Add a device',
@@ -38,16 +41,16 @@ class AddOptionsBottomSheet extends StatelessWidget {
         iconColor: preferredOption == AddOptionType.device
             ? Colors.white
             : AppColors.accentColor,
+        type: AddOptionType.device,
       ),
     ];
 
     if (preferredOption != null) {
       options.sort((a, b) {
-        if (a.title == 'Add Room' && preferredOption == AddOptionType.room) {
+        if (a.type == preferredOption && b.type != preferredOption) {
           return -1;
-        } else if (a.title == 'Add Device' &&
-            preferredOption == AddOptionType.device) {
-          return -1;
+        } else if (a.type != preferredOption && b.type == preferredOption) {
+          return 1;
         }
         return 0;
       });
@@ -152,6 +155,7 @@ class _AddOption {
   final String onTapRoute;
   final Color textColor;
   final Color iconColor;
+  final AddOptionType type;
 
   _AddOption({
     required this.title,
@@ -160,5 +164,6 @@ class _AddOption {
     required this.onTapRoute,
     required this.textColor,
     required this.iconColor,
+    required this.type,
   });
 }
