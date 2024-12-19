@@ -214,7 +214,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                     _showRoomData ? 'Room Environment' : 'Outside Environment',
                 data: _showRoomData
                     ? _controller.getRoomData(widget.roomName)
-                    : _controller.getOutsideData(),
+                    : _weatherController.getOutsideData(),
               ),
             ],
           ),
