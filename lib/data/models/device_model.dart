@@ -5,7 +5,7 @@ class DeviceModel extends Device {
     required super.id,
     required super.identifier,
     required super.room,
-    required super.deviceData,
+    super.deviceData,
   });
 
   factory DeviceModel.fromJson(Map<String, dynamic> json) {

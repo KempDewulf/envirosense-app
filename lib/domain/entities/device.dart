@@ -5,7 +5,7 @@ class Device {
   final String id;
   final String identifier;
   final Room room;
-  final List<DeviceData> deviceData;
+  final List<DeviceData>? deviceData;
 
   Device({
     required this.id,

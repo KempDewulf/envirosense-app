@@ -6,7 +6,7 @@ class RoomModel extends Room {
     required super.name,
     required super.building,
     required super.roomType,
-    required super.devices,
+    super.devices,
   });
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {

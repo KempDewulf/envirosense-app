@@ -5,7 +5,7 @@ class BuildingModel extends Building {
     required super.id,
     required super.name,
     required super.address,
-    required super.rooms,
+    super.rooms,
   });
 
   factory BuildingModel.fromJson(Map<String, dynamic> json) {
