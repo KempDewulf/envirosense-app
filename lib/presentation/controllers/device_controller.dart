@@ -1,4 +1,5 @@
-import '../../data/datasources/device_data_data_source.dart';
+import 'package:envirosense/data/datasources/device_data_source.dart';
+
 import '../../data/repositories/device_repository_impl.dart';
 import '../../domain/entities/device.dart';
 import '../../domain/repositories/device_repository.dart';
