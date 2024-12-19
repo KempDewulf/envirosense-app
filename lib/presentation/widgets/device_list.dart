@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
-import 'device_card.dart';
-import '../../../domain/entities/device.dart';
 
 class DevicesList extends StatelessWidget {
   final String roomId;

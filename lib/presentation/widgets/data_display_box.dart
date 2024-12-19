@@ -83,7 +83,7 @@ class DataDisplayBox extends StatelessWidget {
                 ),
               ],
             ),
-          )).toList(),
+          )),
         ],
       ),
     );
