@@ -24,10 +24,7 @@ class RoomController {
   }
 
   Future<void> addRoom(
-      String? name, String buildingId, String? roomTypeId) async {
-    print(name);
-    print(buildingId);
-    print(roomTypeId);
+    String? name, String buildingId, String? roomTypeId) async {
     return await addRoomUseCase(name, buildingId, roomTypeId);
   }
 }

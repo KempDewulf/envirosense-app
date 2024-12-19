@@ -33,7 +33,6 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   Future<void> _loadRoomTypes() async {
     try {
       final roomTypes = await _roomTypesController.getRoomTypes(_buildingId);
-      print("roomtypes $roomTypes");
       setState(() {
         _roomTypes = roomTypes;
         _isLoading = false;

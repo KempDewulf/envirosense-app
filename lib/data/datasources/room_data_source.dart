@@ -28,8 +28,6 @@ class RoomDataSource {
     try {
       AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
 
-      print(body.toJson());
-
       await apiService.postRequest('rooms', body.toJson());
     } catch (e) {
       // Handle errors
