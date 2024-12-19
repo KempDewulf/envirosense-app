@@ -24,6 +24,17 @@ class RoomDataSource {
     }
   }
 
+  Future<RoomModel> getRoom(String roomId) async {
+    try {
+      final response = await apiService.getRequest('rooms/$roomId');
+
+      return RoomModel.fromJson(response.data);
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load room: $e');
+    }
+  }
+
   Future<void> addRoom(
       String? name, String buildingId, String? roomTypeId) async {
     try {
