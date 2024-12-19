@@ -48,9 +48,11 @@ class _DeviceCardState extends State<DeviceCard> {
       ),
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Icon(
               Icons.sensors,
@@ -60,14 +62,18 @@ class _DeviceCardState extends State<DeviceCard> {
             const SizedBox(height: 8),
             Text(
               _customDeviceName ?? widget.device.identifier,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             Text(
               'Room: ${widget.device.room?.name ?? 'Unknown'}',
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
