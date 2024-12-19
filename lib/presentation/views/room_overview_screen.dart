@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/data/models/room_model.dart';
+import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
@@ -23,7 +24,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   late final TabController _tabController;
   bool _isLoading = true;
   bool _showRoomData = true;
-  RoomModel? _room;
+  Room? _room;
   String? _error;
 
   @override
@@ -36,7 +37,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      final room = await _controller.getRoomById(widget.roomId);
+      final room = await _controller.getRoom(widget.roomId);
       setState(() {
         _room = room;
         _isLoading = false;
