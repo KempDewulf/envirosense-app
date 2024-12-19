@@ -20,6 +20,4 @@ class DeviceController {
   Future<List<Device>> fetchDevices() async {
     return await getDevicesUseCase();
   }
-
-  // Implement addDevice and removeDevice methods if needed
 }
