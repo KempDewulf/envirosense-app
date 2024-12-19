@@ -7,17 +7,13 @@ class DeviceDataSource {
 
   DeviceDataSource({required this.apiService});
 
-  Future<List<DeviceModel>> getDevices() async {
+  Future<List<DeviceModel>> getDevices(String buildingId) async {
     try {
       final response = await apiService.getRequest('devices');
 
-      if (response == null) {
-        throw Exception('Response is null');
-      }
-
       List<dynamic> data = response as List<dynamic>;
       List<DeviceModel> devices = data.map((deviceJson) {
-        return DeviceModel.fromJson(deviceJson as Map<String, dynamic>);
+        return DeviceModel.fromJson(deviceJson as Map<String, dynamic>, buildingId);
       }).toList();
 
       return devices;

@@ -2,18 +2,16 @@ import 'package:envirosense/domain/entities/air_data.dart';
 
 class AirDataModel extends AirData {
   AirDataModel({
-    required super.id,
-    required super.device,
-    required super.timestamp,
-    required super.airData,
+    required super.temperature,
+    required super.humidity,
+    required super.gasPpm,
   });
 
   factory AirDataModel.fromJson(Map<String, dynamic> json) {
     return AirDataModel(
-      id: json['documentId'],
-      device: json['device'],
-      timestamp: json['timestamp'],
-      airData: json['airData'],
+      temperature: json['temperature'],
+      humidity: json['humidity'],
+      gasPpm: json['gas_ppm'],
     );
   }
 }

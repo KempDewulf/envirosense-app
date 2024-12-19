@@ -20,8 +20,8 @@ class DeviceController {
     addDeviceUseCase = AddDeviceUseCase(repository);
   }
 
-  Future<List<Device>> getDevices() async {
-    return await getDevicesUseCase();
+  Future<List<Device>> getDevices(String buildingId) async {
+    return await getDevicesUseCase(buildingId);
   }
 
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {

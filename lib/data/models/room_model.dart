@@ -27,7 +27,8 @@ class RoomModel extends Room {
     );
 
     List<Device> devices = (json['devices'] as List)
-        .map((deviceJson) => Device(id: deviceJson['documentId'], identifier: deviceJson['identifier']))
+        .map((deviceJson) => Device(
+            id: deviceJson['documentId'], identifier: deviceJson['identifier']))
         .toList();
 
     return RoomModel(
