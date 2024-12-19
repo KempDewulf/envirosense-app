@@ -12,6 +12,31 @@ class RoomCard extends StatelessWidget {
     required this.room,
   });
 
+  IconData getIconData(String iconName) {
+    switch (iconName.toLowerCase()) {
+      case 'bedroom':
+        return Icons.bed;
+      case 'tv room':
+        return Icons.tv;
+      case 'bathroom':
+        return Icons.bathtub;
+      case 'cafetaria':
+        return Icons.local_cafe;
+      case 'classroom':
+        return Icons.class_;
+      case 'garage':
+        return Icons.garage;
+      case 'kid room':
+        return Icons.child_care;
+      case 'office':
+        return Icons.business;
+      case 'toiletroom':
+        return Icons.wc;
+      default:
+        return Icons.help_outline;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,8 +50,7 @@ class RoomCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              //TODO: probably map this string to an actual IconData
-              room.roomType.icon,
+              getIconData(room.roomType.icon),
               color: AppColors.secondaryColor,
               size: 48,
             ),
