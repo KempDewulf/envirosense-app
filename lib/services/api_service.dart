@@ -24,7 +24,7 @@ class ApiService {
     }
   }
 
-  Future<dynamic> postRequest(String endpoint, {Map<String, dynamic>? body}) async {
+  Future<dynamic> postRequest(String endpoint, Map<String, dynamic> body) async {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       headers: _headers,
