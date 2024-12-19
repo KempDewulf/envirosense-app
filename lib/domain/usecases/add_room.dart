@@ -1,4 +1,3 @@
-import '../entities/room.dart';
 import '../repositories/room_repository.dart';
 
 class AddRoomUseCase {
@@ -6,7 +5,7 @@ class AddRoomUseCase {
 
   AddRoomUseCase(this.repository);
 
-  Future<void> call(Room room) async {
-    await repository.addRoom(room);
+  Future<void> call(String? name, String buildingId, String? roomTypeId) async {
+    return await repository.addRoom(name, buildingId, roomTypeId);
   }
 }

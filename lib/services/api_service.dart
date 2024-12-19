@@ -2,39 +2,67 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
+class ApiResponse {
+  final dynamic data;
+  final Map<String, String> headers;
+
+  ApiResponse(this.data, this.headers);
+}
+
 class ApiService {
   final String baseUrl = dotenv.env['API_BASE_URL']!;
   final String? _token = dotenv.env['API_TOKEN'];
 
   Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer $_token',
-  };
+        'Authorization': 'Bearer $_token',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Expose-Headers': '*'
+      };
 
-  Future<dynamic> getRequest(String endpoint) async {
+  Future<ApiResponse> getRequest(String endpoint) async {
     final response = await http.get(
       Uri.parse('$baseUrl/$endpoint'),
       headers: _headers,
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return ApiResponse(jsonDecode(response.body), response.headers);
     } else {
       throw Exception('GET request failed with status: ${response.statusCode}');
     }
   }
 
-  Future<dynamic> postRequest(String endpoint, {Map<String, dynamic>? body}) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/$endpoint'),
-      headers: _headers,
-      body: body != null ? jsonEncode(body) : null,
-    );
+  Future<ApiResponse> postRequest(
+      String endpoint, Map<String, dynamic> body) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: _headers,
+        body: jsonEncode(body),
+      );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('POST request failed with status: ${response.statusCode}');
+      print('$baseUrl/$endpoint');
+      print('sending body $body');
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      switch (response.statusCode) {
+        case 200:
+        case 201:
+          final dynamic responseData =
+              response.body.isNotEmpty ? jsonDecode(response.body) : null;
+          return ApiResponse(responseData, response.headers);
+
+        case 409:
+          throw Exception('Entity already assigned to another entity');
+
+        default:
+          throw Exception(
+              'POST request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Request failed: $e');
     }
   }
 }

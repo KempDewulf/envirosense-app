@@ -6,7 +6,7 @@ class GetDevicesUseCase {
 
   GetDevicesUseCase(this.repository);
 
-  Future<List<Device>> call() async {
-    return await repository.getDevices();
+  Future<List<Device>> call(String buildingId) async {
+    return await repository.getDevices(buildingId);
   }
 }

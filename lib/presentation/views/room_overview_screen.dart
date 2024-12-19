@@ -6,7 +6,7 @@ import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:envirosense/services/api_service.dart';
 import 'package:flutter/material.dart';
-import '../controllers/RoomOverviewController.dart';
+import '../controllers/room_overview_controller.dart';
 
 class RoomOverviewScreen extends StatefulWidget {
   final String roomName;

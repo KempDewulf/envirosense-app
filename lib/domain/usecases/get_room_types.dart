@@ -1,11 +1,12 @@
-import '../repositories/room_repository.dart';
+import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/domain/repositories/room_type_repository.dart';
 
 class GetRoomTypesUseCase {
-  final RoomRepository repository;
+  final RoomTypeRepository repository;
 
   GetRoomTypesUseCase(this.repository);
 
-  Future<List<Map<String, dynamic>>> call() async {
-    return await repository.getRoomTypes();
+  Future<List<RoomType>> call(String buildingId) async {
+    return await repository.getRoomTypes(buildingId);
   }
 }

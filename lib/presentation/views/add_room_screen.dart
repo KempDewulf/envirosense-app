@@ -1,7 +1,8 @@
-// lib/presentation/views/add_room_screen.dart
-
-import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/RoomController.dart';
+import 'package:envirosense/core/helpers/icon_helper.dart';
+import 'package:envirosense/core/helpers/string_helper.dart';
+import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/controllers/room_type_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 
@@ -14,9 +15,12 @@ class AddRoomScreen extends StatefulWidget {
 
 class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomController _roomController = RoomController();
+  final RoomTypeController _roomTypesController = RoomTypeController();
   final TextEditingController _roomNameController = TextEditingController();
-  List<Map<String, dynamic>>? _roomTypes; // Store room types in state
-  Map<String, dynamic>? _selectedRoomType;
+
+  final String _buildingId = "gox5y6bsrg640qb11ak44dh0";
+  List<RoomType>? _roomTypes; // Store room types in state
+  RoomType? _selectedRoomType;
   bool _isSaving = false;
   bool _isLoading = true;
 
@@ -28,16 +32,17 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   Future<void> _loadRoomTypes() async {
     try {
-      final types = await _roomController.fetchRoomTypes();
+      final roomTypes = await _roomTypesController.getRoomTypes(_buildingId);
       setState(() {
-        _roomTypes = types;
+        _roomTypes = roomTypes;
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
-      // Handle error
+
+      print('Error loading room types: $e');
     }
   }
 
@@ -59,16 +64,17 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      final newRoom = Room(
-        id: '', // Let the database assign the ID
-        name: _roomNameController.text,
-        icon: _selectedRoomType!['icon'] as IconData,
-        devices: 0,
+      await _roomController.addRoom(
+          _roomNameController.text, _buildingId, _selectedRoomType?.id);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room added successfully. Drag down to refresh.')),
       );
 
-      await _roomController.addRoom(newRoom);
-      Navigator.pop(context);
-    } catch (e) {
+      Navigator.pop(context, true);
+    } catch (e, stackTrace) {
+      print('Exception caught: $e');
+      print('Stack trace: $stackTrace');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to add room')),
       );
@@ -186,7 +192,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                                 : [],
                           ),
                           child: Icon(
-                            roomType['icon'] as IconData,
+                            getIconData(roomType.icon),
                             color: isSelected
                                 ? Colors.white
                                 : AppColors.accentColor,
@@ -195,7 +201,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          roomType['name'] as String,
+                          capitalizeWords(roomType.icon),
                           style: TextStyle(
                             fontSize: 14,
                             color: isSelected
