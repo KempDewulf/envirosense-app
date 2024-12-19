@@ -12,4 +12,9 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<List<Device>> getDevices() async {
     return await remoteDataSource.getDevices();
   }
+
+  @override
+  Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
+    return await remoteDataSource.addDevice(roomId, deviceIdentifier);
+  }
 }

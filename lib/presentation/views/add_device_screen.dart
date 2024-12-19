@@ -1,4 +1,5 @@
 import 'package:envirosense/domain/entities/room.dart';
+import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class AddDeviceScreen extends StatefulWidget {
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final TextEditingController _searchController = TextEditingController();
   final RoomController _roomController = RoomController();
+  final DeviceController _deviceController = DeviceController();
 
   String? _deviceIdentifierCode;
   Room? _selectedRoom;
@@ -77,7 +79,10 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     });
 
     try {
-      await _roomController.addDeviceToRoom(_selectedRoom?.id, _deviceIdentifierCode);
+      String deviceId = await _deviceController.addDevice(
+          _selectedRoom?.id, _deviceIdentifierCode);
+      await _roomController.addDeviceToRoom(
+          _selectedRoom?.id, deviceId);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Device assigned successfully')),
@@ -204,15 +209,14 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                             : AppColors.blackColor,
                                       ),
                                     ),
-                                    trailing:
-                                        _selectedRoom?.id == _filteredRooms[index].id
-                                            ? const Icon(Icons.check,
-                                                color: AppColors.primaryColor)
-                                            : null,
+                                    trailing: _selectedRoom?.id ==
+                                            _filteredRooms[index].id
+                                        ? const Icon(Icons.check,
+                                            color: AppColors.primaryColor)
+                                        : null,
                                     onTap: () {
                                       setState(() {
-                                        _selectedRoom =
-                                            _filteredRooms[index];
+                                        _selectedRoom = _filteredRooms[index];
                                       });
                                     },
                                   ),
