@@ -25,7 +25,7 @@ class RoomCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              room.icon,
+              room.roomType.icon,
               color: AppColors.secondaryColor,
               size: 48,
             ),
@@ -39,7 +39,7 @@ class RoomCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${room.devices} device${room.devices > 1 ? 's' : ''}',
+              '${room.devices} device${room.devices.length > 1 ? 's' : ''}',
               style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.accentColor,

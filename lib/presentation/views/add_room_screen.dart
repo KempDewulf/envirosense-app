@@ -15,8 +15,8 @@ class AddRoomScreen extends StatefulWidget {
 class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomController _roomController = RoomController();
   final TextEditingController _roomNameController = TextEditingController();
-  List<Map<String, dynamic>>? _roomTypes; // Store room types in state
-  Map<String, dynamic>? _selectedRoomType;
+  List<RoomType>? _roomTypes; // Store room types in state
+  RoomType? _selectedRoomType;
   bool _isSaving = false;
   bool _isLoading = true;
 
@@ -28,7 +28,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   Future<void> _loadRoomTypes() async {
     try {
-      final types = await _roomController.fetchRoomTypes();
+      final types = await _roomController.fetchRooms();
       setState(() {
         _roomTypes = types;
         _isLoading = false;
@@ -59,14 +59,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      final newRoom = Room(
-        id: '', // Let the database assign the ID
-        name: _roomNameController.text,
-        icon: _selectedRoomType!['icon'] as IconData,
-        devices: 0,
-      );
-
-      await _roomController.addRoom(newRoom);
+      //TODO: later when all implemented
+      await _roomController.addRoom();
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
