@@ -1,25 +1,25 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/data/datasources/room_data_source.dart';
 import 'package:envirosense/data/models/room_model.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
-import 'package:envirosense/services/api_service.dart';
 import 'package:flutter/material.dart';
-import '../controllers/room_overview_controller.dart';
 
 class RoomOverviewScreen extends StatefulWidget {
   final String roomName;
   final String roomId;
 
-  const RoomOverviewScreen({super.key, required this.roomName, required this.roomId});
+  const RoomOverviewScreen(
+      {super.key, required this.roomName, required this.roomId});
 
   @override
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
 }
 
-class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
-  late final RoomOverviewController _controller;
+class _RoomOverviewScreenState extends State<RoomOverviewScreen>
+    with SingleTickerProviderStateMixin {
+  late final RoomController _controller;
   late final TabController _tabController;
   bool _isLoading = true;
   bool _showRoomData = true;
@@ -29,9 +29,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   @override
   void initState() {
     super.initState();
-    _controller = RoomOverviewController(
-      roomDataSource: RoomDataSource(apiService: ApiService()),
-    );
     _tabController = TabController(length: 3, vsync: this);
     _loadData();
   }
@@ -64,10 +61,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
         title: Text(
           _room?.name ?? widget.roomName,
           style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.whiteColor
-            ),
-          ),
+              fontWeight: FontWeight.bold, color: AppColors.whiteColor),
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
@@ -142,7 +137,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
               const SizedBox(width: 8),
               Text(
                 'Set Target Temperature (${_controller.getTargetTemperature()}°C)',
-                style: const TextStyle(color: AppColors.whiteColor, fontSize: 16),
+                style:
+                    const TextStyle(color: AppColors.whiteColor, fontSize: 16),
               ),
             ],
           ),
@@ -166,8 +162,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: _showRoomData 
-                                ? AppColors.secondaryColor 
+                            color: _showRoomData
+                                ? AppColors.secondaryColor
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(25),
                           ),
@@ -175,8 +171,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                             'Room Data',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: _showRoomData 
-                                  ? Colors.white 
+                              color: _showRoomData
+                                  ? Colors.white
                                   : AppColors.secondaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -190,8 +186,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: !_showRoomData 
-                                ? AppColors.secondaryColor 
+                            color: !_showRoomData
+                                ? AppColors.secondaryColor
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(25),
                           ),
@@ -199,8 +195,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                             'Outside Data',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: !_showRoomData 
-                                  ? Colors.white 
+                              color: !_showRoomData
+                                  ? Colors.white
                                   : AppColors.secondaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -214,8 +210,9 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
               const SizedBox(height: 16),
               DataDisplayBox(
                 key: ValueKey(_showRoomData),
-                title: _showRoomData ? 'Room Environment' : 'Outside Environment',
-                data: _showRoomData 
+                title:
+                    _showRoomData ? 'Room Environment' : 'Outside Environment',
+                data: _showRoomData
                     ? _controller.getRoomData(widget.roomName)
                     : _controller.getOutsideData(),
               ),
@@ -274,7 +271,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                   IconButton(
                     icon: const Icon(Icons.remove_circle_outline),
                     onPressed: () {
-                      setState(() => currentTemp = (currentTemp - 0.5).clamp(16, 30));
+                      setState(() =>
+                          currentTemp = (currentTemp - 0.5).clamp(16, 30));
                     },
                   ),
                   const SizedBox(width: 16),
@@ -286,7 +284,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
-                      setState(() => currentTemp = (currentTemp + 0.5).clamp(16, 30));
+                      setState(() =>
+                          currentTemp = (currentTemp + 0.5).clamp(16, 30));
                     },
                   ),
                 ],
