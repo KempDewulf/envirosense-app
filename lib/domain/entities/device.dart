@@ -4,13 +4,13 @@ import 'package:envirosense/domain/entities/room.dart';
 class Device {
   final String id;
   final String identifier;
-  final Room room;
+  final Room? room;
   final List<DeviceData>? deviceData;
 
   Device({
     required this.id,
     required this.identifier,
-    required this.room,
-    required this.deviceData,
+    this.room,
+    this.deviceData,
   });
 }

@@ -14,6 +14,6 @@ class Room {
     required this.name,
     required this.building,
     required this.roomType,
-    required this.devices,
+    this.devices,
   });
 }

@@ -10,6 +10,6 @@ class Building {
     required this.id,
     required this.name,
     required this.address,
-    required this.rooms,
+    this.rooms,
   });
 }

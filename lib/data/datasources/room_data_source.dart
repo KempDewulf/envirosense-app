@@ -14,9 +14,10 @@ class RoomDataSource {
       List<dynamic> data = response as List<dynamic>;
       List<RoomModel> rooms = data.map((roomJson) {
         return RoomModel.fromJson(
-          roomJson as Map<String, dynamic>,
+          roomJson
         );
       }).toList();
+      print(rooms);
       return rooms;
     } catch (e) {
       // Handle errors

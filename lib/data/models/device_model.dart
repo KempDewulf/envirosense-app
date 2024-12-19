@@ -4,7 +4,7 @@ class DeviceModel extends Device {
   DeviceModel({
     required super.id,
     required super.identifier,
-    required super.room,
+    super.room,
     super.deviceData,
   });
 
