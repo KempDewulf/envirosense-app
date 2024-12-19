@@ -1,5 +1,4 @@
 import 'package:envirosense/data/models/building_model.dart';
-
 import '../../services/api_service.dart';
 
 class BuildingDataSource {

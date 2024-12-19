@@ -1,12 +1,12 @@
+import 'package:envirosense/data/models/device_model.dart';
 import '../../services/api_service.dart';
-import '../models/device_model.dart';
 
 class DeviceDataSource {
   final ApiService apiService;
 
   DeviceDataSource({required this.apiService});
 
-  Future<List<DeviceModel>> getDevices() async {
+  Future<List<DeviceModel>> getDeviceData() async {
     try {
       final response = await apiService.getRequest('devices');
 
