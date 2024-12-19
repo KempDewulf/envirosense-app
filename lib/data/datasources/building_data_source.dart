@@ -11,8 +11,8 @@ class BuildingDataSource {
       final response = await apiService.getRequest('buildings');
       List<dynamic> data = response as List<dynamic>;
       List<BuildingModel> buildings = data.map((buildingJson) {
-          return BuildingModel.fromJson(
-            buildingJson as Map<String, dynamic>,
+        return BuildingModel.fromJson(
+          buildingJson as Map<String, dynamic>,
         );
       }).toList();
       return buildings;

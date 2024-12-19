@@ -11,9 +11,9 @@ class RoomTypeDataSource {
       final response = await apiService.getRequest('room-types');
       List<dynamic> data = response as List<dynamic>;
       List<RoomTypeModel> roomTypes = data.map((roomTypeJson) {
-          return RoomTypeModel.fromJson(
-            roomTypeJson as Map<String, dynamic>,
-          );
+        return RoomTypeModel.fromJson(
+          roomTypeJson as Map<String, dynamic>,
+        );
       }).toList();
       return roomTypes;
     } catch (e) {
