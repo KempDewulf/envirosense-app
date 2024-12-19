@@ -1,9 +1,7 @@
-import 'package:envirosense/domain/entities/device.dart';
-
 class AirData {
-  final String temperature;
-  final Device humidity;
-  final String gasPpm;
+  final double temperature;
+  final double humidity;
+  final int gasPpm;
 
   AirData({
     required this.temperature,
