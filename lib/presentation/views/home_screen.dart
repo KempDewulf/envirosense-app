@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -61,6 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _showAddOptionsBottomSheet(AddOptionType? preferredOption) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => AddOptionsBottomSheet(
+        preferredOption: preferredOption,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (room) => RoomCard(room: room),
                   getItemName: (room) => room.name,
                   onAddPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => const AddOptionsBottomSheet(),
-                    );
+                    _showAddOptionsBottomSheet(AddOptionType.room);
                   },
                 ),
               ),
@@ -99,12 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (device) => DeviceCard(device: device),
                   getItemName: (device) => device.identifier,
                   onAddPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => const AddOptionsBottomSheet(),
-                    );
+                    _showAddOptionsBottomSheet(AddOptionType.device);
                   },
                 ),
               ),
