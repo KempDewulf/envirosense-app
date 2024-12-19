@@ -1,5 +1,5 @@
 class AddDeviceToRoomRequest {
-  final String deviceId;
+  final String? deviceId;
 
   AddDeviceToRoomRequest(
     this.deviceId,

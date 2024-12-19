@@ -5,7 +5,7 @@ class AddDeviceToRoomUseCase {
 
   AddDeviceToRoomUseCase(this.repository);
 
-  Future<void> call(String? roomId, String deviceId) async {
+  Future<void> call(String? roomId, String? deviceId) async {
     return await repository.addDeviceToRoom(roomId, deviceId);
   }
 }

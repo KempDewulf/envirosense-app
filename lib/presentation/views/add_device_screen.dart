@@ -232,7 +232,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               ),
                               onPressed: _selectedRoom == null
                                   ? null
-                                  : _addDeviceToRoom(),
+                                  : _addDeviceToRoom,
                               child: const Text('Assign Device'),
                             ),
                           ),

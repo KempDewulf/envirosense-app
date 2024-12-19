@@ -19,7 +19,7 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
-  Future<void> addDeviceToRoom(String? roomId, String deviceId) async {
+  Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     return await remoteDataSource.addDeviceToRoom(roomId, deviceId);
   }
 }

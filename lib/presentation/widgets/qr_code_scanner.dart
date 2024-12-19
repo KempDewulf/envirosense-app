@@ -13,7 +13,7 @@ class QrCodeScanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: MobileScanner(
         controller: controller,
@@ -23,17 +23,8 @@ class QrCodeScanner extends StatelessWidget {
 
           if (barcode.rawValue != null) {
             setResult(barcode.rawValue);
-
-            await controller
-                .stop()
-                .then((value) => controller.dispose())
-                .then((value) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const AddDeviceScreen(),
-                    ),
-                  );
-            });
+            await controller.stop();
+            await controller.dispose();
           }
         },
       ),

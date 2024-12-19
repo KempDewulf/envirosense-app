@@ -36,7 +36,7 @@ class RoomDataSource {
   }
 
 
-Future<void> addDeviceToRoom(String? roomId, String deviceId) async {
+Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     try {
       AddDeviceToRoomRequest body = AddDeviceToRoomRequest(deviceId);
       await apiService.postRequest('rooms/$roomId/devices', body.toJson());
