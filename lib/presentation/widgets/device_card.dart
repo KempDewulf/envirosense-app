@@ -29,7 +29,7 @@ class DeviceCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              device.name,
+              device.identifier,
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.black,
@@ -37,7 +37,7 @@ class DeviceCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Room: ${device.roomName}',
+              'Room: ${device.room.name}',
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
