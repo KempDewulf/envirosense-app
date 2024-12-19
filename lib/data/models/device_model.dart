@@ -31,9 +31,9 @@ class DeviceModel extends Device {
             id: deviceDataJson['documentId'],
             timestamp: deviceDataJson['timestamp'],
             airData: AirData(
-              temperature: deviceDataJson['temperature'],
-              humidity: deviceDataJson['humidity'],
-              gasPpm: deviceDataJson['gas_ppm'],
+              temperature: double.parse(deviceDataJson['temperature']),
+              humidity: double.parse(deviceDataJson['humidity']),
+              gasPpm: double.parse(deviceDataJson['gas_ppm']),
             ),
             device: Device(
               id: json['documentId'],
