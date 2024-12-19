@@ -28,7 +28,7 @@ class ApiService {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       headers: _headers,
-      body: body != null ? jsonEncode(body) : null,
+      body: jsonEncode(body),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
