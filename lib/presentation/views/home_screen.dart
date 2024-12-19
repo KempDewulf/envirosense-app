@@ -23,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
-  String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  String _buildingId =
+      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   @override
   void initState() {
@@ -98,7 +99,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (device) => DeviceCard(device: device),
                   getItemName: (device) => device.identifier,
                   onAddPressed: () {
-                    // Handle add device action
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => const AddOptionsBottomSheet(),
+                    );
                   },
                 ),
               ),
