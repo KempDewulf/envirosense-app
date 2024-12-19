@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ItemGridPage<Device>(
                   allItems: _allDevices,
                   itemBuilder: (device) => DeviceCard(device: device),
-                  getItemName: (device) => device.name,
+                  getItemName: (device) => device.identifier,
                   onAddPressed: () {
                     // Handle add device action
                   },
