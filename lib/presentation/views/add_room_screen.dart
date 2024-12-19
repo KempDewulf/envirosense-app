@@ -1,5 +1,6 @@
 import 'package:envirosense/domain/entities/roomtype.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/controllers/room_type_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 
