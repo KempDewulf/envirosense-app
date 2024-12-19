@@ -15,6 +15,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomController _roomController = RoomController();
   final RoomTypeController _roomTypesController = RoomTypeController();
   final TextEditingController _roomNameController = TextEditingController();
+
+  final String _buildingId = "gox5y6bsrg640qb11ak44dh0";
   List<RoomType>? _roomTypes; // Store room types in state
   RoomType? _selectedRoomType;
   bool _isSaving = false;
@@ -59,8 +61,9 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      //TODO: later when all implemented, pass correct arguments (probablty name, buildingdocumentid and roomtypedocumentid)
-      await _roomController.addRoom();
+      //harcode building Id since we will have only one for this PoC
+      await _roomController.addRoom(
+          _selectedRoomType?.name, _buildingId, _selectedRoomType?.id);
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
