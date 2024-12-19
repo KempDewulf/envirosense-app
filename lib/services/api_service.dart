@@ -14,9 +14,10 @@ class ApiService {
   final String? _token = dotenv.env['API_TOKEN'];
 
   Map<String, String> get _headers => {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
         'Authorization': 'Bearer $_token',
-        'Accept': '*/*',
+        'Content-Type': 'application/json',
       };
 
   Future<dynamic> getRequest(String endpoint) async {
