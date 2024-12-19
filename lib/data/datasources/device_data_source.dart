@@ -11,8 +11,9 @@ class DeviceDataSource {
     try {
       final response = await apiService.getRequest('devices');
 
-      List<dynamic> data = response as List<dynamic>;
+      List<dynamic> data = response.data as List<dynamic>;
       List<DeviceModel> devices = data.map((deviceJson) {
+        print(deviceJson);
         return DeviceModel.fromJson(deviceJson as Map<String, dynamic>, buildingId);
       }).toList();
 
