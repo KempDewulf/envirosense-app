@@ -39,12 +39,12 @@ class DeviceDataList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      DateFormat('yyyy-MM-dd HH:mm:ss').format(
+                      DateFormat('dd-MM-yyyy HH:mm:ss').format(
                         DateTime.parse(data.timestamp),
                       ),
                       style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        color: AppColors.accentColor,
                       ),
                     ),
                     const SizedBox(height: 16),
