@@ -10,15 +10,21 @@ class AirQualityModel extends AirQuality {
 
   factory AirQualityModel.fromJson(Map<String, dynamic> json) {
     AirData airData = AirData(
-      temperature: json['airQuality']['temperature'] is String
-          ? double.parse(json['airQuality']['temperature'])
-          : (json['airQuality']['temperature'] as num).toDouble(),
-      humidity: json['airQuality']['humidity'] is String
-          ? double.parse(json['airQuality']['humidity'])
-          : (json['airQuality']['humidity'] as num).toDouble(),
-      gasPpm: json['airQuality']['ppm'] is String
-          ? int.parse(json['airQuality']['ppm'])
-          : (json['airQuality']['ppm'] as num).toInt(),
+      temperature: json['airQuality']['temperature'] != null
+          ? (json['airQuality']['temperature'] is String
+              ? double.tryParse(json['airQuality']['temperature'])
+              : (json['airQuality']['temperature'] as num?)?.toDouble())
+          : null,
+      humidity: json['airQuality']['humidity'] != null
+          ? (json['airQuality']['humidity'] is String
+              ? double.tryParse(json['airQuality']['humidity'])
+              : (json['airQuality']['humidity'] as num?)?.toDouble())
+          : null,
+      gasPpm: json['airQuality']['ppm'] != null
+          ? (json['airQuality']['ppm'] is String
+              ? int.tryParse(json['airQuality']['ppm'])
+              : (json['airQuality']['ppm'] as num?)?.toInt())
+          : null,
     );
 
     return AirQualityModel(
