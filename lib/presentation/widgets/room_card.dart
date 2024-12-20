@@ -32,9 +32,11 @@ class RoomCard extends StatelessWidget {
           ),
           elevation: 2,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   getIconData(room.roomType.icon),
@@ -44,10 +46,13 @@ class RoomCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   room.name,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18,
                     color: AppColors.blackColor,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
