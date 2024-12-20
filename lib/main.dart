@@ -89,6 +89,11 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
     return MaterialApp(
       title: 'EnviroSense',
       theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: AppColors.whiteColor,
+          selectionColor: AppColors.secondaryColor,
+          selectionHandleColor: AppColors.secondaryColor,
+        ),
         primaryColor: AppColors.primaryColor,
         scaffoldBackgroundColor: AppColors.whiteColor,
         appBarTheme: const AppBarTheme(

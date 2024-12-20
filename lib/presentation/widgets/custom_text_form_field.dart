@@ -24,7 +24,6 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
-      cursorColor: AppColors.whiteColor,
       style: const TextStyle(color: AppColors.whiteColor),
       decoration: InputDecoration(
         labelText: labelText,
