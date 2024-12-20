@@ -12,40 +12,55 @@ class DataDisplayBox extends StatelessWidget {
     required this.data,
   });
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'good':
+  Status _getStatus(num value, {
+    required num min,
+    required num max,
+    required num optimalMin,
+    required num optimalMax,
+  }) {
+    if (value < min || value > max) return Status.bad;
+    if (value < optimalMin || value > optimalMax) return Status.medium;
+    return Status.good;
+  }
+
+  Status _getTemperatureStatus(double temp) {
+    return _getStatus(
+      temp,
+      min: Thresholds.temperature.min,
+      max: Thresholds.temperature.max,
+      optimalMin: Thresholds.temperature.optimalMin,
+      optimalMax: Thresholds.temperature.optimalMax,
+    );
+  }
+
+  Status _getHumidityStatus(double humidity) {
+    return _getStatus(
+      humidity,
+      min: Thresholds.humidity.min,
+      max: Thresholds.humidity.max,
+      optimalMin: Thresholds.humidity.optimalMin,
+      optimalMax: Thresholds.humidity.optimalMax,
+    );
+  }
+
+  Status _getAirQualityStatus(int ppm) {
+    if (ppm > Thresholds.airQuality.max) return Status.bad;
+    if (ppm > Thresholds.airQuality.optimalMax) return Status.medium;
+    return Status.good;
+  }
+
+  Color _getStatusColor(Status status) {
+    switch (status) {
+      case Status.good:
         return AppColors.greenColor;
-      case 'bad':
+      case Status.bad:
         return AppColors.redColor;
-      case 'medium':
+      case Status.medium:
         return AppColors.secondaryColor;
-      default:
-        return AppColors.blackColor;
     }
   }
 
-  String _getTemperatureStatus(double temp) {
-    if (temp < 18) return 'bad';
-    if (temp > 26) return 'bad';
-    if (temp < 20 || temp > 24) return 'medium';
-    return 'good';
-  }
-
-  String _getHumidityStatus(double humidity) {
-    if (humidity < 30) return 'bad';
-    if (humidity > 70) return 'bad';
-    if (humidity < 40 || humidity > 60) return 'medium';
-    return 'good';
-  }
-
-  String _getAirQualityStatus(int ppm) {
-    if (ppm > 1000) return 'bad';
-    if (ppm > 800) return 'medium';
-    return 'good';
-  }
-
-  List<MapEntry<String, Map<String, String>>> _getDataEntries() {
+  List<MapEntry<String, Map<String, dynamic>>> _getDataEntries() {
     return [
       MapEntry('Temperature', {
         'value': '${data.temperature.toStringAsFixed(1)}°C',
@@ -127,4 +142,31 @@ class DataDisplayBox extends StatelessWidget {
       ),
     );
   }
+}
+
+enum Status {
+  good,
+  medium,
+  bad
+}
+
+class Thresholds {
+  static const temperature = (
+    min: 18.0,
+    max: 35.0,
+    optimalMin: 20.0,
+    optimalMax: 24.0,
+  );
+  
+  static const humidity = (
+    min: 30.0,
+    max: 70.0,
+    optimalMin: 40.0,
+    optimalMax: 60.0,
+  );
+  
+  static const airQuality = (
+    max: 1000,
+    optimalMax: 800,
+  );
 }
