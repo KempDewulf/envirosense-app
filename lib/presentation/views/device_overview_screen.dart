@@ -15,12 +15,17 @@ class DeviceOverviewScreen extends StatefulWidget {
   State<DeviceOverviewScreen> createState() => _DeviceOverviewScreenState();
 }
 
-class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with SingleTickerProviderStateMixin {
+class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
+    with SingleTickerProviderStateMixin {
   late final DeviceController _controller = DeviceController();
-  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
+  late final TabController _tabController =
+      TabController(length: _tabs.length, vsync: this);
   bool _isLoading = true;
   Device? _device;
   String? _error;
+
+  final String _buildingId =
+      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   final List<Tab> _tabs = const [
     Tab(text: 'Overview'),
@@ -36,7 +41,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      final device = await _controller.getDevice(widget.deviceId);
+      final device = await _controller.getDevice(widget.deviceId, _buildingId);
 
       setState(() {
         _device = device;
@@ -119,9 +124,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
       children: [
         Container(
           padding: const EdgeInsets.all(8),
-          child: const Column(
-            children: []
-          ),
+          child: const Column(children: []),
         ),
       ],
     );
