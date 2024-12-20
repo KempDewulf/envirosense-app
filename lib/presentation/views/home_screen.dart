@@ -25,8 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
 
-  final String _buildingId =
-      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  final String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   @override
   void initState() {
