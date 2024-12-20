@@ -90,6 +90,8 @@ class _DeviceCardState extends State<DeviceCard> {
                 fontSize: 14,
                 color: Colors.grey,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
