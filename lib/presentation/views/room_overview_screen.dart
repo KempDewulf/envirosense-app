@@ -1,7 +1,9 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/data/models/room_model.dart';
+import 'package:envirosense/domain/entities/air_data.dart';
+import 'package:envirosense/domain/entities/air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/controllers/weather_controller.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
@@ -22,9 +24,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final RoomController _controller;
   late final TabController _tabController;
+  late final WeatherController _weatherController;
+  double _targetTemperature = 22.0; // hardcoded for now
   bool _isLoading = true;
   bool _showRoomData = true;
   Room? _room;
+  AirQuality? _airQuality;
+  AirData? _outsideAirData;
   String? _error;
 
   @override
@@ -38,8 +44,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     try {
       setState(() => _isLoading = true);
       final room = await _controller.getRoom(widget.roomId);
+      final airQuality = await _controller.getAirQuality(widget.roomId);
+      final outsideAirData = await _weatherController.getOutsideAirData();
       setState(() {
         _room = room;
+        _airQuality = airQuality;
         _isLoading = false;
       });
     } catch (e) {
@@ -118,7 +127,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       padding: const EdgeInsets.all(16),
       children: [
         EnviroScoreCard(
-          score: _controller.getEnviroScore(),
+          score: _airQuality?.enviroScore ?? 0,
           onInfoPressed: _showEnviroScoreInfo,
         ),
         const SizedBox(height: 48),
@@ -137,7 +146,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
               const Icon(Icons.thermostat, color: AppColors.secondaryColor),
               const SizedBox(width: 8),
               Text(
-                'Set Target Temperature (${_controller.getTargetTemperature()}°C)',
+                'Set Target Temperature (${_airQuality?.airData.temperature}°C)',
                 style:
                     const TextStyle(color: AppColors.whiteColor, fontSize: 16),
               ),
@@ -214,8 +223,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                 title:
                     _showRoomData ? 'Room Environment' : 'Outside Environment',
                 data: _showRoomData
-                    ? _controller.getRoomData(widget.roomName)
-                    : _weatherController.getOutsideData(),
+                    ? _airQuality!.airData
+                    : _outsideAirData!,
               ),
             ],
           ),
@@ -249,7 +258,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   void _showTargetTemperatureSheet(BuildContext context) {
-    double currentTemp = _controller.getTargetTemperature();
+    double currentTargetTemp = _targetTemperature;
     showModalBottomSheet(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -273,12 +282,12 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                     icon: const Icon(Icons.remove_circle_outline),
                     onPressed: () {
                       setState(() =>
-                          currentTemp = (currentTemp - 0.5).clamp(16, 30));
+                          currentTargetTemp = (currentTargetTemp - 0.5).clamp(16, 30));
                     },
                   ),
                   const SizedBox(width: 16),
                   Text(
-                    '${currentTemp.toStringAsFixed(1)}°C',
+                    '${currentTargetTemp.toStringAsFixed(1)}°C',
                     style: const TextStyle(fontSize: 24),
                   ),
                   const SizedBox(width: 16),
@@ -286,7 +295,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
                       setState(() =>
-                          currentTemp = (currentTemp + 0.5).clamp(16, 30));
+                          currentTargetTemp = (currentTargetTemp + 0.5).clamp(16, 30));
                     },
                   ),
                 ],
@@ -294,7 +303,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  _controller.setTargetTemperature(currentTemp);
+                  _targetTemperature = currentTargetTemp;
                   Navigator.pop(context);
                 },
                 child: const Text('Save'),
