@@ -80,7 +80,7 @@ class DataDisplayBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dataEntries = _getDataEntries();
-    
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -112,16 +112,15 @@ class DataDisplayBox extends StatelessWidget {
                 Text(
                   entry.key,
                   style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.accentColor,
+                    fontSize: 24,
+                    color: AppColors.blackColor,
                   ),
                 ),
                 const Spacer(),
                 Text(
                   entry.value['value']!,
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w300,
                     color: AppColors.blackColor,
                   ),
@@ -157,14 +156,14 @@ class Thresholds {
     optimalMin: 20.0,
     optimalMax: 24.0,
   );
-  
+
   static const humidity = (
     min: 30.0,
     max: 70.0,
     optimalMin: 40.0,
     optimalMax: 60.0,
   );
-  
+
   static const airQuality = (
     max: 1000,
     optimalMax: 800,

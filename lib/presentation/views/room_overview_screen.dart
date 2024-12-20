@@ -145,7 +145,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
           onInfoPressed: _showEnviroScoreInfo,
           isDeviceDataAvailable: _roomHasDeviceData,
         ),
-        const SizedBox(height: 48),
+        const SizedBox(height: 24),
         ElevatedButton(
           onPressed: () => _showTargetTemperatureSheet(context),
           style: ElevatedButton.styleFrom(
@@ -168,7 +168,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
             ],
           ),
         ),
-        const SizedBox(height: 48),
+        const SizedBox(height: 24),
         Container(
           padding: const EdgeInsets.all(8),
           child: Column(
