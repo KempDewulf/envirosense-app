@@ -113,7 +113,7 @@ class DataDisplayBox extends StatelessWidget {
                   entry.key,
                   style: const TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.accentColor,
                   ),
                 ),
@@ -121,8 +121,8 @@ class DataDisplayBox extends StatelessWidget {
                 Text(
                   entry.value['value']!,
                   style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w300,
                     color: AppColors.blackColor,
                   ),
                 ),
