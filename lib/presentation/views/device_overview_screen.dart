@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
+import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:flutter/material.dart';
 
 class DeviceOverviewScreen extends StatefulWidget {
@@ -106,7 +107,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
         RefreshIndicator(
           onRefresh: _loadData,
           color: AppColors.secondaryColor,
-          child: DeviceDataList(devices: _device?.deviceData ?? []),
+          child: DeviceDataList(deviceData: _device?.deviceData ?? []),
         ),
       ],
     );
