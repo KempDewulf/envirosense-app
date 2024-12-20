@@ -1,6 +1,8 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/air_quality.dart';
+import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/weather_controller.dart';
@@ -23,8 +25,10 @@ class RoomOverviewScreen extends StatefulWidget {
 class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final RoomController _controller = RoomController();
-  late final TabController _tabController = TabController(length: 3, vsync: this);
+  late final TabController _tabController =
+      TabController(length: _tabs.length, vsync: this);
   late final WeatherController _weatherController = WeatherController();
+  late bool _roomHasDeviceData;
   double _targetTemperature = 22.0; // hardcoded for now
   bool _isLoading = true;
   bool _showRoomData = true;
@@ -32,6 +36,10 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   AirQuality? _airQuality;
   AirData? _outsideAirData;
   String? _error;
+  final List<Tab> _tabs = const [
+    Tab(text: 'Overview'),
+    Tab(text: 'Devices'),
+  ];
 
   @override
   void initState() {
@@ -44,12 +52,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _isLoading = true);
       final room = await _controller.getRoom(widget.roomId);
       final airQuality = await _controller.getAirQuality(widget.roomId);
-      final outsideAirData = await _weatherController.getOutsideAirData();
+      final outsideAirData = _weatherController.getOutsideAirData();
       setState(() {
         _room = room;
         _airQuality = airQuality;
         _outsideAirData = outsideAirData;
+
         _isLoading = false;
+        _roomHasDeviceData = isDeviceDataAvailable();
       });
     } catch (e) {
       setState(() {
@@ -57,6 +67,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         _isLoading = false;
       });
     }
+  }
+
+  bool isDeviceDataAvailable() {
+    if (_airQuality?.enviroScore == 0 && _airQuality?.airData.temperature == 0 && _airQuality?.airData.humidity == 0 && _airQuality?.airData.gasPpm== 0) {
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -75,20 +92,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         ),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Overview'),
-            Tab(text: 'Devices'),
-            Tab(text: 'History'),
-          ],
+          tabs: _tabs,
           labelColor: AppColors.secondaryColor,
           indicatorColor: AppColors.secondaryColor,
           unselectedLabelColor: AppColors.whiteColor,
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: _loadData,
-        child: _buildBody(),
-      ),
+      body: _buildBody(),
     );
   }
 
@@ -115,9 +125,15 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     return TabBarView(
       controller: _tabController,
       children: [
-        _buildOverviewTab(),
-        DevicesList(roomId: widget.roomName),
-        _buildHistoryTab(),
+        // Wrap each tab content with RefreshIndicator
+        RefreshIndicator(
+          onRefresh: _loadData,
+          child: _buildOverviewTab(),
+        ),
+        RefreshIndicator(
+          onRefresh: _loadData,
+          child: DevicesList(devices: _room?.devices ?? []),
+        ),
       ],
     );
   }
@@ -129,6 +145,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         EnviroScoreCard(
           score: _airQuality?.enviroScore ?? 0,
           onInfoPressed: _showEnviroScoreInfo,
+          isDeviceDataAvailable: _roomHasDeviceData,
         ),
         const SizedBox(height: 48),
         ElevatedButton(
@@ -218,24 +235,19 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                 ),
               ),
               const SizedBox(height: 16),
-              DataDisplayBox(
-                key: ValueKey(_showRoomData),
-                title:
-                    _showRoomData ? 'Room Environment' : 'Outside Environment',
-                data: _showRoomData
-                    ? _airQuality!.airData
-                    : _outsideAirData!,
-              ),
+              if ((_showRoomData && _airQuality != null) ||
+                  (!_showRoomData && _outsideAirData != null))
+                DataDisplayBox(
+                  key: ValueKey(_showRoomData),
+                  title: _showRoomData
+                      ? 'Room Environment'
+                      : 'Outside Environment',
+                  data: _showRoomData ? _airQuality!.airData : _outsideAirData!,
+                )
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildHistoryTab() {
-    return const Center(
-      child: Text('Historical data coming soon'),
     );
   }
 
@@ -281,8 +293,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                   IconButton(
                     icon: const Icon(Icons.remove_circle_outline),
                     onPressed: () {
-                      setState(() =>
-                          currentTargetTemp = (currentTargetTemp - 0.5).clamp(16, 30));
+                      setState(() => currentTargetTemp =
+                          (currentTargetTemp - 0.5).clamp(16, 30));
                     },
                   ),
                   const SizedBox(width: 16),
@@ -294,8 +306,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
-                      setState(() =>
-                          currentTargetTemp = (currentTargetTemp + 0.5).clamp(16, 30));
+                      setState(() => currentTargetTemp =
+                          (currentTargetTemp + 0.5).clamp(16, 30));
                     },
                   ),
                 ],
