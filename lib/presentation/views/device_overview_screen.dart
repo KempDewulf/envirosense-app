@@ -370,7 +370,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -386,12 +386,12 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                   Text(
                     _device?.room?.name ?? "Unknown Room",
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: AppColors.secondaryColor,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 32),
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
                       labelText: 'Select New Room',
@@ -402,6 +402,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: AppColors.secondaryColor),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.secondaryColor),
+                      ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: AppColors.secondaryColor, width: 2),
@@ -409,6 +412,30 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     ),
                     dropdownColor: AppColors.secondaryColor,
                     value: selectedRoomId,
+                    // Add selectedItemBuilder for closed dropdown display
+                    selectedItemBuilder: (context) => [
+                      const DropdownMenuItem(
+                        value: null,
+                        child: Text(
+                          'No Room',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      ...rooms.map((room) => DropdownMenuItem(
+                            value: room.id,
+                            child: Text(
+                              room.name,
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                              ),
+                            ),
+                          )),
+                    ],
+                    // Regular items for dropdown menu
                     items: [
                       const DropdownMenuItem(
                         value: null,
@@ -422,31 +449,48 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       ),
                       ...rooms.map((room) => DropdownMenuItem(
                             value: room.id,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: room.id == _device?.room?.id
-                                    ? AppColors.accentColor.withOpacity(0.3)
-                                    : null,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              child: Text(
-                                room.name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: room.id == _device?.room?.id
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  room.name,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: room.id == selectedRoomId
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
                                 ),
-                              ),
+                                if (room.id == _device?.room?.id) ...[
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Text(
+                                      'current',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           )),
                     ],
                     onChanged: (value) => selectedRoomId = value,
-                    icon: const Icon(Icons.arrow_drop_down,
-                        color: AppColors.secondaryColor),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: AppColors.secondaryColor,
+                      size: 30,
+                    ),
                   ),
                 ],
               ),
