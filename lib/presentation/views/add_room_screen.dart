@@ -34,15 +34,18 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   Future<void> _loadRoomTypes() async {
     try {
       final roomTypes = await _roomTypesController.getRoomTypes(_buildingId);
-      setState(() {
-        _roomTypes = roomTypes;
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _roomTypes = roomTypes;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
       LoggingService.logError('Error loading room types', e);
     }
   }
@@ -68,21 +71,28 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       await _roomController.addRoom(
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Room added successfully. Drag down to refresh.')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Room added successfully. Drag down to refresh.')),
+        );
 
-      Navigator.pop(context, true);
+        Navigator.pop(context, true);
+      }
     } catch (e, stackTrace) {
       LoggingService.logError('Exception caught: $e', e, stackTrace);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to add room')),
-      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to add room')),
+        );
+      }
     } finally {
-      setState(() {
-        _isSaving = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
     }
   }
 
