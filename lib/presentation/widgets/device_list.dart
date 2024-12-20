@@ -10,8 +10,7 @@ class DevicesList extends StatelessWidget {
   DevicesList({super.key, required this.devices});
 
   void _navigateToDeviceDetail(BuildContext context, Device device) {
-    // TODO: Implement navigation to device detail screen
-    // Navigator.pushNamed(context, '/deviceDetail', arguments: device);
+    Navigator.pushNamed(context, '/deviceOverview', arguments: device);
   }
 
   @override
