@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 
 class DevicesList extends StatelessWidget {
+  final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
   final List<Device> devices;
 
-  const DevicesList({super.key, required this.devices});
+  DevicesList({super.key, required this.devices});
 
   void _navigateToDeviceDetail(BuildContext context, Device device) {
     // TODO: Implement navigation to device detail screen
@@ -49,8 +50,8 @@ class DevicesList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               FutureBuilder<String?>(
-                                future: DeviceStorageHelper.getDeviceName(
-                                    device.identifier),
+                                future: _deviceStorageHelper
+                                    .getDeviceName(device.identifier),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {

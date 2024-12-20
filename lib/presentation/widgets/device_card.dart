@@ -17,24 +17,25 @@ class DeviceCard extends StatefulWidget {
 
 class _DeviceCardState extends State<DeviceCard> {
   String? _customDeviceName;
+  final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
 
   @override
   void initState() {
     super.initState();
-    _fetchDeviceName();
+    _loadDeviceName();
   }
 
   @override
   void didUpdateWidget(DeviceCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.device.identifier != widget.device.identifier) {
-      _fetchDeviceName();
+      _loadDeviceName();
     }
   }
 
-  Future<void> _fetchDeviceName() async {
+  Future<void> _loadDeviceName() async {
     final name =
-        await DeviceStorageHelper.getDeviceName(widget.device.identifier);
+        await _deviceStorageHelper.getDeviceName(widget.device.identifier);
     setState(() {
       _customDeviceName = name;
     });
