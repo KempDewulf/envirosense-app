@@ -63,16 +63,16 @@ class DataDisplayBox extends StatelessWidget {
   List<MapEntry<String, Map<String, dynamic>>> _getDataEntries() {
     return [
       MapEntry('Temperature', {
-        'value': '${data.temperature.toStringAsFixed(1)}°C',
-        'status': _getTemperatureStatus(data.temperature),
+        'value': '${data.temperature?.toStringAsFixed(1)}°C',
+        'status': _getTemperatureStatus(data.temperature ?? 0),
       }),
       MapEntry('Humidity', {
-        'value': '${data.humidity.toStringAsFixed(1)}%',
-        'status': _getHumidityStatus(data.humidity),
+        'value': '${data.humidity?.toStringAsFixed(1)}%',
+        'status': _getHumidityStatus(data.humidity ?? 0),
       }),
       MapEntry('Air Quality', {
         'value': '${data.gasPpm} ppm',
-        'status': _getAirQualityStatus(data.gasPpm),
+        'status': _getAirQualityStatus(data.gasPpm ?? 0),
       }),
     ];
   }
