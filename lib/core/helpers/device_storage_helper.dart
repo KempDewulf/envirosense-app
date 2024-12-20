@@ -23,7 +23,7 @@ class DeviceStorageHelper {
           Map<String, dynamic>.from(json.decode(storedMappings));
       return deviceMappings[identifier] as String?;
     }
-    return null;
+    return identifier;
   }
 
   /// Sets or updates the custom name for a given device identifier.
