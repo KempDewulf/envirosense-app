@@ -84,7 +84,7 @@ class _DeviceCardState extends State<DeviceCard> {
             ),
             const SizedBox(height: 4),
             Text(
-              'Room: ${widget.device.room?.name ?? 'Unknown'}',
+              widget.device.room?.name ?? 'Unknown room',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 14,
