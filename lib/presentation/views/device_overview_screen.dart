@@ -434,15 +434,19 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                             value: room.id,
                             child: Row(
                               children: [
-                                Text(
-                                  room.name,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: room.id == _selectedRoomId
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
+                                Builder(
+                                  builder: (context) {
+                                    return Text(
+                                      room.name,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: room.id == _selectedRoomId
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 if (room.id == _device?.room?.id) ...[
                                   const SizedBox(width: 8),
@@ -468,7 +472,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                             ),
                           )),
                     ],
-                    onChanged: (value) => _selectedRoomId = value,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedRoomId = value;
+                      });
+                    },
                     icon: const Icon(
                       Icons.arrow_drop_down,
                       color: AppColors.secondaryColor,
