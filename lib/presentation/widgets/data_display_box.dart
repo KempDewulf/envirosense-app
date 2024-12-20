@@ -38,12 +38,12 @@ class DataDisplayBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Color.fromARGB(255, 211, 211, 211),
             spreadRadius: 1,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            blurRadius: 10,
+            offset: Offset(0, 2),
           ),
         ],
       ),

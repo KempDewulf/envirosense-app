@@ -54,12 +54,20 @@ class _DeviceCardState extends State<DeviceCard> {
           },
         );
       },
-      child: Card(
+      child: Container(
         key: ValueKey(widget.device.identifier), // Ensure unique key
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 211, 211, 211),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
-        elevation: 2,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Column(
