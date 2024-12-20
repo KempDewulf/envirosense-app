@@ -236,33 +236,96 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     final TextEditingController controller =
         TextEditingController(text: widget.deviceName);
 
-    return showDialog(
+    return showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Rename Device'),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            labelText: 'Device Name',
-            border: OutlineInputBorder(),
-          ),
-          autofocus: true,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (controller.text.isNotEmpty) {
-                // deviceBloc.add(RenameDevice(controller.text));
-                Navigator.pop(context);
-              }
-            },
-            child: const Text('Save'),
-          ),
-        ],
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.accentColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Rename Device',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.secondaryColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: TextField(
+                controller: controller,
+                decoration: const InputDecoration(
+                  labelText: 'Device Name',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.secondaryColor),
+                  ),
+                ),
+              ),
+            ),
+            Divider(color: AppColors.accentColor.withOpacity(0.2)),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: const BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          if (controller.text.isNotEmpty) {
+                            Navigator.pop(context);
+                            // TODO: Implement rename logic
+                          }
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: const Text('Save'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -270,49 +333,117 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   Future<void> _showChangeRoomDialog() async {
     String? selectedRoomId = _device?.room?.id;
 
-    return showDialog(
+    return showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Change Room'),
-        content: Column(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Current Room: ${_device?.room?.name ?? "None"}'),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
-                labelText: 'Select Room',
-                border: OutlineInputBorder(),
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.accentColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(2),
               ),
-              value: selectedRoomId,
-              items: const [
-                // TODO: Fetch rooms from RoomBloc
-                DropdownMenuItem(
-                  value: null,
-                  child: Text('No Room'),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Change Room',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.secondaryColor,
                 ),
-                // ...rooms.map((room) => DropdownMenuItem(
-                //   value: room.id,
-                //   child: Text(room.name),
-                // )),
-              ],
-              onChanged: (value) => selectedRoomId = value,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Current Room:',
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _device?.room?.name ?? "None",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secondaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Select New Room',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.secondaryColor),
+                      ),
+                    ),
+                    value: selectedRoomId,
+                    items: const [
+                      DropdownMenuItem(
+                        value: null,
+                        child: Text('No Room'),
+                      ),
+                      // TODO: Add room items
+                    ],
+                    onChanged: (value) => selectedRoomId = value,
+                  ),
+                ],
+              ),
+            ),
+            Divider(color: AppColors.accentColor.withOpacity(0.2)),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: const BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          // TODO: Implement room change logic
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: const Text('Save'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              // deviceBloc.add(ChangeDeviceRoom(selectedRoomId));
-              Navigator.pop(context);
-            },
-            child: const Text('Save'),
-          ),
-        ],
       ),
     );
   }
@@ -321,6 +452,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
@@ -386,7 +518,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: BorderSide(color: AppColors.secondaryColor),
+                          side: const BorderSide(color: AppColors.secondaryColor),
                         ),
                         child: const Text(
                           'Cancel',
