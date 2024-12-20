@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/domain/entities/device.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceCard extends StatefulWidget {
   final Device device;
@@ -35,20 +33,11 @@ class _DeviceCardState extends State<DeviceCard> {
   }
 
   Future<void> _fetchDeviceName() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? storedMappings = prefs.getString('device_names');
-    if (storedMappings != null) {
-      final Map<String, dynamic> deviceMappings =
-          Map<String, dynamic>.from(json.decode(storedMappings));
-
-      setState(() {
-        _customDeviceName = deviceMappings[widget.device.identifier] as String?;
-      });
-    } else {
-      setState(() {
-        _customDeviceName = null;
-      });
-    }
+    final name =
+        await DeviceStorageHelper.getDeviceName(widget.device.identifier);
+    setState(() {
+      _customDeviceName = name;
+    });
   }
 
   @override
