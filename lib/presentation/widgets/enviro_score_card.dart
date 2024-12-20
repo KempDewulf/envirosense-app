@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
-  final Map<String, Map<String, String>> score;
+  final int score;
   final VoidCallback onInfoPressed;
 
   const EnviroScoreCard({
@@ -45,7 +45,7 @@ class EnviroScoreCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  score['EnviroScore']?['value'] ?? '0',
+                  score.toString(),
                   style: const TextStyle(
                     fontSize: 48,
                     fontWeight: FontWeight.bold,
