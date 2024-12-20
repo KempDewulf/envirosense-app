@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class DeviceOverviewScreen extends StatefulWidget {
 class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _controller = DeviceController();
+  late final RoomController _roomController = RoomController();
   late final TabController _tabController =
       TabController(length: _tabs.length, vsync: this);
   bool _isLoading = true;
@@ -342,6 +344,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
 
   Future<void> _showChangeRoomDialog() async {
     String? selectedRoomId = _device?.room?.id;
+    final rooms = await _roomController.getRooms();
+
+    if (!mounted) return;
 
     return showModalBottomSheet(
       context: context,
@@ -364,17 +369,6 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                'Change Room',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondaryColor,
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -386,7 +380,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    _device?.room?.name ?? "None",
+                    _device?.room?.name ?? "Unknown Room",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -403,12 +397,15 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       ),
                     ),
                     value: selectedRoomId,
-                    items: const [
-                      DropdownMenuItem(
+                    items: [
+                      const DropdownMenuItem(
                         value: null,
                         child: Text('No Room'),
                       ),
-                      // TODO: Add room items
+                      ...rooms.map((room) => DropdownMenuItem(
+                            value: room.id,
+                            child: Text(room.name),
+                          )),
                     ],
                     onChanged: (value) => selectedRoomId = value,
                   ),
