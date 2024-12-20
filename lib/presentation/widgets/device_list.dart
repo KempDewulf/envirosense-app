@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
@@ -8,7 +9,7 @@ class DevicesList extends StatelessWidget {
   const DevicesList({super.key, required this.devices});
 
   void _navigateToDeviceDetail(BuildContext context, Device device) {
-    // TODO: Implement navigation to device detail screen
+    // TODO(@layton): Implement navigation to device detail screen
     // Navigator.pushNamed(context, '/deviceDetail', arguments: device);
   }
 
@@ -48,7 +49,7 @@ class DevicesList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                device.identifier,
+                                DeviceStorageHelper.getDeviceName(device.identifier),
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
