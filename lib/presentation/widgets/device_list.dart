@@ -9,7 +9,7 @@ class DevicesList extends StatelessWidget {
   const DevicesList({super.key, required this.devices});
 
   void _navigateToDeviceDetail(BuildContext context, Device device) {
-    // TODO(@layton): Implement navigation to device detail screen
+    // TODO: Implement navigation to device detail screen
     // Navigator.pushNamed(context, '/deviceDetail', arguments: device);
   }
 
@@ -48,12 +48,37 @@ class DevicesList extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                DeviceStorageHelper.getDeviceName(device.identifier),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              FutureBuilder<String?>(
+                                future: DeviceStorageHelper.getDeviceName(
+                                    device.identifier),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Text(
+                                      'Loading...',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return const Text(
+                                      'Error',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  } else {
+                                    return Text(
+                                      snapshot.data ?? device.identifier,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -66,7 +91,7 @@ class DevicesList extends StatelessWidget {
                     ),
                   ),
                 ),
-              ))
+              )),
       ],
     );
   }
