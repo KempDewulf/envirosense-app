@@ -21,7 +21,7 @@ class _DeviceDataListState extends State<DeviceDataList> {
   void initState() {
     super.initState();
     if (widget.deviceData.isNotEmpty) {
-      _currentDate = DateFormat('yyyy-MM-dd')
+      _currentDate = DateFormat('dd-MM-yyyy')
           .format(DateTime.parse(widget.deviceData.first.timestamp));
     }
   }
@@ -38,7 +38,7 @@ class _DeviceDataListState extends State<DeviceDataList> {
 
     for (var data in widget.deviceData) {
       final date =
-          DateFormat('yyyy-MM-dd').format(DateTime.parse(data.timestamp));
+          DateFormat('dd-MM-yyyy').format(DateTime.parse(data.timestamp));
       if (groupedData[date] == null) {
         groupedData[date] = [];
       }
