@@ -28,8 +28,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
   final List<Tab> _tabs = const [
-    Tab(text: 'Overview'),
     Tab(text: 'Data History'),
+    Tab(text: 'Actions'),
   ];
 
   @override
@@ -107,24 +107,51 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         RefreshIndicator(
           onRefresh: _loadData,
           color: AppColors.secondaryColor,
-          child: _buildOverviewTab(),
+          child: DeviceDataList(deviceData: _device?.deviceData ?? []),
         ),
         RefreshIndicator(
           onRefresh: _loadData,
           color: AppColors.secondaryColor,
-          child: DeviceDataList(deviceData: _device?.deviceData ?? []),
+          child: _buildActionsTab(),
         ),
       ],
     );
   }
 
-  Widget _buildOverviewTab() {
+  Widget _buildActionsTab() {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
-          child: const Column(children: []),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildActionButton(
+                icon: Icons.edit,
+                label: 'Rename Device',
+                onPressed: () {},
+                color: AppColors.accentColor,
+                isNeutral: true,
+              ),
+              const SizedBox(height: 16),
+              _buildActionButton(
+                icon: Icons.swap_horiz,
+                label: 'Change Room',
+                onPressed: () {},
+                color: AppColors.secondaryColor,
+                isWarning: true,
+              ),
+              const SizedBox(height: 16),
+              _buildActionButton(
+                icon: Icons.delete_outline,
+                label: 'Remove Device',
+                onPressed: () {},
+                color: Colors.red,
+                isDestructive: true,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -134,5 +161,74 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+    required Color color,
+    bool isDestructive = false,
+    bool isWarning = false,
+    bool isNeutral = false,
+  }) {
+    return Container(
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: isDestructive
+            ? Colors.red.withOpacity(0.2)
+            : isWarning
+                ? Colors.orange.withOpacity(0.2)
+                : isNeutral
+                    ? Colors.grey.withOpacity(0.2)
+                    : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Icon(icon, color: color),
+                const SizedBox(width: 16),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: isDestructive
+                        ? Colors.red
+                        : isWarning
+                            ? Colors.orange
+                            : Colors.black87,
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: isDestructive
+                      ? Colors.red
+                      : isWarning
+                          ? Colors.orange
+                          : Colors.black54,
+                  size: 16,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
