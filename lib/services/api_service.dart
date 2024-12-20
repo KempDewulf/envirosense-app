@@ -42,11 +42,6 @@ class ApiService {
         body: jsonEncode(body),
       );
 
-      print('$baseUrl/$endpoint');
-      print('sending body $body');
-      print('Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
       switch (response.statusCode) {
         case 200:
         case 201:
