@@ -91,7 +91,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
       title: 'EnviroSense',
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: AppColors.whiteColor,
+          cursorColor: AppColors.secondaryColor,
           selectionColor: AppColors.secondaryColor,
           selectionHandleColor: AppColors.secondaryColor,
         ),

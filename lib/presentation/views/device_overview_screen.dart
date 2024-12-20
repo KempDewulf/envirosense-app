@@ -278,11 +278,20 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 controller: controller,
                 decoration: const InputDecoration(
                   labelText: 'Device Name',
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
+                  labelStyle: TextStyle(color: AppColors.secondaryColor),
+                  border: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.secondaryColor),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.secondaryColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppColors.secondaryColor, width: 2),
+                  ),
                 ),
+                style: const TextStyle(color: Colors.black87),
+                selectionControls: MaterialTextSelectionControls(),
               ),
             ),
             Divider(color: AppColors.accentColor.withOpacity(0.2)),
@@ -296,7 +305,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: const BorderSide(color: AppColors.secondaryColor),
+                          side:
+                              const BorderSide(color: AppColors.secondaryColor),
                         ),
                         child: const Text(
                           'Cancel',
@@ -416,7 +426,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: const BorderSide(color: AppColors.secondaryColor),
+                          side:
+                              const BorderSide(color: AppColors.secondaryColor),
                         ),
                         child: const Text(
                           'Cancel',
@@ -518,7 +529,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          side: const BorderSide(color: AppColors.secondaryColor),
+                          side:
+                              const BorderSide(color: AppColors.secondaryColor),
                         ),
                         child: const Text(
                           'Cancel',
