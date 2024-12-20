@@ -50,7 +50,7 @@ class _DeviceDataListState extends State<DeviceDataList> {
         SliverAppBar(
           pinned: true,
           automaticallyImplyLeading: false,
-          expandedHeight: 50.0,
+          expandedHeight: 60.0,
           backgroundColor: AppColors.accentColor,
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
