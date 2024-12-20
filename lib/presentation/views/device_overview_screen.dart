@@ -130,7 +130,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
               _buildActionButton(
                 icon: Icons.edit,
                 label: 'Rename Device',
-                onPressed: () {},
+                onPressed: _showRenameDeviceDialog,
                 color: AppColors.accentColor,
                 isNeutral: true,
               ),
@@ -138,7 +138,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
               _buildActionButton(
                 icon: Icons.swap_horiz,
                 label: 'Change Room',
-                onPressed: () {},
+                onPressed: _showChangeRoomDialog,
                 color: AppColors.secondaryColor,
                 isWarning: true,
               ),
@@ -146,7 +146,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
               _buildActionButton(
                 icon: Icons.delete_outline,
                 label: 'Remove Device',
-                onPressed: () {},
+                onPressed: _showRemoveDeviceDialog,
                 color: Colors.red,
                 isDestructive: true,
               ),
@@ -227,6 +227,197 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showRenameDeviceDialog() async {
+    final TextEditingController controller =
+        TextEditingController(text: widget.deviceName);
+
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Rename Device'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            labelText: 'Device Name',
+            border: OutlineInputBorder(),
+          ),
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              if (controller.text.isNotEmpty) {
+                // deviceBloc.add(RenameDevice(controller.text));
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showChangeRoomDialog() async {
+    String? selectedRoomId = _device?.room?.id;
+
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Change Room'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Current Room: ${_device?.room?.name ?? "None"}'),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                labelText: 'Select Room',
+                border: OutlineInputBorder(),
+              ),
+              value: selectedRoomId,
+              items: const [
+                // TODO: Fetch rooms from RoomBloc
+                DropdownMenuItem(
+                  value: null,
+                  child: Text('No Room'),
+                ),
+                // ...rooms.map((room) => DropdownMenuItem(
+                //   value: room.id,
+                //   child: Text(room.name),
+                // )),
+              ],
+              onChanged: (value) => selectedRoomId = value,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              // deviceBloc.add(ChangeDeviceRoom(selectedRoomId));
+              Navigator.pop(context);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showRemoveDeviceDialog() async {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.accentColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Remove Device',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.secondaryColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                  children: [
+                    const TextSpan(text: 'Are you sure you want to remove '),
+                    TextSpan(
+                      text: widget.deviceName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secondaryColor,
+                      ),
+                    ),
+                    const TextSpan(text: ' from this room?'),
+                  ],
+                ),
+              ),
+            ),
+            Divider(color: AppColors.accentColor.withOpacity(0.2)),
+            // Action buttons
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          // Pop bottom sheet & Pop device screen
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          // TODO: Implement remove logic
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: const Text(
+                          'Remove',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
