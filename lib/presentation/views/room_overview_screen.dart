@@ -70,10 +70,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   bool isDeviceDataAvailable() {
-    if (_airQuality?.enviroScore == 0 && _airQuality?.airData.temperature == 0 && _airQuality?.airData.humidity == 0 && _airQuality?.airData.gasPpm== 0) {
-      return false;
-    }
-    return true;
+    return _airQuality?.enviroScore != null;
   }
 
   @override
