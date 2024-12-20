@@ -9,9 +9,9 @@ class DeviceCard extends StatefulWidget {
   final Device device;
 
   const DeviceCard({
-    Key? key,
+    super.key,
     required this.device,
-  }) : super(key: key);
+  });
 
   @override
   State<DeviceCard> createState() => _DeviceCardState();
