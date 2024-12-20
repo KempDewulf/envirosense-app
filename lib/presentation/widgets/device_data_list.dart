@@ -76,7 +76,7 @@ class DeviceDataList extends StatelessWidget {
       ),
       const SizedBox(height: 12),
       _buildDataRow(
-        label: 'Air Quality',
+        label: 'CO2 Level',
         value: '${data.airData.gasPpm} ppm',
         status: DataStatusHelper.getAirQualityStatus(data.airData.gasPpm ?? 0),
         icon: Icons.cloud,
@@ -96,16 +96,28 @@ class DeviceDataList extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: Text(
-            '$label: $value',
+            label,
             style: const TextStyle(fontSize: 16),
           ),
         ),
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: DataStatusHelper.getStatusColor(status),
-            shape: BoxShape.circle,
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                value,
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: DataStatusHelper.getStatusColor(status),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
           ),
         ),
       ],

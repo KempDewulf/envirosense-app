@@ -23,7 +23,7 @@ class DataDisplayBox extends StatelessWidget {
         'value': '${data.humidity?.toStringAsFixed(1)}%',
         'status': DataStatusHelper.getHumidityStatus(data.humidity ?? 0),
       }),
-      MapEntry('Air Quality', {
+      MapEntry('CO2 Level', {
         'value': '${data.gasPpm} ppm',
         'status': DataStatusHelper.getAirQualityStatus(data.gasPpm ?? 0),
       }),
