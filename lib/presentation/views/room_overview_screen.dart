@@ -34,7 +34,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   AirQuality? _airQuality;
   AirData? _outsideAirData;
   String? _error;
-  String city = 'Brugge'; //TODO: get city from user
+  String city = 'Brugge'; //TODO: later in poc we would get city from user
 
   final List<Tab> _tabs = const [
     Tab(text: 'Overview'),
