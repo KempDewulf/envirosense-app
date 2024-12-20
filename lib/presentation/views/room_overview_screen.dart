@@ -22,9 +22,9 @@ class RoomOverviewScreen extends StatefulWidget {
 
 class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     with SingleTickerProviderStateMixin {
-  late final RoomController _controller;
-  late final TabController _tabController;
-  late final WeatherController _weatherController;
+  late final RoomController _controller = RoomController();
+  late final TabController _tabController = TabController(length: 3, vsync: this);
+  late final WeatherController _weatherController = WeatherController();
   double _targetTemperature = 22.0; // hardcoded for now
   bool _isLoading = true;
   bool _showRoomData = true;
@@ -36,7 +36,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     _loadData();
   }
 
@@ -49,6 +48,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() {
         _room = room;
         _airQuality = airQuality;
+        _outsideAirData = outsideAirData;
         _isLoading = false;
       });
     } catch (e) {
