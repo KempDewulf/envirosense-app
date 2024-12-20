@@ -1,11 +1,6 @@
+import 'package:envirosense/core/enums/status.dart';
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
-
-enum Status {
-  good,
-  medium,
-  bad,
-}
 
 class Thresholds {
   static const temperature = (
