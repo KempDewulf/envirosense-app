@@ -18,6 +18,9 @@ class AddDeviceScreen extends StatefulWidget {
 }
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _deviceNameController = TextEditingController();
   final RoomController _roomController = RoomController();
@@ -35,10 +38,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         _deviceNameController.text.isNotEmpty;
   }
 
-  void setResult(String result) {
-    setState(() => _deviceIdentifierCode = result);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -49,6 +48,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _deviceNameController.dispose();
     super.dispose();
   }
 
@@ -58,10 +58,10 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     final Map<String, String> deviceMappings = storedMappings != null
         ? Map<String, String>.from(json.decode(storedMappings))
         : {};
+
     if (_deviceIdentifierCode != null &&
         _deviceNameController.text.isNotEmpty) {
       deviceMappings[_deviceIdentifierCode!] = _deviceNameController.text;
-
       await prefs.setString('device_names', json.encode(deviceMappings));
     }
   }
@@ -79,15 +79,19 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   Future<void> _getRooms() async {
     try {
       final rooms = await _roomController.getRooms();
-      setState(() {
-        _rooms = rooms;
-        _filteredRooms = rooms;
-      });
+      if (mounted) {
+        setState(() {
+          _rooms = rooms;
+          _filteredRooms = rooms;
+        });
+      }
     } catch (e) {
       LoggingService.logError('Failed to fetch rooms: $e', e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to load rooms')),
-      );
+      if (mounted) {
+        _scaffoldMessengerKey.currentState?.showSnackBar(
+          const SnackBar(content: Text('Failed to load rooms')),
+        );
+      }
     }
   }
 
@@ -103,26 +107,32 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
           _selectedRoom?.id, _deviceIdentifierCode);
       await _saveDeviceName();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Device assigned successfully')),
-      );
-
-      Navigator.pop(context, true);
+      if (mounted) {
+        _scaffoldMessengerKey.currentState?.showSnackBar(
+          const SnackBar(content: Text('Device assigned successfully')),
+        );
+        Navigator.pop(context, true);
+      }
     } catch (e) {
       LoggingService.logError('Failed to assign device: $e', e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to assign device: $e')),
-      );
+      if (mounted) {
+        _scaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(content: Text('Failed to assign device: $e')),
+        );
+      }
     } finally {
-      setState(() {
-        _isSaving = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldMessengerKey,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.keyboard_arrow_left_rounded),
@@ -171,7 +181,11 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             color: const Color(0xFFFFF9E6),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: QrCodeScanner(setResult: setResult),
+                          child: QrCodeScanner(setResult: (result) {
+                            if (mounted) {
+                              setState(() => _deviceIdentifierCode = result);
+                            }
+                          }),
                         ),
                       )
                     : Column(
