@@ -9,7 +9,9 @@ class DevicesList extends StatelessWidget {
 
   DevicesList({super.key, required this.devices});
 
-  void _navigateToDeviceDetail(BuildContext context, Device device) async{
+  void _navigateToDeviceDetail(BuildContext context, Device device) async {
+    print(device.identifier);
+    print(await _deviceStorageHelper.getDeviceName(device.identifier));
     Navigator.pushNamed(context, '/deviceOverview', arguments: {
       'deviceName': await _deviceStorageHelper.getDeviceName(device.identifier),
       'deviceId': device.id,
@@ -25,7 +27,7 @@ class DevicesList extends StatelessWidget {
         if (devices.isEmpty)
           const Center(
             child: Text(
-              'No devices in this room',
+              'No devices in this room.',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.accentColor,
