@@ -163,6 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Email field
                 CustomTextFormField(
                   labelText: 'Email',
+                  keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
                   validator: ValidationService.validateEmail,
                   focusNode: _emailFocusNode,

@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
   final FocusNode? focusNode;
+  final TextInputType? keyboardType;
 
   const CustomTextFormField({
     super.key,
@@ -17,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.validator,
     this.focusNode,
+    this.keyboardType,
   });
 
   @override
@@ -37,7 +39,7 @@ class CustomTextFormField extends StatelessWidget {
         focusedErrorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
         suffixIcon: suffixIcon,
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: keyboardType,
       validator: validator,
       focusNode: focusNode,
     );
