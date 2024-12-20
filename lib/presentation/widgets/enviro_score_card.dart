@@ -4,11 +4,13 @@ import '../../../core/constants/colors.dart';
 class EnviroScoreCard extends StatelessWidget {
   final int score;
   final VoidCallback onInfoPressed;
+  final bool isDeviceDataAvailable;
 
   const EnviroScoreCard({
     super.key,
     required this.score,
     required this.onInfoPressed,
+    required this.isDeviceDataAvailable,
   });
 
   @override
@@ -40,21 +42,23 @@ class EnviroScoreCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: isDeviceDataAvailable
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  score.toString(),
-                  style: const TextStyle(
-                    fontSize: 48,
+                  isDeviceDataAvailable ? '$score' : 'No data available',
+                  style: TextStyle(
+                    fontSize: isDeviceDataAvailable ? 48 : 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.secondaryColor,
                   ),
                 ),
-                const Text(
-                  '%',
-                  style: TextStyle(
+                Text(
+                  isDeviceDataAvailable ? '%' : '',
+                  style: const TextStyle(
                     fontSize: 24,
                     color: AppColors.secondaryColor,
                   ),
