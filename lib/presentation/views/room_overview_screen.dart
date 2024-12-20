@@ -1,9 +1,10 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/air_quality.dart';
+import 'package:envirosense/domain/entities/outside_air_data.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/controllers/weather_controller.dart';
+import 'package:envirosense/presentation/controllers/outside_air_data_controller.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
@@ -22,7 +23,7 @@ class RoomOverviewScreen extends StatefulWidget {
 
 class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
   late final RoomController _controller = RoomController();
-  late final WeatherController _weatherController = WeatherController();
+  late final OutsideAirDataController _outsideAirController = OutsideAirDataController();
   late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
@@ -34,6 +35,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   AirQuality? _airQuality;
   AirData? _outsideAirData;
   String? _error;
+  String city = 'Brugge'; //TODO: get city from user
 
   final List<Tab> _tabs = const [
     Tab(text: 'Overview'),
@@ -51,7 +53,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       setState(() => _isLoading = true);
       final room = await _controller.getRoom(widget.roomId);
       final airQuality = await _controller.getAirQuality(widget.roomId);
-      final outsideAirData = _weatherController.getOutsideAirData();
+      final outsideAirData = await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
@@ -69,7 +71,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   }
 
   bool isDeviceDataAvailable() {
-    return _airQuality?.enviroScore != 0;
+    return _airQuality?.enviroScore != null;
   }
 
   @override
