@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -6,10 +7,10 @@ import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:flutter/material.dart';
 
 class DeviceOverviewScreen extends StatefulWidget {
-  final String deviceName;
+  String deviceName;
   final String deviceId;
 
-  const DeviceOverviewScreen(
+  DeviceOverviewScreen(
       {super.key, required this.deviceName, required this.deviceId});
 
   @override
@@ -20,6 +21,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _controller = DeviceController();
   late final RoomController _roomController = RoomController();
+  late final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
   late final TabController _tabController =
       TabController(length: _tabs.length, vsync: this);
   bool _isLoading = true;
@@ -236,7 +238,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Future<void> _showRenameDeviceDialog() async {
-    final TextEditingController controller =
+    final TextEditingController inputController =
         TextEditingController(text: widget.deviceName);
 
     return showModalBottomSheet(
@@ -278,7 +280,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
-                controller: controller,
+                controller: inputController,
                 decoration: const InputDecoration(
                   labelText: 'Device Name',
                   labelStyle: TextStyle(color: AppColors.secondaryColor),
@@ -320,10 +322,22 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     const SizedBox(width: 16),
                     Expanded(
                       child: FilledButton(
-                        onPressed: () {
-                          if (controller.text.isNotEmpty) {
+                        onPressed: () async {
+                          if (inputController.text.isNotEmpty) {
+                            final deviceIdentifier = _device?.identifier;
+
+                            if (deviceIdentifier == null) {
+                              throw Exception('Device identifier not found');
+                            }
+
+                            await _deviceStorageHelper.setDeviceName(
+                                deviceIdentifier, inputController.text);
+
+                            setState(() {
+                              widget.deviceName = inputController.text;
+                            });
+
                             Navigator.pop(context);
-                            // TODO: Implement rename logic
                           }
                         },
                         style: FilledButton.styleFrom(
