@@ -146,7 +146,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
               const Icon(Icons.thermostat, color: AppColors.secondaryColor),
               const SizedBox(width: 8),
               Text(
-                'Set Target Temperature (${_airQuality?.airData.temperature}°C)',
+                'Set Target Temperature ($_targetTemperature°C)',
                 style:
                     const TextStyle(color: AppColors.whiteColor, fontSize: 16),
               ),
