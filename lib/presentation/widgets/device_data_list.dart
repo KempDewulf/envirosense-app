@@ -8,12 +8,25 @@ class DeviceDataList extends StatelessWidget {
 
   const DeviceDataList({super.key, required this.deviceData});
 
+  Status _getStatus(double value, {required double min, required double max}) {
+    if (value < min || value > max) return Status.bad;
+    return Status.good;
+  }
+
+  Color _getStatusColor(Status status) {
+    switch (status) {
+      case Status.good:
+        return AppColors.greenColor;
+      case Status.bad:
+        return AppColors.redColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        const SizedBox(height: 16),
         if (deviceData.isEmpty)
           const Center(
             child: Text(
@@ -26,7 +39,7 @@ class DeviceDataList extends StatelessWidget {
           )
         else
           ...deviceData.map(
-            (deviceData) => Card(
+            (data) => Card(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -34,22 +47,35 @@ class DeviceDataList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      DateFormat('yyyy-MM-dd HH:mm:ss')
-                          .format(DateTime.parse(deviceData.timestamp)),
+                      DateFormat('yyyy-MM-dd HH:mm:ss').format(
+                        DateTime.parse(data.timestamp),
+                      ),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Row(
                       children: [
                         const Icon(Icons.thermostat,
                             color: AppColors.secondaryColor),
                         const SizedBox(width: 8),
                         Text(
-                          'Temperature: ${deviceData.airData.temperature}°C',
+                          'Temperature: ${data.airData.temperature}°C',
                           style: const TextStyle(fontSize: 16),
+                        ),
+                        const Spacer(),
+                        Icon(
+                          Icons.circle,
+                          color: _getStatusColor(
+                            _getStatus(
+                              data.airData.temperature ?? 0,
+                              min: 18.0,
+                              max: 24.0,
+                            ),
+                          ),
+                          size: 16,
                         ),
                       ],
                     ),
@@ -60,8 +86,20 @@ class DeviceDataList extends StatelessWidget {
                             color: AppColors.secondaryColor),
                         const SizedBox(width: 8),
                         Text(
-                          'Humidity: ${deviceData.airData.humidity}%',
+                          'Humidity: ${data.airData.humidity}%',
                           style: const TextStyle(fontSize: 16),
+                        ),
+                        const Spacer(),
+                        Icon(
+                          Icons.circle,
+                          color: _getStatusColor(
+                            _getStatus(
+                              data.airData.humidity ?? 0,
+                              min: 40.0,
+                              max: 60.0,
+                            ),
+                          ),
+                          size: 16,
                         ),
                       ],
                     ),
@@ -72,8 +110,20 @@ class DeviceDataList extends StatelessWidget {
                             color: AppColors.secondaryColor),
                         const SizedBox(width: 8),
                         Text(
-                          'PPM: ${deviceData.airData.gasPpm}',
+                          'PPM: ${data.airData.gasPpm}',
                           style: const TextStyle(fontSize: 16),
+                        ),
+                        const Spacer(),
+                        Icon(
+                          Icons.circle,
+                          color: _getStatusColor(
+                            _getStatus(
+                              data.airData.gasPpm?.toDouble() ?? 0,
+                              min: 0,
+                              max: 800,
+                            ),
+                          ),
+                          size: 16,
                         ),
                       ],
                     ),
@@ -81,8 +131,13 @@ class DeviceDataList extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
       ],
     );
   }
+}
+
+enum Status {
+  good,
+  bad,
 }
