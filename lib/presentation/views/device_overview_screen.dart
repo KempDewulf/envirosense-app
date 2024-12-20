@@ -453,27 +453,24 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                               children: [
                                 Text(
                                   room.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
-                                    fontWeight: room.id == selectedRoomId
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
                                   ),
                                 ),
                                 if (room.id == _device?.room?.id) ...[
                                   const SizedBox(width: 8),
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 2,
+                                      horizontal: 10,
+                                      vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withOpacity(0.4),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: const Text(
-                                      'current',
+                                      'Current room',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
