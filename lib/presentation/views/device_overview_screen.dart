@@ -25,6 +25,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   bool _isLoading = true;
   Device? _device;
   String? _error;
+  String? _selectedRoomId;
 
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
@@ -343,7 +344,10 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Future<void> _showChangeRoomDialog() async {
-    String? selectedRoomId = _device?.room?.id;
+    setState(() {
+      _selectedRoomId = _device?.room?.id;
+    });
+
     final rooms = await _roomController.getRooms();
 
     if (!mounted) return;
@@ -411,19 +415,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       ),
                     ),
                     dropdownColor: AppColors.secondaryColor,
-                    value: selectedRoomId,
-                    // Add selectedItemBuilder for closed dropdown display
+                    value: _selectedRoomId,
                     selectedItemBuilder: (context) => [
-                      const DropdownMenuItem(
-                        value: null,
-                        child: Text(
-                          'No Room',
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
                       ...rooms.map((room) => DropdownMenuItem(
                             value: room.id,
                             child: Text(
@@ -437,25 +430,18 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     ],
                     // Regular items for dropdown menu
                     items: [
-                      const DropdownMenuItem(
-                        value: null,
-                        child: Text(
-                          'No Room',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
                       ...rooms.map((room) => DropdownMenuItem(
                             value: room.id,
                             child: Row(
                               children: [
                                 Text(
                                   room.name,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
+                                    fontWeight: room.id == _selectedRoomId
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                   ),
                                 ),
                                 if (room.id == _device?.room?.id) ...[
@@ -482,7 +468,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                             ),
                           )),
                     ],
-                    onChanged: (value) => selectedRoomId = value,
+                    onChanged: (value) => _selectedRoomId = value,
                     icon: const Icon(
                       Icons.arrow_drop_down,
                       color: AppColors.secondaryColor,
