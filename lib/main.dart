@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/views/add_device_screen.dart';
 import 'package:envirosense/presentation/views/add_room_screen.dart';
+import 'package:envirosense/presentation/views/device_overview_screen.dart';
 import 'package:envirosense/presentation/views/email_verification_screen.dart';
 import 'package:envirosense/presentation/views/main_screen.dart';
 import 'package:envirosense/presentation/views/onboarding_screen.dart';
@@ -128,7 +129,13 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
                   as Map<String, dynamic>)['roomName'],
               roomId: (ModalRoute.of(context)?.settings.arguments
                   as Map<String, dynamic>)['roomId'],
-        ),
+            ),
+        '/deviceOverview': (context) => DeviceOverviewScreen(
+              deviceName: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['deviceName'],
+              deviceId: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['deviceId'],
+            ),
       },
     );
   }

@@ -28,7 +28,7 @@ class EnviroScoreCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'EnviroScore',
+                  'Room EnviroScore',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

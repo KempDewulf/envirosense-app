@@ -1,5 +1,6 @@
 import 'package:envirosense/data/datasources/device_data_source.dart';
 import 'package:envirosense/domain/usecases/add_device.dart';
+import 'package:envirosense/domain/usecases/get_device.dart';
 
 import '../../data/repositories/device_repository_impl.dart';
 import '../../domain/entities/device.dart';
@@ -9,6 +10,7 @@ import '../../services/api_service.dart';
 
 class DeviceController {
   late final GetDevicesUseCase getDevicesUseCase;
+  late final GetDeviceUseCase getDeviceUseCase;
   late final AddDeviceUseCase addDeviceUseCase;
   final DeviceRepository repository;
 
@@ -17,11 +19,16 @@ class DeviceController {
           remoteDataSource: DeviceDataSource(apiService: ApiService()),
         ) {
     getDevicesUseCase = GetDevicesUseCase(repository);
+    getDeviceUseCase = GetDeviceUseCase(repository);
     addDeviceUseCase = AddDeviceUseCase(repository);
   }
 
   Future<List<Device>> getDevices(String buildingId) async {
     return await getDevicesUseCase(buildingId);
+  }
+
+  Future<Device> getDevice(String deviceId, String buildingId) async {
+    return await getDeviceUseCase(deviceId, buildingId);
   }
 
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
