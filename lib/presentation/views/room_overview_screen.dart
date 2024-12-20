@@ -1,8 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/air_quality.dart';
-import 'package:envirosense/domain/entities/device.dart';
-import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/weather_controller.dart';
@@ -22,20 +20,21 @@ class RoomOverviewScreen extends StatefulWidget {
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
 }
 
-class _RoomOverviewScreenState extends State<RoomOverviewScreen>
-    with SingleTickerProviderStateMixin {
+class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
   late final RoomController _controller = RoomController();
-  late final TabController _tabController =
-      TabController(length: _tabs.length, vsync: this);
   late final WeatherController _weatherController = WeatherController();
-  late bool _roomHasDeviceData;
-  double _targetTemperature = 22.0; // hardcoded for now
+  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
+
   bool _isLoading = true;
   bool _showRoomData = true;
+  bool _roomHasDeviceData = false;
+  double _targetTemperature = 22.0; // hardcoded for now
+
   Room? _room;
   AirQuality? _airQuality;
   AirData? _outsideAirData;
   String? _error;
+
   final List<Tab> _tabs = const [
     Tab(text: 'Overview'),
     Tab(text: 'Devices'),
@@ -57,9 +56,9 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         _room = room;
         _airQuality = airQuality;
         _outsideAirData = outsideAirData;
-
         _isLoading = false;
         _roomHasDeviceData = isDeviceDataAvailable();
+        _showRoomData = _roomHasDeviceData;
       });
     } catch (e) {
       setState(() {
@@ -70,7 +69,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   bool isDeviceDataAvailable() {
-    return _airQuality?.enviroScore != null;
+    return _airQuality?.enviroScore != 0;
   }
 
   @override
@@ -182,11 +181,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => _showRoomData = true),
+                        onTap: _roomHasDeviceData
+                            ? () => setState(() => _showRoomData = true)
+                            : null,
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: _showRoomData
+                            color: _showRoomData && _roomHasDeviceData
                                 ? AppColors.secondaryColor
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(25),
@@ -195,9 +196,10 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                             'Room Data',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: _showRoomData
+                              color: _showRoomData && _roomHasDeviceData
                                   ? Colors.white
-                                  : AppColors.secondaryColor,
+                                  : AppColors.secondaryColor.withOpacity(
+                                      _roomHasDeviceData ? 1.0 : 0.5),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -232,15 +234,15 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                 ),
               ),
               const SizedBox(height: 16),
-              if ((_showRoomData && _airQuality != null) ||
-                  (!_showRoomData && _outsideAirData != null))
-                DataDisplayBox(
-                  key: ValueKey(_showRoomData),
-                  title: _showRoomData
-                      ? 'Room Environment'
-                      : 'Outside Environment',
-                  data: _showRoomData ? _airQuality!.airData : _outsideAirData!,
-                )
+              const SizedBox(height: 16),
+              DataDisplayBox(
+                key: ValueKey(_showRoomData),
+                title:
+                    _showRoomData ? 'Room Environment' : 'Outside Environment',
+                data: _showRoomData && _roomHasDeviceData
+                    ? _airQuality!.airData
+                    : _outsideAirData!,
+              )
             ],
           ),
         ),
