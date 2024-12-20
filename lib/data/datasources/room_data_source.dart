@@ -1,5 +1,6 @@
 import 'package:envirosense/data/models/add_device_to_room_request_model.dart';
 import 'package:envirosense/data/models/add_room_request_model.dart';
+import 'package:envirosense/data/models/air_quality_model.dart';
 
 import '../../services/api_service.dart';
 import '../models/room_model.dart';
@@ -21,6 +22,27 @@ class RoomDataSource {
     } catch (e) {
       // Handle errors
       throw Exception('Failed to load rooms: $e');
+    }
+  }
+
+  Future<RoomModel> getRoom(String roomId) async {
+    try {
+      final response = await apiService.getRequest('rooms/$roomId');
+
+      return RoomModel.fromJson(response.data);
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load room: $e');
+    }
+  }
+
+  Future<AirQualityModel> getAirQuality(String roomId) async {
+    try {
+      final response = await apiService.getRequest('rooms/$roomId/air-quality');
+      return AirQualityModel.fromJson(response.data);
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load air quality: $e');
     }
   }
 

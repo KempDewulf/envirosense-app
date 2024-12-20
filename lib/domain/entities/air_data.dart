@@ -1,7 +1,7 @@
 class AirData {
-  final double temperature;
-  final double humidity;
-  final int gasPpm;
+  final double? temperature;
+  final double? humidity;
+  final int? gasPpm;
 
   AirData({
     required this.temperature,
