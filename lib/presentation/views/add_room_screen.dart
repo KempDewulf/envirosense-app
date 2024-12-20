@@ -19,7 +19,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomTypeController _roomTypesController = RoomTypeController();
   final TextEditingController _roomNameController = TextEditingController();
 
-  final String _buildingId = "gox5y6bsrg640qb11ak44dh0";
+  final String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
   List<RoomType>? _roomTypes; // Store room types in state
   RoomType? _selectedRoomType;
   bool _isSaving = false;
