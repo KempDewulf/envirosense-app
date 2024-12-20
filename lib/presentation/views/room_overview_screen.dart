@@ -1,10 +1,9 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/air_quality.dart';
-import 'package:envirosense/domain/entities/outside_air_data.dart';
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/outside_air_data_controller.dart';
+import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/services/api_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
