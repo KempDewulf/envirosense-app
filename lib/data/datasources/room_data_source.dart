@@ -39,7 +39,6 @@ class RoomDataSource {
   Future<AirQualityModel> getAirQuality(String roomId) async {
     try {
       final response = await apiService.getRequest('rooms/$roomId/air-quality');
-
       return AirQualityModel.fromJson(response.data);
     } catch (e) {
       // Handle errors
