@@ -376,13 +376,17 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 children: [
                   Text(
                     'Current Room:',
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     _device?.room?.name ?? "Unknown Room",
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.secondaryColor,
                     ),
@@ -391,23 +395,58 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
                       labelText: 'Select New Room',
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
+                      labelStyle: TextStyle(
+                        color: AppColors.secondaryColor,
+                        fontSize: 16,
+                      ),
+                      border: OutlineInputBorder(
                         borderSide: BorderSide(color: AppColors.secondaryColor),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: AppColors.secondaryColor, width: 2),
+                      ),
                     ),
+                    dropdownColor: AppColors.secondaryColor,
                     value: selectedRoomId,
                     items: [
                       const DropdownMenuItem(
                         value: null,
-                        child: Text('No Room'),
+                        child: Text(
+                          'No Room',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                       ...rooms.map((room) => DropdownMenuItem(
                             value: room.id,
-                            child: Text(room.name),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: room.id == _device?.room?.id
+                                    ? AppColors.accentColor.withOpacity(0.3)
+                                    : null,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              child: Text(
+                                room.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: room.id == _device?.room?.id
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                              ),
+                            ),
                           )),
                     ],
                     onChanged: (value) => selectedRoomId = value,
+                    icon: const Icon(Icons.arrow_drop_down,
+                        color: AppColors.secondaryColor),
                   ),
                 ],
               ),
