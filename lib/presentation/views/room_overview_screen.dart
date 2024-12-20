@@ -123,13 +123,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
     return TabBarView(
       controller: _tabController,
       children: [
-        // Wrap each tab content with RefreshIndicator
         RefreshIndicator(
           onRefresh: _loadData,
+          color: AppColors.secondaryColor,
           child: _buildOverviewTab(),
         ),
         RefreshIndicator(
           onRefresh: _loadData,
+          color: AppColors.secondaryColor,
           child: DevicesList(devices: _room?.devices ?? []),
         ),
       ],

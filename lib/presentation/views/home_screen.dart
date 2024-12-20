@@ -1,3 +1,4 @@
+import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
@@ -87,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: _refreshData,
+                color: AppColors.secondaryColor,
                 child: ItemGridPage<Room>(
                   allItems: _allRooms,
                   itemBuilder: (room) => RoomCard(room: room),
@@ -101,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: _refreshData,
+                color: AppColors.secondaryColor,
                 child: ItemGridPage<Device>(
                   allItems: _allDevices,
                   itemBuilder: (device) => DeviceCard(device: device),
