@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/colors.dart';
+import 'package:envirosense/services/logging_service.dart';
 
 class AddDeviceScreen extends StatefulWidget {
   const AddDeviceScreen({super.key});
@@ -83,7 +84,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         _filteredRooms = rooms;
       });
     } catch (e) {
-      print('Failed to fetch rooms: $e');
+      LoggingService.logError('Failed to fetch rooms: $e', e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to load rooms')),
       );
@@ -108,7 +109,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
       Navigator.pop(context, true);
     } catch (e) {
-      print('Failed to assign device: $e');
+      LoggingService.logError('Failed to assign device: $e', e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to assign device: $e')),
       );

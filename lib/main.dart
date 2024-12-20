@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:envirosense/presentation/views/login_screen.dart';
-
+import 'services/logging_service.dart';
 import 'presentation/views/room_overview_screen.dart';
 
 void main() async {
@@ -24,6 +24,7 @@ void main() async {
   );
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  LoggingService.initialize();
 
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
 }

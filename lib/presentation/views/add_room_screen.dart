@@ -5,6 +5,7 @@ import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
+import 'package:envirosense/services/logging_service.dart';
 
 class AddRoomScreen extends StatefulWidget {
   const AddRoomScreen({super.key});
@@ -42,7 +43,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         _isLoading = false;
       });
 
-      print('Error loading room types: $e');
+      LoggingService.logError('Error loading room types', e);
     }
   }
 
@@ -68,13 +69,13 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room added successfully. Drag down to refresh.')),
+        const SnackBar(
+            content: Text('Room added successfully. Drag down to refresh.')),
       );
 
       Navigator.pop(context, true);
     } catch (e, stackTrace) {
-      print('Exception caught: $e');
-      print('Stack trace: $stackTrace');
+      LoggingService.logError('Exception caught: $e', e, stackTrace);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to add room')),
       );
