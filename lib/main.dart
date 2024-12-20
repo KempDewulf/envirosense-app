@@ -128,7 +128,13 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
                   as Map<String, dynamic>)['roomName'],
               roomId: (ModalRoute.of(context)?.settings.arguments
                   as Map<String, dynamic>)['roomId'],
-        ),
+            ),
+        '/deviceOverview': (context) => DeviceOverviewScreen(
+              deviceName: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['deviceName'],
+              deviceId: (ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>)['deviceId'],
+            ),
       },
     );
   }
