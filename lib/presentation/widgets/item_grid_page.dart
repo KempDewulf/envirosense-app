@@ -17,10 +17,10 @@ class ItemGridPage<T> extends StatefulWidget {
   });
 
   @override
-  _ItemGridPageState<T> createState() => _ItemGridPageState<T>();
+  ItemGridPageState<T> createState() => ItemGridPageState<T>();
 }
 
-class _ItemGridPageState<T> extends State<ItemGridPage<T>> {
+class ItemGridPageState<T> extends State<ItemGridPage<T>> {
   final TextEditingController _searchController = TextEditingController();
   late List<T> _filteredItems;
 
