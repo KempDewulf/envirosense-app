@@ -22,6 +22,15 @@ class DeviceDataSource {
     }
   }
 
+  Future<DeviceModel> getDevice(String deviceId, String buildingId) async {
+    try {
+      final response = await apiService.getRequest('devices/$deviceId');
+      return DeviceModel.fromJson(response.data, '');
+    } catch (e) {
+      throw Exception('Failed to load device: $e');
+    }
+  }
+
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
     try {
       AddDeviceRequest body = AddDeviceRequest(roomId, deviceIdentifier);
