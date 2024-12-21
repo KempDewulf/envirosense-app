@@ -16,4 +16,9 @@ class Room {
     required this.roomType,
     this.devices,
   });
+
+  @override
+  String toString() {
+    return 'Room{id: $id, name: $name, building: $building, roomType: $roomType, devices: $devices}';
+  }
 }

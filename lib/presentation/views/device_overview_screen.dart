@@ -63,14 +63,6 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
 
   @override
   Widget build(BuildContext context) {
-    _device?.deviceData?.forEach((element) {
-      print(element.id);
-      print(element.airData.gasPpm);
-      print(element.airData.temperature);
-      print(element.airData.humidity);
-      print(element.timestamp);
-    });
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

@@ -12,4 +12,9 @@ class Building {
     required this.address,
     this.rooms,
   });
+
+  @override
+  String toString() {
+    return 'Building{id: $id, name: $name, address: $address, rooms: $rooms}';
+  }
 }

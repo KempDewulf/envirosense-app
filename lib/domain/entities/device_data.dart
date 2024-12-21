@@ -13,4 +13,9 @@ class DeviceData {
     required this.timestamp,
     required this.airData,
   });
+
+  @override
+  String toString() {
+    return 'DeviceData{id: $id, device: $device, timestamp: $timestamp, airData: $airData}';
+  }
 }

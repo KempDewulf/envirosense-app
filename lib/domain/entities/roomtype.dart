@@ -12,4 +12,9 @@ class RoomType {
     required this.icon,
     this.rooms,
   });
+
+  @override
+  String toString() {
+    return 'RoomType{id: $id, name: $name, icon: $icon, rooms: $rooms}';
+  }
 }

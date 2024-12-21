@@ -13,4 +13,9 @@ class Device {
     this.room,
     this.deviceData,
   });
+
+  @override
+  String toString() {
+    return 'Device{id: $id, identifier: $identifier, room: $room, deviceData: $deviceData}';
+  }
 }

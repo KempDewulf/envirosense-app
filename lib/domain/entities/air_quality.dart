@@ -10,4 +10,9 @@ class AirQuality {
     required this.enviroScore,
     required this.airData,
   });
+
+  @override
+  String toString() {
+    return 'AirQuality{id: $id, enviroScore: $enviroScore, airData: $airData}';
+  }
 }
