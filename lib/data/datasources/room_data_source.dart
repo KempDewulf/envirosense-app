@@ -68,4 +68,14 @@ Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
       throw Exception('Failed to add device to room: $e');
     }
   }
+
+
+Future<void> removeDeviceFromRoom(String? roomId, String? deviceId) async {
+    try {
+      await apiService.deleteRequest('rooms/$roomId/devices/$deviceId');
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to remove device from room: $e');
+    }
+  }
 }
