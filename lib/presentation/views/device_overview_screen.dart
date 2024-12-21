@@ -562,6 +562,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       await _roomController.removeDeviceFromRoom(currentRoomId, _device?.id);
       await _roomController.addDeviceToRoom(_selectedRoomId, _device?.id);
 
+      await _loadData();
+
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
