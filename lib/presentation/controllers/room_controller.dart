@@ -8,6 +8,7 @@ import 'package:envirosense/domain/usecases/delete_room.dart';
 import 'package:envirosense/domain/usecases/get_air_quality.dart';
 import 'package:envirosense/domain/usecases/get_room.dart';
 import 'package:envirosense/domain/usecases/remove_device_from_room.dart';
+import 'package:envirosense/domain/usecases/update_room.dart';
 import '../../domain/usecases/get_rooms.dart';
 import '../../domain/usecases/add_room.dart';
 import '../../services/api_service.dart';
@@ -18,6 +19,7 @@ class RoomController {
   late final GetAirQualityUseCase getAirQualityUseCase;
   late final AddRoomUseCase addRoomUseCase;
   late final DeleteRoomUseCase deleteRoomUseCase;
+  late final UpdateRoomUseCase updateRoomUseCase;
   late final AddDeviceToRoomUseCase addDeviceToRoomUseCase;
   late final RemoveDeviceFromRoomUseCase removeDeviceFromRoomUseCase;
   final RoomRepository repository;
@@ -31,6 +33,7 @@ class RoomController {
     getAirQualityUseCase = GetAirQualityUseCase(repository);
     addRoomUseCase = AddRoomUseCase(repository);
     deleteRoomUseCase = DeleteRoomUseCase(repository);
+    updateRoomUseCase = UpdateRoomUseCase(repository);
     addDeviceToRoomUseCase = AddDeviceToRoomUseCase(repository);
     removeDeviceFromRoomUseCase = RemoveDeviceFromRoomUseCase(repository);
   }
@@ -54,6 +57,10 @@ class RoomController {
 
   Future<void> deleteRoom(String? roomId) async {
     return await deleteRoomUseCase(roomId);
+  }
+
+  Future<void> updateRoom(String? roomId, String? name) async {
+    return await updateRoomUseCase(roomId, name);
   }
 
   Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {

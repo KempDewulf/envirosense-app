@@ -1,6 +1,7 @@
 import 'package:envirosense/data/models/add_device_to_room_request_model.dart';
 import 'package:envirosense/data/models/add_room_request_model.dart';
 import 'package:envirosense/data/models/air_quality_model.dart';
+import 'package:envirosense/data/models/update_room_request_model.dart';
 
 import '../../services/api_service.dart';
 import '../models/room_model.dart';
@@ -67,8 +68,17 @@ class RoomDataSource {
     }
   }
 
+  Future<void> updateRoom(String? roomId, String? name) async {
+    try {
+      UpdateRoomRequest body = UpdateRoomRequest(name);
+      await apiService.putRequest('rooms/$roomId', body.toJson());
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to update room: $e');
+    }
+  }
 
-Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
+  Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     try {
       AddDeviceToRoomRequest body = AddDeviceToRoomRequest(deviceId);
       await apiService.postRequest('rooms/$roomId/devices', body.toJson());
@@ -78,8 +88,7 @@ Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     }
   }
 
-
-Future<void> removeDeviceFromRoom(String? roomId, String? deviceId) async {
+  Future<void> removeDeviceFromRoom(String? roomId, String? deviceId) async {
     try {
       await apiService.deleteRequest('rooms/$roomId/devices/$deviceId');
     } catch (e) {
