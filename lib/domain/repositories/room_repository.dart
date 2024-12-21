@@ -7,6 +7,7 @@ abstract class RoomRepository {
   Future<AirQuality> getAirQuality(String roomId);
   Future<void> addRoom(String? name, String buildingId, String? roomTypeId);
   Future<void> deleteRoom(String? roomId);
+  Future<void> updateRoom(String? roomId, String? name);
   Future<void> addDeviceToRoom(String? roomId, String? deviceId);
   Future<void> removeDeviceFromRoom(String? roomId, String? deviceId);
 }
