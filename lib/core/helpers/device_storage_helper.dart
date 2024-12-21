@@ -21,7 +21,7 @@ class DeviceStorageHelper {
     if (storedMappings != null) {
       final Map<String, dynamic> deviceMappings =
           Map<String, dynamic>.from(json.decode(storedMappings));
-      return deviceMappings[identifier] as String?;
+      return deviceMappings[identifier] as String? ?? identifier;
     }
     return null;
   }

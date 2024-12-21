@@ -163,6 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Email field
                 CustomTextFormField(
                   labelText: 'Email',
+                  labelColor: AppColors.whiteColor,
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
                   validator: ValidationService.validateEmail,
@@ -172,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Password field
                 CustomTextFormField(
                   labelText: 'Password',
+                  labelColor: AppColors.whiteColor,
                   controller: _passwordController,
                   obscureText: _obscureText,
                   suffixIcon: IconButton(
