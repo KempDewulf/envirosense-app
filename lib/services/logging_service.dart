@@ -10,11 +10,11 @@ class LoggingService {
     });
   }
 
-  static void logInfo(String message) {
+  static void logInfo(String? message) {
     _logger.info(message);
   }
 
-  static void logError(String message,
+  static void logError(String? message,
       [dynamic error, StackTrace? stackTrace]) {
     _logger.severe(message, error, stackTrace);
   }
