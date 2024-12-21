@@ -30,6 +30,11 @@ class RoomRepositoryImpl implements RoomRepository {
   }
 
   @override
+  Future<void> deleteRoom(String? roomId) async {
+    return await remoteDataSource.deleteRoom(roomId);
+  }
+
+  @override
   Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     return await remoteDataSource.addDeviceToRoom(roomId, deviceId);
   }
