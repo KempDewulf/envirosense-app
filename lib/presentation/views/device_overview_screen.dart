@@ -563,10 +563,18 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       await _roomController.addDeviceToRoom(_selectedRoomId, _device?.id);
 
       Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room changed successfully')),
+      );
     } catch (e) {
       setState(() {
         _error = e.toString();
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to change room: $_error')),
+      );
     }
   }
 
@@ -584,10 +592,18 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
 
       Navigator.pop(context);
       Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Device removed successfully')),
+      );
     } catch (e) {
       setState(() {
         _error = e.toString();
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to remove device: $_error')),
+      );
     }
   }
 
