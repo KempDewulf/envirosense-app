@@ -22,4 +22,9 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
     return await remoteDataSource.addDevice(roomId, deviceIdentifier);
   }
+
+  @override
+  Future<void> deleteDevice(String? deviceId, String? buildingId) async {
+    return await remoteDataSource.deleteDevice(deviceId, buildingId);
+  }
 }
