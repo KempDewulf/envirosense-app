@@ -58,6 +58,15 @@ class RoomDataSource {
     }
   }
 
+  Future<void> deleteRoom(String? roomId) async {
+    try {
+      await apiService.deleteRequest('rooms/$roomId');
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to delete room: $e');
+    }
+  }
+
 
 Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     try {
