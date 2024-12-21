@@ -19,7 +19,7 @@ class DeviceOverviewScreen extends StatefulWidget {
 
 class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
-  late final DeviceController _controller = DeviceController();
+  late final DeviceController _deviceController = DeviceController();
   late final RoomController _roomController = RoomController();
   late final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
   late final TabController _tabController =
@@ -46,7 +46,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      final device = await _controller.getDevice(widget.deviceId, _buildingId);
+      final device =
+          await _deviceController.getDevice(widget.deviceId, _buildingId);
 
       setState(() {
         _device = device;
@@ -569,6 +570,27 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     }
   }
 
+  Future<void> _handleDeviceRemoval() async {
+    if (_device?.id == null) return;
+
+    try {
+      final deviceId = _device?.id;
+
+      if (deviceId == null) {
+        throw Exception('Device identifier not found');
+      }
+
+      await _deviceController.removeDevice(deviceId);
+
+      Navigator.pop(context);
+      Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+    }
+  }
+
   Future<void> _showRemoveDeviceDialog() async {
     return showModalBottomSheet(
       context: context,
@@ -583,7 +605,6 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Drag handle
             Container(
               width: 40,
               height: 4,
@@ -651,11 +672,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     const SizedBox(width: 16),
                     Expanded(
                       child: FilledButton(
-                        onPressed: () {
-                          // Pop bottom sheet & Pop device screen
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          // TODO: Implement remove logic
+                        onPressed: () async {
+                          await _handleDeviceRemoval();
                         },
                         style: FilledButton.styleFrom(
                           backgroundColor: Colors.red,
