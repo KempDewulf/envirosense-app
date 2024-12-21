@@ -6,6 +6,7 @@ import 'package:envirosense/domain/repositories/room_repository.dart';
 import 'package:envirosense/domain/usecases/add_device_to_room.dart';
 import 'package:envirosense/domain/usecases/get_air_quality.dart';
 import 'package:envirosense/domain/usecases/get_room.dart';
+import 'package:envirosense/domain/usecases/remove_device_from_room.dart';
 import '../../domain/usecases/get_rooms.dart';
 import '../../domain/usecases/add_room.dart';
 import '../../services/api_service.dart';
@@ -16,6 +17,7 @@ class RoomController {
   late final GetAirQualityUseCase getAirQualityUseCase;
   late final AddRoomUseCase addRoomUseCase;
   late final AddDeviceToRoomUseCase addDeviceToRoomUseCase;
+  late final RemoveDeviceFromRoomUseCase removeDeviceFromRoomUseCase;
   final RoomRepository repository;
 
   RoomController()
@@ -27,6 +29,7 @@ class RoomController {
     getAirQualityUseCase = GetAirQualityUseCase(repository);
     addRoomUseCase = AddRoomUseCase(repository);
     addDeviceToRoomUseCase = AddDeviceToRoomUseCase(repository);
+    removeDeviceFromRoomUseCase = RemoveDeviceFromRoomUseCase(repository);
   }
 
   Future<List<Room>> getRooms() async {
@@ -48,5 +51,9 @@ class RoomController {
 
   Future<void> addDeviceToRoom(String? roomId, String? deviceId) async {
     return await addDeviceToRoomUseCase(roomId, deviceId);
+  }
+
+  Future<void> removeDeviceFromRoom(String? roomId, String? deviceId) async {
+    return await removeDeviceFromRoomUseCase(roomId, deviceId);
   }
 }
