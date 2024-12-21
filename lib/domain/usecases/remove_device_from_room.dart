@@ -6,6 +6,6 @@ class RemoveDeviceFromRoomUseCase {
   RemoveDeviceFromRoomUseCase(this.roomRepository);
 
   Future<void> call(String? roomId, String? deviceId) async {
-    await roomRepository.removeDeviceFromRoom(roomId, deviceId);
+    return await roomRepository.removeDeviceFromRoom(roomId, deviceId);
   }
 }
