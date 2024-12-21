@@ -370,178 +370,203 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.accentColor.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(2),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.accentColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Current Room:',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _device?.room?.name ?? "Unknown Room",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Select New Room',
-                      labelStyle: TextStyle(
-                        color: AppColors.secondaryColor,
-                        fontSize: 16,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: AppColors.secondaryColor, width: 2),
-                      ),
-                    ),
-                    dropdownColor: AppColors.secondaryColor,
-                    value: _selectedRoomId,
-                    selectedItemBuilder: (context) => [
-                      ...rooms.map((room) => DropdownMenuItem(
-                            value: room.id,
-                            child: Text(
-                              room.name,
-                              style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                              ),
-                            ),
-                          )),
-                    ],
-                    // Regular items for dropdown menu
-                    items: [
-                      ...rooms.map((room) => DropdownMenuItem(
-                            value: room.id,
-                            child: Row(
-                              children: [
-                                Builder(
-                                  builder: (context) {
-                                    return Text(
-                                      room.name,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: room.id == _selectedRoomId
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                if (room.id == _device?.room?.id) ...[
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.4),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: const Text(
-                                      'Current room',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          )),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedRoomId = value;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: AppColors.secondaryColor,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Divider(color: AppColors.accentColor.withOpacity(0.2)),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.pop(context),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          side:
-                              const BorderSide(color: AppColors.secondaryColor),
-                        ),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: AppColors.secondaryColor),
-                        ),
+                    Text(
+                      'Current Room:',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          // TODO: Implement room change logic
-                        },
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppColors.secondaryColor,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                    const SizedBox(height: 8),
+                    Text(
+                      _device?.room?.name ?? "Unknown Room",
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secondaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: 'Select New Room',
+                        labelStyle: TextStyle(
+                          color: AppColors.secondaryColor,
+                          fontSize: 16,
                         ),
-                        child: const Text('Save'),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors.secondaryColor, width: 2),
+                        ),
+                      ),
+                      dropdownColor: AppColors.secondaryColor,
+                      value: _selectedRoomId,
+                      selectedItemBuilder: (context) => [
+                        ...rooms.map((room) => DropdownMenuItem(
+                              value: room.id,
+                              child: Text(
+                                room.name,
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            )),
+                      ],
+                      items: [
+                        ...rooms.map((room) => DropdownMenuItem(
+                              value: room.id,
+                              child: Row(
+                                children: [
+                                  Builder(
+                                    builder: (context) {
+                                      return Text(
+                                        room.name,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: room.id == _selectedRoomId
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  if (room.id == _device?.room?.id) ...[
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.4),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: const Text(
+                                        'Current room',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            )),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRoomId = value;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: AppColors.secondaryColor,
+                        size: 30,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Divider(color: AppColors.accentColor.withOpacity(0.2)),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            side: const BorderSide(
+                                color: AppColors.secondaryColor),
+                          ),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: AppColors.secondaryColor),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: _selectedRoomId == _device?.room?.id
+                              ? null
+                              : () async {
+                                  await handleRoomChange();
+                                },
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.secondaryColor,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          child: const Text('Save'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> handleRoomChange() async {
+    if (_selectedRoomId == null || _selectedRoomId == _device?.room?.id) {
+      return;
+    }
+
+    try {
+      final currentRoomId = _device?.room?.id;
+
+      if (currentRoomId == null) return;
+
+      await _roomController.removeDeviceFromRoom(currentRoomId, _device?.id);
+      await _roomController.addDeviceToRoom(_selectedRoomId, _device?.id);
+
+      Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+    }
   }
 
   Future<void> _showRemoveDeviceDialog() async {
