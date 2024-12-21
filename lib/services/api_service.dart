@@ -95,7 +95,7 @@ class ApiService {
       headers: _headers,
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 201 || response.statusCode == 200) {
       return ApiResponse(jsonDecode(response.body), response.headers);
     } else {
       throw Exception('DELETE request failed with status: ${response.statusCode}');
