@@ -7,7 +7,7 @@ class Thresholds {
     min: 18.0,
     max: 35.0,
     optimalMin: 20.0,
-    optimalMax: 24.0,
+    optimalMax: 25.0,
   );
 
   static const humidity = (
@@ -19,7 +19,7 @@ class Thresholds {
 
   static const airQuality = (
     max: 1000,
-    optimalMax: 800,
+    optimalMax: 600,
   );
 }
 
