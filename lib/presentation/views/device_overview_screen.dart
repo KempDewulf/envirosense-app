@@ -192,11 +192,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       ),
       child: Material(
         color: isDestructive
-            ? Colors.red.withOpacity(0.2)
+            ? Colors.red.withOpacity(0.4)
             : isWarning
-                ? Colors.orange.withOpacity(0.2)
+                ? Colors.orange.withOpacity(0.4)
                 : isNeutral
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withOpacity(0.4)
                     : Colors.white,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
@@ -588,7 +588,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         throw Exception('Device identifier not found');
       }
 
-      await _deviceController.removeDevice(deviceId);
+      await _deviceController.deleteDevice(deviceId, _buildingId);
 
       Navigator.pop(context);
       Navigator.pop(context);
