@@ -6,6 +6,7 @@ import 'package:envirosense/presentation/views/email_verification_screen.dart';
 import 'package:envirosense/presentation/views/main_screen.dart';
 import 'package:envirosense/presentation/views/onboarding_screen.dart';
 import 'package:envirosense/presentation/views/statistics_detail_screen.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -23,8 +24,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  final dbService = DatabaseService();
+  bool isFirstTime = await dbService.getSetting<bool>('isFirstTime') ?? true;
   LoggingService.initialize();
 
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
@@ -56,16 +57,16 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? timestamp = prefs.getInt('loginTimestamp');
+    final dbService = DatabaseService();
+    final timestamp = await dbService.getSetting<int>('loginTimestamp');
 
     if (timestamp != null) {
-      DateTime loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-      DateTime now = DateTime.now();
-      Duration difference = now.difference(loginTime);
+      final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      final now = DateTime.now();
+      final difference = now.difference(loginTime);
 
       if (difference.inDays < 2) {
-        User? currentUser = FirebaseAuth.instance.currentUser;
+        final currentUser = FirebaseAuth.instance.currentUser;
         if (currentUser != null) {
           setState(() {
             _initialScreen = const MainScreen();
@@ -74,12 +75,10 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         }
       }
 
-      // If login is expired or user is not authenticated
-      prefs.remove('loginTimestamp');
+      await dbService.setSetting('loginTimestamp', null);
       await FirebaseAuth.instance.signOut();
     }
 
-    // Default to LoginScreen
     setState(() {
       _initialScreen = const LoginScreen();
     });
