@@ -34,6 +34,7 @@ class DevicesList extends StatelessWidget {
           )
         else
           ...devices.map((device) => Container(
+                margin: EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(12.0),
