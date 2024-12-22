@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/services/validation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
