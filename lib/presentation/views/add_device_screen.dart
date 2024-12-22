@@ -208,7 +208,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             labelText: 'Enter a name for this device',
                             floatingLabelBehaviour: FloatingLabelBehavior.never,
                             onChanged: (value) => setState(() {}),
-                            labelColor: AppColors.blackColor,
+                            labelColor: AppColors.accentColor,
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 16),
                             borderColor: AppColors.accentColor,
@@ -228,12 +228,12 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 8),
                           CustomTextFormField(
                             controller: _searchController,
                             labelText: 'Search rooms',
                             floatingLabelBehaviour: FloatingLabelBehavior.never,
-                            labelColor: AppColors.blackColor,
+                            labelColor: AppColors.accentColor,
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 16),
                             borderColor: AppColors.accentColor,
@@ -244,14 +244,14 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 32),
                           Expanded(
                             child: GridView.builder(
                               itemCount: _filteredRooms.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
-                                mainAxisSpacing: 25,
+                                mainAxisSpacing: 35,
                                 crossAxisSpacing: 15,
                               ),
                               itemBuilder: (context, index) {
@@ -298,6 +298,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                       const SizedBox(height: 8),
                                       Text(
                                         room.name,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: isSelected
