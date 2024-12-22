@@ -87,8 +87,7 @@ class CustomTextFormField extends StatelessWidget {
         labelStyle: TextStyle(color: labelColor),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        contentPadding: contentPadding ??
-            const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+        contentPadding: contentPadding,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: borderClr),
