@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:envirosense/core/helpers/icon_helper.dart';
-import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/colors.dart';
 import 'package:envirosense/services/logging_service.dart';
 
@@ -28,6 +25,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final TextEditingController _deviceNameController = TextEditingController();
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
+  final DatabaseService _databaseService = DatabaseService();
 
   String? _deviceIdentifierCode;
   Room? _selectedRoom;
@@ -53,20 +51,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     _searchController.dispose();
     _deviceNameController.dispose();
     super.dispose();
-  }
-
-  Future<void> _saveDeviceName() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? storedMappings = prefs.getString('device_names');
-    final Map<String, String> deviceMappings = storedMappings != null
-        ? Map<String, String>.from(json.decode(storedMappings))
-        : {};
-
-    if (_deviceIdentifierCode != null &&
-        _deviceNameController.text.isNotEmpty) {
-      deviceMappings[_deviceIdentifierCode!] = _deviceNameController.text;
-      await prefs.setString('device_names', json.encode(deviceMappings));
-    }
   }
 
   void _filterRooms() {
@@ -108,7 +92,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     try {
       await _deviceController.addDevice(
           _selectedRoom?.id, _deviceIdentifierCode);
-      await _saveDeviceName();
+      await _databaseService.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
 
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(

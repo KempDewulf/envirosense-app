@@ -1,10 +1,10 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 
 class DeviceOverviewScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
   late final RoomController _roomController = RoomController();
-  late final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
+  late final DatabaseService _databaseService = DatabaseService();
   late final TabController _tabController =
       TabController(length: _tabs.length, vsync: this);
   bool _isLoading = true;
@@ -323,7 +323,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                               throw Exception('Device identifier not found');
                             }
 
-                            await _deviceStorageHelper.setDeviceName(
+                            await _databaseService.setDeviceName(
                                 deviceIdentifier, inputController.text);
 
                             setState(() {

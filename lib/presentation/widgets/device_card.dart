@@ -1,5 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/core/helpers/device_storage_helper.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/domain/entities/device.dart';
 
@@ -17,7 +17,7 @@ class DeviceCard extends StatefulWidget {
 
 class _DeviceCardState extends State<DeviceCard> {
   String? _customDeviceName;
-  final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
+  final DatabaseService _databaseService = DatabaseService();
 
   @override
   void initState() {
@@ -34,8 +34,7 @@ class _DeviceCardState extends State<DeviceCard> {
   }
 
   Future<void> _loadDeviceName() async {
-    final name =
-        await _deviceStorageHelper.getDeviceName(widget.device.identifier);
+    final name = await _databaseService.getDeviceName(widget.device.identifier);
     setState(() {
       _customDeviceName = name;
     });
