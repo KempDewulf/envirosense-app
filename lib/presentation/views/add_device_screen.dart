@@ -147,7 +147,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                 'Scan the QR Code on the device.\nYour device will connect automatically.',
                 style: TextStyle(
                     fontSize: 16,
-                    color: AppColors.blackColor,
+                    color: AppColors.accentColor,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
