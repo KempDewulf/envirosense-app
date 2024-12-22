@@ -130,7 +130,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
             const Text(
               "Enter Room's name",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 color: AppColors.accentColor,
                 fontWeight: FontWeight.bold,
               ),
@@ -141,7 +141,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               labelText: 'e.g. Living Room',
               floatingLabelBehaviour: FloatingLabelBehavior.never,
               onChanged: (value) => setState(() {}),
-              labelColor: AppColors.blackColor,
+              labelColor: AppColors.accentColor,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
               borderColor: AppColors.accentColor,
@@ -156,7 +156,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
             const Text(
               "Select Room's icon",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 color: AppColors.accentColor,
                 fontWeight: FontWeight.bold,
               ),
@@ -168,7 +168,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 25,
-                  crossAxisSpacing: 15,
+                  crossAxisSpacing: 35,
+                  childAspectRatio: 1 / 1.15,
                 ),
                 itemBuilder: (context, index) {
                   final roomType = _roomTypes![index];

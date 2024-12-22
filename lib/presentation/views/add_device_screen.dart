@@ -167,7 +167,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-            SizedBox(height: _deviceIdentifierCode == null ? 28.0 : 12.0),
+            SizedBox(height: _deviceIdentifierCode == null ? 28.0 : 6.0),
             Expanded(
               child: Center(
                 child: _deviceIdentifierCode == null
@@ -198,8 +198,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             'Enter device name',
                             style: TextStyle(
                               fontSize: 18,
+                              color: AppColors.accentColor,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -224,7 +224,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             'Select a room',
                             style: TextStyle(
                               fontSize: 18,
-                              color: AppColors.primaryColor,
+                              color: AppColors.accentColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -253,7 +253,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                 crossAxisCount: 3,
                                 mainAxisSpacing: 35,
                                 crossAxisSpacing: 15,
-                                childAspectRatio: 1 / 1.2,
+                                childAspectRatio: 1 / 1.15,
                               ),
                               itemBuilder: (context, index) {
                                 final room = _filteredRooms[index];
@@ -299,7 +299,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                       const SizedBox(height: 8),
                                       Tooltip(
                                         message: room.name,
-                                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 16),
                                         child: Text(
                                           room.name,
                                           textAlign: TextAlign.center,
