@@ -70,10 +70,10 @@ class DevicesList extends StatelessWidget {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
                                     return const Text(
-                                      'Loading...',
+                                      'Loading device name...',
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.accentColor
                                       ),
                                     );
                                   } else if (snapshot.hasError) {
