@@ -10,6 +10,7 @@ import 'package:envirosense/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,8 +57,8 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
       return;
     }
 
-    final dbService = DatabaseService();
-    final timestamp = await dbService.getSetting<int>('loginTimestamp');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? timestamp = prefs.getInt('loginTimestamp');
 
     if (timestamp != null) {
       final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -74,7 +75,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         }
       }
 
-      await dbService.setSetting('loginTimestamp', null);
+      prefs.remove('loginTimestamp');
       await FirebaseAuth.instance.signOut();
     }
 

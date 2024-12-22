@@ -80,20 +80,6 @@ class DatabaseService {
     return json.decode(maps.first['value']) as T;
   }
 
-  // Login timestamp specific methods
-  Future<void> updateLoginTimestamp() async {
-    await setSetting('loginTimestamp', DateTime.now().millisecondsSinceEpoch);
-  }
-
-  Future<bool> isLoginValid() async {
-    final timestamp = await getSetting<int>('loginTimestamp');
-    if (timestamp == null) return false;
-
-    final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    final now = DateTime.now();
-    return now.difference(loginTime).inDays < 2; // 2 days expiration
-  }
-
   // Device naming methods
   Future<void> setDeviceName(String deviceId, String customName) async {
     final db = await database;
