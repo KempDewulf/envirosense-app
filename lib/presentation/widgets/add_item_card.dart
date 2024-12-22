@@ -21,13 +21,11 @@ class AddItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          color: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          elevation: 2,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -45,9 +43,7 @@ class AddItemCard extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

@@ -79,7 +79,7 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
               color: AppColors.primaryColor,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Expanded(
             child: GridView.builder(
               itemCount: _filteredItems.length + 1,
@@ -98,8 +98,8 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
                     onTap: widget.onAddPressed,
                     title: 'Add a ${T.toString().toLowerCase()}',
                     backgroundColor: AppColors.secondaryColor,
-                    iconColor: Colors.white,
-                    textColor: Colors.white,
+                    iconColor: AppColors.whiteColor,
+                    textColor: AppColors.whiteColor,
                   );
                 }
               },

@@ -57,7 +57,7 @@ class _DeviceCardState extends State<DeviceCard> {
       child: Container(
         key: ValueKey(widget.device.identifier), // Ensure unique key
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: const [
             BoxShadow(
@@ -86,7 +86,7 @@ class _DeviceCardState extends State<DeviceCard> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: AppColors.blackColor,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -97,7 +97,7 @@ class _DeviceCardState extends State<DeviceCard> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Colors.grey,
+                  color: AppColors.accentColor,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

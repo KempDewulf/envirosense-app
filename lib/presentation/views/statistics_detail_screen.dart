@@ -118,7 +118,7 @@ class _StatisticsDetailScreenState extends State<StatisticsDetailScreen> {
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: AppColors.blackColor.withOpacity(0.1),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
                             ),
@@ -254,7 +254,7 @@ class _StatisticsDetailScreenState extends State<StatisticsDetailScreen> {
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.normal,
-                            color: Colors.black87,
+                            color: AppColors.blackColor,
                           ),
                         ),
                         IconButton(
@@ -313,7 +313,7 @@ class _StatisticsDetailScreenState extends State<StatisticsDetailScreen> {
                           style: TextStyle(
                             fontSize: 60,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
+                            color: AppColors.blackColor,
                           ),
                         ),
                         Text(
@@ -321,7 +321,7 @@ class _StatisticsDetailScreenState extends State<StatisticsDetailScreen> {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.normal,
-                            color: Colors.black87,
+                            color: AppColors.blackColor,
                           ),
                         ),
                       ],

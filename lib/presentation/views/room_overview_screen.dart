@@ -20,10 +20,13 @@ class RoomOverviewScreen extends StatefulWidget {
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
 }
 
-class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
+class _RoomOverviewScreenState extends State<RoomOverviewScreen>
+    with SingleTickerProviderStateMixin {
   late final RoomController _controller = RoomController();
-  late final OutsideAirDataController _outsideAirController = OutsideAirDataController();
-  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
+  late final OutsideAirDataController _outsideAirController =
+      OutsideAirDataController();
+  late final TabController _tabController =
+      TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
   bool _showRoomData = true;
@@ -52,7 +55,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       setState(() => _isLoading = true);
       final room = await _controller.getRoom(widget.roomId);
       final airQuality = await _controller.getAirQuality(widget.roomId);
-      final outsideAirData = await _outsideAirController.getOutsideAirData(city);
+      final outsideAirData =
+          await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
@@ -199,7 +203,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: _showRoomData && _roomHasDeviceData
-                                  ? Colors.white
+                                  ? AppColors.whiteColor
                                   : AppColors.secondaryColor.withOpacity(
                                       _roomHasDeviceData ? 1.0 : 0.5),
                               fontWeight: FontWeight.bold,
@@ -224,7 +228,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: !_showRoomData
-                                  ? Colors.white
+                                  ? AppColors.whiteColor
                                   : AppColors.secondaryColor,
                               fontWeight: FontWeight.bold,
                             ),

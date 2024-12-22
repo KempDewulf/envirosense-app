@@ -154,7 +154,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 icon: Icons.delete_outline,
                 label: 'Remove Device',
                 onPressed: _showRemoveDeviceDialog,
-                color: Colors.red,
+                color: AppColors.redColor,
                 isDestructive: true,
               ),
             ],
@@ -185,7 +185,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.blackColor.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -193,12 +193,12 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       ),
       child: Material(
         color: isDestructive
-            ? Colors.red.withOpacity(0.4)
+            ? AppColors.redColor.withOpacity(0.4)
             : isWarning
-                ? Colors.orange.withOpacity(0.4)
+                ? AppColors.secondaryColor.withOpacity(0.4)
                 : isNeutral
-                    ? Colors.grey.withOpacity(0.4)
-                    : Colors.white,
+                    ? AppColors.accentColor.withOpacity(0.4)
+                    : AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           onTap: onPressed,
@@ -215,20 +215,20 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: isDestructive
-                        ? Colors.red
+                        ? AppColors.redColor
                         : isWarning
-                            ? Colors.orange
-                            : Colors.black87,
+                            ? AppColors.secondaryColor
+                            : AppColors.blackColor,
                   ),
                 ),
                 const Spacer(),
                 Icon(
                   Icons.arrow_forward_ios,
                   color: isDestructive
-                      ? Colors.red
+                      ? AppColors.redColor
                       : isWarning
-                          ? Colors.orange
-                          : Colors.black54,
+                          ? AppColors.secondaryColor
+                          : AppColors.blackColor,
                   size: 16,
                 ),
               ],
@@ -250,7 +250,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         padding: EdgeInsets.only(
@@ -366,7 +366,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
@@ -386,10 +386,10 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Current Room',
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: AppColors.accentColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
@@ -432,7 +432,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                               child: Text(
                                 room.name,
                                 style: const TextStyle(
-                                  color: Colors.black87,
+                                  color: AppColors.blackColor,
                                   fontSize: 16,
                                 ),
                               ),
@@ -448,7 +448,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                                       return Text(
                                         room.name,
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.whiteColor,
                                           fontSize: 16,
                                           fontWeight: room.id == _selectedRoomId
                                               ? FontWeight.bold
@@ -465,13 +465,14 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.4),
+                                        color: AppColors.whiteColor
+                                            .withOpacity(0.4),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: const Text(
                                         'Current room',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.whiteColor,
                                           fontSize: 12,
                                         ),
                                       ),
@@ -607,7 +608,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
@@ -640,7 +641,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 text: TextSpan(
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: AppColors.blackColor,
                   ),
                   children: [
                     const TextSpan(text: 'Are you sure you want to remove '),
@@ -684,12 +685,12 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                           await _handleDeviceRemoval();
                         },
                         style: FilledButton.styleFrom(
-                          backgroundColor: Colors.red,
+                          backgroundColor: AppColors.redColor,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         child: const Text(
                           'Remove',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.whiteColor),
                         ),
                       ),
                     ),

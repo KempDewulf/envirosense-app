@@ -415,7 +415,7 @@ class EnviroScoreChart extends StatelessWidget {
                   return LineTooltipItem(
                     '$xLabel\n${y.toStringAsFixed(2)}%',
                     const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                       fontWeight: FontWeight.bold,
                     ),
                   );

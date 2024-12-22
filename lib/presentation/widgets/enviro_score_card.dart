@@ -17,7 +17,7 @@ class EnviroScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: const [
           BoxShadow(

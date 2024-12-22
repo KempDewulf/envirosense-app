@@ -28,7 +28,7 @@ class RoomCard extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(12.0),
             boxShadow: const [
               BoxShadow(

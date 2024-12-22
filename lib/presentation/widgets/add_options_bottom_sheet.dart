@@ -24,7 +24,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
             ? AppColors.secondaryColor
             : AppColors.accentColor,
         iconColor: preferredOption == AddOptionType.room
-            ? Colors.white
+            ? AppColors.whiteColor
             : AppColors.accentColor,
         type: AddOptionType.room,
       ),
@@ -39,7 +39,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
             ? AppColors.secondaryColor
             : AppColors.accentColor,
         iconColor: preferredOption == AddOptionType.device
-            ? Colors.white
+            ? AppColors.whiteColor
             : AppColors.accentColor,
         type: AddOptionType.device,
       ),
@@ -60,7 +60,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
       heightFactor: 0.35,
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
         ),
         child: Column(

@@ -30,7 +30,7 @@ class DeviceDataList extends StatelessWidget {
             (data) => Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(12.0),
                 boxShadow: const [
                   BoxShadow(

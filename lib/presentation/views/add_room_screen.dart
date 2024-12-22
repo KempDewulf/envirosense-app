@@ -205,7 +205,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                           child: Icon(
                             getIconData(roomType.icon),
                             color: isSelected
-                                ? Colors.white
+                                ? AppColors.whiteColor
                                 : AppColors.accentColor,
                             size: 35,
                           ),
