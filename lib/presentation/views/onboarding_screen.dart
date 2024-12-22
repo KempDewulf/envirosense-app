@@ -1,8 +1,8 @@
 // lib/views/onboarding_screen.dart
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -62,8 +62,8 @@ class OnboardingScreen extends StatelessWidget {
       ];
 
   void _onIntroEnd(context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstTime', false);
+    final dbService = DatabaseService();
+    await dbService.setSetting('isFirstTime', false);
     Navigator.pushReplacementNamed(
       context,
       '/login',
