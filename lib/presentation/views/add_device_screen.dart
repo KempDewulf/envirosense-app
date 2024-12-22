@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:envirosense/core/helpers/icon_helper.dart';
+import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -244,33 +246,69 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           ),
                           const SizedBox(height: 16),
                           Expanded(
-                            child: ListView.builder(
+                            child: GridView.builder(
                               itemCount: _filteredRooms.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 25,
+                                crossAxisSpacing: 15,
+                              ),
                               itemBuilder: (context, index) {
-                                return Container(
-                                  color: _selectedRoom == _filteredRooms[index]
-                                      ? AppColors.primaryColor.withOpacity(0.1)
-                                      : AppColors.whiteColor,
-                                  child: ListTile(
-                                    title: Text(
-                                      _filteredRooms[index].name,
-                                      style: TextStyle(
-                                        color: _selectedRoom?.id ==
-                                                _filteredRooms[index].id
-                                            ? AppColors.primaryColor
-                                            : AppColors.blackColor,
+                                final room = _filteredRooms[index];
+                                final isSelected = _selectedRoom == room;
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    setState(() {
+                                      _selectedRoom = room;
+                                    });
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 70,
+                                        height: 70,
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? AppColors.secondaryColor
+                                              : AppColors.lightGrayColor,
+                                          shape: BoxShape.circle,
+                                          boxShadow: isSelected
+                                              ? [
+                                                  BoxShadow(
+                                                    color: AppColors
+                                                        .secondaryColor
+                                                        .withOpacity(0.6),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 6,
+                                                  ),
+                                                ]
+                                              : [],
+                                        ),
+                                        child: Icon(
+                                          getIconData(room.roomType.icon),
+                                          color: isSelected
+                                              ? AppColors.whiteColor
+                                              : AppColors.accentColor,
+                                          size: 35,
+                                        ),
                                       ),
-                                    ),
-                                    trailing: _selectedRoom?.id ==
-                                            _filteredRooms[index].id
-                                        ? const Icon(Icons.check,
-                                            color: AppColors.primaryColor)
-                                        : null,
-                                    onTap: () {
-                                      setState(() {
-                                        _selectedRoom = _filteredRooms[index];
-                                      });
-                                    },
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        room.name,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: isSelected
+                                              ? AppColors.secondaryColor
+                                              : AppColors.accentColor,
+                                          fontWeight: isSelected
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 );
                               },
