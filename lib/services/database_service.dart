@@ -7,8 +7,6 @@ class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
   factory DatabaseService() => _instance;
 
-  final Map<String, dynamic> _cache = {};
-
   DatabaseService._internal();
 
   Database? _db;
@@ -58,9 +56,6 @@ class DatabaseService {
 
   // Settings Methods
   Future<void> setSetting(String key, dynamic value) async {
-    // Update memory cache immediately
-    _cache[key] = value;
-
     final db = await database;
     await db.insert(
       'settings',
@@ -74,11 +69,6 @@ class DatabaseService {
   }
 
   Future<T?> getSetting<T>(String key) async {
-    // Check memory cache first
-    if (_cache.containsKey(key)) {
-      return _cache[key] as T?;
-    }
-
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'settings',
@@ -87,11 +77,7 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-
-    final value = json.decode(maps.first['value']) as T;
-    // Store in memory cache
-    _cache[key] = value;
-    return value;
+    return json.decode(maps.first['value']) as T;
   }
 
   // Login timestamp specific methods
@@ -100,20 +86,12 @@ class DatabaseService {
   }
 
   Future<bool> isLoginValid() async {
-    // Check memory cache first for instant response
-    if (_cache.containsKey('loginTimestamp')) {
-      final timestamp = _cache['loginTimestamp'] as int?;
-      if (timestamp != null) {
-        final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-        return DateTime.now().difference(loginTime).inDays < 2;
-      }
-    }
-
     final timestamp = await getSetting<int>('loginTimestamp');
     if (timestamp == null) return false;
 
     final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    return DateTime.now().difference(loginTime).inDays < 2;
+    final now = DateTime.now();
+    return now.difference(loginTime).inDays < 2; // 2 days expiration
   }
 
   // Device naming methods
