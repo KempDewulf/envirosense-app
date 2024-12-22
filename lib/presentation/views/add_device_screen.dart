@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -196,63 +197,47 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor,
+                              color: AppColors.primaryColor,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
+                          CustomTextFormField(
                             controller: _deviceNameController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter a name for this device',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
+                            labelText: 'Enter a name for this device',
+                            onChanged: (value) => setState(() {}),
+                            labelColor: AppColors.blackColor,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            borderColor: AppColors.accentColor,
+                            floatingLabelCustomStyle: const TextStyle(
+                              color: AppColors.primaryColor,
                             ),
-                            onChanged: (_) => setState(() {}),
+                            textStyle: const TextStyle(
+                              color: AppColors.primaryColor,
+                            ),
                           ),
                           const SizedBox(height: 16),
                           const Text(
                             'Select a room:',
                             style: TextStyle(
                               fontSize: 26,
-                              color: AppColors.blackColor,
+                              color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 16),
-                          TextField(
+                          CustomTextFormField(
                             controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Search rooms',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: AppColors.accentColor),
-                              ),
-                              prefixIcon: const Icon(Icons.search,
-                                  color: AppColors.accentColor),
+                            labelText: 'Search rooms',
+                            labelColor: AppColors.blackColor,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 16),
+                            borderColor: AppColors.accentColor,
+                            floatingLabelCustomStyle: const TextStyle(
+                              color: AppColors.primaryColor,
+                            ),
+                            textStyle: const TextStyle(
+                              color: AppColors.primaryColor,
                             ),
                           ),
                           const SizedBox(height: 16),
