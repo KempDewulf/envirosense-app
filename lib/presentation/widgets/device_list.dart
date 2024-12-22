@@ -1,17 +1,17 @@
-import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 
 class DevicesList extends StatelessWidget {
-  final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
+  final DatabaseService _databaseService = DatabaseService();
   final List<Device> devices;
 
   DevicesList({super.key, required this.devices});
 
   void _navigateToDeviceDetail(BuildContext context, Device device) async {
     Navigator.pushNamed(context, '/deviceOverview', arguments: {
-      'deviceName': await _deviceStorageHelper.getDeviceName(device.identifier),
+      'deviceName': await _databaseService.getDeviceName(device.identifier),
       'deviceId': device.id,
     });
   }
@@ -64,7 +64,7 @@ class DevicesList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               FutureBuilder<String?>(
-                                future: _deviceStorageHelper
+                                future: _databaseService
                                     .getDeviceName(device.identifier),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
