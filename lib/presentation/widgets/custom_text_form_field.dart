@@ -29,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? enableSuggestions;
   final TextCapitalization textCapitalization;
   final TextStyle? floatingLabelCustomStyle;
+  final FloatingLabelBehavior? floatingLabelBehaviour;
 
   const CustomTextFormField({
     super.key,
@@ -50,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.readOnly = false,
-    this.maxLines,
+    this.maxLines = 1,
     this.minLines,
     this.expands,
     this.maxLength,
@@ -58,6 +59,7 @@ class CustomTextFormField extends StatelessWidget {
     this.autocorrect,
     this.enableSuggestions,
     this.floatingLabelCustomStyle,
+    this.floatingLabelBehaviour = FloatingLabelBehavior.auto,
     this.textCapitalization = TextCapitalization.none,
   });
 
@@ -104,7 +106,7 @@ class CustomTextFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: focusClr, width: 2),
         ),
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        floatingLabelBehavior: floatingLabelBehaviour,
         floatingLabelStyle: floatingLabelCustomStyle ??
             const TextStyle(color: AppColors.whiteColor),
       ),
