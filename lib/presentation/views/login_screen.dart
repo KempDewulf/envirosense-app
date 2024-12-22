@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/custom_button.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/services/validation_service.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _authService = AuthService();
+  final DatabaseService _dbService = DatabaseService();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -84,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
           return;
         }
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setInt(
+        await _dbService.setSetting(
           'loginTimestamp',
           DateTime.now().millisecondsSinceEpoch,
         );
