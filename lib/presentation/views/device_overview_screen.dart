@@ -422,11 +422,17 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       selectedItemBuilder: (context) => [
                         ...rooms.map((room) => DropdownMenuItem(
                               value: room.id,
-                              child: Text(
-                                room.name,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: AppColors.blackColor,
+                              child: Container(
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                ),
+                                child: Text(
+                                  room.name,
+                                  softWrap: true,
+                                  style: const TextStyle(
+                                    color: AppColors.blackColor,
+                                  ),
                                 ),
                               ),
                             )),
