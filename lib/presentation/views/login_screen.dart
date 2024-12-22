@@ -168,12 +168,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _emailController,
                   validator: ValidationService.validateEmail,
                   focusNode: _emailFocusNode,
+                  borderColor: AppColors.secondaryColor,
+                  focusColor: AppColors.secondaryColor,
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 14.0),
                 // Password field
                 CustomTextFormField(
                   labelText: 'Password',
                   labelColor: AppColors.whiteColor,
+                  borderColor: AppColors.secondaryColor,
+                  focusColor: AppColors.secondaryColor,
                   controller: _passwordController,
                   obscureText: _obscureText,
                   suffixIcon: IconButton(

@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/add_item_card.dart';
+import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ItemGridPage<T> extends StatefulWidget {
@@ -63,28 +64,22 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          TextFormField(
+          CustomTextFormField(
             controller: _searchController,
-            decoration: InputDecoration(
-              labelText: 'Search a ${T.toString().toLowerCase()}',
-              prefixIcon: const Icon(Icons.search),
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.blue, width: 2),
-              ),
+            labelText: 'Search a ${T.toString().toLowerCase()}',
+            labelColor: AppColors.blackColor,
+            prefixIcon: const Icon(Icons.search),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+            borderColor: AppColors.accentColor,
+            floatingLabelCustomStyle: const TextStyle(
+              color: AppColors.primaryColor,
+            ),
+            textStyle: const TextStyle(
+              color: AppColors.primaryColor,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Expanded(
             child: GridView.builder(
               itemCount: _filteredItems.length + 1,

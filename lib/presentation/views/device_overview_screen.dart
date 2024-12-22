@@ -3,6 +3,7 @@ import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:flutter/material.dart';
 
@@ -280,24 +281,15 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
             ),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: TextField(
+              child: CustomTextFormField(
                 controller: inputController,
-                decoration: const InputDecoration(
-                  labelText: 'Device Name',
-                  labelStyle: TextStyle(color: AppColors.secondaryColor),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.secondaryColor),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.secondaryColor),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.secondaryColor, width: 2),
-                  ),
+                labelText: 'Device Name',
+                floatingLabelCustomStyle: const TextStyle(
+                  color: AppColors.secondaryColor,
                 ),
-                style: const TextStyle(color: Colors.black87),
-                selectionControls: MaterialTextSelectionControls(),
+                textStyle: const TextStyle(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
             Divider(color: AppColors.accentColor.withOpacity(0.2)),

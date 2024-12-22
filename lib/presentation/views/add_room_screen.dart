@@ -3,6 +3,7 @@ import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/roomtype.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
+import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 import 'package:envirosense/services/logging_service.dart';
@@ -19,7 +20,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   final RoomTypeController _roomTypesController = RoomTypeController();
   final TextEditingController _roomNameController = TextEditingController();
 
-  final String _buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  final String _buildingId =
+      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
   List<RoomType>? _roomTypes; // Store room types in state
   RoomType? _selectedRoomType;
   bool _isSaving = false;
@@ -129,40 +131,37 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               "Enter Room's name",
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.lightGrayColor,
+                color: AppColors.accentColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
+            CustomTextFormField(
               controller: _roomNameController,
-              decoration: InputDecoration(
-                hintText: 'e.g., Living Room',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.accentColor),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.accentColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.accentColor),
-                ),
-              ),
+              labelText: 'e.g. Living Room',
+              floatingLabelBehaviour: FloatingLabelBehavior.never,
               onChanged: (value) => setState(() {}),
+              labelColor: AppColors.blackColor,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              borderColor: AppColors.accentColor,
+              floatingLabelCustomStyle: const TextStyle(
+                color: AppColors.primaryColor,
+              ),
+              textStyle: const TextStyle(
+                color: AppColors.primaryColor,
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
             const Text(
               "Select Room's icon",
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.lightGrayColor,
+                color: AppColors.accentColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 itemCount: _roomTypes?.length ?? 0,
@@ -177,6 +176,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
                   return GestureDetector(
                     onTap: () {
+                      FocusScope.of(context).unfocus();
                       setState(() {
                         _selectedRoomType = roomType;
                       });
