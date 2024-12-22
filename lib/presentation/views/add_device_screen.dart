@@ -1,10 +1,10 @@
-import 'package:envirosense/core/helpers/device_storage_helper.dart';
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../core/constants/colors.dart';
@@ -25,7 +25,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   final TextEditingController _deviceNameController = TextEditingController();
   final RoomController _roomController = RoomController();
   final DeviceController _deviceController = DeviceController();
-  final DeviceStorageHelper _deviceStorageHelper = DeviceStorageHelper();
+  final DatabaseService _databaseService = DatabaseService();
 
   String? _deviceIdentifierCode;
   Room? _selectedRoom;
@@ -92,7 +92,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     try {
       await _deviceController.addDevice(
           _selectedRoom?.id, _deviceIdentifierCode);
-      await _deviceStorageHelper.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
+      await _databaseService.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
 
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
