@@ -278,53 +278,93 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     double currentTargetTemp = _targetTemperature;
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Container(
-          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Set Target Temperature',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.accentColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove_circle_outline),
-                    onPressed: () {
-                      setState(() => currentTargetTemp =
-                          (currentTargetTemp - 0.5).clamp(16, 30));
-                    },
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    '${currentTargetTemp.toStringAsFixed(1)}°C',
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                  const SizedBox(width: 16),
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      setState(() => currentTargetTemp =
-                          (currentTargetTemp + 0.5).clamp(16, 30));
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  _targetTemperature = currentTargetTemp;
-                  Navigator.pop(context);
-                },
-                child: const Text('Save'),
-              ),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Target Temperature',
+                        style: TextStyle(
+                          color: AppColors.accentColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove_circle_outline),
+                            iconSize: 28,
+                            color: AppColors.secondaryColor,
+                            onPressed: () {
+                              setState(() => currentTargetTemp =
+                                  (currentTargetTemp - 0.5).clamp(16, 30));
+                            },
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            '${currentTargetTemp.toStringAsFixed(1)}°C',
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 16),
+                          IconButton(
+                            icon: const Icon(Icons.add_circle_outline),
+                            iconSize: 28,
+                            color: AppColors.secondaryColor,
+                            onPressed: () {
+                              setState(() => currentTargetTemp =
+                                  (currentTargetTemp + 0.5).clamp(16, 30));
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: 180,
+                        child: FilledButton(
+                          onPressed: () {
+                            _targetTemperature = currentTargetTemp;
+                            Navigator.pop(context);
+                          },
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.secondaryColor,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),
