@@ -387,7 +387,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Current Room:',
+                      'Current Room',
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 18,

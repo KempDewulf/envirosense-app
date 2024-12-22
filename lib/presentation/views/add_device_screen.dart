@@ -193,9 +193,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Enter device name:',
+                            'Enter device name',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor,
                             ),
@@ -204,6 +204,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           CustomTextFormField(
                             controller: _deviceNameController,
                             labelText: 'Enter a name for this device',
+                            floatingLabelBehaviour: FloatingLabelBehavior.never,
                             onChanged: (value) => setState(() {}),
                             labelColor: AppColors.blackColor,
                             contentPadding: const EdgeInsets.symmetric(
@@ -218,9 +219,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           ),
                           const SizedBox(height: 16),
                           const Text(
-                            'Select a room:',
+                            'Select a room',
                             style: TextStyle(
-                              fontSize: 26,
+                              fontSize: 18,
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -229,6 +230,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           CustomTextFormField(
                             controller: _searchController,
                             labelText: 'Search rooms',
+                            floatingLabelBehaviour: FloatingLabelBehavior.never,
                             labelColor: AppColors.blackColor,
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 16),
