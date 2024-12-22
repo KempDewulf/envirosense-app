@@ -251,7 +251,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
-                                mainAxisSpacing: 35,
+                                mainAxisSpacing: 25,
                                 crossAxisSpacing: 15,
                                 childAspectRatio: 1 / 1.15,
                               ),
