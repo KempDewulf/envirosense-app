@@ -394,9 +394,10 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
                       _device?.room?.name ?? "Unknown Room",
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -405,35 +406,27 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                     ),
                     const SizedBox(height: 32),
                     DropdownButtonFormField<String>(
-                      decoration: const InputDecoration(
-                        labelText: 'Select New Room',
-                        labelStyle: TextStyle(
-                          color: AppColors.secondaryColor,
-                          fontSize: 16,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.secondaryColor),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.secondaryColor),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: AppColors.secondaryColor, width: 2),
-                        ),
-                      ),
+                      isExpanded: true,
                       dropdownColor: AppColors.secondaryColor,
                       value: _selectedRoomId,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRoomId = value;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: AppColors.secondaryColor,
+                        size: 30,
+                      ),
                       selectedItemBuilder: (context) => [
                         ...rooms.map((room) => DropdownMenuItem(
                               value: room.id,
                               child: Text(
                                 room.name,
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   color: AppColors.blackColor,
-                                  fontSize: 16,
                                 ),
                               ),
                             )),
@@ -447,6 +440,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                                     builder: (context) {
                                       return Text(
                                         room.name,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: AppColors.whiteColor,
                                           fontSize: 16,
@@ -482,15 +476,24 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                               ),
                             )),
                       ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedRoomId = value;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: AppColors.secondaryColor,
-                        size: 30,
+                      decoration: const InputDecoration(
+                        labelText: 'Select New Room',
+                        labelStyle: TextStyle(
+                          color: AppColors.secondaryColor,
+                          fontSize: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.secondaryColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors.secondaryColor, width: 2),
+                        ),
                       ),
                     ),
                   ],
