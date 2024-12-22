@@ -253,6 +253,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                 crossAxisCount: 3,
                                 mainAxisSpacing: 35,
                                 crossAxisSpacing: 15,
+                                childAspectRatio: 1 / 1.2,
                               ),
                               itemBuilder: (context, index) {
                                 final room = _filteredRooms[index];
@@ -296,20 +297,25 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 8),
-                                      Text(
-                                        room.name,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: isSelected
-                                              ? AppColors.secondaryColor
-                                              : AppColors.accentColor,
-                                          fontWeight: isSelected
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
+                                      Tooltip(
+                                        message: room.name,
+                                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                                        child: Text(
+                                          room.name,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: isSelected
+                                                ? AppColors.secondaryColor
+                                                : AppColors.accentColor,
+                                            fontWeight: isSelected
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                          ),
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                 );
