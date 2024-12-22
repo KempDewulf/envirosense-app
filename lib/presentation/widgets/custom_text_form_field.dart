@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final TextStyle? textStyle;
   final bool obscureText;
   final bool? enabled;
   final EdgeInsetsGeometry? contentPadding;
@@ -27,12 +28,14 @@ class CustomTextFormField extends StatelessWidget {
   final bool? autocorrect;
   final bool? enableSuggestions;
   final TextCapitalization textCapitalization;
+  final TextStyle? floatingLabelCustomStyle;
 
   const CustomTextFormField({
     super.key,
     this.controller,
     this.labelText,
     this.hintText,
+    this.textStyle = const TextStyle(color: AppColors.whiteColor),
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
@@ -54,6 +57,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.autocorrect,
     this.enableSuggestions,
+    this.floatingLabelCustomStyle,
     this.textCapitalization = TextCapitalization.none,
   });
 
@@ -79,7 +83,7 @@ class CustomTextFormField extends StatelessWidget {
       autocorrect: autocorrect ?? true,
       enableSuggestions: enableSuggestions ?? true,
       textCapitalization: textCapitalization,
-      style: const TextStyle(color: AppColors.whiteColor),
+      style: textStyle,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
@@ -101,7 +105,8 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: focusClr, width: 2),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        floatingLabelStyle: const TextStyle(color: AppColors.whiteColor),
+        floatingLabelStyle: floatingLabelCustomStyle ??
+            const TextStyle(color: AppColors.whiteColor),
       ),
     );
   }
