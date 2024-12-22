@@ -59,8 +59,8 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color borderClr = borderColor ?? Colors.grey;
-    final Color focusClr = focusColor ?? Colors.blue;
+    final Color borderClr = borderColor ?? AppColors.secondaryColor;
+    final Color focusClr = focusColor ?? AppColors.secondaryColor;
 
     return TextFormField(
       controller: controller,
