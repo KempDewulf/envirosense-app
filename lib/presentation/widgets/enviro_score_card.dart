@@ -5,12 +5,14 @@ class EnviroScoreCard extends StatelessWidget {
   final int score;
   final VoidCallback onInfoPressed;
   final bool isDeviceDataAvailable;
+  final String type;
 
   const EnviroScoreCard({
     super.key,
     required this.score,
     required this.onInfoPressed,
     required this.isDeviceDataAvailable,
+    this.type = '',
   });
 
   @override
@@ -35,13 +37,21 @@ class EnviroScoreCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Room EnviroScore',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                type.isNotEmpty
+                    ? Text(
+                        '$type EnviroScore',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : Text(
+                        'EnviroScore',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                 IconButton(
                   icon: const Icon(Icons.info_outline),
                   onPressed: onInfoPressed,

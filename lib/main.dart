@@ -5,7 +5,7 @@ import 'package:envirosense/presentation/views/device_overview_screen.dart';
 import 'package:envirosense/presentation/views/email_verification_screen.dart';
 import 'package:envirosense/presentation/views/main_screen.dart';
 import 'package:envirosense/presentation/views/onboarding_screen.dart';
-import 'package:envirosense/presentation/views/statistics_detail_screen.dart';
+import 'package:envirosense/presentation/views/statistics_screen.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -122,7 +122,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
             ),
         '/addRoom': (context) => const AddRoomScreen(),
         '/addDevice': (context) => const AddDeviceScreen(),
-        '/statisticsDetail': (context) => const StatisticsDetailScreen(),
+        '/statisticsDetail': (context) => const StatisticsScreen(),
         '/roomOverview': (context) => RoomOverviewScreen(
               roomName: (ModalRoute.of(context)?.settings.arguments
                   as Map<String, dynamic>)['roomName'],
