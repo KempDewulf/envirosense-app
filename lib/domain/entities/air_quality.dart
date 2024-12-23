@@ -3,7 +3,7 @@ import 'package:envirosense/domain/entities/air_data.dart';
 class AirQuality {
   final String id;
   final double? enviroScore;
-  final AirData airData;
+  final AirData? airData;
 
   AirQuality({
     required this.id,
