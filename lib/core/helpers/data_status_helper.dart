@@ -21,6 +21,13 @@ class Thresholds {
     max: 1000,
     optimalMax: 600,
   );
+
+  static const envirosense = (
+    min: 50,
+    max: 100,
+    optimalMin: 85,
+    optimalMax: 100,
+  );
 }
 
 class DataStatusHelper {
@@ -48,6 +55,16 @@ class DataStatusHelper {
     if (ppm > Thresholds.ppm.max) return Status.bad;
     if (ppm > Thresholds.ppm.optimalMax) return Status.medium;
     return Status.good;
+  }
+
+  static Status getEnviroSenseStatus(double enviroScore) {
+    return _getStatus(
+      enviroScore,
+      min: Thresholds.envirosense.min,
+      max: Thresholds.envirosense.max,
+      optimalMin: Thresholds.envirosense.optimalMin,
+      optimalMax: Thresholds.envirosense.optimalMax,
+    );
   }
 
   static Color getStatusColor(Status status) {
