@@ -1,6 +1,6 @@
 import 'package:envirosense/domain/entities/building.dart';
 import 'package:envirosense/domain/entities/device.dart';
-import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/domain/entities/room_type.dart';
 
 class Room {
   final String id;

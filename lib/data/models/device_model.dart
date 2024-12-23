@@ -2,7 +2,7 @@ import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/building.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/domain/entities/room_type.dart';
 
 import '../../domain/entities/device.dart';
 
