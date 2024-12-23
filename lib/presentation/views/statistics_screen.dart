@@ -96,7 +96,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   color: AppColors.whiteColor,
                   child: Column(
                     children: [
-                      const SizedBox(height: 90), // Space for overlapping card
+                      const SizedBox(height: 80),
                       // ROOMS Card
                       Container(
                         height: MediaQuery.of(context).size.height,
@@ -124,12 +124,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 ),
                               ),
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 14.0),
+                                  const EdgeInsets.symmetric(vertical: 10.0),
                               child: const Text(
                                 'ROOMS',
                                 style: TextStyle(
                                   color: AppColors.whiteColor,
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign: TextAlign.center,
@@ -177,7 +177,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                             alignment: Alignment.center,
                                             child: Text(
                                               //TODO: have the calculated rooms enviroscore here
-                                              '74%',
+                                              '74.8%',
                                               style: const TextStyle(
                                                 color: AppColors.whiteColor,
                                                 fontSize: 16,

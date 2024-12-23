@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
-  final int score;
+  final double score;
   final VoidCallback onInfoPressed;
   final bool isDeviceDataAvailable;
   final String type;
@@ -60,9 +60,7 @@ class EnviroScoreCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: isDeviceDataAvailable
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
