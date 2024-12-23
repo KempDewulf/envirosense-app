@@ -99,13 +99,16 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                       SizedBox(height: topBackgroundHeight + 30),
                       // ROOMS Card
                       Container(
-                        height:
-                          MediaQuery.of(context).size.height
-                          - topBackgroundHeight  // Top blue section
-                          - kToolbarHeight      // AppBar
-                          - 100                 // EnviroScore card
-                          - 80                  // Bottom navigation
-                          - 50,                 // Additional padding/margins
+                        height: MediaQuery.of(context).size.height -
+                            topBackgroundHeight // Top blue section
+                            -
+                            kToolbarHeight // AppBar
+                            -
+                            100 // EnviroScore card
+                            -
+                            80 // Bottom navigation
+                            -
+                            50, // Additional padding/margins
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
@@ -145,11 +148,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                             // Rooms List
                             Expanded(
                               child: ListView.separated(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                shrinkWrap: true,
                                 itemCount: rooms.length,
                                 separatorBuilder: (context, index) =>
-                                    const Divider(height: 1),
+                                    const Divider(height: 0),
                                 itemBuilder: (context, index) {
                                   final room = rooms[index];
                                   return GestureDetector(
@@ -192,24 +193,48 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 16),
                                           // Room Title
                                           Expanded(
-                                            child: Text(
-                                              room.name,
-                                              style: const TextStyle(
-                                                color: AppColors.blackColor,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          // Arrow Icon
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: AppColors.blackColor,
-                                            size: 16,
-                                          ),
+                                              child: Container(
+                                                  height: 60,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 16),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors
+                                                        .primaryColor
+                                                        .withAlpha(10),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topRight:
+                                                          Radius.circular(15),
+                                                      bottomRight:
+                                                          Radius.circular(15),
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        room.name,
+                                                        style: const TextStyle(
+                                                          color: AppColors
+                                                              .primaryColor,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: AppColors
+                                                            .primaryColor,
+                                                        size: 16,
+                                                      ),
+                                                    ],
+                                                  ))),
                                         ],
                                       ),
                                     ),
