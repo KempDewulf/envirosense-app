@@ -1,6 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
-import 'package:envirosense/domain/entities/air_quality.dart';
+import 'package:envirosense/domain/entities/room_air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/outside_air_data_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -35,7 +35,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   double _targetTemperature = 22.0; // hardcoded for now
 
   Room? _room;
-  AirQuality? _airQuality;
+  RoomAirQuality? _airQuality;
   AirData? _outsideAirData;
   String? _error;
   String city = 'Brugge'; //TODO: later in poc we would get city from user
@@ -56,7 +56,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     try {
       setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
-      final airQuality = await _roomController.getAirQuality(widget.roomId);
+      final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
       final outsideAirData =
           await _outsideAirController.getOutsideAirData(city);
       setState(() {

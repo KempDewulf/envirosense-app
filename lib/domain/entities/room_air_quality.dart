@@ -1,14 +1,16 @@
 import 'package:envirosense/domain/entities/air_data.dart';
 
-class AirQuality {
+class RoomAirQuality {
   final String id;
+  final String? name;
   final double? enviroScore;
   final AirData? airData;
 
-  AirQuality({
+  RoomAirQuality({
     required this.id,
-    required this.enviroScore,
-    required this.airData,
+    this.name,
+    this.enviroScore,
+    this.airData,
   });
 
   @override

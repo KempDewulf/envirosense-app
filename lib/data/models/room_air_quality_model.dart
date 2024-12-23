@@ -1,14 +1,22 @@
 import 'package:envirosense/domain/entities/air_data.dart';
-import 'package:envirosense/domain/entities/air_quality.dart';
+import 'package:envirosense/domain/entities/room_air_quality.dart';
 
-class AirQualityModel extends AirQuality {
-  AirQualityModel({
+class RoomAirQualityModel extends RoomAirQuality {
+  RoomAirQualityModel({
     required super.id,
     required super.enviroScore,
     required super.airData,
   });
 
-  factory AirQualityModel.fromJson(Map<String, dynamic> json) {
+  factory RoomAirQualityModel.fromJson(Map<String, dynamic> json) {
+    if (json['airQuality'] == null) {
+      return RoomAirQualityModel(
+        id: json['id'],
+        enviroScore: json['enviroScore'],
+        airData: null,
+      );
+    }
+
     AirData airData = AirData(
       temperature: json['airQuality']['temperature'] != null
           ? (json['airQuality']['temperature'] is String
@@ -27,7 +35,7 @@ class AirQualityModel extends AirQuality {
           : null,
     );
 
-    return AirQualityModel(
+    return RoomAirQualityModel(
       id: json['id'],
       enviroScore: json['enviroScore'],
       airData: airData,
