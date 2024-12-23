@@ -250,7 +250,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                 title:
                     _showRoomData ? 'Room Environment' : 'Outside Environment',
                 data: _showRoomData && _roomHasDeviceData
-                    ? _airQuality!.airData
+                    ? _airQuality?.airData ?? AirData(temperature: 0, humidity: 0, gasPpm: 0)
                     : _outsideAirData!,
               )
             ],
