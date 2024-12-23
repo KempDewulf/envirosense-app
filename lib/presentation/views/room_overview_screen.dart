@@ -149,7 +149,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       children: [
         EnviroScoreCard(
           score: _airQuality?.enviroScore ?? 0,
-          onInfoPressed: _showEnviroScoreInfo,
           isDataAvailable: _roomHasDeviceData,
           type: 'Room',
         ),
@@ -629,24 +628,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         SnackBar(content: Text('Failed to remove room: $_error')),
       );
     }
-  }
-
-  void _showEnviroScoreInfo() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('About EnviroScore'),
-        content: const Text(
-          'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Got it'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _showTargetTemperatureSheet(BuildContext context) {
