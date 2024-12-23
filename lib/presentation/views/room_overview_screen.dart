@@ -150,7 +150,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         EnviroScoreCard(
           score: _airQuality?.enviroScore ?? 0,
           onInfoPressed: _showEnviroScoreInfo,
-          isDeviceDataAvailable: _roomHasDeviceData,
+          isDataAvailable: _roomHasDeviceData,
           type: 'Room',
         ),
         const SizedBox(height: 24),
