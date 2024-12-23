@@ -138,6 +138,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
           color: AppColors.secondaryColor,
           child: DevicesList(devices: _room?.devices ?? []),
         ),
+        _buildActionsTab(),
       ],
     );
   }

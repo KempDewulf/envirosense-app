@@ -117,11 +117,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
           color: AppColors.secondaryColor,
           child: DeviceDataList(deviceData: _device?.deviceData ?? []),
         ),
-        RefreshIndicator(
-          onRefresh: _loadData,
-          color: AppColors.secondaryColor,
-          child: _buildActionsTab(),
-        ),
+        _buildActionsTab()
       ],
     );
   }
