@@ -3,20 +3,36 @@ import '../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
   final double score;
-  final VoidCallback onInfoPressed;
-  final bool isDeviceDataAvailable;
+  final bool isDataAvailable;
   final String type;
 
   const EnviroScoreCard({
     super.key,
     required this.score,
-    required this.onInfoPressed,
-    required this.isDeviceDataAvailable,
+    required this.isDataAvailable,
     this.type = '',
   });
 
   @override
   Widget build(BuildContext context) {
+    void showEnviroScoreInfo() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('About EnviroScore'),
+          content: const Text(
+            'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Got it'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -54,7 +70,7 @@ class EnviroScoreCard extends StatelessWidget {
                       ),
                 IconButton(
                   icon: const Icon(Icons.info_outline),
-                  onPressed: onInfoPressed,
+                  onPressed: showEnviroScoreInfo,
                 ),
               ],
             ),
@@ -64,15 +80,15 @@ class EnviroScoreCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  isDeviceDataAvailable ? '$score' : 'No data available',
+                  isDataAvailable ? '$score' : 'No data available',
                   style: TextStyle(
-                    fontSize: isDeviceDataAvailable ? 48 : 18,
+                    fontSize: isDataAvailable ? 48 : 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.secondaryColor,
                   ),
                 ),
                 Text(
-                  isDeviceDataAvailable ? '%' : '',
+                  isDataAvailable ? '%' : '',
                   style: const TextStyle(
                     fontSize: 24,
                     color: AppColors.secondaryColor,

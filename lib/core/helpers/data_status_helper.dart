@@ -17,9 +17,16 @@ class Thresholds {
     optimalMax: 60.0,
   );
 
-  static const airQuality = (
+  static const ppm = (
     max: 1000,
     optimalMax: 600,
+  );
+
+  static const envirosense = (
+    min: 50,
+    max: 100,
+    optimalMin: 85,
+    optimalMax: 100,
   );
 }
 
@@ -44,10 +51,20 @@ class DataStatusHelper {
     );
   }
 
-  static Status getAirQualityStatus(int ppm) {
-    if (ppm > Thresholds.airQuality.max) return Status.bad;
-    if (ppm > Thresholds.airQuality.optimalMax) return Status.medium;
+  static Status getPPMStatus(int ppm) {
+    if (ppm > Thresholds.ppm.max) return Status.bad;
+    if (ppm > Thresholds.ppm.optimalMax) return Status.medium;
     return Status.good;
+  }
+
+  static Status getEnviroSenseStatus(double? enviroScore) {
+    return _getStatus(
+      enviroScore,
+      min: Thresholds.envirosense.min,
+      max: Thresholds.envirosense.max,
+      optimalMin: Thresholds.envirosense.optimalMin,
+      optimalMax: Thresholds.envirosense.optimalMax,
+    );
   }
 
   static Color getStatusColor(Status status) {
@@ -58,16 +75,19 @@ class DataStatusHelper {
         return AppColors.secondaryColor;
       case Status.bad:
         return AppColors.redColor;
+      default:
+        return AppColors.accentColor;
     }
   }
 
   static Status _getStatus(
-    num value, {
+    num? value, {
     required num min,
     required num max,
     required num optimalMin,
     required num optimalMax,
   }) {
+    if (value == null) return Status.unknown;
     if (value < min || value > max) return Status.bad;
     if (value < optimalMin || value > optimalMax) return Status.medium;
     return Status.good;

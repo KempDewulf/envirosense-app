@@ -1,5 +1,6 @@
 enum Status {
   good,
   medium,
-  bad,
+  bad, 
+  unknown,
 }

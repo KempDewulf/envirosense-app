@@ -86,7 +86,7 @@ class DeviceDataList extends StatelessWidget {
       _buildDataRow(
         label: 'CO2 Level',
         value: '${data.airData.gasPpm} ppm',
-        status: DataStatusHelper.getAirQualityStatus(data.airData.gasPpm ?? 0),
+        status: DataStatusHelper.getPPMStatus(data.airData.gasPpm ?? 0),
         icon: Icons.cloud,
       ),
     ];

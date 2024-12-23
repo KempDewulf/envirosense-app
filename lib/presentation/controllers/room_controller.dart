@@ -1,11 +1,11 @@
 import 'package:envirosense/data/datasources/room_data_source.dart';
 import 'package:envirosense/data/repositories/room_repository_impl.dart';
-import 'package:envirosense/domain/entities/air_quality.dart';
+import 'package:envirosense/domain/entities/room_air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/domain/repositories/room_repository.dart';
 import 'package:envirosense/domain/usecases/add_device_to_room.dart';
 import 'package:envirosense/domain/usecases/delete_room.dart';
-import 'package:envirosense/domain/usecases/get_air_quality.dart';
+import 'package:envirosense/domain/usecases/get_room_air_quality.dart';
 import 'package:envirosense/domain/usecases/get_room.dart';
 import 'package:envirosense/domain/usecases/remove_device_from_room.dart';
 import 'package:envirosense/domain/usecases/update_room.dart';
@@ -16,7 +16,7 @@ import '../../services/api_service.dart';
 class RoomController {
   late final GetRoomsUseCase getRoomsUseCase;
   late final GetRoomUseCase getRoomUseCase;
-  late final GetAirQualityUseCase getAirQualityUseCase;
+  late final GetRoomAirQualityUseCase getRoomAirQualityUseCase;
   late final AddRoomUseCase addRoomUseCase;
   late final DeleteRoomUseCase deleteRoomUseCase;
   late final UpdateRoomUseCase updateRoomUseCase;
@@ -30,7 +30,7 @@ class RoomController {
         ) {
     getRoomsUseCase = GetRoomsUseCase(repository);
     getRoomUseCase = GetRoomUseCase(repository);
-    getAirQualityUseCase = GetAirQualityUseCase(repository);
+    getRoomAirQualityUseCase = GetRoomAirQualityUseCase(repository);
     addRoomUseCase = AddRoomUseCase(repository);
     deleteRoomUseCase = DeleteRoomUseCase(repository);
     updateRoomUseCase = UpdateRoomUseCase(repository);
@@ -46,8 +46,8 @@ class RoomController {
     return await getRoomUseCase(roomId);
   }
 
-  Future<AirQuality> getAirQuality(String roomId) async {
-    return await getAirQualityUseCase(roomId);
+  Future<RoomAirQuality> getRoomAirQuality(String roomId) async {
+    return await getRoomAirQualityUseCase(roomId);
   }
 
   Future<void> addRoom(

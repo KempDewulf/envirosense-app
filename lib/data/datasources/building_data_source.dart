@@ -1,3 +1,4 @@
+import 'package:envirosense/data/models/building_air_quality.dart';
 import 'package:envirosense/data/models/building_model.dart';
 import '../../services/api_service.dart';
 
@@ -20,6 +21,16 @@ class BuildingDataSource {
     } catch (e) {
       // Handle errors
       throw Exception('Failed to load buildings: $e');
+    }
+  }
+
+  Future<BuildingAirQualityModel> getBuildingAirQuality(String buildingId) async {
+    try {
+      final response = await apiService.getRequest('buildings/$buildingId/air-quality');
+      return BuildingAirQualityModel.fromJson(response.data as Map<String, dynamic>);
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load building air quality: $e');
     }
   }
 }
