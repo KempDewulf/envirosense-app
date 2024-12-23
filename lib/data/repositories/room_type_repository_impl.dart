@@ -1,5 +1,5 @@
 import 'package:envirosense/data/datasources/room_type_data_source.dart';
-import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/domain/repositories/room_type_repository.dart';
 
 class RoomTypeRepositoryImpl implements RoomTypeRepository {

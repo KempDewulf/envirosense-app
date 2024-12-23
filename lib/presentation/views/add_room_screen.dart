@@ -1,6 +1,6 @@
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/core/helpers/string_helper.dart';
-import 'package:envirosense/domain/entities/roomtype.dart';
+import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
