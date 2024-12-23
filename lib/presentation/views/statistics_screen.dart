@@ -96,7 +96,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   color: AppColors.whiteColor,
                   child: Column(
                     children: [
-                      const SizedBox(height: 80),
+                      SizedBox(height: topBackgroundHeight + 30),
                       // ROOMS Card
                       Container(
                         height: MediaQuery.of(context).size.height,
