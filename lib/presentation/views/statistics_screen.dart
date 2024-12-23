@@ -99,16 +99,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                       SizedBox(height: topBackgroundHeight + 30),
                       // ROOMS Card
                       Container(
-                        height: MediaQuery.of(context).size.height -
-                            topBackgroundHeight // Top blue section
-                            -
-                            kToolbarHeight // AppBar
-                            -
-                            100 // EnviroScore card
-                            -
-                            80 // Bottom navigation
-                            -
-                            50, // Additional padding/margins
+                        height:
+                          MediaQuery.of(context).size.height
+                          - topBackgroundHeight  // Top blue section
+                          - kToolbarHeight      // AppBar
+                          - 100                 // EnviroScore card
+                          - 80                  // Bottom navigation
+                          - 50,                 // Additional padding/margins
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
