@@ -3,20 +3,36 @@ import '../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
   final double score;
-  final VoidCallback onInfoPressed;
   final bool isDataAvailable;
   final String type;
 
   const EnviroScoreCard({
     super.key,
     required this.score,
-    required this.onInfoPressed,
     required this.isDataAvailable,
     this.type = '',
   });
 
   @override
   Widget build(BuildContext context) {
+    void showEnviroScoreInfo() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('About EnviroScore'),
+          content: const Text(
+            'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Got it'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -54,7 +70,7 @@ class EnviroScoreCard extends StatelessWidget {
                       ),
                 IconButton(
                   icon: const Icon(Icons.info_outline),
-                  onPressed: onInfoPressed,
+                  onPressed: showEnviroScoreInfo,
                 ),
               ],
             ),
