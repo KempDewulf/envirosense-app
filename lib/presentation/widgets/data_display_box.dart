@@ -25,7 +25,7 @@ class DataDisplayBox extends StatelessWidget {
       }),
       MapEntry('CO2 Level', {
         'value': '${data.gasPpm} ppm',
-        'status': DataStatusHelper.getAirQualityStatus(data.gasPpm ?? 0),
+        'status': DataStatusHelper.getPPMStatus(data.gasPpm ?? 0),
       }),
     ];
   }
