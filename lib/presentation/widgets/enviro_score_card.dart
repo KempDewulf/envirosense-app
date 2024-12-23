@@ -4,14 +4,14 @@ import '../../../core/constants/colors.dart';
 class EnviroScoreCard extends StatelessWidget {
   final double score;
   final VoidCallback onInfoPressed;
-  final bool isDeviceDataAvailable;
+  final bool isDataAvailable;
   final String type;
 
   const EnviroScoreCard({
     super.key,
     required this.score,
     required this.onInfoPressed,
-    required this.isDeviceDataAvailable,
+    required this.isDataAvailable,
     this.type = '',
   });
 
@@ -64,15 +64,15 @@ class EnviroScoreCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  isDeviceDataAvailable ? '$score' : 'No data available',
+                  isDataAvailable ? '$score' : 'No data available',
                   style: TextStyle(
-                    fontSize: isDeviceDataAvailable ? 48 : 18,
+                    fontSize: isDataAvailable ? 48 : 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.secondaryColor,
                   ),
                 ),
                 Text(
-                  isDeviceDataAvailable ? '%' : '',
+                  isDataAvailable ? '%' : '',
                   style: const TextStyle(
                     fontSize: 24,
                     color: AppColors.secondaryColor,
