@@ -1,7 +1,5 @@
-import 'package:envirosense/domain/entities/building.dart';
+import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
-import 'package:envirosense/domain/entities/room.dart';
-import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/building_controller.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +13,10 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
-  final String buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  final String buildingId =
+      "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
   late BuildingAirQuality _buildingAirQuality;
   bool _buildingHasDeviceData = false;
-
-  Color _getScoreColor(int score) {
-    if (score >= 85) {
-      return AppColors.greenColor;
-    } else if (score >= 50) {
-      return AppColors.secondaryColor;
-    } else {
-      return AppColors.redColor;
-    }
-  }
 
   @override
   void initState() {
@@ -37,7 +26,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   Future<void> _loadData() async {
     try {
-      BuildingAirQuality buildingAirQuality = await BuildingController().getBuildingAirQuality(buildingId);
+      BuildingAirQuality buildingAirQuality =
+          await BuildingController().getBuildingAirQuality(buildingId);
 
       setState(() {
         _buildingAirQuality = buildingAirQuality;
@@ -138,11 +128,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                             // Rooms List
                             Expanded(
                               child: ListView.separated(
-                                itemCount: _buildingAirQuality.roomsAirQuality.length,
+                                itemCount:
+                                    _buildingAirQuality.roomsAirQuality.length,
                                 separatorBuilder: (context, index) =>
                                     const Divider(height: 0),
                                 itemBuilder: (context, index) {
-                                  final room = _buildingAirQuality.roomsAirQuality[index];
+                                  final room = _buildingAirQuality
+                                      .roomsAirQuality[index];
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
@@ -164,8 +156,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                             width: 60,
                                             height: 60,
                                             decoration: BoxDecoration(
-                                              //TODO: getScoreColor() ---- Dynamic color based on score
-                                              color: AppColors.greenColor,
+                                              color: DataStatusHelper.getStatusColor(
+                                                  DataStatusHelper.getEnviroSenseStatus(room?.enviroScore ?? 0.0)
+                                                ),
                                               borderRadius:
                                                   const BorderRadius.only(
                                                 topLeft: Radius.circular(15),
@@ -174,8 +167,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                             ),
                                             alignment: Alignment.center,
                                             child: Text(
-                                              //TODO: have the calculated rooms enviroscore here
-                                              room?.enviroScore.toString() ?? '',
+                                              room?.enviroScore.toString() ??
+                                                  '',
                                               style: const TextStyle(
                                                 color: AppColors.whiteColor,
                                                 fontSize: 16,
@@ -248,28 +241,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             left: MediaQuery.of(context).size.width * 0.04,
             right: MediaQuery.of(context).size.width * 0.04,
             child: EnviroScoreCard(
-              score: 75,
-              onInfoPressed: _showEnviroScoreInfo,
-              isDeviceDataAvailable: _buildingHasDeviceData,
+              score: _buildingAirQuality.enviroScore ?? 0.0,
+              isDataAvailable: _buildingHasDeviceData,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showEnviroScoreInfo() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('About EnviroScore'),
-        content: const Text(
-          'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Got it'),
           ),
         ],
       ),
