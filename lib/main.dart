@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/views/add_device_screen.dart';
 import 'package:envirosense/presentation/views/add_room_screen.dart';
@@ -11,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,10 +23,17 @@ import 'presentation/views/room_overview_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows || Platform.isLinux) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
   await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   final dbService = DatabaseService();
   bool isFirstTime = await dbService.getSetting<bool>('isFirstTime') ?? true;
   LoggingService.initialize();
