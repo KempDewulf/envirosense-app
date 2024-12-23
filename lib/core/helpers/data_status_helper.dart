@@ -57,7 +57,7 @@ class DataStatusHelper {
     return Status.good;
   }
 
-  static Status getEnviroSenseStatus(double enviroScore) {
+  static Status getEnviroSenseStatus(double? enviroScore) {
     return _getStatus(
       enviroScore,
       min: Thresholds.envirosense.min,
@@ -75,16 +75,19 @@ class DataStatusHelper {
         return AppColors.secondaryColor;
       case Status.bad:
         return AppColors.redColor;
+      default:
+        return AppColors.accentColor;
     }
   }
 
   static Status _getStatus(
-    num value, {
+    num? value, {
     required num min,
     required num max,
     required num optimalMin,
     required num optimalMax,
   }) {
+    if (value == null) return Status.unknown;
     if (value < min || value > max) return Status.bad;
     if (value < optimalMin || value > optimalMax) return Status.medium;
     return Status.good;
