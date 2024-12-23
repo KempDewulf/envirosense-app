@@ -1,6 +1,8 @@
 import 'package:envirosense/domain/entities/building.dart';
+import 'package:envirosense/domain/entities/building_air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/domain/entities/room_type.dart';
+import 'package:envirosense/presentation/controllers/building_controller.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
@@ -13,7 +15,8 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
-  final List<Room> rooms = [];
+  final String buildingId = "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  late BuildingAirQuality _buildingAirQuality;
   bool _buildingHasDeviceData = false;
 
   Color _getScoreColor(int score) {
@@ -34,23 +37,10 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   Future<void> _loadData() async {
     try {
-      // Load data from API
-      List<Room> mockRooms = List.generate(
-          15,
-          (index) => Room(
-              id: (index + 1).toString(),
-              name: "Room ${index + 1}",
-              building: Building(
-                  id: "${(index % 3) + 1}", // Creates 3 different buildings
-                  name: "Building ${(index % 3) + 1}",
-                  address: "Address ${(index % 3) + 1}"),
-              roomType: RoomType(
-                  id: "${(index % 4) + 1}", // Creates 4 different room types
-                  name: "Type ${(index % 4) + 1}",
-                  icon: "icon${(index % 4) + 1}")));
+      BuildingAirQuality buildingAirQuality = await BuildingController().getBuildingAirQuality(buildingId);
 
       setState(() {
-        rooms.addAll(mockRooms);
+        _buildingAirQuality = buildingAirQuality;
         _buildingHasDeviceData = isDeviceDataAvailable();
       });
     } catch (e) {
@@ -60,7 +50,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   }
 
   bool isDeviceDataAvailable() {
-    return true; //TODO: see here for building
+    return _buildingAirQuality.enviroScore != null;
   }
 
   @override
@@ -148,19 +138,19 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                             // Rooms List
                             Expanded(
                               child: ListView.separated(
-                                itemCount: rooms.length,
+                                itemCount: _buildingAirQuality.roomsAirQuality.length,
                                 separatorBuilder: (context, index) =>
                                     const Divider(height: 0),
                                 itemBuilder: (context, index) {
-                                  final room = rooms[index];
+                                  final room = _buildingAirQuality.roomsAirQuality[index];
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
                                         context,
                                         '/roomOverview',
                                         arguments: {
-                                          'roomId': room.id,
-                                          'roomName': room.name,
+                                          'roomId': room?.id,
+                                          'roomName': room?.name,
                                         },
                                       );
                                     },
@@ -185,7 +175,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                             alignment: Alignment.center,
                                             child: Text(
                                               //TODO: have the calculated rooms enviroscore here
-                                              '74.8%',
+                                              room?.enviroScore.toString() ?? '',
                                               style: const TextStyle(
                                                 color: AppColors.whiteColor,
                                                 fontSize: 16,
@@ -218,7 +208,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        room.name,
+                                                        room?.name ?? '',
                                                         style: const TextStyle(
                                                           color: AppColors
                                                               .primaryColor,
