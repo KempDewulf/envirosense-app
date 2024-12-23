@@ -443,6 +443,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                               throw Exception('Room name not found');
                             }
 
+                            await _handleRoomRename(inputController.text);
+
                             setState(() {
                               widget.roomName = inputController.text;
                             });
@@ -569,6 +571,34 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _handleRoomRename(String newRoomName) async {
+    if (_room?.id == null) return;
+
+    try {
+      final roomId = _room?.id;
+
+      if (roomId == null) {
+        throw Exception('Room id not found');
+      }
+
+      await _roomController.updateRoom(roomId, newRoomName);
+
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room renamed successfully')),
+      );
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to rename (update) room: $_error')),
+      );
+    }
   }
 
   Future<void> _handleRoomRemoval() async {
