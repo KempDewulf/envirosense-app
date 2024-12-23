@@ -1,7 +1,7 @@
 import 'package:envirosense/domain/entities/room_air_quality.dart';
 
 class BuildingAirQuality {
-  final String? enviroScore;
+  final double? enviroScore;
   final List<RoomAirQuality?>  roomsAirQuality;
 
   BuildingAirQuality({
