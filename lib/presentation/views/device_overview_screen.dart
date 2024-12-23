@@ -7,6 +7,7 @@ import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class DeviceOverviewScreen extends StatefulWidget {
   String deviceName;
   final String deviceId;
@@ -25,11 +26,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   late final DatabaseService _databaseService = DatabaseService();
   late final TabController _tabController =
       TabController(length: _tabs.length, vsync: this);
+
   bool _isLoading = true;
   Device? _device;
   String? _error;
   String? _selectedRoomId;
-
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
@@ -116,11 +117,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
           color: AppColors.secondaryColor,
           child: DeviceDataList(deviceData: _device?.deviceData ?? []),
         ),
-        RefreshIndicator(
-          onRefresh: _loadData,
-          color: AppColors.secondaryColor,
-          child: _buildActionsTab(),
-        ),
+        _buildActionsTab()
       ],
     );
   }

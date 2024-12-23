@@ -45,18 +45,18 @@ class OnboardingScreen extends StatelessWidget {
         _buildPageModel(
           title: "Convenience",
           body:
-              "Control your home device using a single app from anywhere in the world",
+              "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
           imagePath: 'assets/images/convenience.png',
         ),
         _buildPageModel(
           title: "Automate",
           body:
-              "Switch through different scenes and quick actions for fast management of your home",
+              "Effortlessly manage quick actions for control and real-time environmental insights.",
           imagePath: 'assets/images/automate.png',
         ),
         _buildPageModel(
           title: "Stay Informed",
-          body: "Instant notifications about any activity or alerts",
+          body: "Get instant notifications and react quickly to any activity or alerts",
           imagePath: 'assets/images/stay_informed.png',
         ),
       ];
