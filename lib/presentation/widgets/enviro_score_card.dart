@@ -58,7 +58,6 @@ class EnviroScoreCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.baseline,

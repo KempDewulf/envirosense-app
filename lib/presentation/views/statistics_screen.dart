@@ -83,23 +83,32 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       body: Stack(
         children: [
           // Background and content
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Top background container
-                Container(
-                  height: topBackgroundHeight,
-                  color: AppColors.primaryColor,
-                ),
-                // Rest of the content
-                Container(
+          Column(
+            children: [
+              // Top background container
+              Container(
+                height: topBackgroundHeight,
+                color: AppColors.primaryColor,
+              ),
+              // Rest of the content
+              Expanded(
+                child: Container(
                   color: AppColors.whiteColor,
                   child: Column(
                     children: [
                       SizedBox(height: topBackgroundHeight + 30),
                       // ROOMS Card
                       Container(
-                        height: MediaQuery.of(context).size.height,
+                        height: MediaQuery.of(context).size.height -
+                            topBackgroundHeight // Top blue section
+                            -
+                            kToolbarHeight // AppBar
+                            -
+                            100 // EnviroScore card
+                            -
+                            80 // Bottom navigation
+                            -
+                            50, // Additional padding/margins
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
@@ -113,6 +122,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           ],
                         ),
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
                               width: double.infinity,
@@ -217,8 +227,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              )
+            ],
           ),
           // Positioned EnviroScore card
           Positioned(
