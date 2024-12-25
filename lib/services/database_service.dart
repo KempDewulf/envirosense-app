@@ -102,7 +102,7 @@ class DatabaseService {
       whereArgs: [deviceId],
     );
 
-    if (maps.isEmpty) return null;
+    if (maps.isEmpty) return deviceId;
     return maps.first['custom_name'] as String;
   }
 
