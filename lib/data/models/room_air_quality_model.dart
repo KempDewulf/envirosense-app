@@ -10,11 +10,18 @@ class RoomAirQualityModel extends RoomAirQuality {
   });
 
   factory RoomAirQualityModel.fromJson(Map<String, dynamic> json) {
+    double? parseEnviroScore(dynamic value) {
+      if (value == null) return null;
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value);
+      return null;
+    }
+
     if (json['airQuality'] == null) {
       return RoomAirQualityModel(
         id: json['documentId'],
         name: json['name'],
-        enviroScore: json['enviroScore'],
+        enviroScore: parseEnviroScore(json['enviroScore']),
         airData: null,
       );
     }
@@ -39,7 +46,7 @@ class RoomAirQualityModel extends RoomAirQuality {
 
     return RoomAirQualityModel(
       id: json['documentId'],
-      enviroScore: json['enviroScore'],
+      enviroScore: parseEnviroScore(json['enviroScore']),
       airData: airData,
     );
   }
