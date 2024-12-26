@@ -12,7 +12,7 @@ class RoomAirQualityModel extends RoomAirQuality {
   factory RoomAirQualityModel.fromJson(Map<String, dynamic> json) {
     if (json['airQuality'] == null) {
       return RoomAirQualityModel(
-        id: json['id'],
+        id: json['documentId'],
         name: json['name'],
         enviroScore: json['enviroScore'],
         airData: null,
@@ -38,7 +38,7 @@ class RoomAirQualityModel extends RoomAirQuality {
     );
 
     return RoomAirQualityModel(
-      id: json['id'],
+      id: json['documentId'],
       enviroScore: json['enviroScore'],
       airData: airData,
     );
