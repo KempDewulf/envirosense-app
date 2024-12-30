@@ -1,6 +1,8 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
+import 'package:envirosense/presentation/controllers/device_data_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
@@ -22,6 +24,7 @@ class DeviceOverviewScreen extends StatefulWidget {
 class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
+  late final DeviceDataController _deviceDataController = DeviceDataController();
   late final RoomController _roomController = RoomController();
   late final DatabaseService _databaseService = DatabaseService();
   late final TabController _tabController =
@@ -29,6 +32,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
 
   bool _isLoading = true;
   Device? _device;
+  List<DeviceData> _deviceData = [];
   String? _error;
   String? _selectedRoomId;
   final String _buildingId =
@@ -50,9 +54,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       setState(() => _isLoading = true);
       final device =
           await _deviceController.getDevice(widget.deviceId, _buildingId);
+      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(widget.deviceId);
 
       setState(() {
         _device = device;
+        _deviceData = deviceData;
         _isLoading = false;
       });
     } catch (e) {
@@ -115,7 +121,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         RefreshIndicator(
           onRefresh: _loadData,
           color: AppColors.secondaryColor,
-          child: DeviceDataList(deviceData: _device?.deviceData ?? []),
+          child: DeviceDataList(deviceData: _deviceData ?? []),
         ),
         _buildActionsTab()
       ],

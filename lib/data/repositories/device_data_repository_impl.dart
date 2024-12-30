@@ -11,4 +11,9 @@ class DeviceDataRepositoryImpl implements DeviceDataRepository {
   Future<List<DeviceData>> getDeviceData() async {
     return await remoteDataSource.getDeviceData();
   }
+
+  @override
+  Future<List<DeviceData>> getDeviceDataByDeviceId(String deviceId) async {
+    return await remoteDataSource.getDeviceDataByDeviceId(deviceId);
+  }
 }
