@@ -116,31 +116,62 @@ class DatabaseService {
   }
 
   // Cache methods (for future use)
-  Future<void> setCache(String key, dynamic value, Duration expiration) async {
+  Future<void> setCache(String key, dynamic value, DateTime latestTimestap, Duration expiration) async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final existingData = await getCache<List<dynamic>>(key) ?? [];
+    final expirationTime = await getCacheExpiration(key) ?? latestTimestap.microsecondsSinceEpoch + expiration.inMilliseconds;
+    final combinedData = [...existingData, ...value];
+    
     await db.insert(
       'cache',
       {
         'key': key,
-        'value': json.encode(value),
-        'timestamp': now,
-        'expiration': now + expiration.inMilliseconds,
+        'value': json.encode(combinedData),
+        'timestamp': latestTimestap.millisecondsSinceEpoch,
+        'expiration': expirationTime,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<T?> getCache<T>(String key) async {
+  Future<DateTime?> getCacheTimestamp(String key) async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
     final List<Map<String, dynamic>> maps = await db.query(
       'cache',
-      where: 'key = ? AND expiration > ?',
-      whereArgs: [key, now],
+      columns: ['timestamp'],
+      where: 'key = ?',
+      whereArgs: [key],
     );
 
     if (maps.isEmpty) return null;
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int);
+  }
+
+  Future<DateTime?> getCacheExpiration(String key) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'cache',
+      columns: ['expiration'],
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+
+    if (maps.isEmpty) return null;
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int);
+  }
+
+  Future<T?> getCache<T>(String key) async {
+    final db = await database;
+
+    if (await getCacheExpiration(key) != null) {
+      await clearExpiredCache();
+    }
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'cache',
+      where: 'key = ?',
+      whereArgs: [key],
+    );
     return json.decode(maps.first['value']) as T;
   }
 
