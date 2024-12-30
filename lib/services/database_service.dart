@@ -118,15 +118,13 @@ class DatabaseService {
   // Cache methods (for future use)
   Future<void> setCache(String key, dynamic value, DateTime latestTimestap, Duration expiration) async {
     final db = await database;
-    final existingData = await getCache<List<dynamic>>(key) ?? [];
     final expirationTime = await getCacheExpiration(key) ?? latestTimestap.microsecondsSinceEpoch + expiration.inMilliseconds;
-    final combinedData = [...existingData, ...value];
     
     await db.insert(
       'cache',
       {
         'key': key,
-        'value': json.encode(combinedData),
+        'value': json.encode(value),
         'timestamp': latestTimestap.millisecondsSinceEpoch,
         'expiration': expirationTime,
       },
