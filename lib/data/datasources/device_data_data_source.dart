@@ -24,12 +24,19 @@ class DeviceDataDataSource {
   }) async {
     final cachedTimestamp = await databaseService.getCacheTimestamp(baseKey);
     final cachedData = await _retrieveCachedData(baseKey, cachedTimestamp);
+    
+    print(cachedData);
 
     final remoteEndpoint = _buildEndpoint(baseKey, cachedTimestamp, deviceId: deviceId);
+
+    print(remoteEndpoint);
+
     final newData = await _fetchNetworkData(remoteEndpoint);
 
     final latestTimestamp = _extractLatestTimestamp(newData, cachedTimestamp);
     final mergedData = _mergeCachedData(newData, cachedData);
+
+    print(mergedData);
 
     await _storeDataToCache(baseKey, mergedData, latestTimestamp, cacheDuration);
     return mergedData;
