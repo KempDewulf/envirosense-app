@@ -1,5 +1,6 @@
 import 'package:envirosense/data/models/device_data_model.dart';
 import 'package:envirosense/services/database_service.dart';
+import 'package:logging/logging.dart';
 import '../../services/api_service.dart';
 
 class DeviceDataDataSource {
@@ -8,26 +9,30 @@ class DeviceDataDataSource {
 
   DeviceDataDataSource({required this.apiService});
 
-  Future<List<DeviceDataModel>> getDeviceData() async {
-    try {
-      final String endpointBase = 'device-data';
-      final Duration cacheDuration = const Duration(days: 1);
+  Future<List<DeviceDataModel>> getDeviceData() {
+    return _getDeviceData('device-data');
+  }
 
-      final cachedTimestamp = await databaseService.getCacheTimestamp(endpointBase);
-      final cachedData = await _retrieveCachedData(endpointBase, cachedTimestamp);
+  Future<List<DeviceDataModel>> getDeviceDataByDeviceId(String deviceId) {
+    return _getDeviceData('device-data', deviceId: deviceId);
+  }
 
-      final remoteEndpoint = _buildRemoteEndpoint(endpointBase, cachedTimestamp);
-      final newData = await _fetchNetworkData(remoteEndpoint);
+  Future<List<DeviceDataModel>> _getDeviceData(
+    String baseKey, {
+    String? deviceId,
+    Duration cacheDuration = const Duration(days: 1),
+  }) async {
+    final cachedTimestamp = await databaseService.getCacheTimestamp(baseKey);
+    final cachedData = await _retrieveCachedData(baseKey, cachedTimestamp);
 
-      final latestTimestamp = _extractLatestTimestamp(newData, cachedTimestamp);
-      final mergedData = _mergeCachedData(newData, cachedData);
+    final remoteEndpoint = _buildEndpoint(baseKey, cachedTimestamp, deviceId: deviceId);
+    final newData = await _fetchNetworkData(remoteEndpoint);
 
-      await _storeDataToCache(endpointBase, mergedData, latestTimestamp, cacheDuration);
+    final latestTimestamp = _extractLatestTimestamp(newData, cachedTimestamp);
+    final mergedData = _mergeCachedData(newData, cachedData);
 
-      return mergedData;
-    } catch (e) {
-      throw Exception('Failed to load device data: $e');
-    }
+    await _storeDataToCache(baseKey, mergedData, latestTimestamp, cacheDuration);
+    return mergedData;
   }
 
   List<DeviceDataModel> _mergeCachedData(
@@ -48,10 +53,19 @@ class DeviceDataDataSource {
     return List<DeviceDataModel>.from(rawCache);
   }
 
-  String _buildRemoteEndpoint(String base, DateTime? cachedTimestamp) {
-    if (cachedTimestamp == null) return base;
-    final encodedTimestamp = Uri.encodeComponent(cachedTimestamp.toString());
-    return '$base?since=$encodedTimestamp';
+  String _buildEndpoint(String base, DateTime? cachedTimestamp, {String? deviceId}) {
+    final buffer = StringBuffer(base);
+    bool hasQuery = false;
+    if (deviceId != null) {
+      buffer.write('?identifier=$deviceId');
+      hasQuery = true;
+    }
+    if (cachedTimestamp != null) {
+      final encodedTimestamp = Uri.encodeComponent(cachedTimestamp.toString());
+      buffer.write(hasQuery ? '&' : '?');
+      buffer.write('since=$encodedTimestamp');
+    }
+    return buffer.toString();
   }
 
   Future<List<DeviceDataModel>> _fetchNetworkData(String endpoint) async {
