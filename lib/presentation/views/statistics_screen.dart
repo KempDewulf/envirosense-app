@@ -13,12 +13,14 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
-  final BuildingController _buildingController = BuildingController();
+  late final BuildingController _buildingController = BuildingController();
   final String buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
   late BuildingAirQuality _buildingAirQuality;
   bool _buildingHasData = false;
   bool _buildingHasRooms = false;
+  bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -28,17 +30,22 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
 
   Future<void> _loadData() async {
     try {
-      BuildingAirQuality buildingAirQuality =
+      setState(() => _isLoading = true);
+
+      final buildingAirQuality =
           await _buildingController.getBuildingAirQuality(buildingId);
 
       setState(() {
         _buildingAirQuality = buildingAirQuality;
         _buildingHasData = isBuildingDataAvailable();
         _buildingHasRooms = _buildingAirQuality.roomsAirQuality.isNotEmpty;
+        _isLoading = false;
       });
     } catch (e) {
-      // Handle error
-      debugPrint('Error loading data: $e');
+      setState(() {
+        _error = e.toString();
+        _isLoading = false;
+      });
     }
   }
 
@@ -48,10 +55,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    // Calculate 25% of the screen height
-    double screenHeight = MediaQuery.of(context).size.height;
-    double topBackgroundHeight = screenHeight * 0.10;
-
     return Scaffold(
         backgroundColor: AppColors.whiteColor, // All white underneath
         appBar: AppBar(
@@ -63,7 +66,37 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
                 fontSize: 22),
           ),
         ),
-        body: RefreshIndicator(
+        body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if(_isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (_error != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Error: $_error'),
+            ElevatedButton(
+              onPressed: _loadData,
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Calculate 25% of the screen height
+    double screenHeight = MediaQuery.of(context).size.height;
+    double topBackgroundHeight = screenHeight * 0.10;
+
+     return RefreshIndicator(
           onRefresh: _loadData,
           child: Stack(
             children: [
@@ -265,6 +298,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
               ),
             ],
           ),
-        ));
+        );
   }
 }
