@@ -25,7 +25,7 @@ class DeviceModel extends Device {
         ),
         roomType: RoomType(id: 'lorem', name: 'lorem', icon: 'lorem')) : null;
 
-        
+
     List<DeviceData> deviceData = json['device_data'] != null
       ? (json['device_data'] as List)
         .map((deviceDataJson) => DeviceData(
@@ -38,9 +38,9 @@ class DeviceModel extends Device {
             humidity: deviceDataJson['humidity'] is String
               ? double.parse(deviceDataJson['humidity'])
               : (deviceDataJson['humidity'] as num).toDouble(),
-            ppm: deviceDataJson['gas_ppm'] is String
-              ? int.parse(deviceDataJson['gas_ppm'])
-              : (deviceDataJson['gas_ppm'] as num).toInt(),
+            ppm: deviceDataJson['ppm'] is String
+              ? int.parse(deviceDataJson['ppm'])
+              : (deviceDataJson['ppm'] as num).toInt(),
             ),
             device: Device(
             id: json['documentId'],

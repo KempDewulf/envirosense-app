@@ -11,7 +11,7 @@ class AirDataModel extends AirData {
     return AirDataModel(
       temperature: json['temperature'],
       humidity: json['humidity'],
-      ppm: json['gas_ppm'],
+      ppm: json['ppm'],
     );
   }
 }
