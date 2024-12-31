@@ -61,7 +61,7 @@ class DeviceDataDataSource {
       hasQuery = true;
     }
     if (cachedTimestamp != null) {
-      final encodedTimestamp = '${Uri.encodeComponent(cachedTimestamp.toIso8601String())}Z';
+      final encodedTimestamp = Uri.encodeComponent(cachedTimestamp.toIso8601String());
       buffer.write(hasQuery ? '&' : '?');
       buffer.write('since=$encodedTimestamp');
     }
