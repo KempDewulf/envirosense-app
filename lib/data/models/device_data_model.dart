@@ -18,7 +18,7 @@ class DeviceDataModel extends DeviceData {
       airData: AirData(
         temperature: json['airData']['temperature'],
         humidity: json['airData']['humidity'],
-        ppm: json['airData']['ppm'].toInt(),
+        ppm: json['airData']['ppm'],
       ),
     );
   }
