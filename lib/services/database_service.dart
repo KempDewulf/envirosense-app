@@ -63,7 +63,7 @@ class DatabaseService {
       {
         'key': key,
         'value': json.encode(value),
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
+        'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -89,7 +89,7 @@ class DatabaseService {
       {
         'device_id': deviceId,
         'custom_name': customName,
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
+        'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -124,11 +124,11 @@ class DatabaseService {
     final expirationTime = existingExpiration != null
         ? existingExpiration.millisecondsSinceEpoch
         : latestTimestamp.millisecondsSinceEpoch + expiration.inMilliseconds;
-    
+
     final jsonValue = value is List
         ? json.encode(value.map((item) => item.toJson()).toList())
         : json.encode(value.toJson());
-    
+
     await db.insert(
       'cache',
       {
@@ -151,7 +151,7 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int, isUtc: true);
   }
 
   Future<DateTime?> getCacheExpiration(String key) async {
@@ -164,7 +164,7 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int, isUtc: true);
   }
 
   Future<T?> getCache<T>(String key) async {
@@ -195,7 +195,7 @@ class DatabaseService {
 
   Future<void> clearExpiredCache() async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final now = DateTime.now().toUtc().millisecondsSinceEpoch;
     await db.delete(
       'cache',
       where: 'expiration <= ?',

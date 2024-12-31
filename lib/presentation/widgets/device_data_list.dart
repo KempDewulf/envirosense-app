@@ -49,7 +49,7 @@ class DeviceDataList extends StatelessWidget {
                   children: [
                     Text(
                       DateFormat('dd-MM-yyyy HH:mm:ss').format(
-                        DateTime.parse(data.timestamp),
+                        DateTime.parse(data.timestamp).toLocal(),
                       ),
                       style: const TextStyle(
                         fontSize: 18,

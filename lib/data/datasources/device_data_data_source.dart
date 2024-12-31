@@ -24,7 +24,7 @@ class DeviceDataDataSource {
     final cachedData = await _retrieveCachedData(deviceIdentifier, cachedTimestamp);
 
     final remoteEndpoint = _buildEndpoint('device-data', cachedTimestamp, deviceIdentifier: deviceIdentifier);
-    final newData = await _fetchNetworkData(remoteEndpoint);
+    final newData = await _fetchFreshData(remoteEndpoint);
 
     final latestTimestamp = _extractLatestTimestamp(newData, cachedTimestamp);
     final mergedData = _mergeCachedData(newData, cachedData, deviceIdentifier);
@@ -68,7 +68,7 @@ class DeviceDataDataSource {
     return buffer.toString();
   }
 
-  Future<List<DeviceDataModel>> _fetchNetworkData(String endpoint) async {
+  Future<List<DeviceDataModel>> _fetchFreshData(String endpoint) async {
     final response = await apiService.getRequest(endpoint);
     final List<dynamic> data = response.data as List<dynamic>;
     return data.map((deviceDataJson) {

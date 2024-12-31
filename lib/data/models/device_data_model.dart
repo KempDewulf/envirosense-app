@@ -11,7 +11,6 @@ class DeviceDataModel extends DeviceData {
   });
 
   factory DeviceDataModel.fromJson(Map<String, dynamic> json) {
-    int ppm = json['airData']['ppm'].toInt();
     return DeviceDataModel(
       id: json['documentId'].toString(),
       device: DeviceModel.fromJson(json['device'], 'gox5y6bsrg640qb11ak44dh0'),
@@ -19,7 +18,7 @@ class DeviceDataModel extends DeviceData {
       airData: AirData(
         temperature: json['airData']['temperature'],
         humidity: json['airData']['humidity'],
-        ppm: ppm,
+        ppm: json['airData']['ppm'].toInt(),
       ),
     );
   }
@@ -38,6 +37,4 @@ class DeviceDataModel extends DeviceData {
       },
     };
   }
-
-  
 }

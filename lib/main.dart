@@ -71,8 +71,8 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
     int? timestamp = prefs.getInt('loginTimestamp');
 
     if (timestamp != null) {
-      final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-      final now = DateTime.now();
+      final loginTime = DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true);
+      final now = DateTime.now().toUtc();
       final difference = now.difference(loginTime);
 
       if (difference.inDays < 2) {
