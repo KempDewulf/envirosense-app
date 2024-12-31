@@ -21,15 +21,25 @@ class ApiService {
       };
 
   Future<ApiResponse> getRequest(String endpoint) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/$endpoint'),
-      headers: _headers,
-    );
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: _headers,
+      );
 
-    if (response.statusCode == 200) {
-      return ApiResponse(jsonDecode(response.body), response.headers);
-    } else {
-      throw Exception('GET request failed with status: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        return ApiResponse(jsonDecode(response.body), response.headers);
+      } else {
+        throw Exception('''
+          GET request failed:
+          Status: ${response.statusCode}
+          Body: ${response.body}
+          Headers: ${response.headers}
+          URL: $baseUrl/$endpoint
+        ''');
+      }
+    } catch (e) {
+      throw Exception('Network error: $e');
     }
   }
 

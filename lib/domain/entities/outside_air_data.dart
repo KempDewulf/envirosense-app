@@ -4,10 +4,10 @@ class OutsideAirData extends AirData{
   OutsideAirData({
     required double temperature,
     required double humidity,
-    int gasPpm = 400,
+    int ppm = 400,
   }) : super(
     temperature: temperature,
     humidity: humidity,
-    gasPpm: gasPpm,
+    ppm: ppm,
   );
 }

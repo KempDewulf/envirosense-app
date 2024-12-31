@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setInt(
           'loginTimestamp',
-          DateTime.now().millisecondsSinceEpoch,
+          DateTime.now().toUtc().millisecondsSinceEpoch,
         );
 
         if (!mounted) return;

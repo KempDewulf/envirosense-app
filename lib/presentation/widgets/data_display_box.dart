@@ -24,8 +24,8 @@ class DataDisplayBox extends StatelessWidget {
         'status': DataStatusHelper.getHumidityStatus(data.humidity ?? 0),
       }),
       MapEntry('CO2 Level', {
-        'value': '${data.gasPpm} ppm',
-        'status': DataStatusHelper.getPPMStatus(data.gasPpm ?? 0),
+        'value': '${data.ppm} ppm',
+        'status': DataStatusHelper.getPPMStatus(data.ppm ?? 0),
       }),
     ];
   }
