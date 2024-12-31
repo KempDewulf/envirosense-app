@@ -4,14 +4,14 @@ class AirDataModel extends AirData {
   AirDataModel({
     required super.temperature,
     required super.humidity,
-    required super.gasPpm,
+    required super.ppm,
   });
 
   factory AirDataModel.fromJson(Map<String, dynamic> json) {
     return AirDataModel(
       temperature: json['temperature'],
       humidity: json['humidity'],
-      gasPpm: json['gas_ppm'],
+      ppm: json['gas_ppm'],
     );
   }
 }

@@ -54,8 +54,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       setState(() => _isLoading = true);
       final device =
           await _deviceController.getDevice(widget.deviceId, _buildingId);
-      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(widget.deviceId);
-
+      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);
       setState(() {
         _device = device;
         _deviceData = deviceData;
@@ -114,14 +113,13 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         ),
       );
     }
-
     return TabBarView(
       controller: _tabController,
       children: [
         RefreshIndicator(
           onRefresh: _loadData,
           color: AppColors.secondaryColor,
-          child: DeviceDataList(deviceData: _deviceData ?? []),
+          child: DeviceDataList(deviceData: _deviceData),
         ),
         _buildActionsTab()
       ],

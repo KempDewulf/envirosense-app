@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:envirosense/data/models/device_data_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -116,16 +117,24 @@ class DatabaseService {
   }
 
   // Cache methods (for future use)
-  Future<void> setCache(String key, dynamic value, DateTime latestTimestap, Duration expiration) async {
+  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp, Duration expiration) async {
     final db = await database;
-    final expirationTime = await getCacheExpiration(key) ?? latestTimestap.microsecondsSinceEpoch + expiration.inMilliseconds;
+    final existingExpiration = await getCacheExpiration(key);
+
+    final expirationTime = existingExpiration != null
+        ? existingExpiration.millisecondsSinceEpoch
+        : latestTimestamp.millisecondsSinceEpoch + expiration.inMilliseconds;
+    
+    final jsonValue = value is List
+        ? json.encode(value.map((item) => item.toJson()).toList())
+        : json.encode(value.toJson());
     
     await db.insert(
       'cache',
       {
         'key': key,
-        'value': json.encode(value),
-        'timestamp': latestTimestap.millisecondsSinceEpoch,
+        'value': jsonValue,
+        'timestamp': latestTimestamp.millisecondsSinceEpoch,
         'expiration': expirationTime,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -170,7 +179,18 @@ class DatabaseService {
       where: 'key = ?',
       whereArgs: [key],
     );
-    return json.decode(maps.first['value']) as T;
+    if (maps.isEmpty) return null;
+
+    final decodedValue = json.decode(maps.first['value']) as dynamic;
+
+    if (T == List<DeviceDataModel>) {
+      return (decodedValue as List)
+          .map((item) => DeviceDataModel.fromJson(item as Map<String, dynamic>))
+          .toList() as T;
+    }
+
+    // Handle other types if necessary
+    return decodedValue as T;
   }
 
   Future<void> clearExpiredCache() async {

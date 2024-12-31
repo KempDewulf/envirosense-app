@@ -1,16 +1,16 @@
 class AirData {
   final double? temperature;
   final double? humidity;
-  final int? gasPpm;
+  final int? ppm;
 
   AirData({
     required this.temperature,
     required this.humidity,
-    required this.gasPpm,
+    required this.ppm,
   });
 
   @override
   String toString() {
-    return 'AirData{temperature: $temperature, humidity: $humidity, gasPpm: $gasPpm}';
+    return 'AirData{temperature: $temperature, humidity: $humidity, ppm: $ppm}';
   }
 }
