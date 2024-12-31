@@ -10,6 +10,7 @@ class DeviceDataList extends StatelessWidget {
 
   const DeviceDataList({super.key, required this.deviceData});
 
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -48,7 +49,7 @@ class DeviceDataList extends StatelessWidget {
                   children: [
                     Text(
                       DateFormat('dd-MM-yyyy HH:mm:ss').format(
-                        DateTime.parse(data.timestamp),
+                        DateTime.parse(data.timestamp).toLocal(),
                       ),
                       style: const TextStyle(
                         fontSize: 18,
@@ -85,8 +86,8 @@ class DeviceDataList extends StatelessWidget {
       const SizedBox(height: 12),
       _buildDataRow(
         label: 'CO2 Level',
-        value: '${data.airData.gasPpm} ppm',
-        status: DataStatusHelper.getPPMStatus(data.airData.gasPpm ?? 0),
+        value: '${data.airData.ppm} ppm',
+        status: DataStatusHelper.getPPMStatus(data.airData.ppm ?? 0),
         icon: Icons.cloud,
       ),
     ];

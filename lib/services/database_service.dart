@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:envirosense/data/models/device_data_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -62,7 +63,7 @@ class DatabaseService {
       {
         'key': key,
         'value': json.encode(value),
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
+        'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -88,7 +89,7 @@ class DatabaseService {
       {
         'device_id': deviceId,
         'custom_name': customName,
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
+        'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -116,37 +117,85 @@ class DatabaseService {
   }
 
   // Cache methods (for future use)
-  Future<void> setCache(String key, dynamic value, Duration expiration) async {
+  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp, Duration expiration) async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final existingExpiration = await getCacheExpiration(key);
+
+    final expirationTime = existingExpiration != null
+        ? existingExpiration.millisecondsSinceEpoch
+        : latestTimestamp.millisecondsSinceEpoch + expiration.inMilliseconds;
+
+    final jsonValue = value is List
+        ? json.encode(value.map((item) => item.toJson()).toList())
+        : json.encode(value.toJson());
+
     await db.insert(
       'cache',
       {
         'key': key,
-        'value': json.encode(value),
-        'timestamp': now,
-        'expiration': now + expiration.inMilliseconds,
+        'value': jsonValue,
+        'timestamp': latestTimestamp.millisecondsSinceEpoch,
+        'expiration': expirationTime,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<T?> getCache<T>(String key) async {
+  Future<DateTime?> getCacheTimestamp(String key) async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
     final List<Map<String, dynamic>> maps = await db.query(
       'cache',
-      where: 'key = ? AND expiration > ?',
-      whereArgs: [key, now],
+      columns: ['timestamp'],
+      where: 'key = ?',
+      whereArgs: [key],
     );
 
     if (maps.isEmpty) return null;
-    return json.decode(maps.first['value']) as T;
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int, isUtc: true);
+  }
+
+  Future<DateTime?> getCacheExpiration(String key) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'cache',
+      columns: ['expiration'],
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+
+    if (maps.isEmpty) return null;
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int, isUtc: true);
+  }
+
+  Future<T?> getCache<T>(String key) async {
+    final db = await database;
+
+    if (await getCacheExpiration(key) != null) {
+      await clearExpiredCache();
+    }
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'cache',
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+    if (maps.isEmpty) return null;
+
+    final decodedValue = json.decode(maps.first['value']) as dynamic;
+
+    if (T == List<DeviceDataModel>) {
+      return (decodedValue as List)
+          .map((item) => DeviceDataModel.fromJson(item as Map<String, dynamic>))
+          .toList() as T;
+    }
+
+    // Handle other types if necessary
+    return decodedValue as T;
   }
 
   Future<void> clearExpiredCache() async {
     final db = await database;
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final now = DateTime.now().toUtc().millisecondsSinceEpoch;
     await db.delete(
       'cache',
       where: 'expiration <= ?',

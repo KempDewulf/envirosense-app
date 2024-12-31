@@ -25,7 +25,6 @@ class RoomAirQualityModel extends RoomAirQuality {
         airData: null,
       );
     }
-
     AirData airData = AirData(
       temperature: json['airQuality']['temperature'] != null
           ? (json['airQuality']['temperature'] is String
@@ -37,7 +36,7 @@ class RoomAirQualityModel extends RoomAirQuality {
               ? double.tryParse(json['airQuality']['humidity'])
               : (json['airQuality']['humidity'] as num?)?.toDouble())
           : null,
-      gasPpm: json['airQuality']['ppm'] != null
+      ppm: json['airQuality']['ppm'] != null
           ? (json['airQuality']['ppm'] is String
               ? int.tryParse(json['airQuality']['ppm'])
               : (json['airQuality']['ppm'] as num?)?.toInt())
