@@ -12,25 +12,25 @@ class DeviceDataDataSource {
     throw UnimplementedError();
   }
 
-  Future<List<DeviceDataModel>> getDeviceDataByDeviceId(String deviceId) {
-    return _getDeviceData(deviceId);
+  Future<List<DeviceDataModel>> getDeviceDataByDeviceId(String deviceIdentifier) {
+    return _getDeviceData(deviceIdentifier);
   }
 
   Future<List<DeviceDataModel>> _getDeviceData(
-    String deviceId,{
+    String deviceIdentifier,{
     Duration cacheDuration = const Duration(days: 1),
   }) async {
-    final cachedTimestamp = await databaseService.getCacheTimestamp(deviceId);
-    final cachedData = await _retrieveCachedData(deviceId, cachedTimestamp);
+    final cachedTimestamp = await databaseService.getCacheTimestamp(deviceIdentifier);
+    final cachedData = await _retrieveCachedData(deviceIdentifier, cachedTimestamp);
 
-    final remoteEndpoint = _buildEndpoint('device-data', cachedTimestamp, deviceId: deviceId);
+    final remoteEndpoint = _buildEndpoint('device-data', cachedTimestamp, deviceIdentifier: deviceIdentifier);
     final newData = await _fetchNetworkData(remoteEndpoint);
 
     final latestTimestamp = _extractLatestTimestamp(newData, cachedTimestamp);
-    final mergedData = _mergeCachedData(newData, cachedData, deviceId);
+    final mergedData = _mergeCachedData(newData, cachedData, deviceIdentifier);
 
     if (latestTimestamp != null) {
-      await _storeDataToCache(deviceId, mergedData, latestTimestamp, cacheDuration);
+      await _storeDataToCache(deviceIdentifier, mergedData, latestTimestamp, cacheDuration);
     }
     return mergedData;
   }
@@ -38,7 +38,7 @@ class DeviceDataDataSource {
   List<DeviceDataModel> _mergeCachedData(
     List<DeviceDataModel> freshData,
     List<DeviceDataModel>? cachedData,
-    String deviceId,
+    String deviceIdentifier,
   ) {
     if (cachedData == null || cachedData.isEmpty) return freshData;
     return [...freshData, ...cachedData];
@@ -53,11 +53,11 @@ class DeviceDataDataSource {
   return cachedData;
 }
 
-  String _buildEndpoint(String base, DateTime? cachedTimestamp, {String? deviceId}) {
+  String _buildEndpoint(String base, DateTime? cachedTimestamp, {String? deviceIdentifier}) {
     final buffer = StringBuffer(base);
     bool hasQuery = false;
-    if (deviceId != null) {
-      buffer.write('?identifier=$deviceId');
+    if (deviceIdentifier != null) {
+      buffer.write('?identifier=$deviceIdentifier');
       hasQuery = true;
     }
     if (cachedTimestamp != null) {
