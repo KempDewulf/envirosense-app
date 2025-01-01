@@ -8,8 +8,10 @@ import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
+import 'package:envirosense/presentation/widgets/environment_data_section.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
+import 'package:envirosense/presentation/widgets/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_sheet.dart';
 import 'package:envirosense/services/room_service.dart';
 import 'package:flutter/material.dart';
@@ -143,110 +145,19 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
           type: 'Room',
         ),
         const SizedBox(height: 24),
-        ElevatedButton(
+        TargetTemperatureButton(
+          temperature: _targetTemperature,
           onPressed: () => _showTargetTemperatureSheet(context),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.thermostat, color: AppColors.secondaryColor),
-              const SizedBox(width: 8),
-              Text(
-                'Set Target Temperature ($_targetTemperature°C)',
-                style:
-                    const TextStyle(color: AppColors.whiteColor, fontSize: 16),
-              ),
-            ],
-          ),
         ),
         const SizedBox(height: 24),
-        if (_outsideAirData != null)
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                // Toggle buttons
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.accentColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: _roomHasDeviceData
-                              ? () => setState(() => _showRoomData = true)
-                              : null,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              color: _showRoomData && _roomHasDeviceData
-                                  ? AppColors.secondaryColor
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Text(
-                              'Room Data',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: _showRoomData && _roomHasDeviceData
-                                    ? AppColors.whiteColor
-                                    : AppColors.secondaryColor.withOpacity(
-                                        _roomHasDeviceData ? 1.0 : 0.5),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => setState(() => _showRoomData = false),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              color: !_showRoomData
-                                  ? AppColors.secondaryColor
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Text(
-                              'Outside Data',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: !_showRoomData
-                                    ? AppColors.whiteColor
-                                    : AppColors.secondaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 32),
-                DataDisplayBox(
-                  key: ValueKey(_showRoomData),
-                  title: _showRoomData
-                      ? 'Room Environment'
-                      : 'Outside Environment',
-                  data: _showRoomData && _roomHasDeviceData
-                      ? _airQuality?.airData ??
-                          AirData(temperature: 0, humidity: 0, ppm: 0)
-                      : _outsideAirData!,
-                )
-              ],
-            ),
-          ),
+        EnvironmentDataSection(
+          showRoomData: _showRoomData,
+          roomHasDeviceData: _roomHasDeviceData,
+          onToggleData: (value) => setState(() => _showRoomData = value),
+          roomData: _airQuality?.airData ??
+              AirData(temperature: 0, humidity: 0, ppm: 0),
+          outsideData: _outsideAirData!,
+        ),
       ],
     );
   }
