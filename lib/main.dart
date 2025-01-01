@@ -9,8 +9,10 @@ import 'package:envirosense/presentation/views/main_screen.dart';
 import 'package:envirosense/presentation/views/onboarding_screen.dart';
 import 'package:envirosense/presentation/views/statistics_screen.dart';
 import 'package:envirosense/services/database_service.dart';
+import 'package:envirosense/services/notifications_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -33,12 +35,24 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
 
   final dbService = DatabaseService();
   bool isFirstTime = await dbService.getSetting<bool>('isFirstTime') ?? true;
   LoggingService.initialize();
-
+  if (isFirstTime) {
+    await NotificationsService().init();
+  }
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("Handling a message: ${message.toMap()}");
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.toMap()}");
 }
 
 class EnviroSenseApp extends StatefulWidget {
