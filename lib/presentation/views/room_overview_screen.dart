@@ -10,6 +10,7 @@ import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/environment_data_section.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
+import 'package:envirosense/presentation/widgets/room_app_bar.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_sheet.dart';
@@ -88,24 +89,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left_rounded),
-          iconSize: 35,
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          _room?.name ?? widget.roomName,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, color: AppColors.whiteColor),
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: _tabs,
-          labelColor: AppColors.secondaryColor,
-          indicatorColor: AppColors.secondaryColor,
-          unselectedLabelColor: AppColors.whiteColor,
-        ),
+      appBar: RoomAppBar(
+        roomName: _room?.name ?? widget.roomName,
+        tabController: _tabController,
+        tabs: _tabs,
+        onBackPressed: () => Navigator.pop(context),
       ),
       body: LoadingErrorWidget(
         isLoading: _isLoading,
