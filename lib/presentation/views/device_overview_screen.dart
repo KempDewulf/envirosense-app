@@ -568,7 +568,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room changed successfully')),
+        const SnackBar(content: Text('Room changed successfully'), backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -576,7 +576,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to change room: $_error')),
+        SnackBar(content: Text('Failed to change room: $_error'), backgroundColor: AppColors.secondaryColor),
       );
     }
   }
@@ -597,7 +597,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Device removed successfully')),
+        const SnackBar(content: Text('Device removed successfully'), backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -605,7 +605,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to remove device: $_error')),
+        SnackBar(content: Text('Failed to remove device: $_error'), backgroundColor: AppColors.secondaryColor),
       );
     }
   }

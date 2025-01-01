@@ -310,7 +310,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room renamed successfully')),
+        const SnackBar(content: Text('Room renamed successfully'), backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -318,7 +318,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to rename (update) room: $_error')),
+        SnackBar(content: Text('Failed to rename (update) room: $_error'), backgroundColor: AppColors.secondaryColor),
       );
     }
   }
@@ -331,7 +331,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room removed successfully')),
+        const SnackBar(content: Text('Room removed successfully'), backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -339,7 +339,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to remove room: $_error')),
+        SnackBar(content: Text('Failed to remove room: $_error'), backgroundColor: AppColors.secondaryColor),
       );
     }
   }

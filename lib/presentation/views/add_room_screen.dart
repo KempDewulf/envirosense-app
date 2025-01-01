@@ -76,7 +76,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Room added successfully. Drag down to refresh.')),
+              content: Text('Room added successfully. Drag down to refresh.'), backgroundColor: AppColors.secondaryColor),
         );
 
         Navigator.pop(context, true);
@@ -86,7 +86,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add room')),
+          const SnackBar(content: Text('Failed to add room'), backgroundColor: AppColors.secondaryColor),
         );
       }
     } finally {

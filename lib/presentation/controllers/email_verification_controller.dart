@@ -1,3 +1,4 @@
+import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,6 +16,7 @@ class EmailVerificationController {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Email not verified yet. Please check your inbox.'),
+            backgroundColor: AppColors.secondaryColor
           ),
         );
       }
@@ -29,6 +31,7 @@ class EmailVerificationController {
           const SnackBar(
             content:
                 Text('Verification email resent. Please check your inbox.'),
+                backgroundColor: AppColors.secondaryColor
           ),
         );
       }
@@ -37,6 +40,7 @@ class EmailVerificationController {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Failed to resend email. Try again later.'),
+            backgroundColor: AppColors.secondaryColor
           ),
         );
       }

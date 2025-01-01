@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _showErrorDialog(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(content: Text(message), backgroundColor: AppColors.secondaryColor),
     );
   }
 

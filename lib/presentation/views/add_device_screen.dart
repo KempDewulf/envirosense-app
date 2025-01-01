@@ -76,7 +76,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       LoggingService.logError('Failed to fetch rooms: $e', e);
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Failed to load rooms')),
+          const SnackBar(content: Text('Failed to load rooms'), backgroundColor: AppColors.secondaryColor),
         );
       }
     }
@@ -96,7 +96,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Device assigned successfully')),
+          const SnackBar(content: Text('Device assigned successfully'), backgroundColor: AppColors.secondaryColor),
         );
         Navigator.pop(context, true);
       }
@@ -104,7 +104,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       LoggingService.logError('Failed to assign device: $e', e);
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('Failed to assign device: $e')),
+          SnackBar(content: Text('Failed to assign device: $e'), backgroundColor: AppColors.secondaryColor),
         );
       }
     } finally {
