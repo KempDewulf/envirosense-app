@@ -361,6 +361,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
                 color: AppColors.accentColor,
                 isNeutral: true,
               ),
+              const SizedBox(height: 16),
               _buildActionButton(
                 icon: Icons.delete_outline,
                 label: 'Remove Room',
