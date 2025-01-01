@@ -310,7 +310,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       }
 
       await widget.roomService.renameRoom(widget.roomId, newRoomName);
-      widget.onRoomRenamed(newRoomName); // Updates parent state for header
+      widget.onRoomRenamed(newRoomName);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -319,6 +319,8 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
           backgroundColor: AppColors.secondaryColor,
         ),
       );
+
+      Navigator.pop(context);
     } catch (e) {
       setState(() => _error = e.toString());
 
