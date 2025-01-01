@@ -14,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'firebase_options.dart';
@@ -44,7 +45,7 @@ void main() async {
     await NotificationsService().init();
   }
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print("Handling a message: ${message.toMap()}");
+    Logger('FirebaseMessaging').info('Handling a message: ${message.messageId}');
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(EnviroSenseApp(isFirstTime: isFirstTime));
@@ -52,7 +53,7 @@ void main() async {
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.toMap()}");
+  Logger('FirebaseMessaging').info('Handling a background message: ${message.messageId}');
 }
 
 class EnviroSenseApp extends StatefulWidget {
