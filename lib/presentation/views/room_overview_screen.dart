@@ -8,6 +8,7 @@ import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
+import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_sheet.dart';
 import 'package:envirosense/services/room_service.dart';
@@ -104,49 +105,35 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
           unselectedLabelColor: AppColors.whiteColor,
         ),
       ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: LoadingErrorWidget(
+        isLoading: _isLoading,
+        error: _error,
+        onRetry: _loadData,
+        child: TabBarView(
+          controller: _tabController,
           children: [
-            Text('Error: $_error'),
-            ElevatedButton(
-              onPressed: _loadData,
-              child: const Text('Retry'),
+            RefreshIndicator(
+              onRefresh: _loadData,
+              color: AppColors.secondaryColor,
+              child: _buildOverviewTab(),
             ),
+            RefreshIndicator(
+              onRefresh: _loadData,
+              color: AppColors.secondaryColor,
+              child: DevicesList(devices: _room?.devices ?? []),
+            ),
+            _buildActionsTab(),
           ],
         ),
-      );
-    }
-
-    return TabBarView(
-      controller: _tabController,
-      children: [
-        RefreshIndicator(
-          onRefresh: _loadData,
-          color: AppColors.secondaryColor,
-          child: _buildOverviewTab(),
-        ),
-        RefreshIndicator(
-          onRefresh: _loadData,
-          color: AppColors.secondaryColor,
-          child: DevicesList(devices: _room?.devices ?? []),
-        ),
-        _buildActionsTab(),
-      ],
+      ),
     );
   }
 
   Widget _buildOverviewTab() {
+    if (_outsideAirData == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -179,85 +166,87 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
           ),
         ),
         const SizedBox(height: 24),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              // Toggle buttons
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.accentColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: _roomHasDeviceData
-                            ? () => setState(() => _showRoomData = true)
-                            : null,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: _showRoomData && _roomHasDeviceData
-                                ? AppColors.secondaryColor
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Text(
-                            'Room Data',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+        if (_outsideAirData != null)
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                // Toggle buttons
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.accentColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: _roomHasDeviceData
+                              ? () => setState(() => _showRoomData = true)
+                              : null,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
                               color: _showRoomData && _roomHasDeviceData
-                                  ? AppColors.whiteColor
-                                  : AppColors.secondaryColor.withOpacity(
-                                      _roomHasDeviceData ? 1.0 : 0.5),
-                              fontWeight: FontWeight.bold,
+                                  ? AppColors.secondaryColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Text(
+                              'Room Data',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: _showRoomData && _roomHasDeviceData
+                                    ? AppColors.whiteColor
+                                    : AppColors.secondaryColor.withOpacity(
+                                        _roomHasDeviceData ? 1.0 : 0.5),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _showRoomData = false),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: !_showRoomData
-                                ? AppColors.secondaryColor
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Text(
-                            'Outside Data',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => setState(() => _showRoomData = false),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
                               color: !_showRoomData
-                                  ? AppColors.whiteColor
-                                  : AppColors.secondaryColor,
-                              fontWeight: FontWeight.bold,
+                                  ? AppColors.secondaryColor
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Text(
+                              'Outside Data',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: !_showRoomData
+                                    ? AppColors.whiteColor
+                                    : AppColors.secondaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              DataDisplayBox(
-                key: ValueKey(_showRoomData),
-                title:
-                    _showRoomData ? 'Room Environment' : 'Outside Environment',
-                data: _showRoomData && _roomHasDeviceData
-                    ? _airQuality?.airData ??
-                        AirData(temperature: 0, humidity: 0, ppm: 0)
-                    : _outsideAirData!,
-              )
-            ],
+                const SizedBox(height: 32),
+                DataDisplayBox(
+                  key: ValueKey(_showRoomData),
+                  title: _showRoomData
+                      ? 'Room Environment'
+                      : 'Outside Environment',
+                  data: _showRoomData && _roomHasDeviceData
+                      ? _airQuality?.airData ??
+                          AirData(temperature: 0, humidity: 0, ppm: 0)
+                      : _outsideAirData!,
+                )
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

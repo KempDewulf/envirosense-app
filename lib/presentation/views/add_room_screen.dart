@@ -102,7 +102,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator(color: AppColors.secondaryColor,)),
       );
     }
 
