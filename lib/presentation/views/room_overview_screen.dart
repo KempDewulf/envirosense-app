@@ -244,8 +244,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              const SizedBox(height: 16),
+              const SizedBox(height: 32),
               DataDisplayBox(
                 key: ValueKey(_showRoomData),
                 title:
