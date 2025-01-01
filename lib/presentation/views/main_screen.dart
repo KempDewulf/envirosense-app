@@ -1,6 +1,7 @@
 // main_screen.dart
 
 import 'package:envirosense/presentation/widgets/bottom_nav_bar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/views/home_screen.dart';
@@ -16,6 +17,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  String buildingId = 'gox5y6bsrg640qb11ak44dh0';
+
+  @override
+  void initState() {
+    super.initState();
+    //fetch user data..
+    FirebaseMessaging.instance.subscribeToTopic("buildings-$buildingId");
+  }
 
   // List of pages to navigate
   final List<Widget> _pages = [
