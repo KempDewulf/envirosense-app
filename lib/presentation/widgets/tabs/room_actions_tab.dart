@@ -305,20 +305,29 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
 
   Future<void> _handleRoomRename(String newRoomName) async {
     try {
+      if (widget.roomId.isEmpty) {
+        throw Exception('Room id not found');
+      }
+
       await widget.roomService.renameRoom(widget.roomId, newRoomName);
+      widget.onRoomRenamed(newRoomName); // Updates parent state for header
 
-      Navigator.pop(context);
-
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room renamed successfully'), backgroundColor: AppColors.secondaryColor),
+        const SnackBar(
+          content: Text('Room renamed successfully'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-      });
+      setState(() => _error = e.toString());
 
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to rename (update) room: $_error'), backgroundColor: AppColors.secondaryColor),
+        SnackBar(
+          content: Text('Failed to rename room: $_error'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     }
   }
@@ -331,7 +340,9 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room removed successfully'), backgroundColor: AppColors.secondaryColor),
+        const SnackBar(
+            content: Text('Room removed successfully'),
+            backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -339,7 +350,9 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to remove room: $_error'), backgroundColor: AppColors.secondaryColor),
+        SnackBar(
+            content: Text('Failed to remove room: $_error'),
+            backgroundColor: AppColors.secondaryColor),
       );
     }
   }

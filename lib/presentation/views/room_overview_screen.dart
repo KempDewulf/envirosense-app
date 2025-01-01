@@ -268,11 +268,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       roomId: _room?.id ?? '',
       roomService: RoomService(_roomController),
       onRoomRenamed: (newName) {
-        setState(() => widget.roomName = newName);
+        setState(() {
+          widget.roomName = newName; // This updates the header
+        });
       },
-      onRoomRemoved: () {
-        Navigator.pop(context);
-      },
+      onRoomRemoved: () => Navigator.pop(context),
     );
   }
 
