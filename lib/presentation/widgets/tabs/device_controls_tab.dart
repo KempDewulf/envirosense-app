@@ -33,47 +33,4 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
       ],
     );
   }
-
-  Widget _buildBrightnessControl() {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: () {
-            if (_brightnessLevel > 1) {
-              setState(() => _brightnessLevel--);
-            }
-          },
-          icon: const Icon(Icons.remove_circle),
-          color: AppColors.secondaryColor,
-        ),
-        Expanded(
-          child: Row(
-            children: List.generate(5, (index) {
-              return Expanded(
-                child: Container(
-                  height: 24,
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  decoration: BoxDecoration(
-                    color: index < _brightnessLevel
-                        ? AppColors.secondaryColor
-                        : Colors.grey[300],
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            if (_brightnessLevel < 5) {
-              setState(() => _brightnessLevel++);
-            }
-          },
-          icon: const Icon(Icons.add_circle),
-          color: AppColors.secondaryColor,
-        ),
-      ],
-    );
-  }
 }
