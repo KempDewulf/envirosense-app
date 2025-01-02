@@ -483,7 +483,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
     try {
       final currentRoomId = widget.currentRoomId;
-      if (currentRoomId == null) return;
+      print("Current room id: $currentRoomId");
 
       await widget.deviceService.changeDeviceRoom(
         deviceId: widget.deviceId!,

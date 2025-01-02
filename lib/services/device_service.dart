@@ -26,14 +26,15 @@ class DeviceService {
   Future<void> changeDeviceRoom({
     required String deviceId,
     required String deviceIdentifier,
-    required String currentRoomId,
+    required String? currentRoomId,
     required String newRoomId,
     required Function(String, String?) removeDeviceFromRoom,
     required Function(String, String?) addDeviceToRoom,
   }) async {
-    if (newRoomId == currentRoomId) return;
+    if (currentRoomId != null && currentRoomId.isNotEmpty) {
+      await removeDeviceFromRoom(currentRoomId, deviceId);
+    }
 
-    await removeDeviceFromRoom(currentRoomId, deviceId);
     await addDeviceToRoom(newRoomId, deviceId);
     await _databaseService.clearCacheForDevice(deviceIdentifier);
   }
