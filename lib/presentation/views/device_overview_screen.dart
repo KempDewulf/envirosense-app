@@ -40,7 +40,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   String? _error;
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
-  String _selectedLayout = 'default';
+  final String _selectedLayout = 'default';
 
   final List<Tab> _tabs = const [
     Tab(text: 'Data History'),
