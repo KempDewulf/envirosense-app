@@ -9,6 +9,7 @@ import 'package:envirosense/presentation/widgets/device_app_bar.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
 import 'package:envirosense/services/database_service.dart';
+import 'package:envirosense/services/device_service.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -26,10 +27,10 @@ class DeviceOverviewScreen extends StatefulWidget {
 class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
+  late final DeviceService _deviceService = DeviceService(_deviceController);
   late final DeviceDataController _deviceDataController =
       DeviceDataController();
   late final RoomController _roomController = RoomController();
-  late final DatabaseService _databaseService = DatabaseService();
   late final TabController _tabController =
       TabController(length: _tabs.length, vsync: this);
 
@@ -292,20 +293,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                       child: FilledButton(
                         onPressed: () async {
                           if (inputController.text.isNotEmpty) {
-                            final deviceIdentifier = _device?.identifier;
-
-                            if (deviceIdentifier == null) {
-                              throw Exception('Device identifier not found');
-                            }
-
-                            await _databaseService.setDeviceName(
-                                deviceIdentifier, inputController.text);
-
-                            setState(() {
-                              widget.deviceName = inputController.text;
-                            });
-
-                            Navigator.pop(context);
+                            await _handleDeviceRename(inputController.text);
                           }
                         },
                         style: FilledButton.styleFrom(
@@ -323,6 +311,39 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _handleDeviceRename(String newName) async {
+    try {
+      final deviceIdentifier = _device?.identifier;
+      if (deviceIdentifier == null) {
+        throw Exception('Device identifier not found');
+      }
+
+      await _deviceService.renameDevice(deviceIdentifier, newName);
+
+      setState(() {
+        widget.deviceName = newName;
+      });
+
+      if (!mounted) return;
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Device renamed successfully'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
+      );
+    } catch (e) {
+      setState(() => _error = e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to rename device: $_error'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
+      );
+    }
   }
 
   Future<void> _showChangeRoomDialog() async {
@@ -527,67 +548,61 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Future<void> handleRoomChange() async {
-    if (_selectedRoomId == null || _selectedRoomId == _device?.room?.id) {
-      return;
-    }
+    if (_selectedRoomId == null || _selectedRoomId == _device?.room?.id) return;
 
     try {
       final currentRoomId = _device?.room?.id;
+      if (currentRoomId == null || _device?.id == null) return;
 
-      if (currentRoomId == null) return;
-
-      await _roomController.removeDeviceFromRoom(currentRoomId, _device?.id);
-      await _roomController.addDeviceToRoom(_selectedRoomId, _device?.id);
+      await _deviceService.changeDeviceRoom(
+        deviceId: _device!.id,
+        currentRoomId: currentRoomId,
+        newRoomId: _selectedRoomId!,
+        removeDeviceFromRoom: _roomController.removeDeviceFromRoom,
+        addDeviceToRoom: _roomController.addDeviceToRoom,
+      );
 
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Room changed successfully'),
-            backgroundColor: AppColors.secondaryColor),
+          content: Text('Room changed successfully'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-      });
-
+      setState(() => _error = e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('Failed to change room: $_error'),
-            backgroundColor: AppColors.secondaryColor),
+          content: Text('Failed to change room: $_error'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     }
   }
 
   Future<void> _handleDeviceRemoval() async {
-    if (_device?.id == null) return;
-
     try {
-      final deviceId = _device?.id;
+      if (_device?.id == null) throw Exception('Device identifier not found');
 
-      if (deviceId == null) {
-        throw Exception('Device identifier not found');
-      }
-
-      await _deviceController.deleteDevice(deviceId, _buildingId);
+      await _deviceService.deleteDevice(_device!.id, _buildingId);
 
       Navigator.pop(context);
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Device removed successfully'),
-            backgroundColor: AppColors.secondaryColor),
+          content: Text('Device removed successfully'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-      });
-
+      setState(() => _error = e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('Failed to remove device: $_error'),
-            backgroundColor: AppColors.secondaryColor),
+          content: Text('Failed to remove device: $_error'),
+          backgroundColor: AppColors.secondaryColor,
+        ),
       );
     }
   }
