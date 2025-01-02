@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
-import '../../../domain/entities/air_data.dart';
-import '../../../core/helpers/data_status_helper.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../domain/entities/air_data.dart';
+import '../../../../core/helpers/data_status_helper.dart';
 
 class DataDisplayBox extends StatelessWidget {
   final String title;

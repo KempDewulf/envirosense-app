@@ -2,7 +2,7 @@ import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';

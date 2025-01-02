@@ -1,6 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/presentation/widgets/add_item_card.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/cards/add_item_card.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ItemGridPage<T> extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:envirosense/presentation/widgets/data_display_box.dart';
-import 'package:envirosense/presentation/widgets/environment_data_toggle.dart';
+import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
+import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
 import 'package:flutter/material.dart';
-import '../../../domain/entities/air_data.dart';
+import '../../../../domain/entities/air_data.dart';
 
 class EnvironmentDataSection extends StatelessWidget {
   final bool showRoomData;

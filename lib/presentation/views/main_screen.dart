@@ -1,6 +1,6 @@
 // main_screen.dart
 
-import 'package:envirosense/presentation/widgets/bottom_nav_bar.dart';
+import 'package:envirosense/presentation/widgets/layout/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/views/home_screen.dart';

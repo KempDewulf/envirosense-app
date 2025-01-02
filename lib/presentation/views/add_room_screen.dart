@@ -3,7 +3,7 @@ import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 import 'package:envirosense/services/logging_service.dart';

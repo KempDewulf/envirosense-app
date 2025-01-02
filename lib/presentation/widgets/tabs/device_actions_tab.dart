@@ -1,9 +1,9 @@
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/custom_action_button.dart';
-import 'package:envirosense/presentation/widgets/custom_bottom_sheet_actions.dart';
-import 'package:envirosense/presentation/widgets/custom_bottom_sheet_header.dart';
-import 'package:envirosense/presentation/widgets/custom_confirmation_dialog.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/actions/custom_action_button.dart';
+import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_actions.dart';
+import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
+import 'package:envirosense/presentation/widgets/core/custom_confirmation_dialog.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../../../services/device_service.dart';

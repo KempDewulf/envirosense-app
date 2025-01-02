@@ -3,11 +3,11 @@ import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/add_options_bottom_sheet.dart';
-import 'package:envirosense/presentation/widgets/device_card.dart';
-import 'package:envirosense/presentation/widgets/header.dart';
-import 'package:envirosense/presentation/widgets/item_grid_page.dart';
-import 'package:envirosense/presentation/widgets/room_card.dart';
+import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
+import 'package:envirosense/presentation/widgets/cards/device_card.dart';
+import 'package:envirosense/presentation/widgets/layout/header.dart';
+import 'package:envirosense/presentation/widgets/lists/item_grid_page.dart';
+import 'package:envirosense/presentation/widgets/cards/room_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 

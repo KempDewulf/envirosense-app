@@ -1,7 +1,7 @@
 import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
 import 'package:envirosense/presentation/controllers/building_controller.dart';
-import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
+import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 

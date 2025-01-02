@@ -1,6 +1,6 @@
-import 'package:envirosense/presentation/widgets/data_display_box.dart';
-import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
-import 'package:envirosense/presentation/widgets/environment_data_toggle.dart';
+import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
+import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
+import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/air_data.dart';

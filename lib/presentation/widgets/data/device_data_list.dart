@@ -1,9 +1,9 @@
 import 'package:envirosense/core/enums/status.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../core/constants/colors.dart';
-import '../../../domain/entities/device_data.dart';
-import '../../../core/helpers/data_status_helper.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../domain/entities/device_data.dart';
+import '../../../../core/helpers/data_status_helper.dart';
 
 class DeviceDataList extends StatelessWidget {
   final List<DeviceData> deviceData;
