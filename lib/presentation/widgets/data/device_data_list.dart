@@ -1,5 +1,6 @@
 import 'package:envirosense/core/enums/status.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_controls.dart';
+import 'package:envirosense/presentation/widgets/cards/device_data_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/constants/colors.dart';
@@ -58,39 +59,9 @@ class _DeviceDataListState extends State<DeviceDataList> {
                   )
                 else
                   ...currentPageItems.map(
-                    (data) => Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(12.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 211, 211, 211),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              DateFormat('dd-MM-yyyy HH:mm:ss').format(
-                                DateTime.parse(data.timestamp).toLocal(),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: AppColors.accentColor,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ..._buildDataRows(data),
-                          ],
-                        ),
-                      ),
+                    (data) => DeviceDataCard(
+                      data: data,
+                      isNewest: currentPageItems.first == data,
                     ),
                   ),
               ],
