@@ -21,9 +21,16 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Display Mode',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Row(
+            children: [
+              const Icon(Icons.screen_rotation,
+                  color: AppColors.secondaryColor),
+              const SizedBox(width: 8),
+              const Text(
+                'Screen Mode',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -54,7 +61,17 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 36),
+          Row(
+            children: [
+              const Icon(Icons.brightness_6, color: AppColors.secondaryColor),
+              const SizedBox(width: 8),
+              const Text(
+                'Brightness',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           _buildBrightnessControl(),
         ],
       ),
@@ -62,53 +79,43 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   }
 
   Widget _buildBrightnessControl() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        const Text(
-          'Display Brightness',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        IconButton(
+          onPressed: () {
+            if (_brightnessLevel > 0) {
+              setState(() => _brightnessLevel--);
+            }
+          },
+          icon: const Icon(Icons.remove_circle),
+          color: AppColors.secondaryColor,
         ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                if (_brightnessLevel > 0) {
-                  setState(() => _brightnessLevel--);
-                }
-              },
-              icon: const Icon(Icons.remove_circle),
-              color: AppColors.secondaryColor,
-            ),
-            Expanded(
-              child: Row(
-                children: List.generate(5, (index) {
-                  return Expanded(
-                    child: Container(
-                      height: 24,
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      decoration: BoxDecoration(
-                        color: index < _brightnessLevel
-                            ? AppColors.secondaryColor
-                            : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                if (_brightnessLevel < 5) {
-                  setState(() => _brightnessLevel++);
-                }
-              },
-              icon: const Icon(Icons.add_circle),
-              color: AppColors.secondaryColor,
-            ),
-          ],
+        Expanded(
+          child: Row(
+            children: List.generate(5, (index) {
+              return Expanded(
+                child: Container(
+                  height: 24,
+                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                  decoration: BoxDecoration(
+                    color: index < _brightnessLevel
+                        ? AppColors.secondaryColor
+                        : Colors.grey[300],
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            if (_brightnessLevel < 5) {
+              setState(() => _brightnessLevel++);
+            }
+          },
+          icon: const Icon(Icons.add_circle),
+          color: AppColors.secondaryColor,
         ),
       ],
     );
