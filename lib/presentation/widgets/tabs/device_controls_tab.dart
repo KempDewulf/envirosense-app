@@ -1,4 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/actions/brightness_control.dart';
+import 'package:envirosense/presentation/widgets/actions/display_mode_selector.dart';
 import 'package:flutter/material.dart';
 
 enum DisplayMode { defaultView, temperature, humidity, ppm }
@@ -19,99 +21,16 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: [
-        Row(
-          children: [
-            const Icon(Icons.screen_rotation, color: AppColors.secondaryColor),
-            const SizedBox(width: 8),
-            const Text(
-              'Screen Mode',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 170,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _buildModeCard(
-                DisplayMode.defaultView,
-                'Default View',
-                Icons.dashboard_outlined,
-              ),
-              _buildModeCard(
-                DisplayMode.temperature,
-                'Temperature',
-                Icons.thermostat_outlined,
-              ),
-              _buildModeCard(
-                DisplayMode.humidity,
-                'Humidity',
-                Icons.water_drop_outlined,
-              ),
-              _buildModeCard(
-                DisplayMode.ppm,
-                'CO2 PPM',
-                Icons.air_outlined,
-              ),
-            ],
-          ),
+        DisplayModeSelector(
+          selectedMode: _selectedMode,
+          onModeSelected: (mode) => setState(() => _selectedMode = mode),
         ),
         const SizedBox(height: 36),
-        Row(
-          children: [
-            const Icon(Icons.brightness_6, color: AppColors.secondaryColor),
-            const SizedBox(width: 8),
-            const Text(
-              'Brightness',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ],
+        BrightnessControl(
+          level: _brightnessLevel,
+          onChanged: (level) => setState(() => _brightnessLevel = level),
         ),
-        _buildBrightnessControl(),
       ],
-    );
-  }
-
-  Widget _buildModeCard(DisplayMode mode, String title, IconData icon) {
-    final isSelected = _selectedMode == mode;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: InkWell(
-        onTap: () => setState(() => _selectedMode = mode),
-        child: Container(
-          width: 150,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.secondaryColor : Colors.grey[100],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isSelected ? AppColors.secondaryColor : Colors.grey[300]!,
-              width: 2,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 48,
-                color: isSelected ? Colors.white : Colors.grey[600],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? Colors.white : Colors.grey[600],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
