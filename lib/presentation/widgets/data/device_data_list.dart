@@ -97,13 +97,10 @@ class _DeviceDataListState extends State<DeviceDataList> {
             ),
           ),
           if (widget.deviceData.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-              child: PaginationControls(
-                currentPage: currentPage,
-                totalPages: totalPages,
-                onPageChanged: (page) => setState(() => currentPage = page),
-              ),
+            PaginationControls(
+              currentPage: currentPage,
+              totalPages: totalPages,
+              onPageChanged: (page) => setState(() => currentPage = page),
             ),
         ],
       ),
