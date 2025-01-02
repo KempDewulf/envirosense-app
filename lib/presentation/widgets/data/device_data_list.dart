@@ -5,7 +5,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/device_data.dart';
 import '../../../../core/helpers/data_status_helper.dart';
 
-class DeviceDataList extends StatelessWidget {
+class DeviceDataList extends StatefulWidget {
   final List<DeviceData> deviceData;
   final Future<void> Function() onRefresh;
 
@@ -16,62 +16,167 @@ class DeviceDataList extends StatelessWidget {
   });
 
   @override
+  State<DeviceDataList> createState() => _DeviceDataListState();
+}
+
+class _DeviceDataListState extends State<DeviceDataList> {
+  static const int itemsPerPage = 8;
+  int currentPage = 1;
+
+  int get totalPages => (widget.deviceData.length / itemsPerPage).ceil();
+
+  List<DeviceData> get currentPageItems {
+    final startIndex = (currentPage - 1) * itemsPerPage;
+    final endIndex = startIndex + itemsPerPage;
+    return widget.deviceData.sublist(
+      startIndex,
+      endIndex > widget.deviceData.length ? widget.deviceData.length : endIndex,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: onRefresh,
-        color: AppColors.secondaryColor,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            if (deviceData.isEmpty)
-              const Center(
-                child: Text(
-                  'No device data from this device.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.accentColor,
-                  ),
-                ),
-              )
-            else
-              ...deviceData.map(
-                (data) => Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(12.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 211, 211, 211),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 2),
+      onRefresh: widget.onRefresh,
+      color: AppColors.secondaryColor,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                if (widget.deviceData.isEmpty)
+                  const Center(
+                    child: Text(
+                      'No device data from this device.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.accentColor,
                       ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          DateFormat('dd-MM-yyyy HH:mm:ss').format(
-                            DateTime.parse(data.timestamp).toLocal(),
+                    ),
+                  )
+                else
+                  ...currentPageItems.map(
+                    (data) => Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 211, 211, 211),
+                            spreadRadius: 1,
+                            blurRadius: 10,
+                            offset: Offset(0, 2),
                           ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              DateFormat('dd-MM-yyyy HH:mm:ss').format(
+                                DateTime.parse(data.timestamp).toLocal(),
+                              ),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: AppColors.accentColor,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ..._buildDataRows(data),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          if (widget.deviceData.isNotEmpty)
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 211, 211, 211),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: currentPage > 1
+                            ? () => setState(() => currentPage--)
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                          foregroundColor: AppColors.whiteColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.chevron_left, size: 20),
+                            Text('Previous'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'Page $currentPage of $totalPages',
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             color: AppColors.accentColor,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        ..._buildDataRows(data),
-                      ],
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: currentPage < totalPages
+                            ? () => setState(() => currentPage++)
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+                          foregroundColor: AppColors.whiteColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Next'),
+                            Icon(Icons.chevron_right, size: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
-        ));
+            )
+        ],
+      ),
+    );
   }
 
   List<Widget> _buildDataRows(DeviceData data) {
