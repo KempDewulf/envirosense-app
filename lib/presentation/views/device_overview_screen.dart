@@ -52,11 +52,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Widget _buildOverviewTab() {
-  return DeviceDataList(
-    deviceData: _deviceData,
-    onRefresh: _loadData,
-  );
-}
+    return DeviceDataList(
+      deviceData: _deviceData,
+      onRefresh: _loadData,
+    );
+  }
 
   Future<void> _loadData() async {
     try {
@@ -81,28 +81,28 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DeviceAppBar(
-        deviceName: _device?.identifier ?? widget.deviceName,
-        tabController: _tabController,
-        tabs: _tabs,
-        onBackPressed: () => Navigator.pop(context),
-      ),
-      body: LoadingErrorWidget(
-      isLoading: _isLoading,
-      error: _error,
-      onRetry: _loadData,
-      child: TabBarView(
-        controller: _tabController,
-        children: [
-          RefreshIndicator(
-            onRefresh: _loadData,
-            color: AppColors.secondaryColor,
-            child: _buildOverviewTab(),
+        appBar: DeviceAppBar(
+          deviceName: _device?.identifier ?? widget.deviceName,
+          tabController: _tabController,
+          tabs: _tabs,
+          onBackPressed: () => Navigator.pop(context),
+        ),
+        body: LoadingErrorWidget(
+          isLoading: _isLoading,
+          error: _error,
+          onRetry: _loadData,
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              RefreshIndicator(
+                onRefresh: _loadData,
+                color: AppColors.secondaryColor,
+                child: _buildOverviewTab(),
+              ),
+              _buildActionsTab(),
+            ],
           ),
-          _buildActionsTab(),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget _buildActionsTab() {
