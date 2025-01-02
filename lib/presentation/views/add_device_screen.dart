@@ -93,6 +93,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       await _deviceController.addDevice(
           _selectedRoom?.id, _deviceIdentifierCode);
       await _databaseService.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
+      await _databaseService.clearCacheForDevice(_deviceIdentifierCode!);
 
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
