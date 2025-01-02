@@ -25,6 +25,7 @@ class DeviceService {
 
   Future<void> changeDeviceRoom({
     required String deviceId,
+    required String deviceIdentifier,
     required String currentRoomId,
     required String newRoomId,
     required Function(String, String?) removeDeviceFromRoom,
@@ -34,6 +35,7 @@ class DeviceService {
 
     await removeDeviceFromRoom(currentRoomId, deviceId);
     await addDeviceToRoom(newRoomId, deviceId);
+    await _databaseService.clearCacheForDevice(deviceIdentifier);
   }
 
   Future<Device> getDevice(String deviceIdentifier, String buildingId) async {

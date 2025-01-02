@@ -487,6 +487,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
       await widget.deviceService.changeDeviceRoom(
         deviceId: widget.deviceId!,
+        deviceIdentifier: widget.deviceIdentifier!,
         currentRoomId: currentRoomId,
         newRoomId: _selectedRoomId!,
         removeDeviceFromRoom: widget.roomController.removeDeviceFromRoom,
