@@ -27,4 +27,9 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<void> deleteDevice(String? deviceId, String? buildingId) async {
     return await remoteDataSource.deleteDevice(deviceId, buildingId);
   }
+
+  @override
+  Future<void> deleteDeviceData(String? deviceId) async {
+    return await remoteDataSource.deleteDeviceData(deviceId);
+  }
 }

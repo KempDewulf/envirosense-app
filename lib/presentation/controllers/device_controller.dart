@@ -1,6 +1,7 @@
 import 'package:envirosense/data/datasources/device_data_source.dart';
 import 'package:envirosense/domain/usecases/add_device.dart';
 import 'package:envirosense/domain/usecases/delete_device.dart';
+import 'package:envirosense/domain/usecases/delete_device_data.dart';
 import 'package:envirosense/domain/usecases/get_device.dart';
 
 import '../../data/repositories/device_repository_impl.dart';
@@ -14,6 +15,7 @@ class DeviceController {
   late final GetDeviceUseCase getDeviceUseCase;
   late final AddDeviceUseCase addDeviceUseCase;
   late final DeleteDeviceUseCase deleteDeviceUseCase;
+  late final DeleteDeviceDataUseCase deleteDeviceDataUseCase;
   final DeviceRepository repository;
 
   DeviceController()
@@ -24,6 +26,7 @@ class DeviceController {
     getDeviceUseCase = GetDeviceUseCase(repository);
     addDeviceUseCase = AddDeviceUseCase(repository);
     deleteDeviceUseCase = DeleteDeviceUseCase(repository);
+    deleteDeviceDataUseCase = DeleteDeviceDataUseCase(repository);
   }
 
   Future<List<Device>> getDevices(String buildingId) async {
@@ -40,5 +43,9 @@ class DeviceController {
 
   Future<void> deleteDevice(String? deviceId, String? buildingId) async {
     return await deleteDeviceUseCase(deviceId, buildingId);
+  }
+
+  Future<void> deleteDeviceData(String? deviceId) async {
+    return await deleteDeviceDataUseCase(deviceId);
   }
 }

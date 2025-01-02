@@ -33,6 +33,8 @@ class DeviceService {
   }) async {
     if (currentRoomId != null && currentRoomId.isNotEmpty) {
       await removeDeviceFromRoom(currentRoomId, deviceId);
+    } else {
+      await _deviceController.deleteDeviceData(deviceId);
     }
 
     await addDeviceToRoom(newRoomId, deviceId);
