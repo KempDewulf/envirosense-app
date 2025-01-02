@@ -321,7 +321,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      widget.currentRoomName ?? "Unknown Room",
+                      widget.currentRoomName ?? "Not assigned to any room",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 24,

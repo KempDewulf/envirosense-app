@@ -118,7 +118,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       deviceService: _deviceService,
       roomController: _roomController,
       currentRoomId: _device?.room?.id,
-      currentRoomName: _device?.room?.name ?? 'Unknown Room',
+      currentRoomName: _device?.room?.name ?? 'Not assigned',
       onDeviceRenamed: (newName) {
         setState(() {
           widget.deviceName = newName;
