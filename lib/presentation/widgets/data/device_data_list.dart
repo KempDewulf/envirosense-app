@@ -1,4 +1,5 @@
 import 'package:envirosense/core/enums/status.dart';
+import 'package:envirosense/presentation/widgets/actions/pagination_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/constants/colors.dart';
@@ -96,84 +97,14 @@ class _DeviceDataListState extends State<DeviceDataList> {
             ),
           ),
           if (widget.deviceData.isNotEmpty)
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 211, 211, 211),
-                    spreadRadius: 1,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+              child: PaginationControls(
+                currentPage: currentPage,
+                totalPages: totalPages,
+                onPageChanged: (page) => setState(() => currentPage = page),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: currentPage > 1
-                            ? () => setState(() => currentPage--)
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryColor,
-                          foregroundColor: AppColors.whiteColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.chevron_left, size: 20),
-                            Text('Previous'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          'Page $currentPage of $totalPages',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.accentColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: currentPage < totalPages
-                            ? () => setState(() => currentPage++)
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryColor,
-                          foregroundColor: AppColors.whiteColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Next'),
-                            Icon(Icons.chevron_right, size: 20),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
+            ),
         ],
       ),
     );
