@@ -196,6 +196,17 @@ class DatabaseService {
     return decodedValue as T;
   }
 
+  Future<void> clearCacheForDevice(String deviceIdentifier) async {
+    final db = await database;
+
+    // Clear cache entries for specific device
+    await db.delete(
+      'cache',
+      where: 'key LIKE ?',
+      whereArgs: ['%$deviceIdentifier%'],
+    );
+  }
+
   Future<void> clearExpiredCache() async {
     final db = await database;
     final now = DateTime.now().toUtc().millisecondsSinceEpoch;
