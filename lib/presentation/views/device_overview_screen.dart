@@ -8,6 +8,7 @@ import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
 import 'package:envirosense/presentation/widgets/data/device_data_list.dart';
 import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/tabs/device_actions_tab.dart';
+import 'package:envirosense/presentation/widgets/tabs/device_controls_tab.dart';
 import 'package:envirosense/services/device_service.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +40,11 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   String? _error;
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  String _selectedLayout = 'default';
 
   final List<Tab> _tabs = const [
     Tab(text: 'Data History'),
+    Tab(text: 'Controls'),
     Tab(text: 'Actions'),
   ];
 
@@ -49,13 +52,6 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   void initState() {
     super.initState();
     _loadData();
-  }
-
-  Widget _buildOverviewTab() {
-    return DeviceDataList(
-      deviceData: _deviceData,
-      onRefresh: _loadData,
-    );
   }
 
   Future<void> _loadData() async {
@@ -99,10 +95,22 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
                 color: AppColors.secondaryColor,
                 child: _buildOverviewTab(),
               ),
+              _buildControlsTab(),
               _buildActionsTab(),
             ],
           ),
         ));
+  }
+
+  Widget _buildOverviewTab() {
+    return DeviceDataList(
+      deviceData: _deviceData,
+      onRefresh: _loadData,
+    );
+  }
+
+  Widget _buildControlsTab() {
+    return DeviceControlsTab();
   }
 
   Widget _buildActionsTab() {
