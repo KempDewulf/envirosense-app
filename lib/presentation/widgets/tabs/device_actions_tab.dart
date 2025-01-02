@@ -495,7 +495,6 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       );
 
       Navigator.pop(context);
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Room changed successfully'),
