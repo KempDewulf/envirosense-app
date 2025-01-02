@@ -3,7 +3,7 @@ import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 import 'package:envirosense/services/logging_service.dart';
@@ -76,7 +76,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Room added successfully. Drag down to refresh.')),
+              content: Text('Room added successfully. Drag down to refresh.'), backgroundColor: AppColors.secondaryColor),
         );
 
         Navigator.pop(context, true);
@@ -86,7 +86,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add room')),
+          const SnackBar(content: Text('Failed to add room'), backgroundColor: AppColors.secondaryColor),
         );
       }
     } finally {
@@ -102,7 +102,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator(color: AppColors.secondaryColor,)),
       );
     }
 

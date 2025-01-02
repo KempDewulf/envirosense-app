@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
+import '../../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
   final double score;

@@ -1,6 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/presentation/widgets/custom_button.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/core/custom_button.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:envirosense/services/validation_service.dart';
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _showErrorDialog(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(content: Text(message), backgroundColor: AppColors.secondaryColor),
     );
   }
 

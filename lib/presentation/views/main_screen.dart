@@ -1,5 +1,4 @@
-// main_screen.dart
-
+import 'package:envirosense/presentation/widgets/layout/bottom_nav_bar.dart';
 import 'package:envirosense/presentation/widgets/bottom_nav_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

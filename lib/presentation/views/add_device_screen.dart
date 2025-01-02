@@ -2,7 +2,7 @@ import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +76,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       LoggingService.logError('Failed to fetch rooms: $e', e);
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Failed to load rooms')),
+          const SnackBar(content: Text('Failed to load rooms'), backgroundColor: AppColors.secondaryColor),
         );
       }
     }
@@ -93,10 +93,11 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       await _deviceController.addDevice(
           _selectedRoom?.id, _deviceIdentifierCode);
       await _databaseService.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
+      await _databaseService.clearCacheForDevice(_deviceIdentifierCode!);
 
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Device assigned successfully')),
+          const SnackBar(content: Text('Device assigned successfully'), backgroundColor: AppColors.secondaryColor),
         );
         Navigator.pop(context, true);
       }
@@ -104,7 +105,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       LoggingService.logError('Failed to assign device: $e', e);
       if (mounted) {
         _scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('Failed to assign device: $e')),
+          SnackBar(content: Text('Failed to assign device: $e'), backgroundColor: AppColors.secondaryColor),
         );
       }
     } finally {

@@ -1,6 +1,6 @@
 import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:flutter/material.dart';
-import '../../core/constants/colors.dart';
+import '../../../core/constants/colors.dart';
 
 class AddOptionsBottomSheet extends StatelessWidget {
   final AddOptionType? preferredOption;

@@ -1,7 +1,7 @@
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
+import '../../../../core/constants/colors.dart';
 
 class DevicesList extends StatelessWidget {
   final DatabaseService _databaseService = DatabaseService();
