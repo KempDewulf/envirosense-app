@@ -58,7 +58,6 @@ class DeviceDataSource {
 
   Future<void> deleteDeviceData(String? deviceId) async {
     try {
-      print('devices/$deviceId/device-data');
       await apiService.deleteRequest('devices/$deviceId/device-data');
     } catch (e) {
       throw Exception('Failed to delete device: $e');
