@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
+import '../../core/constants/colors.dart';
 
-class RoomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String roomName;
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
   final TabController tabController;
   final List<Tab> tabs;
   final VoidCallback onBackPressed;
 
-  const RoomAppBar({
+  const CustomAppBar({
     super.key,
-    required this.roomName,
+    required this.title,
     required this.tabController,
     required this.tabs,
     required this.onBackPressed,
@@ -24,7 +24,7 @@ class RoomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: onBackPressed,
       ),
       title: Text(
-        roomName,
+        title,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: AppColors.whiteColor,

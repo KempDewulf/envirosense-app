@@ -4,7 +4,7 @@ import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/device_data_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/device_app_bar.dart';
+import 'package:envirosense/presentation/widgets/custom_app_bar.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/tabs/device_actions_tab.dart';
@@ -81,8 +81,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DeviceAppBar(
-          deviceName: widget.deviceName,
+        appBar: CustomAppBar(
+          title: widget.deviceName,
           tabController: _tabController,
           tabs: _tabs,
           onBackPressed: () => Navigator.pop(context),

@@ -8,7 +8,7 @@ import 'package:envirosense/presentation/widgets/device_list.dart';
 import 'package:envirosense/presentation/widgets/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/environment_data_section.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
-import 'package:envirosense/presentation/widgets/room_app_bar.dart';
+import 'package:envirosense/presentation/widgets/custom_app_bar.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/target_temperature_sheet.dart';
@@ -87,8 +87,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RoomAppBar(
-        roomName: _room?.name ?? widget.roomName,
+      appBar: CustomAppBar(
+        title: _room?.name ?? widget.roomName,
         tabController: _tabController,
         tabs: _tabs,
         onBackPressed: () => Navigator.pop(context),
