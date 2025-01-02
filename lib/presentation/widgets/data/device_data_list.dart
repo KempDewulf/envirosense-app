@@ -61,7 +61,7 @@ class _DeviceDataListState extends State<DeviceDataList> {
                   ...currentPageItems.map(
                     (data) => DeviceDataCard(
                       data: data,
-                      isNewest: currentPageItems.first == data,
+                      isNewest: widget.deviceData.first == data,
                     ),
                   ),
               ],
