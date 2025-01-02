@@ -5,7 +5,9 @@ import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/device_data_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/device_app_bar.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
+import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +26,8 @@ class DeviceOverviewScreen extends StatefulWidget {
 class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
-  late final DeviceDataController _deviceDataController = DeviceDataController();
+  late final DeviceDataController _deviceDataController =
+      DeviceDataController();
   late final RoomController _roomController = RoomController();
   late final DatabaseService _databaseService = DatabaseService();
   late final TabController _tabController =
@@ -54,7 +57,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       setState(() => _isLoading = true);
       final device =
           await _deviceController.getDevice(widget.deviceId, _buildingId);
-      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);
+      final deviceData = await _deviceDataController
+          .getDeviceDataByDeviceId(device.identifier);
       setState(() {
         _device = device;
         _deviceData = deviceData;
@@ -71,58 +75,28 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left_rounded),
-          iconSize: 35,
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          widget.deviceName,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, color: AppColors.whiteColor),
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: _tabs,
-          labelColor: AppColors.secondaryColor,
-          indicatorColor: AppColors.secondaryColor,
-          unselectedLabelColor: AppColors.whiteColor,
-        ),
+      appBar: DeviceAppBar(
+        deviceName: _device?.identifier ?? widget.deviceName,
+        tabController: _tabController,
+        tabs: _tabs,
+        onBackPressed: () => Navigator.pop(context),
       ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Error: $_error'),
-            ElevatedButton(
-              onPressed: _loadData,
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
-      );
-    }
-    return TabBarView(
-      controller: _tabController,
-      children: [
-        RefreshIndicator(
-          onRefresh: _loadData,
-          color: AppColors.secondaryColor,
-          child: DeviceDataList(deviceData: _deviceData),
-        ),
-        _buildActionsTab()
-      ],
+      body: LoadingErrorWidget(
+      isLoading: _isLoading,
+      error: _error,
+      onRetry: _loadData,
+      child: TabBarView(
+        controller: _tabController,
+        children: [
+          RefreshIndicator(
+            onRefresh: _loadData,
+            color: AppColors.secondaryColor,
+            child: _buildOverviewTab(),
+          ),
+          _buildControlsTab(),
+          _buildActionsTab(),
+        ],
+      ),
     );
   }
 
@@ -568,7 +542,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Room changed successfully'), backgroundColor: AppColors.secondaryColor),
+        const SnackBar(
+            content: Text('Room changed successfully'),
+            backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -576,7 +552,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to change room: $_error'), backgroundColor: AppColors.secondaryColor),
+        SnackBar(
+            content: Text('Failed to change room: $_error'),
+            backgroundColor: AppColors.secondaryColor),
       );
     }
   }
@@ -597,7 +575,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Device removed successfully'), backgroundColor: AppColors.secondaryColor),
+        const SnackBar(
+            content: Text('Device removed successfully'),
+            backgroundColor: AppColors.secondaryColor),
       );
     } catch (e) {
       setState(() {
@@ -605,7 +585,9 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to remove device: $_error'), backgroundColor: AppColors.secondaryColor),
+        SnackBar(
+            content: Text('Failed to remove device: $_error'),
+            backgroundColor: AppColors.secondaryColor),
       );
     }
   }
