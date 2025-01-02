@@ -102,7 +102,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
           _buildActionsTab(),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildActionsTab() {
