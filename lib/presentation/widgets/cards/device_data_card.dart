@@ -21,24 +21,9 @@ class DeviceDataCard extends StatefulWidget {
 
 class _DeviceDataCardState extends State<DeviceDataCard>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _animation = Tween<double>(begin: 0.2, end: 0.5).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   Widget _buildDataRow({
@@ -83,80 +68,79 @@ class _DeviceDataCardState extends State<DeviceDataCard>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-            color: AppColors.whiteColor,
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: widget.isNewest
-                ? [
-                    BoxShadow(
-                      color: AppColors.secondaryColor
-                          .withOpacity(_animation.value),
-                      spreadRadius: 2,
-                      blurRadius: 15,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : [
-                    const BoxShadow(
-                      color: Color.fromARGB(255, 211, 211, 211),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DateFormat('dd-MM-yyyy HH:mm:ss').format(
-                    DateTime.parse(widget.data.timestamp).toLocal(),
-                  ),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.accentColor,
-                  ),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(12.0),
+        border: widget.isNewest
+            ? Border.all(
+                color: AppColors.secondaryColor,
+                width: 2.0,
+              )
+            : null,
+        boxShadow: widget.isNewest
+            ? [
+                BoxShadow(
+                  color: AppColors.secondaryColor.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
-                const SizedBox(height: 16),
-                _buildDataRow(
-                  label: 'Temperature',
-                  value:
-                      '${widget.data.airData.temperature?.toStringAsFixed(1)}°C',
-                  status: DataStatusHelper.getTemperatureStatus(
-                    widget.data.airData.temperature ?? 0,
-                  ),
-                  icon: Icons.thermostat,
-                ),
-                const SizedBox(height: 12),
-                _buildDataRow(
-                  label: 'Humidity',
-                  value: '${widget.data.airData.humidity?.toStringAsFixed(1)}%',
-                  status: DataStatusHelper.getHumidityStatus(
-                    widget.data.airData.humidity ?? 0,
-                  ),
-                  icon: Icons.water_drop,
-                ),
-                const SizedBox(height: 12),
-                _buildDataRow(
-                  label: 'CO2',
-                  value: '${widget.data.airData.ppm?.toStringAsFixed(0)} ppm',
-                  status: DataStatusHelper.getPPMStatus(
-                    widget.data.airData.ppm ?? 0,
-                  ),
-                  icon: Icons.co2,
+              ]
+            : [
+                const BoxShadow(
+                  color: Color.fromARGB(255, 211, 211, 211),
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: Offset(0, 2),
                 ),
               ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat('dd-MM-yyyy HH:mm:ss').format(
+                DateTime.parse(widget.data.timestamp).toLocal(),
+              ),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.accentColor,
+              ),
             ),
-          ),
-        );
-      },
+            const SizedBox(height: 16),
+            _buildDataRow(
+              label: 'Temperature',
+              value: '${widget.data.airData.temperature?.toStringAsFixed(1)}°C',
+              status: DataStatusHelper.getTemperatureStatus(
+                widget.data.airData.temperature ?? 0,
+              ),
+              icon: Icons.thermostat,
+            ),
+            const SizedBox(height: 12),
+            _buildDataRow(
+              label: 'Humidity',
+              value: '${widget.data.airData.humidity?.toStringAsFixed(1)}%',
+              status: DataStatusHelper.getHumidityStatus(
+                widget.data.airData.humidity ?? 0,
+              ),
+              icon: Icons.water_drop,
+            ),
+            const SizedBox(height: 12),
+            _buildDataRow(
+              label: 'CO2',
+              value: '${widget.data.airData.ppm?.toStringAsFixed(0)} ppm',
+              status: DataStatusHelper.getPPMStatus(
+                widget.data.airData.ppm ?? 0,
+              ),
+              icon: Icons.co2,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
