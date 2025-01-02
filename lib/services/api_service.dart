@@ -10,7 +10,7 @@ class ApiResponse {
 }
 
 class ApiService {
-  final String baseUrl = dotenv.env['API_BASE_URL']!;
+  final String? baseUrl = dotenv.env['API_BASE_URL'];
   final String? _token = dotenv.env['API_TOKEN'];
 
   Map<String, String> get _headers => {
@@ -106,17 +106,17 @@ class ApiService {
     );
 
     switch (response.statusCode) {
-        case 200:
-        case 201:
-        case 202:
-        case 204:
-          final dynamic responseData =
-              response.body.isNotEmpty ? jsonDecode(response.body) : null;
-          return ApiResponse(responseData, response.headers);
+      case 200:
+      case 201:
+      case 202:
+      case 204:
+        final dynamic responseData =
+            response.body.isNotEmpty ? jsonDecode(response.body) : null;
+        return ApiResponse(responseData, response.headers);
 
-        default:
-          throw Exception(
-              'PUT request failed with status: ${response.statusCode}');
-      }
+      default:
+        throw Exception(
+            'PUT request failed with status: ${response.statusCode}');
+    }
   }
 }
