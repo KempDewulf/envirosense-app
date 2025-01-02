@@ -8,7 +8,6 @@ import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/device_app_bar.dart';
 import 'package:envirosense/presentation/widgets/device_data_list.dart';
 import 'package:envirosense/presentation/widgets/loading_error_widget.dart';
-import 'package:envirosense/services/database_service.dart';
 import 'package:envirosense/services/device_service.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +51,13 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     super.initState();
     _loadData();
   }
+
+  Widget _buildOverviewTab() {
+  return DeviceDataList(
+    deviceData: _deviceData,
+    onRefresh: _loadData,
+  );
+}
 
   Future<void> _loadData() async {
     try {
