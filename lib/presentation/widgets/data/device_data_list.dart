@@ -21,7 +21,7 @@ class DeviceDataList extends StatefulWidget {
 }
 
 class _DeviceDataListState extends State<DeviceDataList> {
-  static const int itemsPerPage = 8;
+  static const int itemsPerPage = 6;
   int currentPage = 1;
 
   int get totalPages => (widget.deviceData.length / itemsPerPage).ceil();
