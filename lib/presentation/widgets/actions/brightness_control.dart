@@ -73,14 +73,19 @@ class _BrightnessControlState extends State<BrightnessControl> {
               child: Row(
                 children: List.generate(5, (index) {
                   return Expanded(
-                    child: Container(
-                      height: 24,
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      decoration: BoxDecoration(
-                        color: index < widget.level
-                            ? AppColors.secondaryColor
-                            : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.onChanged(index + 1);
+                      },
+                      child: Container(
+                        height: 24,
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        decoration: BoxDecoration(
+                          color: index < widget.level
+                              ? AppColors.secondaryColor
+                              : AppColors.lightGrayColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                     ),
                   );

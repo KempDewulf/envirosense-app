@@ -58,10 +58,14 @@ class DisplayModeSelector extends StatelessWidget {
           width: 150,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.secondaryColor : Colors.grey[100],
+            color: isSelected
+                ? AppColors.secondaryColor
+                : AppColors.lightGrayColor,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected ? AppColors.secondaryColor : Colors.grey[300]!,
+              color: isSelected
+                  ? AppColors.secondaryColor
+                  : AppColors.lightGrayColor,
               width: 2,
             ),
           ),
@@ -71,7 +75,8 @@ class DisplayModeSelector extends StatelessWidget {
               Icon(
                 icon,
                 size: 48,
-                color: isSelected ? Colors.white : Colors.grey[600],
+                color:
+                    isSelected ? AppColors.whiteColor : AppColors.accentColor,
               ),
               const SizedBox(height: 8),
               Text(
@@ -79,7 +84,8 @@ class DisplayModeSelector extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? Colors.white : Colors.grey[600],
+                  color:
+                      isSelected ? AppColors.whiteColor : AppColors.accentColor,
                 ),
               ),
             ],
