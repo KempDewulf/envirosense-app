@@ -3,6 +3,7 @@ import 'package:envirosense/presentation/widgets/custom_text_form_field.dart';
 import 'package:envirosense/services/room_service.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class RoomActionsTab extends StatefulWidget {
   String roomName;
   final String roomId;
