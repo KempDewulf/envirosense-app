@@ -1,7 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-enum DisplayMode { default_view, temperature, humidity, ppm }
+enum DisplayMode { defaultView, temperature, humidity, ppm }
 
 class DeviceControlsTab extends StatefulWidget {
   const DeviceControlsTab({super.key});
@@ -11,7 +11,8 @@ class DeviceControlsTab extends StatefulWidget {
 }
 
 class _DeviceControlsTabState extends State<DeviceControlsTab> {
-  DisplayMode _selectedMode = DisplayMode.default_view;
+  DisplayMode _selectedMode = DisplayMode.defaultView;
+  int _brightnessLevel = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,12 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 160,
+            height: 170,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _buildModeCard(
-                  DisplayMode.default_view,
+                  DisplayMode.defaultView,
                   'Default View',
                   Icons.dashboard_outlined,
                 ),
@@ -53,8 +54,63 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
               ],
             ),
           ),
+          const SizedBox(height: 24),
+          _buildBrightnessControl(),
         ],
       ),
+    );
+  }
+
+  Widget _buildBrightnessControl() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Display Brightness',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                if (_brightnessLevel > 0) {
+                  setState(() => _brightnessLevel--);
+                }
+              },
+              icon: const Icon(Icons.remove_circle),
+              color: AppColors.secondaryColor,
+            ),
+            Expanded(
+              child: Row(
+                children: List.generate(5, (index) {
+                  return Expanded(
+                    child: Container(
+                      height: 24,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      decoration: BoxDecoration(
+                        color: index < _brightnessLevel
+                            ? AppColors.secondaryColor
+                            : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (_brightnessLevel < 5) {
+                  setState(() => _brightnessLevel++);
+                }
+              },
+              icon: const Icon(Icons.add_circle),
+              color: AppColors.secondaryColor,
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -65,7 +121,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
       child: InkWell(
         onTap: () => setState(() => _selectedMode = mode),
         child: Container(
-          width: 120,
+          width: 130,
           decoration: BoxDecoration(
             color: isSelected ? AppColors.secondaryColor : Colors.grey[100],
             borderRadius: BorderRadius.circular(12),
