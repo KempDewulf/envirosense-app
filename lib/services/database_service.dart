@@ -117,7 +117,8 @@ class DatabaseService {
   }
 
   // Cache methods (for future use)
-  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp, Duration expiration) async {
+  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp,
+      Duration expiration) async {
     final db = await database;
     final existingExpiration = await getCacheExpiration(key);
 
@@ -151,7 +152,8 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int, isUtc: true);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int,
+        isUtc: true);
   }
 
   Future<DateTime?> getCacheExpiration(String key) async {
@@ -164,7 +166,8 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int, isUtc: true);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int,
+        isUtc: true);
   }
 
   Future<T?> getCache<T>(String key) async {
