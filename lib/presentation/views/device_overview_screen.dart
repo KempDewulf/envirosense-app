@@ -82,7 +82,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: DeviceAppBar(
-          deviceName: _device?.identifier ?? widget.deviceName,
+          deviceName: widget.deviceName,
           tabController: _tabController,
           tabs: _tabs,
           onBackPressed: () => Navigator.pop(context),
@@ -106,14 +106,19 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Widget _buildActionsTab() {
+    if (_device == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return DeviceActionsTab(
-      deviceName: widget.deviceName,
-      deviceId: _device?.id ?? '',
+      deviceCustomName: widget.deviceName,
+      deviceId: _device?.id,
+      deviceIdentifier: _device?.identifier,
       buildingId: _buildingId,
       deviceService: _deviceService,
+      roomController: _roomController,
       currentRoomId: _device?.room?.id,
       currentRoomName: _device?.room?.name ?? 'Unknown Room',
-      roomController: _roomController,
       onDeviceRenamed: (newName) {
         setState(() {
           widget.deviceName = newName;

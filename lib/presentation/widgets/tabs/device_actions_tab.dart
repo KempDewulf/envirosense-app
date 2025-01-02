@@ -6,8 +6,9 @@ import '../../../services/device_service.dart';
 
 // ignore: must_be_immutable
 class DeviceActionsTab extends StatefulWidget {
-  String deviceName;
-  final String deviceId;
+  String deviceCustomName;
+  String? deviceIdentifier;
+  final String? deviceId;
   final String buildingId;
   final DeviceService deviceService;
   final RoomController roomController;
@@ -18,8 +19,9 @@ class DeviceActionsTab extends StatefulWidget {
 
   DeviceActionsTab(
       {super.key,
-      required this.deviceName,
-      required this.deviceId,
+      required this.deviceCustomName,
+      this.deviceIdentifier,
+      this.deviceId,
       required this.buildingId,
       required this.deviceService,
       required this.roomController,
@@ -147,7 +149,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
   Future<void> _showRenameDeviceDialog() async {
     final TextEditingController inputController =
-        TextEditingController(text: widget.deviceName);
+        TextEditingController(text: widget.deviceCustomName);
 
     return showModalBottomSheet(
       context: context,
@@ -245,12 +247,12 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
   Future<void> _handleDeviceRename(String newName) async {
     try {
-      final deviceIdentifier = widget.deviceId;
+      final deviceIdentifier = widget.deviceIdentifier!;
 
       await widget.deviceService.renameDevice(deviceIdentifier, newName);
 
       setState(() {
-        widget.deviceName = newName;
+        widget.deviceCustomName = newName;
       });
 
       if (!mounted) return;
@@ -484,7 +486,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       if (currentRoomId == null) return;
 
       await widget.deviceService.changeDeviceRoom(
-        deviceId: widget.deviceId,
+        deviceId: widget.deviceId!,
         currentRoomId: currentRoomId,
         newRoomId: _selectedRoomId!,
         removeDeviceFromRoom: widget.roomController.removeDeviceFromRoom,
@@ -556,7 +558,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                   children: [
                     const TextSpan(text: 'Are you sure you want to remove '),
                     TextSpan(
-                      text: widget.deviceName,
+                      text: widget.deviceCustomName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.secondaryColor,
@@ -617,7 +619,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   Future<void> _handleDeviceRemoval() async {
     try {
       await widget.deviceService
-          .deleteDevice(widget.deviceId, widget.buildingId);
+          .deleteDevice(widget.deviceId!, widget.buildingId);
 
       Navigator.pop(context);
       Navigator.pop(context);
