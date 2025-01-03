@@ -40,7 +40,6 @@ class DeviceActionsTab extends StatefulWidget {
 }
 
 class _DeviceActionsTabState extends State<DeviceActionsTab> {
-  String? _error;
   String? _selectedRoomId;
 
   @override
@@ -139,18 +138,18 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
       await widget.deviceService.renameDevice(deviceIdentifier, newName);
 
+      if (!mounted) return;
       setState(() {
         widget.deviceCustomName = newName;
       });
 
-      if (!mounted) return;
       Navigator.pop(context);
       CustomSnackbar.showSnackBar(
         context,
         'Device renamed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
+      if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
         'Failed to rename device. Please try again later.',
@@ -376,13 +375,14 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
         addDeviceToRoom: widget.roomController.addDeviceToRoom,
       );
 
+      if (!mounted) return;
       Navigator.pop(context);
       CustomSnackbar.showSnackBar(
         context,
         'Room changed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
+      if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
         'Failed to change room. Please try again later.',
@@ -412,6 +412,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       await widget.deviceService
           .deleteDevice(widget.deviceId!, widget.buildingId);
 
+      if (!mounted) return;
       Navigator.pop(context);
       Navigator.pop(context);
 
@@ -420,7 +421,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
         'Device removed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
+      if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
         'Failed to remove device. Please try again later.',

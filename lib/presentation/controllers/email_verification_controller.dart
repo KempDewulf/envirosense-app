@@ -1,4 +1,3 @@
-import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

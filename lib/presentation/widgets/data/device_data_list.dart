@@ -1,10 +1,8 @@
-import 'package:envirosense/core/enums/status.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_controls.dart';
 import 'package:envirosense/presentation/widgets/cards/device_data_card.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/device_data.dart';
-import '../../../../core/helpers/data_status_helper.dart';
 
 class DeviceDataList extends StatefulWidget {
   final List<DeviceData> deviceData;
@@ -74,72 +72,6 @@ class _DeviceDataListState extends State<DeviceDataList> {
             ),
         ],
       ),
-    );
-  }
-
-  List<Widget> _buildDataRows(DeviceData data) {
-    return [
-      _buildDataRow(
-        label: 'Temperature',
-        value: '${data.airData.temperature?.toStringAsFixed(1)}°C',
-        status: DataStatusHelper.getTemperatureStatus(
-            data.airData.temperature ?? 0),
-        icon: Icons.thermostat,
-      ),
-      const SizedBox(height: 12),
-      _buildDataRow(
-        label: 'Humidity',
-        value: '${data.airData.humidity?.toStringAsFixed(1)}%',
-        status: DataStatusHelper.getHumidityStatus(data.airData.humidity ?? 0),
-        icon: Icons.water_drop,
-      ),
-      const SizedBox(height: 12),
-      _buildDataRow(
-        label: 'CO2 Level',
-        value: '${data.airData.ppm} ppm',
-        status: DataStatusHelper.getPPMStatus(data.airData.ppm ?? 0),
-        icon: Icons.cloud,
-      ),
-    ];
-  }
-
-  Widget _buildDataRow({
-    required String label,
-    required String value,
-    required Status status,
-    required IconData icon,
-  }) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.secondaryColor),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                value,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: DataStatusHelper.getStatusColor(status),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

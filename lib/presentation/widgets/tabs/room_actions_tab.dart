@@ -30,8 +30,6 @@ class RoomActionsTab extends StatefulWidget {
 }
 
 class _RoomActionsTabState extends State<RoomActionsTab> {
-  String? _error;
-
   Future<void> _showRenameRoomDialog(BuildContext context) async {
     final TextEditingController inputController =
         TextEditingController(text: widget.roomName);
@@ -116,8 +114,6 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
 
       Navigator.pop(context);
     } catch (e) {
-      setState(() => _error = e.toString());
-
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
@@ -130,6 +126,8 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
     try {
       await widget.roomService.deleteRoom(widget.roomId);
 
+      if (!mounted) return;
+
       Navigator.pop(context);
       Navigator.pop(context);
 
@@ -138,10 +136,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
         'Room removed successfully',
       );
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-      });
-
+      if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
         'Failed to remove room. Please try again later.',

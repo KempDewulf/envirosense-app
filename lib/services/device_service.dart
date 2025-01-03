@@ -34,7 +34,6 @@ class DeviceService {
     if (currentRoomId != null && currentRoomId.isNotEmpty) {
       await removeDeviceFromRoom(currentRoomId, deviceId);
     } else {
-      print("Device is not in any room");
       await _deviceController.deleteDeviceData(deviceId);
     }
 
