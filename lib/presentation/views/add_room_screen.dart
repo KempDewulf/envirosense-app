@@ -4,6 +4,7 @@ import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 import 'package:envirosense/services/logging_service.dart';
@@ -74,9 +75,9 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           _roomNameController.text, _buildingId, _selectedRoomType?.id);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Room added successfully. Drag down to refresh.'), backgroundColor: AppColors.secondaryColor),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Room added successfully. Drag down to refresh.',
         );
 
         Navigator.pop(context, true);
@@ -85,8 +86,9 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       LoggingService.logError('Exception caught: $e', e, stackTrace);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add room'), backgroundColor: AppColors.secondaryColor),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Failed to add room. Please try again later.',
         );
       }
     } finally {

@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessControl extends StatefulWidget {
@@ -25,12 +26,9 @@ class _BrightnessControlState extends State<BrightnessControl> {
         now.difference(_lastAttemptTime!).inSeconds < 2) {
       _minimumAttempts++;
       if (_minimumAttempts >= 3) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Minimum brightness is 20%'),
-            duration: Duration(seconds: 2),
-            backgroundColor: AppColors.secondaryColor,
-          ),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Minimum brightness is 20%',
         );
         _minimumAttempts = 0;
       }
@@ -73,14 +71,19 @@ class _BrightnessControlState extends State<BrightnessControl> {
               child: Row(
                 children: List.generate(5, (index) {
                   return Expanded(
-                    child: Container(
-                      height: 24,
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      decoration: BoxDecoration(
-                        color: index < widget.level
-                            ? AppColors.secondaryColor
-                            : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.onChanged(index + 1);
+                      },
+                      child: Container(
+                        height: 24,
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        decoration: BoxDecoration(
+                          color: index < widget.level
+                              ? AppColors.secondaryColor
+                              : AppColors.lightGrayColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                     ),
                   );

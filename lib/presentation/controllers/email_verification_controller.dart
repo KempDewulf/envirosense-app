@@ -1,4 +1,4 @@
-import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,11 +13,9 @@ class EmailVerificationController {
       if (user != null && user.emailVerified) {
         Navigator.pushReplacementNamed(context, '/main');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email not verified yet. Please check your inbox.'),
-            backgroundColor: AppColors.secondaryColor
-          ),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Email not verified yet. Please check your inbox.',
         );
       }
     }
@@ -27,21 +25,16 @@ class EmailVerificationController {
     try {
       await _auth.currentUser?.sendEmailVerification();
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content:
-                Text('Verification email resent. Please check your inbox.'),
-                backgroundColor: AppColors.secondaryColor
-          ),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Verification email resent. Please check your inbox.',
         );
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to resend email. Try again later.'),
-            backgroundColor: AppColors.secondaryColor
-          ),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Failed to resend email. Try again later.',
         );
       }
     }

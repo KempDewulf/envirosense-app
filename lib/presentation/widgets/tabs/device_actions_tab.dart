@@ -4,6 +4,7 @@ import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_act
 import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
 import 'package:envirosense/presentation/widgets/core/custom_confirmation_dialog.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../../../services/device_service.dart';
@@ -39,7 +40,6 @@ class DeviceActionsTab extends StatefulWidget {
 }
 
 class _DeviceActionsTabState extends State<DeviceActionsTab> {
-  String? _error;
   String? _selectedRoomId;
 
   @override
@@ -138,26 +138,21 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
       await widget.deviceService.renameDevice(deviceIdentifier, newName);
 
+      if (!mounted) return;
       setState(() {
         widget.deviceCustomName = newName;
       });
 
-      if (!mounted) return;
       Navigator.pop(context);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Device renamed successfully'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Device renamed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to rename device: $_error'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      if (!mounted) return;
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to rename device. Please try again later.',
       );
     }
   }
@@ -380,20 +375,17 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
         addDeviceToRoom: widget.roomController.addDeviceToRoom,
       );
 
+      if (!mounted) return;
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Room changed successfully'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Room changed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to change room: $_error'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      if (!mounted) return;
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to change room. Please try again later.',
       );
     }
   }
@@ -420,22 +412,19 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       await widget.deviceService
           .deleteDevice(widget.deviceId!, widget.buildingId);
 
+      if (!mounted) return;
       Navigator.pop(context);
       Navigator.pop(context);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Device removed successfully'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Device removed successfully',
       );
     } catch (e) {
-      setState(() => _error = e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to remove device: $_error'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      if (!mounted) return;
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to remove device. Please try again later.',
       );
     }
   }

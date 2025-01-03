@@ -1,4 +1,3 @@
-import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/brightness_control.dart';
 import 'package:envirosense/presentation/widgets/actions/display_mode_selector.dart';
 import 'package:flutter/material.dart';
