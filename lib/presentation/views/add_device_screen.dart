@@ -3,6 +3,7 @@ import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
@@ -75,8 +76,9 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     } catch (e) {
       LoggingService.logError('Failed to fetch rooms: $e', e);
       if (mounted) {
-        _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Failed to load rooms'), backgroundColor: AppColors.secondaryColor),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Failed to load rooms',
         );
       }
     }
@@ -96,16 +98,18 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       await _databaseService.clearCacheForDevice(_deviceIdentifierCode!);
 
       if (mounted) {
-        _scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(content: Text('Device assigned successfully'), backgroundColor: AppColors.secondaryColor),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Device assigned successfully',
         );
         Navigator.pop(context, true);
       }
     } catch (e) {
       LoggingService.logError('Failed to assign device: $e', e);
       if (mounted) {
-        _scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('Failed to assign device: $e'), backgroundColor: AppColors.secondaryColor),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Failed to assign device $e',
         );
       }
     } finally {

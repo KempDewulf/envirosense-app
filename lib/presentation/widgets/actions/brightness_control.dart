@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessControl extends StatefulWidget {
@@ -25,12 +26,9 @@ class _BrightnessControlState extends State<BrightnessControl> {
         now.difference(_lastAttemptTime!).inSeconds < 2) {
       _minimumAttempts++;
       if (_minimumAttempts >= 3) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Minimum brightness is 20%'),
-            duration: Duration(seconds: 2),
-            backgroundColor: AppColors.secondaryColor,
-          ),
+        CustomSnackbar.showSnackBar(
+          context,
+          'Minimum brightness is 20%',
         );
         _minimumAttempts = 0;
       }

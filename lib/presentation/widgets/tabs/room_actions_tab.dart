@@ -4,6 +4,7 @@ import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_act
 import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
 import 'package:envirosense/presentation/widgets/core/custom_confirmation_dialog.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/services/room_service.dart';
 import 'package:flutter/material.dart';
 
@@ -108,11 +109,9 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       widget.onRoomRenamed(newRoomName);
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Room renamed successfully'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Room renamed successfully',
       );
 
       Navigator.pop(context);
@@ -120,11 +119,9 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       setState(() => _error = e.toString());
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to rename room: $_error'),
-          backgroundColor: AppColors.secondaryColor,
-        ),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to rename room. Please try again later.',
       );
     }
   }
@@ -136,20 +133,18 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       Navigator.pop(context);
       Navigator.pop(context);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Room removed successfully'),
-            backgroundColor: AppColors.secondaryColor),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Room removed successfully',
       );
     } catch (e) {
       setState(() {
         _error = e.toString();
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Failed to remove room: $_error'),
-            backgroundColor: AppColors.secondaryColor),
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to remove room. Please try again later.',
       );
     }
   }
