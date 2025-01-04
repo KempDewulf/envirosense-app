@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
 import 'package:envirosense/data/models/device_model.dart';
 import '../../services/api_service.dart';
@@ -45,6 +46,26 @@ class DeviceDataSource {
 
     } catch (e) {
       throw Exception('Failed to add device: $e');
+    }
+  }
+
+   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
+    try {
+      await apiService.patchRequest('devices/$deviceId/config/ui-mode', {
+        'mode': mode.name,
+      });
+    } catch (e) {
+      throw Exception('Failed to update device UI mode: $e');
+    }
+  }
+
+  Future<void> updateDeviceLimit(String deviceId, String limitType, double value) async {
+    try {
+      await apiService.patchRequest('devices/$deviceId/limits/$limitType', {
+        'value': value,
+      });
+    } catch (e) {
+      throw Exception('Failed to update device limit: $e');
     }
   }
 
