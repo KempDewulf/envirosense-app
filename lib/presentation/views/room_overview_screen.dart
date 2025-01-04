@@ -177,17 +177,27 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   void _handleTemperatureLimitChanged(double newTemperature) async {
+    print('🌡️ Temperature limit change requested: $newTemperature°C');
     try {
+      print('📤 Sending temperature limit update request...');
       await _deviceController.updateDeviceLimit(
           widget.roomId, LimitType.temperature, newTemperature);
+      print('✅ Temperature limit successfully updated to: $newTemperature°C');
+
       setState(() => _targetTemperature = newTemperature);
+
+      if (mounted) {
+          CustomSnackbar.showSnackBar(
+              context, 'Temperature limit updated to $newTemperature°C');
+        }
     } catch (e) {
+      print('❌ Failed to update temperature limit: $e');
       if (mounted) {
         CustomSnackbar.showSnackBar(
             context, 'Failed to update temperature limit');
       }
     }
-  }
+}
 
   @override
   void dispose() {
