@@ -9,5 +9,6 @@ abstract class DeviceRepository {
   Future<void> deleteDevice(String? deviceId, String? buildingId);
   Future<void> deleteDeviceData(String? deviceId);
   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode);
+  Future<void> updateDeviceBrightness(String deviceId, int value);
   Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value);
 }

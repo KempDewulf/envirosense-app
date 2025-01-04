@@ -21,7 +21,7 @@ class DeviceControlsTab extends StatefulWidget {
 
 class _DeviceControlsTabState extends State<DeviceControlsTab> {
   DisplayMode _selectedMode = DisplayMode.normal;
-  final int _brightnessLevel = 3;
+  int _brightnessValue = 80;
   final _uiModeDebouncer = Debouncer(delay: const Duration(milliseconds: 1500));
   final _brightnessDebouncer =
       Debouncer(delay: const Duration(milliseconds: 1500));
@@ -43,10 +43,15 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
     });
   }
 
-  Future<void> _updateBrightnessLimit(int level) async {
+  Future<void> _updateBrightnessLimit(int value) async {
     _brightnessDebouncer.call(() async {
       try {
-        throw UnimplementedError();
+        await widget.deviceController.updateDeviceBrightness(widget.deviceId, value);
+        setState(() => _brightnessValue = value);
+        if (mounted) {
+          CustomSnackbar.showSnackBar(
+              context, 'Brightness successfully updated to $value');
+        }
       } catch (e) {
         if (mounted) {
           CustomSnackbar.showSnackBar(context, 'Failed to update brightness');
@@ -73,7 +78,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
         ),
         const SizedBox(height: 36),
         BrightnessControl(
-          level: _brightnessLevel,
+          value: _brightnessValue,
           onChanged: _updateBrightnessLimit,
         ),
       ],

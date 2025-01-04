@@ -5,6 +5,7 @@ import 'package:envirosense/domain/usecases/add_device.dart';
 import 'package:envirosense/domain/usecases/delete_device.dart';
 import 'package:envirosense/domain/usecases/delete_device_data.dart';
 import 'package:envirosense/domain/usecases/get_device.dart';
+import 'package:envirosense/domain/usecases/update_device_brightness.dart';
 import 'package:envirosense/domain/usecases/update_device_limit.dart';
 import 'package:envirosense/domain/usecases/update_device_ui_mode.dart';
 
@@ -19,6 +20,7 @@ class DeviceController {
   late final GetDeviceUseCase getDeviceUseCase;
   late final AddDeviceUseCase addDeviceUseCase;
   late final UpdateDeviceUIModeUseCase updateDeviceUIModeUseCase;
+  late final UpdateDeviceBrightnessUseCase updateDeviceBrightnessUseCase;
   late final UpdateDeviceLimitUseCase updateDeviceLimitUseCase;
   late final DeleteDeviceUseCase deleteDeviceUseCase;
   late final DeleteDeviceDataUseCase deleteDeviceDataUseCase;
@@ -32,6 +34,7 @@ class DeviceController {
     getDeviceUseCase = GetDeviceUseCase(repository);
     addDeviceUseCase = AddDeviceUseCase(repository);
     updateDeviceUIModeUseCase = UpdateDeviceUIModeUseCase(repository);
+    updateDeviceBrightnessUseCase = UpdateDeviceBrightnessUseCase(repository);
     updateDeviceLimitUseCase = UpdateDeviceLimitUseCase(repository);
     deleteDeviceUseCase = DeleteDeviceUseCase(repository);
     deleteDeviceDataUseCase = DeleteDeviceDataUseCase(repository);
@@ -51,6 +54,10 @@ class DeviceController {
 
   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
     return await updateDeviceUIModeUseCase(deviceId, mode);
+  }
+
+  Future<void> updateDeviceBrightness(String deviceId, int value) async {
+    return await updateDeviceBrightnessUseCase(deviceId, value);
   }
 
   Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {

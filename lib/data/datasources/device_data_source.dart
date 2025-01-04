@@ -60,6 +60,16 @@ class DeviceDataSource {
     }
   }
 
+  Future<void> updateDeviceBrightness(String deviceId, int value) async {
+    try {
+      await apiService.patchRequest('devices/$deviceId/config/brightness', {
+        'value': value,
+      });
+    } catch (e) {
+      throw Exception('Failed to update device brightness: $e');
+    }
+  }
+
   Future<void> updateDeviceLimit(
       String deviceId, LimitType limitType, double value) async {
     try {

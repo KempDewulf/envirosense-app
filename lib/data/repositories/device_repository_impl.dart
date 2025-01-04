@@ -31,6 +31,11 @@ class DeviceRepositoryImpl implements DeviceRepository {
   }
 
   @override
+  Future<void> updateDeviceBrightness(String deviceId, int value) async {
+    return await remoteDataSource.updateDeviceBrightness(deviceId, value);
+  }
+
+  @override
   Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {
     return await remoteDataSource.updateDeviceLimit(deviceId, limitType, value);
   }
