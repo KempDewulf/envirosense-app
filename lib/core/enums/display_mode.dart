@@ -1,5 +1,5 @@
 enum DisplayMode {
-    defaultView,
+    normal,
     temperature,
     humidity,
     ppm

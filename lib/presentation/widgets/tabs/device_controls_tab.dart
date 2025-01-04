@@ -1,8 +1,7 @@
+import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/presentation/widgets/actions/brightness_control.dart';
 import 'package:envirosense/presentation/widgets/actions/display_mode_selector.dart';
 import 'package:flutter/material.dart';
-
-enum DisplayMode { defaultView, temperature, humidity, ppm }
 
 class DeviceControlsTab extends StatefulWidget {
   const DeviceControlsTab({super.key});
@@ -12,7 +11,7 @@ class DeviceControlsTab extends StatefulWidget {
 }
 
 class _DeviceControlsTabState extends State<DeviceControlsTab> {
-  DisplayMode _selectedMode = DisplayMode.defaultView;
+  DisplayMode _selectedMode = DisplayMode.normal;
   int _brightnessLevel = 3;
 
   @override

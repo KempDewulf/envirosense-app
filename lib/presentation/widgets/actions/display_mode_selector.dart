@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/presentation/widgets/tabs/device_controls_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class DisplayModeSelector extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              _buildModeCard(DisplayMode.defaultView, 'Default View',
+              _buildModeCard(DisplayMode.normal, 'Default View',
                   Icons.dashboard_outlined),
               _buildModeCard(DisplayMode.temperature, 'Temperature',
                   Icons.thermostat_outlined),
