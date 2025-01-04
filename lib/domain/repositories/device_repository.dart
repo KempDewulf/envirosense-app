@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import '../entities/device.dart';
@@ -9,5 +10,6 @@ abstract class DeviceRepository {
   Future<void> deleteDevice(String? deviceId, String? buildingId);
   Future<void> deleteDeviceData(String? deviceId);
   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode);
+  Future<void> updateDeviceBrightness(String deviceId, Int value);
   Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value);
 }
