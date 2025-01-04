@@ -109,7 +109,10 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   }
 
   Widget _buildControlsTab() {
-    return DeviceControlsTab();
+    return DeviceControlsTab(
+      deviceId: widget.deviceId,
+      deviceController: _deviceController,
+    );
   }
 
   Widget _buildActionsTab() {
