@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
@@ -62,7 +60,7 @@ class DeviceDataSource {
     }
   }
 
-  Future<void> updateDeviceBrightness(String deviceId, Int value) async {
+  Future<void> updateDeviceBrightness(String deviceId, int value) async {
     try {
       await apiService.patchRequest('devices/$deviceId/config/brightness', {
         'value': value,

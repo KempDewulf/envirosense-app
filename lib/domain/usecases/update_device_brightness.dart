@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:envirosense/domain/repositories/device_repository.dart';
 
 class UpdateDeviceBrightnessUseCase {
@@ -6,7 +5,7 @@ class UpdateDeviceBrightnessUseCase {
 
   UpdateDeviceBrightnessUseCase(this.repository);
 
-  Future<void> call(String deviceId, Int value) async {
+  Future<void> call(String deviceId, int value) async {
     return await repository.updateDeviceBrightness(deviceId, value);
   }
 }
