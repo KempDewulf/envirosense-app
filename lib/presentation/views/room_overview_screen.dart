@@ -172,11 +172,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
         isScrollControlled: true,
         builder: (context) => TargetTemperatureSheet(
               currentTemperature: _targetTemperature,
-              onTemperatureChanged: _handleTemperatureChanged,
+              onTemperatureChanged: _handleTemperatureLimitChanged,
             ));
   }
 
-  void _handleTemperatureChanged(double newTemperature) async {
+  void _handleTemperatureLimitChanged(double newTemperature) async {
     try {
       await _deviceController.updateDeviceLimit(
           widget.roomId, LimitType.temperature, newTemperature);
