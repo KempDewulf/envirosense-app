@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/datasources/device_data_source.dart';
@@ -28,6 +30,11 @@ class DeviceRepositoryImpl implements DeviceRepository {
   @override
   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
     return await remoteDataSource.updateDeviceUIMode(deviceId, mode);
+  }
+
+  @override
+  Future<void> updateDeviceBrightness(String deviceId, Int value) async {
+    return await remoteDataSource.updateDeviceBrightness(deviceId, value);
   }
 
   @override
