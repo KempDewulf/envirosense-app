@@ -33,7 +33,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
         setState(() => _selectedMode = mode);
         if (mounted) {
           CustomSnackbar.showSnackBar(
-              context, 'Display mode updated successfully');
+              context, 'Display mode successfully updated to $mode');
         }
       } catch (e) {
         if (mounted) {
