@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/data/datasources/device_data_source.dart';
 
 import '../../domain/entities/device.dart';
@@ -21,6 +22,16 @@ class DeviceRepositoryImpl implements DeviceRepository {
   @override
   Future<String> addDevice(String? roomId, String? deviceIdentifier) async {
     return await remoteDataSource.addDevice(roomId, deviceIdentifier);
+  }
+
+  @override
+  Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
+    return await remoteDataSource.updateDeviceUIMode(deviceId, mode);
+  }
+
+  @override
+  Future<void> updateDeviceLimit(String deviceId, String limitType, double value) async {
+    return await remoteDataSource.updateDeviceLimit(deviceId, limitType, value);
   }
 
   @override
