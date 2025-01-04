@@ -40,7 +40,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
 
   @override
   Widget build(BuildContext context) {
-    final int activeBars = (widget.value ~/ 20).clamp(1, 5); // Convert percentage to number of active bars
+    final int activeBars = (widget.value ~/ 20).clamp(1, 5);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,8 +104,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
             ),
             IconButton(
               onPressed: widget.value < 100
-                ? () => widget.onChanged(widget.value + 20)
-                : null,
+                  ? () => widget.onChanged(widget.value + 20)
+                  : null,
               icon: const Icon(Icons.add_circle),
               color: AppColors.secondaryColor,
             ),
