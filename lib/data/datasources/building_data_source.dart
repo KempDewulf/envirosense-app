@@ -10,7 +10,7 @@ class BuildingDataSource {
   Future<List<BuildingModel>> getBuildings() async {
     try {
       final response = await apiService.getRequest('buildings');
-      
+
       List<dynamic> data = response.data as List<dynamic>;
       List<BuildingModel> buildings = data.map((buildingJson) {
         return BuildingModel.fromJson(
@@ -27,6 +27,7 @@ class BuildingDataSource {
   Future<BuildingAirQualityModel> getBuildingAirQuality(String buildingId) async {
     try {
       final response = await apiService.getRequest('buildings/$buildingId/air-quality');
+      print(response.data);
       return BuildingAirQualityModel.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
       // Handle errors
