@@ -59,7 +59,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
             IconButton(
               onPressed: () {
                 if (widget.value > 1) {
-                  widget.onChanged(widget.value - 1);
+                  widget.onChanged(widget.value - 20);
                 } else {
                   _handleMinimumBrightnessAttempt();
                 }
@@ -73,7 +73,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
                   return Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        widget.onChanged(index + 1);
+                        widget.onChanged(index + 20);
                       },
                       child: Container(
                         height: 24,
@@ -93,7 +93,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
             IconButton(
               onPressed: () {
                 if (widget.value < 5) {
-                  widget.onChanged(widget.value + 1);
+                  widget.onChanged(widget.value + 20);
                 }
               },
               icon: const Icon(Icons.add_circle),
