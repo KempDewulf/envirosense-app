@@ -1,4 +1,4 @@
-import 'package:envirosense/data/models/building_air_quality.dart';
+import 'package:envirosense/data/models/building_air_quality_model.dart';
 import 'package:envirosense/data/models/building_model.dart';
 import '../../services/api_service.dart';
 
