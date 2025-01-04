@@ -1,6 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
-import 'package:envirosense/presentation/widgets/tabs/device_controls_tab.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
