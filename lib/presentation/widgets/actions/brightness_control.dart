@@ -3,7 +3,7 @@ import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessControl extends StatefulWidget {
-  final int value;
+  final int value; // Now represents percentage (20-100)
   final Function(int) onChanged;
 
   const BrightnessControl({
@@ -40,6 +40,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
 
   @override
   Widget build(BuildContext context) {
+    final int activeBars = (widget.value ~/ 20).clamp(1, 5); // Convert percentage to number of active bars
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -51,6 +53,15 @@ class _BrightnessControlState extends State<BrightnessControl> {
               'Brightness',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            const Spacer(),
+            Text(
+              '${widget.value}%',
+              style: const TextStyle(
+                fontSize: 16,
+                color: AppColors.accentColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 16),
@@ -58,7 +69,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
           children: [
             IconButton(
               onPressed: () {
-                if (widget.value > 1) {
+                if (widget.value > 20) {
                   widget.onChanged(widget.value - 20);
                 } else {
                   _handleMinimumBrightnessAttempt();
@@ -73,13 +84,14 @@ class _BrightnessControlState extends State<BrightnessControl> {
                   return Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        widget.onChanged(index + 20);
+                        final newValue = ((index + 1) * 20);
+                        widget.onChanged(newValue);
                       },
                       child: Container(
                         height: 24,
                         margin: const EdgeInsets.symmetric(horizontal: 2),
                         decoration: BoxDecoration(
-                          color: index < widget.value
+                          color: index < activeBars
                               ? AppColors.secondaryColor
                               : AppColors.lightGrayColor,
                           borderRadius: BorderRadius.circular(4),
@@ -91,11 +103,9 @@ class _BrightnessControlState extends State<BrightnessControl> {
               ),
             ),
             IconButton(
-              onPressed: () {
-                if (widget.value < 5) {
-                  widget.onChanged(widget.value + 20);
-                }
-              },
+              onPressed: widget.value < 100
+                ? () => widget.onChanged(widget.value + 20)
+                : null,
               icon: const Icon(Icons.add_circle),
               color: AppColors.secondaryColor,
             ),
