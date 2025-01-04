@@ -3,12 +3,12 @@ import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessControl extends StatefulWidget {
-  final int level;
+  final int value;
   final Function(int) onChanged;
 
   const BrightnessControl({
     super.key,
-    required this.level,
+    required this.value,
     required this.onChanged,
   });
 
@@ -58,8 +58,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
           children: [
             IconButton(
               onPressed: () {
-                if (widget.level > 1) {
-                  widget.onChanged(widget.level - 1);
+                if (widget.value > 1) {
+                  widget.onChanged(widget.value - 1);
                 } else {
                   _handleMinimumBrightnessAttempt();
                 }
@@ -79,7 +79,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
                         height: 24,
                         margin: const EdgeInsets.symmetric(horizontal: 2),
                         decoration: BoxDecoration(
-                          color: index < widget.level
+                          color: index < widget.value
                               ? AppColors.secondaryColor
                               : AppColors.lightGrayColor,
                           borderRadius: BorderRadius.circular(4),
@@ -92,8 +92,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
             ),
             IconButton(
               onPressed: () {
-                if (widget.level < 5) {
-                  widget.onChanged(widget.level + 1);
+                if (widget.value < 5) {
+                  widget.onChanged(widget.value + 1);
                 }
               },
               icon: const Icon(Icons.add_circle),
