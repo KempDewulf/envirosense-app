@@ -1,4 +1,5 @@
 import 'package:envirosense/core/enums/display_mode.dart';
+import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
 import 'package:envirosense/data/models/device_model.dart';
 import '../../services/api_service.dart';
@@ -14,7 +15,8 @@ class DeviceDataSource {
 
       List<dynamic> data = response.data as List<dynamic>;
       List<DeviceModel> devices = data.map((deviceJson) {
-        return DeviceModel.fromJson(deviceJson as Map<String, dynamic>, buildingId);
+        return DeviceModel.fromJson(
+            deviceJson as Map<String, dynamic>, buildingId);
       }).toList();
 
       return devices;
@@ -38,18 +40,17 @@ class DeviceDataSource {
 
       final response = await apiService.postRequest('devices', body.toJson());
       final locationHeader = response.headers['location'];
-      if(locationHeader == null) {
+      if (locationHeader == null) {
         throw Exception('Device ID not found in response headers');
       }
 
       return locationHeader.split('/').last;
-
     } catch (e) {
       throw Exception('Failed to add device: $e');
     }
   }
 
-   Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
+  Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
     try {
       await apiService.patchRequest('devices/$deviceId/config/ui-mode', {
         'mode': mode.name,
@@ -59,9 +60,11 @@ class DeviceDataSource {
     }
   }
 
-  Future<void> updateDeviceLimit(String deviceId, String limitType, double value) async {
+  Future<void> updateDeviceLimit(
+      String deviceId, LimitType limitType, double value) async {
     try {
-      await apiService.patchRequest('devices/$deviceId/limits/$limitType', {
+      await apiService
+          .patchRequest('devices/$deviceId/limits/${limitType.name}', {
         'value': value,
       });
     } catch (e) {

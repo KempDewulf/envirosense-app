@@ -1,4 +1,5 @@
 import 'package:envirosense/core/enums/display_mode.dart';
+import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/datasources/device_data_source.dart';
 import 'package:envirosense/domain/usecases/add_device.dart';
 import 'package:envirosense/domain/usecases/delete_device.dart';
@@ -52,7 +53,7 @@ class DeviceController {
     return await updateDeviceUIModeUseCase(deviceId, mode);
   }
 
-  Future<void> updateDeviceLimit(String deviceId, String limitType, double value) async {
+  Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {
     return await updateDeviceLimitUseCase(deviceId, limitType, value);
   }
 

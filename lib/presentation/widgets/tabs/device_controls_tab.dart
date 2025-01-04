@@ -46,14 +46,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   Future<void> _updateBrightnessLimit(int level) async {
     _brightnessDebouncer.call(() async {
       try {
-        final value = level * 20.0;
-        await widget.deviceController
-            .updateDeviceLimit(widget.deviceId, 'light', value);
-        setState(() => _brightnessLevel = level);
-        if (mounted) {
-          CustomSnackbar.showSnackBar(
-              context, 'Brightness updated successfully');
-        }
+        throw UnimplementedError();
       } catch (e) {
         if (mounted) {
           CustomSnackbar.showSnackBar(context, 'Failed to update brightness');
