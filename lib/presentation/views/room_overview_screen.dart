@@ -1,9 +1,12 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/room_air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
+import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/outside_air_data_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/lists/device_list.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
@@ -29,6 +32,7 @@ class RoomOverviewScreen extends StatefulWidget {
 class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     with SingleTickerProviderStateMixin {
   late final RoomController _roomController = RoomController();
+  late final DeviceController _deviceController = DeviceController();
   late final OutsideAirDataController _outsideAirController =
       OutsideAirDataController();
   late final TabController _tabController =
@@ -164,14 +168,25 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
 
   void _showTargetTemperatureSheet(BuildContext context) {
     showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => TargetTemperatureSheet(
-        currentTemperature: _targetTemperature,
-        onTemperatureChanged: (temp) =>
-            setState(() => _targetTemperature = temp),
-      ),
-    );
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => TargetTemperatureSheet(
+              currentTemperature: _targetTemperature,
+              onTemperatureChanged: _handleTemperatureChanged,
+            ));
+  }
+
+  void _handleTemperatureChanged(double newTemperature) async {
+    try {
+      await _deviceController.updateDeviceLimit(
+          widget.roomId, LimitType.temperature, newTemperature);
+      setState(() => _targetTemperature = newTemperature);
+    } catch (e) {
+      if (mounted) {
+        CustomSnackbar.showSnackBar(
+            context, 'Failed to update temperature limit');
+      }
+    }
   }
 
   @override
