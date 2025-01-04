@@ -40,7 +40,7 @@ class DisplayModeSelector extends StatelessWidget {
                   Icons.thermostat_outlined),
               _buildModeCard(
                   DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
-              _buildModeCard(DisplayMode.ppm, 'CO2 PPM', Icons.air_outlined),
+              _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
             ],
           ),
         ),
