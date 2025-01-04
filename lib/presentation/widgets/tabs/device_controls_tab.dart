@@ -21,7 +21,7 @@ class DeviceControlsTab extends StatefulWidget {
 
 class _DeviceControlsTabState extends State<DeviceControlsTab> {
   DisplayMode _selectedMode = DisplayMode.normal;
-  int _brightnessLevel = 3;
+  final int _brightnessLevel = 3;
   final _uiModeDebouncer = Debouncer(delay: const Duration(milliseconds: 1500));
   final _brightnessDebouncer =
       Debouncer(delay: const Duration(milliseconds: 1500));
