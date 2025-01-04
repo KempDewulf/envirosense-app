@@ -8,9 +8,18 @@ class BuildingAirQualityModel extends BuildingAirQuality {
   });
 
   factory BuildingAirQualityModel.fromJson(Map<String, dynamic> json) {
+    double? parseEnviroScore(dynamic value) {
+      if (value == null) return null;
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value);
+      return null;
+    }
+
     return BuildingAirQualityModel(
-      enviroScore: json['enviroScore'],
-      roomsAirQuality: (json['rooms'] as List).map((e) => RoomAirQualityModel.fromJson(e)).toList(),
+      enviroScore: parseEnviroScore(json['enviroScore']),
+      roomsAirQuality: (json['rooms'] as List)
+          .map((e) => RoomAirQualityModel.fromJson(e))
+          .toList(),
     );
   }
 }
