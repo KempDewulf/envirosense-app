@@ -35,10 +35,12 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
 
     debouncer.call(() async {
       try {
+        final apiValue = value is DisplayMode ? value.toApiString : value;
+
         await widget.deviceController.updateDeviceConfig(
           widget.deviceId,
           configType,
-          value,
+          apiValue,
         );
 
         if (mounted) {
