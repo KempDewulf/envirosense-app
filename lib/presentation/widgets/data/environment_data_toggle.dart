@@ -30,7 +30,7 @@ class EnvironmentDataToggle extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: showRoomData && roomHasDeviceData
                       ? AppColors.secondaryColor
-                      : Colors.transparent,
+                      : AppColors.transparent,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(
@@ -55,7 +55,7 @@ class EnvironmentDataToggle extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: !showRoomData
                       ? AppColors.secondaryColor
-                      : Colors.transparent,
+                      : AppColors.transparent,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(

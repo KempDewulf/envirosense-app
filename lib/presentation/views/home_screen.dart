@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (_) => AddOptionsBottomSheet(
         preferredOption: preferredOption,
       ),
