@@ -39,7 +39,9 @@ class TabButton extends StatelessWidget {
               child: Container(
                 height: 4,
                 width: 60,
-                color: isSelected ? AppColors.secondaryColor : Colors.transparent,
+                color: isSelected
+                    ? AppColors.secondaryColor
+                    : AppColors.transparent,
               ),
             ),
           ),

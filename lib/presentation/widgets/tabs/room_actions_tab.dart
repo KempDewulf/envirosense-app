@@ -38,7 +38,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
           color: AppColors.whiteColor,
@@ -85,7 +85,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => CustomConfirmationDialog(
         title: 'Remove Room',
         message: 'Are you sure you want to remove ',

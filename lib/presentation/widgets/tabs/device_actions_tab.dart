@@ -90,7 +90,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
           color: AppColors.whiteColor,
@@ -169,7 +169,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => Container(
           decoration: const BoxDecoration(
@@ -395,7 +395,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) => CustomConfirmationDialog(
         title: 'Remove Device',
         message: 'Are you sure you want to remove ',
