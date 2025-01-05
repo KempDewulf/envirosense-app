@@ -52,7 +52,7 @@ class DeviceDataSource {
 
   Future<void> updateDeviceConfig(String deviceId, ConfigType configType, dynamic value) async {
     try {
-      await apiService.patchRequest('devices/$deviceId/config/${configType.name}', {
+      await apiService.patchRequest('devices/$deviceId/config/${configType.toApiString}', {
         'value': value,
       });
     } catch (e) {
@@ -64,7 +64,7 @@ class DeviceDataSource {
       String deviceId, LimitType limitType, double value) async {
     try {
       await apiService
-          .patchRequest('devices/$deviceId/limits/${limitType.name}', {
+          .patchRequest('devices/$deviceId/limits/${limitType.toApiString}', {
         'value': value,
       });
     } catch (e) {
