@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/helpers/debouncer.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
@@ -29,7 +30,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   Future<void> _updateDeviceUIMode(DisplayMode mode) async {
     _uiModeDebouncer.call(() async {
       try {
-        await widget.deviceController.updateDeviceUIMode(widget.deviceId, mode);
+        await widget.deviceController.updateDeviceConfig(widget.deviceId, ConfigType.uiMode, mode);
         setState(() => _selectedMode = mode);
         if (mounted) {
           CustomSnackbar.showSnackBar(
@@ -46,7 +47,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   Future<void> _updateBrightnessLimit(int value) async {
     _brightnessDebouncer.call(() async {
       try {
-        await widget.deviceController.updateDeviceBrightness(widget.deviceId, value);
+        await widget.deviceController.updateDeviceConfig(widget.deviceId, ConfigType.brightness, value);
         setState(() => _brightnessValue = value);
         if (mounted) {
           CustomSnackbar.showSnackBar(
