@@ -1,6 +1,1 @@
-enum DisplayMode {
-    normal,
-    temperature,
-    humidity,
-    ppm
-}
+enum DisplayMode { normal, temperature, humidity, ppm }
