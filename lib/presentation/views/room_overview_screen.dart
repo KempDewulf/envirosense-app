@@ -8,12 +8,10 @@ import 'package:envirosense/presentation/controllers/outside_air_data_controller
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/lists/device_list.dart';
-import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
-import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
+import 'package:envirosense/presentation/widgets/room_overview_content.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
-import 'package:envirosense/presentation/widgets/actions/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/dialogs/target_temperature_sheet.dart';
 import 'package:envirosense/services/room_service.dart';
 import 'package:flutter/material.dart';
@@ -126,29 +124,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       return const Center(child: CircularProgressIndicator());
     }
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        EnviroScoreCard(
-          score: _airQuality?.enviroScore ?? 0,
-          isDataAvailable: _roomHasDeviceData,
-          type: 'Room',
-        ),
-        const SizedBox(height: 24),
-        TargetTemperatureButton(
-          temperature: _targetTemperature,
-          onPressed: () => _showTargetTemperatureSheet(context),
-        ),
-        const SizedBox(height: 24),
-        EnvironmentDataSection(
-          showRoomData: _showRoomData,
-          roomHasDeviceData: _roomHasDeviceData,
-          onToggleData: (value) => setState(() => _showRoomData = value),
-          roomData: _airQuality?.airData ??
-              AirData(temperature: 0, humidity: 0, ppm: 0),
-          outsideData: _outsideAirData!,
-        ),
-      ],
+    return RoomOverviewContent(
+      airQuality: _airQuality,
+      roomHasDeviceData: _roomHasDeviceData,
+      targetTemperature: _targetTemperature,
+      showRoomData: _showRoomData,
+      outsideAirData: _outsideAirData,
+      onSetTemperature: () => _showTargetTemperatureSheet(context),
+      onDataToggle: (value) => setState(() => _showRoomData = value),
     );
   }
 
@@ -179,7 +162,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   void _handleTemperatureLimitChanged(double newTemperature) async {
     try {
       final allDeviceIds = _room?.devices?.map((device) => device.id).toList();
-      
+
       if (allDeviceIds == null) {
         CustomSnackbar.showSnackBar(context, 'No devices found in this room');
       }
@@ -192,16 +175,16 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _targetTemperature = newTemperature);
 
       if (mounted) {
-          CustomSnackbar.showSnackBar(
-              context, 'Temperature limit updated to $newTemperature°C');
-        }
+        CustomSnackbar.showSnackBar(
+            context, 'Temperature limit updated to $newTemperature°C');
+      }
     } catch (e) {
       if (mounted) {
         CustomSnackbar.showSnackBar(
             context, 'Failed to update temperature limit');
       }
     }
-}
+  }
 
   @override
   void dispose() {

@@ -1,6 +1,5 @@
-import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
-import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
+import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/air_data.dart';
@@ -10,10 +9,10 @@ class RoomOverviewContent extends StatelessWidget {
   final RoomAirQuality? airQuality;
   final bool roomHasDeviceData;
   final double targetTemperature;
-  final Function() onSetTemperature;
   final bool showRoomData;
-  final Function(bool) onDataToggle;
   final AirData? outsideAirData;
+  final VoidCallback onSetTemperature;
+  final Function(bool) onDataToggle;
 
   const RoomOverviewContent({
     super.key,
@@ -64,21 +63,13 @@ class RoomOverviewContent extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              EnvironmentDataToggle(
-                showRoomData: showRoomData,
-                roomHasDeviceData: roomHasDeviceData,
-                onToggle: onDataToggle,
-              ),
-              const SizedBox(height: 32),
-              DataDisplayBox(
-                key: ValueKey(showRoomData),
-                title:
-                    showRoomData ? 'Room Environment' : 'Outside Environment',
-                data: showRoomData && roomHasDeviceData
-                    ? airQuality?.airData ??
-                        AirData(temperature: 0, humidity: 0, ppm: 0)
-                    : outsideAirData!,
-              )
+              EnvironmentDataSection(
+                  showRoomData: showRoomData,
+                  roomHasDeviceData: roomHasDeviceData,
+                  onToggleData: onDataToggle,
+                  roomData: airQuality?.airData ??
+                      AirData(temperature: 0, humidity: 0, ppm: 0),
+                  outsideData: outsideAirData!),
             ],
           ),
         ),
