@@ -27,7 +27,6 @@ class RoomOverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(airQuality?.airData);
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
