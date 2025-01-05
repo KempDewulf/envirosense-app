@@ -60,8 +60,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   Future<void> _loadData() async {
-    setState(() => _isLoading = true);
     try {
+      setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
       final outsideAirData =
@@ -77,11 +77,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
     } catch (e) {
       setState(() {
         _error = e.toString();
+        _isLoading = false;
       });
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
     }
   }
 
@@ -123,23 +120,18 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   }
 
   Widget _buildOverviewTab() {
-    if (_isLoading || _outsideAirData == null) {
+    if (_outsideAirData == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        RoomOverviewContent(
-          airQuality: _airQuality,
-          roomHasDeviceData: _roomHasDeviceData,
-          targetTemperature: _targetTemperature,
-          showRoomData: _showRoomData,
-          outsideAirData: _outsideAirData,
-          onSetTemperature: () => _showTargetTemperatureSheet(context),
-          onDataToggle: (value) => setState(() => _showRoomData = value),
-        ),
-      ],
+    return RoomOverviewContent(
+      airQuality: _airQuality,
+      roomHasDeviceData: _roomHasDeviceData,
+      targetTemperature: _targetTemperature,
+      onSetTemperature: () => _showTargetTemperatureSheet(context),
+      showRoomData: _showRoomData,
+      onDataToggle: (value) => setState(() => _showRoomData = value),
+      outsideAirData: _outsideAirData,
     );
   }
 

@@ -10,7 +10,7 @@ class RoomOverviewContent extends StatelessWidget {
   final RoomAirQuality? airQuality;
   final bool roomHasDeviceData;
   final double targetTemperature;
-  final Function() onSetTemperature;
+  final VoidCallback onSetTemperature;
   final bool showRoomData;
   final Function(bool) onDataToggle;
   final AirData? outsideAirData;
