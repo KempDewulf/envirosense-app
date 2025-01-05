@@ -1,5 +1,4 @@
 import 'package:envirosense/core/enums/config_type.dart';
-import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
 import 'package:envirosense/data/models/device_model.dart';
