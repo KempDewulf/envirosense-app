@@ -128,10 +128,10 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       airQuality: _airQuality,
       roomHasDeviceData: _roomHasDeviceData,
       targetTemperature: _targetTemperature,
-      onSetTemperature: () => _showTargetTemperatureSheet(context),
       showRoomData: _showRoomData,
-      onDataToggle: (value) => setState(() => _showRoomData = value),
       outsideAirData: _outsideAirData,
+      onSetTemperature: () => _showTargetTemperatureSheet(context),
+      onDataToggle: (value) => setState(() => _showRoomData = value),
     );
   }
 
