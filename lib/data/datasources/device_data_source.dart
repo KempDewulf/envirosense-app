@@ -1,3 +1,4 @@
+import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
@@ -50,23 +51,13 @@ class DeviceDataSource {
     }
   }
 
-  Future<void> updateDeviceUIMode(String deviceId, DisplayMode mode) async {
+  Future<void> updateDeviceConfig(String deviceId, ConfigType configType, double value) async {
     try {
-      await apiService.patchRequest('devices/$deviceId/config/ui-mode', {
-        'mode': mode.name,
-      });
-    } catch (e) {
-      throw Exception('Failed to update device UI mode: $e');
-    }
-  }
-
-  Future<void> updateDeviceBrightness(String deviceId, int value) async {
-    try {
-      await apiService.patchRequest('devices/$deviceId/config/brightness', {
+      await apiService.patchRequest('devices/$deviceId/config/${configType.name}', {
         'value': value,
       });
     } catch (e) {
-      throw Exception('Failed to update device brightness: $e');
+      throw Exception('Failed to update device config: $e');
     }
   }
 
