@@ -30,7 +30,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   Future<void> _updateDeviceUIMode(DisplayMode mode) async {
     _uiModeDebouncer.call(() async {
       try {
-        await widget.deviceController.updateDeviceConfig(widget.deviceId, ConfigType.uiMode, mode);
+        await widget.deviceController.updateDeviceConfig(widget.deviceId, ConfigType.uiMode, mode.toApiString);
         setState(() => _selectedMode = mode);
         if (mounted) {
           CustomSnackbar.showSnackBar(
