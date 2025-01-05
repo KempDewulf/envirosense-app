@@ -1,7 +1,5 @@
-import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
-import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../../../domain/entities/air_data.dart';
@@ -11,10 +9,10 @@ class RoomOverviewContent extends StatelessWidget {
   final RoomAirQuality? airQuality;
   final bool roomHasDeviceData;
   final double targetTemperature;
-  final VoidCallback onSetTemperature;
   final bool showRoomData;
-  final Function(bool) onDataToggle;
   final AirData? outsideAirData;
+  final VoidCallback onSetTemperature;
+  final Function(bool) onDataToggle;
 
   const RoomOverviewContent({
     super.key,
@@ -29,6 +27,7 @@ class RoomOverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(airQuality?.airData);
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
