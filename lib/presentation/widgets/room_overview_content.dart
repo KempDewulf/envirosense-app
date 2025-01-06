@@ -83,13 +83,13 @@ class RoomOverviewContent extends StatelessWidget {
               const SizedBox(width: 8),
               if (isLoadingTemperature)
                 Text(
-                  'Loading temperature limit...',
+                  'Loading Temperature Limit',
                   style: TextStyle(color: AppColors.accentColor, fontSize: 16),
                 )
               else
                 Text(
                   targetTemperature == null
-                      ? 'Not Available'
+                      ? 'Temperature Limit Not Available'
                       : 'Set Target Temperature ($targetTemperature°C)',
                   style: TextStyle(
                       color: targetTemperature == null
