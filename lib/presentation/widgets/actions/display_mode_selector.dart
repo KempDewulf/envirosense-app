@@ -34,12 +34,9 @@ class DisplayModeSelector extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              _buildModeCard(DisplayMode.normal, 'Default View',
-                  Icons.dashboard_outlined),
-              _buildModeCard(DisplayMode.temperature, 'Temperature',
-                  Icons.thermostat_outlined),
-              _buildModeCard(
-                  DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
+              _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
+              _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
+              _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
               _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
             ],
           ),
@@ -58,14 +55,10 @@ class DisplayModeSelector extends StatelessWidget {
           width: 150,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.secondaryColor
-                : AppColors.lightGrayColor,
+            color: isSelected ? AppColors.secondaryColor : AppColors.lightGrayColor,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected
-                  ? AppColors.secondaryColor
-                  : AppColors.lightGrayColor,
+              color: isSelected ? AppColors.secondaryColor : AppColors.lightGrayColor,
               width: 2,
             ),
           ),
@@ -75,8 +68,7 @@ class DisplayModeSelector extends StatelessWidget {
               Icon(
                 icon,
                 size: 48,
-                color:
-                    isSelected ? AppColors.whiteColor : AppColors.accentColor,
+                color: isSelected ? AppColors.whiteColor : AppColors.accentColor,
               ),
               const SizedBox(height: 8),
               Text(
@@ -84,8 +76,7 @@ class DisplayModeSelector extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color:
-                      isSelected ? AppColors.whiteColor : AppColors.accentColor,
+                  color: isSelected ? AppColors.whiteColor : AppColors.accentColor,
                 ),
               ),
             ],

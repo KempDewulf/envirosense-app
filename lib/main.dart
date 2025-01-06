@@ -36,7 +36,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
 
   final dbService = DatabaseService();
   bool isFirstTime = await dbService.getSetting<bool>('isFirstTime') ?? true;
@@ -124,8 +123,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         appBarTheme: const AppBarTheme(
           color: AppColors.primaryColor,
           iconTheme: IconThemeData(color: AppColors.whiteColor),
-          toolbarTextStyle:
-              TextStyle(color: AppColors.whiteColor, fontSize: 20),
+          toolbarTextStyle: TextStyle(color: AppColors.whiteColor, fontSize: 20),
         ),
         buttonTheme: const ButtonThemeData(
           buttonColor: AppColors.secondaryColor,
@@ -142,23 +140,18 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         '/main': (context) => const MainScreen(),
         '/login': (context) => const LoginScreen(),
         '/emailVerification': (context) => EmailVerificationScreen(
-              email: (ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>)['email'],
+              email: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['email'],
             ),
         '/addRoom': (context) => const AddRoomScreen(),
         '/addDevice': (context) => const AddDeviceScreen(),
         '/statisticsDetail': (context) => const StatisticsScreen(),
         '/roomOverview': (context) => RoomOverviewScreen(
-              roomName: (ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>)['roomName'],
-              roomId: (ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>)['roomId'],
+              roomName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomName'],
+              roomId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomId'],
             ),
         '/deviceOverview': (context) => DeviceOverviewScreen(
-              deviceName: (ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>)['deviceName'],
-              deviceId: (ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>)['deviceId'],
+              deviceName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceName'],
+              deviceId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceId'],
             ),
       },
     );

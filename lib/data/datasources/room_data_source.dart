@@ -58,8 +58,7 @@ class RoomDataSource {
     }
   }
 
-  Future<void> addRoom(
-      String? name, String buildingId, String? roomTypeId) async {
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
     try {
       AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
 

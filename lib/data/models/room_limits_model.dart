@@ -19,9 +19,7 @@ class RoomLimitsModel extends RoomLimits {
     return RoomLimitsModel(
       id: json['documentId'],
       limits: Map<String, double>.from(json['limits'] as Map),
-      failedDevices: json['failedDevices'] != null
-          ? List<String>.from(json['failedDevices'] as List)
-          : null,
+      failedDevices: json['failedDevices'] != null ? List<String>.from(json['failedDevices'] as List) : null,
     );
   }
 }

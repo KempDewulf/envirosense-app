@@ -48,13 +48,11 @@ class DeviceController {
     return await addDeviceUseCase(roomId, deviceIdentifier);
   }
 
-  Future<void> updateDeviceConfig(
-      String deviceId, ConfigType configType, dynamic value) async {
+  Future<void> updateDeviceConfig(String deviceId, ConfigType configType, dynamic value) async {
     return await updateDeviceConfigUseCase(deviceId, configType, value);
   }
 
-  Future<void> updateDeviceLimit(
-      String deviceId, LimitType limitType, double value) async {
+  Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {
     return await updateDeviceLimitUseCase(deviceId, limitType, value);
   }
 

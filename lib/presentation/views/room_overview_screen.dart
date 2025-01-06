@@ -27,14 +27,11 @@ class RoomOverviewScreen extends StatefulWidget {
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
 }
 
-class _RoomOverviewScreenState extends State<RoomOverviewScreen>
-    with SingleTickerProviderStateMixin {
+class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
   late final RoomController _roomController = RoomController();
   late final DeviceController _deviceController = DeviceController();
-  late final OutsideAirDataController _outsideAirController =
-      OutsideAirDataController();
-  late final TabController _tabController =
-      TabController(length: _tabs.length, vsync: this);
+  late final OutsideAirDataController _outsideAirController = OutsideAirDataController();
+  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
   final Map<String, bool> _loadingLimits = {
@@ -90,8 +87,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
 
-      final outsideAirData =
-          await _outsideAirController.getOutsideAirData(city);
+      final outsideAirData = await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
@@ -165,7 +161,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       outsideAirData: _outsideAirData,
       onSetTemperature: () => _showTargetTemperatureSheet(context),
       onDataToggle: (value) => setState(() => _showRoomData = value),
-
       isLoadingTemperature: _loadingLimits['temperature']!,
     );
   }
@@ -203,20 +198,17 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       }
 
       allDeviceIds?.forEach((deviceId) async {
-        await _deviceController.updateDeviceLimit(
-            deviceId, LimitType.temperature, newTemperature);
+        await _deviceController.updateDeviceLimit(deviceId, LimitType.temperature, newTemperature);
       });
 
       setState(() => _targetTemperature = newTemperature);
 
       if (mounted) {
-        CustomSnackbar.showSnackBar(
-            context, 'Temperature limit updated to $newTemperature°C');
+        CustomSnackbar.showSnackBar(context, 'Temperature limit updated to $newTemperature°C');
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackbar.showSnackBar(
-            context, 'Failed to update temperature limit');
+        CustomSnackbar.showSnackBar(context, 'Failed to update temperature limit');
       }
     }
   }

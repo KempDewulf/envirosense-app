@@ -14,8 +14,7 @@ class LoggingService {
     _logger.info(message);
   }
 
-  static void logError(String? message,
-      [dynamic error, StackTrace? stackTrace]) {
+  static void logError(String? message, [dynamic error, StackTrace? stackTrace]) {
     _logger.severe(message, error, stackTrace);
   }
 }

@@ -44,14 +44,12 @@ class OnboardingScreen extends StatelessWidget {
   List<PageViewModel> get _pages => [
         _buildPageModel(
           title: "Convenience",
-          body:
-              "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
+          body: "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
           imagePath: 'assets/images/convenience.png',
         ),
         _buildPageModel(
           title: "Automate",
-          body:
-              "Effortlessly manage quick actions for control and real-time environmental insights.",
+          body: "Effortlessly manage quick actions for control and real-time environmental insights.",
           imagePath: 'assets/images/automate.png',
         ),
         _buildPageModel(

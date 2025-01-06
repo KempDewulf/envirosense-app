@@ -19,8 +19,7 @@ class DeviceDataCard extends StatefulWidget {
   State<DeviceDataCard> createState() => _DeviceDataCardState();
 }
 
-class _DeviceDataCardState extends State<DeviceDataCard>
-    with SingleTickerProviderStateMixin {
+class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -116,8 +115,7 @@ class _DeviceDataCardState extends State<DeviceDataCard>
                 const SizedBox(height: 16),
                 _buildDataRow(
                   label: 'Temperature',
-                  value:
-                      '${widget.data.airData.temperature?.toStringAsFixed(1)}°C',
+                  value: '${widget.data.airData.temperature?.toStringAsFixed(1)}°C',
                   status: DataStatusHelper.getTemperatureStatus(
                     widget.data.airData.temperature ?? 0,
                   ),

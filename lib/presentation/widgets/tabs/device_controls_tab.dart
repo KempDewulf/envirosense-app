@@ -49,8 +49,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
         }
       } catch (e) {
         if (mounted) {
-          CustomSnackbar.showSnackBar(
-              context, 'Failed to update ${configType.name.toLowerCase()}');
+          CustomSnackbar.showSnackBar(context, 'Failed to update ${configType.name.toLowerCase()}');
         }
       }
     });

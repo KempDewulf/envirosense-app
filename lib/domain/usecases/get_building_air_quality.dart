@@ -6,7 +6,7 @@ class GetBuildingAirQualityUseCase {
 
   GetBuildingAirQualityUseCase(this.buildingRepository);
 
-  Future<BuildingAirQuality> execute(String buildingId) async{
+  Future<BuildingAirQuality> execute(String buildingId) async {
     return await buildingRepository.getBuildingAirQuality(buildingId);
   }
 }

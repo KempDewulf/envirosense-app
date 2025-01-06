@@ -31,8 +31,7 @@ class RoomActionsTab extends StatefulWidget {
 
 class _RoomActionsTabState extends State<RoomActionsTab> {
   Future<void> _showRenameRoomDialog(BuildContext context) async {
-    final TextEditingController inputController =
-        TextEditingController(text: widget.roomName);
+    final TextEditingController inputController = TextEditingController(text: widget.roomName);
 
     return showModalBottomSheet(
       context: context,

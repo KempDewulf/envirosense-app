@@ -15,40 +15,39 @@ class DeviceModel extends Device {
   });
 
   factory DeviceModel.fromJson(Map<String, dynamic> json, String buildingId) {
-    Room? room = json['room'] != null ? Room(
-        id: json['room']['documentId'],
-        name: json['room']['name'],
-        building: Building(
-          id: buildingId,
-          name: 'Campus Brugge Station - Building A',
-          address: 'Spoorwegstraat 4, 8200 Brugge',
-        ),
-        roomType: RoomType(id: 'lorem', name: 'lorem', icon: 'lorem')) : null;
-
+    Room? room = json['room'] != null
+        ? Room(
+            id: json['room']['documentId'],
+            name: json['room']['name'],
+            building: Building(
+              id: buildingId,
+              name: 'Campus Brugge Station - Building A',
+              address: 'Spoorwegstraat 4, 8200 Brugge',
+            ),
+            roomType: RoomType(id: 'lorem', name: 'lorem', icon: 'lorem'))
+        : null;
 
     List<DeviceData> deviceData = json['device_data'] != null
-      ? (json['device_data'] as List)
-        .map((deviceDataJson) => DeviceData(
-            id: deviceDataJson['documentId'],
-            timestamp: deviceDataJson['timestamp'],
-            airData: AirData(
-            temperature: deviceDataJson['temperature'] is String
-              ? double.parse(deviceDataJson['temperature'])
-              : (deviceDataJson['temperature'] as num).toDouble(),
-            humidity: deviceDataJson['humidity'] is String
-              ? double.parse(deviceDataJson['humidity'])
-              : (deviceDataJson['humidity'] as num).toDouble(),
-            ppm: deviceDataJson['ppm'] is String
-              ? int.parse(deviceDataJson['ppm'])
-              : (deviceDataJson['ppm'] as num).toInt(),
-            ),
-            device: Device(
-            id: json['documentId'],
-            identifier: json['identifier'],
-            ),
-          ))
-        .toList()
-      : [];
+        ? (json['device_data'] as List)
+            .map((deviceDataJson) => DeviceData(
+                  id: deviceDataJson['documentId'],
+                  timestamp: deviceDataJson['timestamp'],
+                  airData: AirData(
+                    temperature: deviceDataJson['temperature'] is String
+                        ? double.parse(deviceDataJson['temperature'])
+                        : (deviceDataJson['temperature'] as num).toDouble(),
+                    humidity: deviceDataJson['humidity'] is String
+                        ? double.parse(deviceDataJson['humidity'])
+                        : (deviceDataJson['humidity'] as num).toDouble(),
+                    ppm: deviceDataJson['ppm'] is String ? int.parse(deviceDataJson['ppm']) : (deviceDataJson['ppm'] as num).toInt(),
+                  ),
+                  device: Device(
+                    id: json['documentId'],
+                    identifier: json['identifier'],
+                  ),
+                ))
+            .toList()
+        : [];
 
     return DeviceModel(
       id: json['documentId'],

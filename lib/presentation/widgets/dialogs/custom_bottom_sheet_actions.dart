@@ -40,9 +40,7 @@ class CustomBottomSheetActions extends StatelessWidget {
               child: FilledButton(
                 onPressed: onSave,
                 style: FilledButton.styleFrom(
-                  backgroundColor: isDestructive
-                      ? AppColors.redColor
-                      : AppColors.secondaryColor,
+                  backgroundColor: isDestructive ? AppColors.redColor : AppColors.secondaryColor,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: Text(saveButtonText),

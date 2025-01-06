@@ -26,10 +26,8 @@ class RoomModel extends Room {
       icon: json['roomType']['name'].toString().toLowerCase(),
     );
 
-    List<Device> devices = (json['devices'] as List)
-        .map((deviceJson) => Device(
-            id: deviceJson['documentId'], identifier: deviceJson['identifier']))
-        .toList();
+    List<Device> devices =
+        (json['devices'] as List).map((deviceJson) => Device(id: deviceJson['documentId'], identifier: deviceJson['identifier'])).toList();
 
     return RoomModel(
       id: json['documentId'],

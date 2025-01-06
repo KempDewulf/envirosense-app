@@ -40,9 +40,7 @@ class RoomOverviewContent extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         ElevatedButton(
-          onPressed: isLoadingTemperature || targetTemperature == null
-              ? null
-              : onSetTemperature,
+          onPressed: isLoadingTemperature || targetTemperature == null ? null : onSetTemperature,
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
               if (states.contains(WidgetState.disabled)) {
@@ -76,9 +74,7 @@ class RoomOverviewContent extends StatelessWidget {
                 //if not available then grow greyed out icon
                 Icon(
                   Icons.thermostat_outlined,
-                  color: targetTemperature == null
-                      ? AppColors.accentColor
-                      : AppColors.secondaryColor,
+                  color: targetTemperature == null ? AppColors.accentColor : AppColors.secondaryColor,
                 ),
               const SizedBox(width: 8),
               if (isLoadingTemperature)
@@ -88,14 +84,8 @@ class RoomOverviewContent extends StatelessWidget {
                 )
               else
                 Text(
-                  targetTemperature == null
-                      ? 'Temperature Limit Not Available'
-                      : 'Set Target Temperature ($targetTemperature°C)',
-                  style: TextStyle(
-                      color: targetTemperature == null
-                          ? AppColors.accentColor
-                          : AppColors.whiteColor,
-                      fontSize: 16),
+                  targetTemperature == null ? 'Temperature Limit Not Available' : 'Set Target Temperature ($targetTemperature°C)',
+                  style: TextStyle(color: targetTemperature == null ? AppColors.accentColor : AppColors.whiteColor, fontSize: 16),
                 ),
             ],
           ),
@@ -109,8 +99,7 @@ class RoomOverviewContent extends StatelessWidget {
                   showRoomData: showRoomData,
                   roomHasDeviceData: roomHasDeviceData,
                   onToggleData: onDataToggle,
-                  roomData: airQuality?.airData ??
-                      AirData(temperature: 0, humidity: 0, ppm: 0),
+                  roomData: airQuality?.airData ?? AirData(temperature: 0, humidity: 0, ppm: 0),
                   outsideData: outsideAirData!),
             ],
           ),

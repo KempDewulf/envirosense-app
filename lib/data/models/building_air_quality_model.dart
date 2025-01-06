@@ -17,9 +17,7 @@ class BuildingAirQualityModel extends BuildingAirQuality {
 
     return BuildingAirQualityModel(
       enviroScore: parseEnviroScore(json['enviroScore']),
-      roomsAirQuality: (json['rooms'] as List)
-          .map((e) => RoomAirQualityModel.fromJson(e))
-          .toList(),
+      roomsAirQuality: (json['rooms'] as List).map((e) => RoomAirQualityModel.fromJson(e)).toList(),
     );
   }
 }

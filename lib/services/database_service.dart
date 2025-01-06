@@ -117,18 +117,14 @@ class DatabaseService {
   }
 
   // Cache methods (for future use)
-  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp,
-      Duration expiration) async {
+  Future<void> setCache(String key, dynamic value, DateTime latestTimestamp, Duration expiration) async {
     final db = await database;
     final existingExpiration = await getCacheExpiration(key);
 
-    final expirationTime = existingExpiration != null
-        ? existingExpiration.millisecondsSinceEpoch
-        : latestTimestamp.millisecondsSinceEpoch + expiration.inMilliseconds;
+    final expirationTime =
+        existingExpiration != null ? existingExpiration.millisecondsSinceEpoch : latestTimestamp.millisecondsSinceEpoch + expiration.inMilliseconds;
 
-    final jsonValue = value is List
-        ? json.encode(value.map((item) => item.toJson()).toList())
-        : json.encode(value.toJson());
+    final jsonValue = value is List ? json.encode(value.map((item) => item.toJson()).toList()) : json.encode(value.toJson());
 
     await db.insert(
       'cache',
@@ -152,8 +148,7 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int,
-        isUtc: true);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['timestamp'] as int, isUtc: true);
   }
 
   Future<DateTime?> getCacheExpiration(String key) async {
@@ -166,8 +161,7 @@ class DatabaseService {
     );
 
     if (maps.isEmpty) return null;
-    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int,
-        isUtc: true);
+    return DateTime.fromMillisecondsSinceEpoch(maps.first['expiration'] as int, isUtc: true);
   }
 
   Future<T?> getCache<T>(String key) async {
@@ -187,9 +181,7 @@ class DatabaseService {
     final decodedValue = json.decode(maps.first['value']) as dynamic;
 
     if (T == List<DeviceDataModel>) {
-      return (decodedValue as List)
-          .map((item) => DeviceDataModel.fromJson(item as Map<String, dynamic>))
-          .toList() as T;
+      return (decodedValue as List).map((item) => DeviceDataModel.fromJson(item as Map<String, dynamic>)).toList() as T;
     }
 
     // Handle other types if necessary

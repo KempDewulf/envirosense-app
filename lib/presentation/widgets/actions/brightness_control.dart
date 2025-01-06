@@ -22,8 +22,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
 
   void _handleMinimumBrightnessAttempt() {
     final now = DateTime.now();
-    if (_lastAttemptTime != null &&
-        now.difference(_lastAttemptTime!).inSeconds < 2) {
+    if (_lastAttemptTime != null && now.difference(_lastAttemptTime!).inSeconds < 2) {
       _minimumAttempts++;
       if (_minimumAttempts >= 3) {
         CustomSnackbar.showSnackBar(
@@ -91,9 +90,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
                         height: 24,
                         margin: const EdgeInsets.symmetric(horizontal: 2),
                         decoration: BoxDecoration(
-                          color: index < activeBars
-                              ? AppColors.secondaryColor
-                              : AppColors.lightGrayColor,
+                          color: index < activeBars ? AppColors.secondaryColor : AppColors.lightGrayColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -103,9 +100,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
               ),
             ),
             IconButton(
-              onPressed: widget.value < 100
-                  ? () => widget.onChanged(widget.value + 20)
-                  : null,
+              onPressed: widget.value < 100 ? () => widget.onChanged(widget.value + 20) : null,
               icon: const Icon(Icons.add_circle),
               color: AppColors.secondaryColor,
             ),

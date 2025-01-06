@@ -78,10 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
           if (!mounted) return;
 
-          Navigator.pushReplacementNamed(context, '/emailVerification',
-              arguments: {
-                'email': _emailController.text.trim(),
-              });
+          Navigator.pushReplacementNamed(context, '/emailVerification', arguments: {
+            'email': _emailController.text.trim(),
+          });
           return;
         }
 
@@ -122,10 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) return;
 
         // Navigate to home page on successful registration
-        Navigator.pushReplacementNamed(context, '/emailVerification',
-            arguments: {
-              'email': _emailController.text.trim(),
-            });
+        Navigator.pushReplacementNamed(context, '/emailVerification', arguments: {
+          'email': _emailController.text.trim(),
+        });
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
         _showErrorDialog(e.message ?? 'An error occurred during registration.');
@@ -149,9 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            autovalidateMode: _formSubmitted
-                ? AutovalidateMode.always
-                : AutovalidateMode.disabled,
+            autovalidateMode: _formSubmitted ? AutovalidateMode.always : AutovalidateMode.disabled,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

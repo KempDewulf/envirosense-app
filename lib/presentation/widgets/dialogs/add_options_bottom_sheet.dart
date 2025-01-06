@@ -16,31 +16,19 @@ class AddOptionsBottomSheet extends StatelessWidget {
       _AddOption(
         title: 'Add a room',
         icon: Icons.meeting_room,
-        backgroundColor: preferredOption == AddOptionType.room
-            ? AppColors.secondaryColor
-            : AppColors.lightGrayColor,
+        backgroundColor: preferredOption == AddOptionType.room ? AppColors.secondaryColor : AppColors.lightGrayColor,
         onTapRoute: '/addRoom',
-        textColor: preferredOption == AddOptionType.room
-            ? AppColors.secondaryColor
-            : AppColors.accentColor,
-        iconColor: preferredOption == AddOptionType.room
-            ? AppColors.whiteColor
-            : AppColors.accentColor,
+        textColor: preferredOption == AddOptionType.room ? AppColors.secondaryColor : AppColors.accentColor,
+        iconColor: preferredOption == AddOptionType.room ? AppColors.whiteColor : AppColors.accentColor,
         type: AddOptionType.room,
       ),
       _AddOption(
         title: 'Add a device',
         icon: Icons.devices,
-        backgroundColor: preferredOption == AddOptionType.device
-            ? AppColors.secondaryColor
-            : AppColors.lightGrayColor,
+        backgroundColor: preferredOption == AddOptionType.device ? AppColors.secondaryColor : AppColors.lightGrayColor,
         onTapRoute: '/addDevice',
-        textColor: preferredOption == AddOptionType.device
-            ? AppColors.secondaryColor
-            : AppColors.accentColor,
-        iconColor: preferredOption == AddOptionType.device
-            ? AppColors.whiteColor
-            : AppColors.accentColor,
+        textColor: preferredOption == AddOptionType.device ? AppColors.secondaryColor : AppColors.accentColor,
+        iconColor: preferredOption == AddOptionType.device ? AppColors.whiteColor : AppColors.accentColor,
         type: AddOptionType.device,
       ),
     ];
@@ -97,8 +85,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
                           Navigator.pushNamed(context, option.onTapRoute);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 32.0, vertical: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
                           child: Row(
                             children: [
                               Container(

@@ -55,15 +55,13 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() =>
-                              tempValue = (tempValue! - 0.5).clamp(16, 30));
+                          setState(() => tempValue = (tempValue! - 0.5).clamp(16, 30));
                         },
                       ),
                       const SizedBox(width: 16),
                       Text(
                         '${tempValue?.toStringAsFixed(1)}°C',
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 16),
                       IconButton(
@@ -71,8 +69,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() =>
-                              tempValue = (tempValue! + 0.5).clamp(16, 30));
+                          setState(() => tempValue = (tempValue! + 0.5).clamp(16, 30));
                         },
                       ),
                     ],
@@ -94,8 +91,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                       ),
                       child: const Text(
                         'Save',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

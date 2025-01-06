@@ -15,8 +15,7 @@ class DeviceDataSource {
 
       List<dynamic> data = response.data as List<dynamic>;
       List<DeviceModel> devices = data.map((deviceJson) {
-        return DeviceModel.fromJson(
-            deviceJson as Map<String, dynamic>, buildingId);
+        return DeviceModel.fromJson(deviceJson as Map<String, dynamic>, buildingId);
       }).toList();
 
       return devices;
@@ -60,11 +59,9 @@ class DeviceDataSource {
     }
   }
 
-  Future<void> updateDeviceLimit(
-      String deviceId, LimitType limitType, double value) async {
+  Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {
     try {
-      await apiService
-          .patchRequest('devices/$deviceId/limits/${limitType.toApiString}', {
+      await apiService.patchRequest('devices/$deviceId/limits/${limitType.toApiString}', {
         'value': value,
       });
     } catch (e) {

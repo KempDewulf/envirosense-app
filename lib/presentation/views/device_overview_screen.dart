@@ -17,22 +17,18 @@ class DeviceOverviewScreen extends StatefulWidget {
   String deviceName;
   final String deviceId;
 
-  DeviceOverviewScreen(
-      {super.key, required this.deviceName, required this.deviceId});
+  DeviceOverviewScreen({super.key, required this.deviceName, required this.deviceId});
 
   @override
   State<DeviceOverviewScreen> createState() => _DeviceOverviewScreenState();
 }
 
-class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
-    with SingleTickerProviderStateMixin {
+class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
   late final DeviceService _deviceService = DeviceService(_deviceController);
-  late final DeviceDataController _deviceDataController =
-      DeviceDataController();
+  late final DeviceDataController _deviceDataController = DeviceDataController();
   late final RoomController _roomController = RoomController();
-  late final TabController _tabController =
-      TabController(length: _tabs.length, vsync: this);
+  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
   Device? _device;
@@ -56,10 +52,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      final device =
-          await _deviceController.getDevice(widget.deviceId, _buildingId);
-      final deviceData = await _deviceDataController
-          .getDeviceDataByDeviceId(device.identifier);
+      final device = await _deviceController.getDevice(widget.deviceId, _buildingId);
+      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);
       setState(() {
         _device = device;
         _deviceData = deviceData;

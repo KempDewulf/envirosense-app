@@ -64,17 +64,12 @@ class DevicesList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               FutureBuilder<String?>(
-                                future: _databaseService
-                                    .getDeviceName(device.identifier),
+                                future: _databaseService.getDeviceName(device.identifier),
                                 builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
                                     return const Text(
                                       'Loading device name...',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.accentColor
-                                      ),
+                                      style: TextStyle(fontSize: 16, color: AppColors.accentColor),
                                     );
                                   } else if (snapshot.hasError) {
                                     return const Text(
