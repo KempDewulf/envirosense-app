@@ -1,5 +1,6 @@
 import 'package:envirosense/data/datasources/room_data_source.dart';
 import 'package:envirosense/domain/entities/room_air_quality.dart';
+import 'package:envirosense/domain/entities/room_limits.dart';
 import '../../domain/entities/room.dart';
 import '../../domain/repositories/room_repository.dart';
 
@@ -21,6 +22,11 @@ class RoomRepositoryImpl implements RoomRepository {
   @override
   Future<RoomAirQuality> getRoomAirQuality(String roomId) async {
     return await remoteDataSource.getRoomAirQuality(roomId);
+  }
+
+  @override
+  Future<RoomLimits> getRoomLimits(String roomId) async {
+    return await remoteDataSource.getRoomLimits(roomId);
   }
 
   @override
