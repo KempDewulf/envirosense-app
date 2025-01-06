@@ -1,6 +1,7 @@
 import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
+import 'package:envirosense/data/models/device_config_model.dart';
 import 'package:envirosense/data/models/device_model.dart';
 import '../../services/api_service.dart';
 
@@ -30,6 +31,15 @@ class DeviceDataSource {
       return DeviceModel.fromJson(response.data, '');
     } catch (e) {
       throw Exception('Failed to load device: $e');
+    }
+  }
+
+  Future<DeviceConfigModel> getDeviceConfig(String deviceId) async {
+    try {
+      final response = await apiService.getRequest('devices/$deviceId/limits');
+      return DeviceConfigModel.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to get device limits: $e');
     }
   }
 
