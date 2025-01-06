@@ -63,10 +63,12 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
 
   Future<void> _loadLimits(String limitType) async {
     if (!mounted) return;
+
     setState(() => _loadingLimits[limitType] = true);
     try {
       final limits = await _roomController.getRoomLimits(widget.roomId);
       if (!mounted) return;
+
       setState(() {
         if (limitType == 'temperature') {
           _targetTemperature = limits.temperature;
@@ -75,6 +77,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       });
     } catch (e) {
       if (!mounted) return;
+
       setState(() {
         if (limitType == 'temperature') {
           _targetTemperature = null;
