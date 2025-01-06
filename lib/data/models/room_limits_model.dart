@@ -8,10 +8,20 @@ class RoomLimitsModel extends RoomLimits {
   });
 
   factory RoomLimitsModel.fromJson(Map<String, dynamic> json) {
+    if (json.containsKey('error')) {
+      return RoomLimitsModel(
+        id: '',
+        limits: {},
+        failedDevices: [''],
+      );
+    }
+
     return RoomLimitsModel(
       id: json['documentId'],
-      limits: json['limits'],
-      failedDevices: json['failedDevices'],
+      limits: Map<String, double>.from(json['limits'] as Map),
+      failedDevices: json['failedDevices'] != null
+          ? List<String>.from(json['failedDevices'] as List)
+          : null,
     );
   }
 }

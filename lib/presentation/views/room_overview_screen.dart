@@ -37,6 +37,10 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
+  final Map<String, bool> _loadingLimits = {
+    'temperature': false,
+  };
+
   bool _showRoomData = true;
   bool _roomHasDeviceData = false;
 
@@ -57,6 +61,27 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   void initState() {
     super.initState();
     _loadData();
+    _loadLimits('temperature');
+  }
+
+  Future<void> _loadLimits(String limitType) async {
+    setState(() => _loadingLimits[limitType] = true);
+    try {
+      final limits = await _roomController.getRoomLimits(widget.roomId);
+      setState(() {
+        if (limitType == 'temperature') {
+          _targetTemperature = limits.temperature;
+        }
+        _loadingLimits[limitType] = false;
+      });
+    } catch (e) {
+      setState(() {
+        if (limitType == 'temperature') {
+          _targetTemperature = null;
+        }
+        _loadingLimits[limitType] = false;
+      });
+    }
   }
 
   Future<void> _loadData() async {
@@ -64,14 +89,12 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
-      final limits = await _roomController.getRoomLimits(widget.roomId);
 
       final outsideAirData =
           await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
-        _targetTemperature = limits.temperature;
         _outsideAirData = outsideAirData;
         _isLoading = false;
         _roomHasDeviceData = isDeviceDataAvailable();
