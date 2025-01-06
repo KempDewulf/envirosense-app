@@ -8,7 +8,7 @@ import '../../../domain/entities/room_air_quality.dart';
 class RoomOverviewContent extends StatelessWidget {
   final RoomAirQuality? airQuality;
   final bool roomHasDeviceData;
-  final double targetTemperature;
+  final double? targetTemperature;
   final bool showRoomData;
   final AirData? outsideAirData;
   final VoidCallback onSetTemperature;
@@ -37,23 +37,40 @@ class RoomOverviewContent extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         ElevatedButton(
-          onPressed: onSetTemperature,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+          onPressed: targetTemperature == null ? null : onSetTemperature,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey[300]!;
+              }
+              return AppColors.primaryColor;
+            }),
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(vertical: 18),
+            ),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.thermostat, color: AppColors.secondaryColor),
+              Icon(Icons.thermostat,
+                  color: targetTemperature == null
+                      ? Colors.grey[600]
+                      : AppColors.secondaryColor),
               const SizedBox(width: 8),
               Text(
-                'Set Target Temperature ($targetTemperature°C)',
-                style:
-                    const TextStyle(color: AppColors.whiteColor, fontSize: 16),
+                targetTemperature == null
+                    ? 'Not Available'
+                    : 'Set Target Temperature ($targetTemperature°C)',
+                style: TextStyle(
+                    color: targetTemperature == null
+                        ? Colors.grey[600]
+                        : AppColors.whiteColor,
+                    fontSize: 16),
               ),
             ],
           ),

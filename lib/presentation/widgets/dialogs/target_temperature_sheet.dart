@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 
 class TargetTemperatureSheet extends StatelessWidget {
-  final double currentTemperature;
+  final double? currentTemperature;
   final Function(double) onTemperatureChanged;
 
   const TargetTemperatureSheet({
@@ -13,7 +13,7 @@ class TargetTemperatureSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double tempValue = currentTemperature;
+    double? tempValue = currentTemperature;
 
     return StatefulBuilder(
       builder: (context, setState) => Container(
@@ -56,12 +56,12 @@ class TargetTemperatureSheet extends StatelessWidget {
                         color: AppColors.secondaryColor,
                         onPressed: () {
                           setState(() =>
-                              tempValue = (tempValue - 0.5).clamp(16, 30));
+                              tempValue = (tempValue! - 0.5).clamp(16, 30));
                         },
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        '${tempValue.toStringAsFixed(1)}°C',
+                        '${tempValue?.toStringAsFixed(1)}°C',
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -72,7 +72,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         color: AppColors.secondaryColor,
                         onPressed: () {
                           setState(() =>
-                              tempValue = (tempValue + 0.5).clamp(16, 30));
+                              tempValue = (tempValue! + 0.5).clamp(16, 30));
                         },
                       ),
                     ],
@@ -82,7 +82,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                     width: 180,
                     child: FilledButton(
                       onPressed: () {
-                        onTemperatureChanged(tempValue);
+                        onTemperatureChanged(tempValue!);
                         Navigator.pop(context);
                       },
                       style: FilledButton.styleFrom(

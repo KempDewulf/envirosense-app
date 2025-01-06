@@ -39,11 +39,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   bool _isLoading = true;
   bool _showRoomData = true;
   bool _roomHasDeviceData = false;
-  double _targetTemperature = 22.0; // hardcoded for now
 
   Room? _room;
   RoomAirQuality? _airQuality;
   AirData? _outsideAirData;
+  double? _targetTemperature;
   String? _error;
   String city = 'Brugge'; //TODO: later in poc we would get city from user
 
@@ -64,11 +64,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
+      final temperatureLimit = await _roomController.getRoomTemperatureLimit(widget.roomId);
+
       final outsideAirData =
           await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
+        _targetTemperature = temperatureLimit;
         _outsideAirData = outsideAirData;
         _isLoading = false;
         _roomHasDeviceData = isDeviceDataAvailable();
