@@ -64,14 +64,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
-      final temperatureLimit = await _roomController.getRoomTemperatureLimit(widget.roomId);
+      final limits = await _roomController.getRoomLimits(widget.roomId);
 
       final outsideAirData =
           await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
-        _targetTemperature = temperatureLimit;
+        _targetTemperature = limits.temperature;
         _outsideAirData = outsideAirData;
         _isLoading = false;
         _roomHasDeviceData = isDeviceDataAvailable();
