@@ -124,7 +124,10 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       body: LoadingErrorWidget(
         isLoading: _isLoading,
         error: _error,
-        onRetry: _loadData,
+        onRetry: () => {
+          _loadData(),
+          _loadLimits('temperature'),
+        },
         child: TabBarView(
           controller: _tabController,
           children: [
