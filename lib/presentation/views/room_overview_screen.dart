@@ -87,12 +87,6 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
     }
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
