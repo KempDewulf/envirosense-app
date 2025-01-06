@@ -124,15 +124,19 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       body: LoadingErrorWidget(
         isLoading: _isLoading,
         error: _error,
-        onRetry: () => {
-          _loadData(),
-          _loadLimits('temperature'),
+        onRetry: () async {
+          setState(() => _loadingLimits['temperature'] = true);
+          await _loadData();
+          await _loadLimits('temperature');
         },
         child: TabBarView(
           controller: _tabController,
           children: [
             RefreshIndicator(
-              onRefresh: _loadData,
+              onRefresh: () async {
+                await _loadData();
+                await _loadLimits('temperature');
+              },
               color: AppColors.secondaryColor,
               child: _buildOverviewTab(),
             ),
@@ -161,6 +165,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       outsideAirData: _outsideAirData,
       onSetTemperature: () => _showTargetTemperatureSheet(context),
       onDataToggle: (value) => setState(() => _showRoomData = value),
+
+      isLoadingTemperature: _loadingLimits['temperature']!,
     );
   }
 

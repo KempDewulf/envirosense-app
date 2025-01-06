@@ -14,6 +14,8 @@ class RoomOverviewContent extends StatelessWidget {
   final VoidCallback onSetTemperature;
   final Function(bool) onDataToggle;
 
+  final bool isLoadingTemperature;
+
   const RoomOverviewContent({
     super.key,
     required this.airQuality,
@@ -23,6 +25,7 @@ class RoomOverviewContent extends StatelessWidget {
     required this.showRoomData,
     required this.onDataToggle,
     required this.outsideAirData,
+    required this.isLoadingTemperature,
   });
 
   @override
@@ -37,11 +40,13 @@ class RoomOverviewContent extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         ElevatedButton(
-          onPressed: targetTemperature == null ? null : onSetTemperature,
+          onPressed: isLoadingTemperature || targetTemperature == null
+              ? null
+              : onSetTemperature,
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
               if (states.contains(WidgetState.disabled)) {
-                return Colors.grey[300]!;
+                return AppColors.lightGrayColor;
               }
               return AppColors.primaryColor;
             }),
@@ -57,21 +62,41 @@ class RoomOverviewContent extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.thermostat,
+              //render loading icon if temperature is loading
+              if (isLoadingTemperature)
+                const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor),
+                  ),
+                )
+              else
+                //if not available then grow greyed out icon
+                Icon(
+                  Icons.thermostat_outlined,
                   color: targetTemperature == null
-                      ? Colors.grey[600]
-                      : AppColors.secondaryColor),
+                      ? AppColors.accentColor
+                      : AppColors.secondaryColor,
+                ),
               const SizedBox(width: 8),
-              Text(
-                targetTemperature == null
-                    ? 'Not Available'
-                    : 'Set Target Temperature ($targetTemperature°C)',
-                style: TextStyle(
-                    color: targetTemperature == null
-                        ? Colors.grey[600]
-                        : AppColors.whiteColor,
-                    fontSize: 16),
-              ),
+              if (isLoadingTemperature)
+                Text(
+                  'Loading temperature limit...',
+                  style: TextStyle(color: AppColors.accentColor, fontSize: 16),
+                )
+              else
+                Text(
+                  targetTemperature == null
+                      ? 'Not Available'
+                      : 'Set Target Temperature ($targetTemperature°C)',
+                  style: TextStyle(
+                      color: targetTemperature == null
+                          ? AppColors.accentColor
+                          : AppColors.whiteColor,
+                      fontSize: 16),
+                ),
             ],
           ),
         ),
