@@ -19,6 +19,17 @@ class AuthService {
   }
 
   Future<void> signOut(BuildContext context) async {
-    await _firebaseAuth.signOut();
+    try {
+      await _firebaseAuth.signOut();
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/login',
+          (route) => false,
+        );
+      }
+    } catch (e) {
+      throw Exception('Failed to sign out');
+    }
   }
 }
