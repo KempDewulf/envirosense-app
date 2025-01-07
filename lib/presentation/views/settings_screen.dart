@@ -227,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                           option.subtitle,
                                           style: TextStyle(
                                             color:
-                                                option.isSelected ? AppColors.whiteColor.withOpacity(0.8) : AppColors.secondaryColor.withOpacity(0.7),
+                                                option.isSelected ? AppColors.whiteColor.withOpacity(0.8) : AppColors.accentColor,
                                             fontSize: 14,
                                           ),
                                         ),
