@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
+import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/room_air_quality.dart';
 import 'package:envirosense/domain/entities/room.dart';
@@ -222,7 +223,9 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       setState(() => _targetTemperature = newTemperature);
 
       if (mounted) {
-        CustomSnackbar.showSnackBar(context, 'Temperature limit updated to $newTemperature°C');
+        final formattedTemp = await UnitConverter.formatTemperature(newTemperature);
+
+        CustomSnackbar.showSnackBar(context, 'Temperature limit updated to $formattedTemp');
       }
     } catch (e) {
       if (mounted) {
