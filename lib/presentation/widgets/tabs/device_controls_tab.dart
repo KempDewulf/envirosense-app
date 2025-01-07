@@ -83,7 +83,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
     await _updateDeviceConfig<DisplayMode>(
       configType: ConfigType.uiMode,
       value: mode,
-      successMessage: 'Display mode successfully updated to ${mode.name}',
+      successMessage: 'Display mode successfully updated to ${mode.toDisplayString}',
       debounceDelay: const Duration(milliseconds: 1500),
       onSuccess: (value) => _selectedMode = value,
     );
