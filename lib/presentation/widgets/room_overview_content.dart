@@ -1,7 +1,7 @@
+import 'package:envirosense/presentation/widgets/actions/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
 import '../../../domain/entities/air_data.dart';
 import '../../../domain/entities/room_air_quality.dart';
 
@@ -39,53 +39,10 @@ class RoomOverviewContent extends StatelessWidget {
           type: 'Room',
         ),
         const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: isLoadingTemperature || targetTemperature == null ? null : onSetTemperature,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-              if (states.contains(WidgetState.disabled)) {
-                return AppColors.lightGrayColor;
-              }
-              return AppColors.primaryColor;
-            }),
-            padding: WidgetStateProperty.all(
-              const EdgeInsets.symmetric(vertical: 18),
-            ),
-            shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (isLoadingTemperature)
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor),
-                  ),
-                )
-              else
-                Icon(
-                  Icons.thermostat_outlined,
-                  color: targetTemperature == null ? AppColors.accentColor : AppColors.secondaryColor,
-                ),
-              const SizedBox(width: 8),
-              if (isLoadingTemperature)
-                Text(
-                  'Loading Temperature Limit',
-                  style: TextStyle(color: AppColors.accentColor, fontSize: 16),
-                )
-              else
-                Text(
-                  targetTemperature == null ? 'Temperature Limit Not Available' : 'Set Target Temperature ($targetTemperature°C)',
-                  style: TextStyle(color: targetTemperature == null ? AppColors.accentColor : AppColors.whiteColor, fontSize: 16),
-                ),
-            ],
-          ),
+        TargetTemperatureButton(
+          targetTemperature: targetTemperature,
+          isLoadingTemperature: isLoadingTemperature,
+          onSetTemperature: onSetTemperature,
         ),
         const SizedBox(height: 24),
         Container(
