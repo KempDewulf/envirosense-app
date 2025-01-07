@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -113,13 +114,18 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
                   ),
                 ),
                 const SizedBox(height: 16),
-                _buildDataRow(
-                  label: 'Temperature',
-                  value: '${widget.data.airData.temperature?.toStringAsFixed(1)}°C',
-                  status: DataStatusHelper.getTemperatureStatus(
-                    widget.data.airData.temperature ?? 0,
-                  ),
-                  icon: Icons.thermostat,
+                FutureBuilder<String>(
+                  future: UnitConverter.formatTemperature(widget.data.airData.temperature),
+                  builder: (context, snapshot) {
+                    return _buildDataRow(
+                      label: 'Temperature',
+                      value: snapshot.data ?? 'Loading...',
+                      status: DataStatusHelper.getTemperatureStatus(
+                        widget.data.airData.temperature ?? 0,
+                      ),
+                      icon: Icons.thermostat,
+                    );
+                  },
                 ),
                 const SizedBox(height: 12),
                 _buildDataRow(
