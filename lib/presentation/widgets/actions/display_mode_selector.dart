@@ -28,29 +28,31 @@ class DisplayModeSelector extends StatelessWidget {
               'Screen Mode',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            if (isLoading) ...[
-              const SizedBox(width: 8),
-              const SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-            ],
           ],
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 170,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
-              _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
-              _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
-              _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
-            ],
+        if (isLoading)
+          const Center(
+            child: SizedBox(
+              height: 170,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          )
+        else
+          SizedBox(
+            height: 170,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
+                _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
+                _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
+                _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }
