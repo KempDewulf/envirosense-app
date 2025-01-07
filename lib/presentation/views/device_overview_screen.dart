@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/device_config.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/device_data_controller.dart';
@@ -31,7 +32,13 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
+  final Map<String, bool> _loadingConfig = {
+    'ui-mode': false,
+    'brightness': false,
+  };
+
   Device? _device;
+  DeviceConfig? _deviceConfig;
   List<DeviceData> _deviceData = [];
   String? _error;
   final String _buildingId =
@@ -47,6 +54,34 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   void initState() {
     super.initState();
     _loadData();
+    _loadConfig();
+  }
+
+  Future<void> _loadConfig() async {
+    if (!mounted) return;
+
+    setState(() {
+      _loadingConfig['ui-mode'] = true;
+      _loadingConfig['brightness'] = true;
+    });
+
+    try {
+      final config = await _deviceController.getDeviceConfig(widget.deviceId);
+      if (!mounted) return;
+
+      setState(() {
+        _deviceConfig = config;
+        _loadingConfig['ui-mode'] = false;
+        _loadingConfig['brightness'] = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _deviceConfig = null;
+        _loadingConfig['ui-mode'] = false;
+        _loadingConfig['brightness'] = false;
+      });
+    }
   }
 
   Future<void> _loadData() async {
@@ -79,12 +114,22 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
         body: LoadingErrorWidget(
           isLoading: _isLoading,
           error: _error,
-          onRetry: _loadData,
+          onRetry: () async {
+            await _loadData();
+            await _loadConfig();
+          },
           child: TabBarView(
             controller: _tabController,
             children: [
               RefreshIndicator(
-                onRefresh: _loadData,
+                onRefresh: () async {
+                  setState(() {
+                    _loadingConfig['ui-mode'] = true;
+                    _loadingConfig['brightness'] = true;
+                  });
+                  await _loadData();
+                  await _loadConfig();
+                },
                 color: AppColors.secondaryColor,
                 child: _buildOverviewTab(),
               ),
