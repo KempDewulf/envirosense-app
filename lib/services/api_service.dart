@@ -30,7 +30,6 @@ class ApiService {
       if (response.statusCode == 200) {
         return ApiResponse(jsonDecode(response.body), response.headers);
       } else {
-        print('$baseUrl/$endpoint');
         throw Exception('''
           GET request failed:
           Status: ${response.statusCode}

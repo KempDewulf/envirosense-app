@@ -107,8 +107,6 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
   @override
   Widget build(BuildContext context) {
     final bool hasError = widget.deviceConfig?.failed ?? false;
-    print(widget.deviceConfig?.failed);
-    print('DeviceControlsTab: hasError: $hasError');
 
     return ListView(
       padding: const EdgeInsets.all(16.0),
