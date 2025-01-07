@@ -3,17 +3,18 @@ import '../../../core/constants/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final TabController tabController;
-  final List<Tab> tabs;
-  final VoidCallback onBackPressed;
+  final TabController? tabController;
+  final List<Tab>? tabs;
+  final VoidCallback? onBackPressed;
 
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.tabController,
-    required this.tabs,
-    required this.onBackPressed,
-  });
+    this.tabController,
+    this.tabs,
+    this.onBackPressed,
+  }) : assert((tabController == null && tabs == null) || (tabController != null && tabs != null),
+            'Both tabController and tabs must be either provided or null');
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(Icons.keyboard_arrow_left_rounded),
         iconSize: 35,
-        onPressed: onBackPressed,
+        onPressed: onBackPressed!,
       ),
       title: Text(
         title,
@@ -32,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       bottom: TabBar(
         controller: tabController,
-        tabs: tabs,
+        tabs: tabs!,
         labelColor: AppColors.secondaryColor,
         indicatorColor: AppColors.secondaryColor,
         unselectedLabelColor: AppColors.whiteColor,
@@ -41,5 +42,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 48);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + ((tabController != null && tabs != null) ? 48 : 0));
 }
