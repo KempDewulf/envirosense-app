@@ -59,7 +59,7 @@ class CustomActionButton extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: isDestructive
-                        ? AppColors.redColor
+                        ? const Color.fromARGB(255, 255, 0, 0)
                         : isWarning
                             ? AppColors.secondaryColor
                             : AppColors.blackColor,
