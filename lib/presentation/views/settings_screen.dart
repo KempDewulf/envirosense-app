@@ -15,10 +15,26 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   bool _useImperialUnits = false;
   final AuthService _authService = AuthService();
 
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _useImperialUnits = prefs.getBool('useImperialUnits') ?? false;
+    });
+  }
+
   Future<void> _toggleUnits(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('useImperialUnits', value);
-    print('Imperial Units: $value');
+    setState(() {
+      _useImperialUnits = value;
+    });
+    print('Units changed to: ${value ? 'Imperial' : 'Metric'}');
   }
 
   @override
@@ -81,10 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   color: AppColors.whiteColor,
                 ),
                 onChanged: (value) {
-                  setState(() {
-                    _useImperialUnits = value;
-                  });
-                  _toggleUnits;
+                  _toggleUnits(value);
                 },
               ),
             ),
