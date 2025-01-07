@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
+import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -146,24 +147,21 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
+      useSafeArea: true,
+      backgroundColor: AppColors.transparent,
       builder: (context) => StatefulBuilder(
-        builder: (context, setState) => Padding(
-          padding: const EdgeInsets.all(16.0),
+        builder: (context, setState) => Container(
+          decoration: const BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                'Clear Cache',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
+              const CustomBottomSheetHeader(title: 'Clear Cache'),
               ...cacheOptions.map((option) => CheckboxListTile(
                     title: Text(option.title),
                     subtitle: Text(option.subtitle),
