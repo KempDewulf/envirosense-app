@@ -7,6 +7,6 @@ class GetDeviceConfigUseCase {
   GetDeviceConfigUseCase(this.repository);
 
   Future<DeviceConfig> call(String deviceId) async {
-    return repository.getDeviceConfig(deviceId);
+    return await repository.getDeviceConfig(deviceId);
   }
 }
