@@ -14,7 +14,6 @@ class UnitConverter {
     if (celsius == null) return 'N/A';
 
     final useImperial = await getUseImperialUnits();
-    print(useImperial);
     if (useImperial) {
       final fahrenheit = celsiusToFahrenheit(celsius);
       return '${fahrenheit.toStringAsFixed(1)}°F';

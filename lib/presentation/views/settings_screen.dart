@@ -34,7 +34,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     setState(() {
       _useImperialUnits = value;
     });
-    print('Units changed to: ${value ? 'Imperial' : 'Metric'}');
   }
 
   @override

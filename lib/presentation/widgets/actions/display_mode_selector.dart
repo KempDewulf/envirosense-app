@@ -129,7 +129,6 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
 
   Widget _buildModeCard(DisplayMode mode, String title, IconData icon) {
     final isSelected = widget.selectedMode == mode;
-    debugPrint('Building card for $mode, isSelected: $isSelected');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
