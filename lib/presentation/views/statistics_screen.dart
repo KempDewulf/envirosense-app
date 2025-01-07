@@ -69,7 +69,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
   Widget _buildBody() {
     if (_isLoading) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
       );
     }
 

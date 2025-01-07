@@ -60,18 +60,15 @@ class RoomOverviewContent extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //render loading icon if temperature is loading
               if (isLoadingTemperature)
                 const SizedBox(
                   height: 20,
                   width: 20,
                   child: CircularProgressIndicator(
-                    strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor),
                   ),
                 )
               else
-                //if not available then grow greyed out icon
                 Icon(
                   Icons.thermostat_outlined,
                   color: targetTemperature == null ? AppColors.accentColor : AppColors.secondaryColor,

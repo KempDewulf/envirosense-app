@@ -106,6 +106,10 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasError = widget.deviceConfig?.failed != null;
+    print(widget.deviceConfig?.failed);
+    print('DeviceControlsTab: hasError: $hasError');
+
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: [
@@ -113,12 +117,14 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
           selectedMode: _selectedMode,
           onModeSelected: _updateDeviceUIMode,
           isLoading: widget.loadingConfig['ui-mode'] ?? false,
+          hasError: hasError,
         ),
         const SizedBox(height: 36),
         BrightnessControl(
           value: _brightnessValue,
           onChanged: _updateBrightnessLimit,
           isLoading: widget.loadingConfig['brightness'] ?? false,
+          hasError: hasError,
         ),
       ],
     );

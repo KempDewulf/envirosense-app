@@ -7,12 +7,14 @@ class DisplayModeSelector extends StatelessWidget {
   DisplayMode selectedMode;
   final Function(DisplayMode) onModeSelected;
   final bool isLoading;
+  final bool hasError;
 
   DisplayModeSelector({
     super.key,
     required this.selectedMode,
     required this.onModeSelected,
     this.isLoading = false,
+    this.hasError = false,
   });
 
   @override
@@ -22,7 +24,10 @@ class DisplayModeSelector extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.screen_rotation, color: AppColors.secondaryColor),
+            Icon(
+              hasError ? Icons.error_outline : Icons.screen_rotation,
+              color: hasError ? AppColors.redColor : AppColors.secondaryColor,
+            ),
             const SizedBox(width: 8),
             const Text(
               'Screen Mode',
@@ -31,16 +36,39 @@ class DisplayModeSelector extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        if (isLoading)
+        if (hasError)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              'Not found',
+              style: TextStyle(
+                color: AppColors.accentColor,
+                fontSize: 16,
+              ),
+            ),
+          )
+        else if (isLoading)
           const Center(
             child: SizedBox(
               height: 170,
-              child: Center(
-                child: CircularProgressIndicator(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
+                  SizedBox(height: 16),
+                  Text(
+                    'Fetching...',
+                    style: TextStyle(
+                      color: AppColors.accentColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
           )
         else
+          // Existing display mode selector UI
           SizedBox(
             height: 170,
             child: ListView(

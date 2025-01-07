@@ -6,12 +6,14 @@ class BrightnessControl extends StatefulWidget {
   final int value;
   final Function(int) onChanged;
   final bool isLoading;
+  final bool hasError;
 
   const BrightnessControl({
     super.key,
     required this.value,
     required this.onChanged,
     this.isLoading = false,
+    this.hasError = false,
   });
 
   @override
@@ -48,14 +50,17 @@ class _BrightnessControlState extends State<BrightnessControl> {
       children: [
         Row(
           children: [
-            const Icon(Icons.brightness_6, color: AppColors.secondaryColor),
+            Icon(
+              widget.hasError ? Icons.error_outline : Icons.brightness_6,
+              color: widget.hasError ? AppColors.redColor : AppColors.secondaryColor,
+            ),
             const SizedBox(width: 8),
             const Text(
               'Brightness',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
-            if (!widget.isLoading) ...[
+            if (!widget.isLoading && !widget.hasError) ...[
               Text(
                 '${widget.value}%',
                 style: const TextStyle(
@@ -68,11 +73,35 @@ class _BrightnessControlState extends State<BrightnessControl> {
           ],
         ),
         const SizedBox(height: 16),
-        if (widget.isLoading)
-          const SizedBox(
-            height: 170,
-            child: Center(
-              child: CircularProgressIndicator(),
+        if (widget.hasError)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              'Not found',
+              style: TextStyle(
+                color: AppColors.accentColor,
+                fontSize: 16,
+              ),
+            ),
+          )
+        else if (widget.isLoading)
+          const Center(
+            child: SizedBox(
+              height: 170,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
+                  SizedBox(height: 16),
+                  Text(
+                    'Fetching...',
+                    style: TextStyle(
+                      color: AppColors.accentColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         else
