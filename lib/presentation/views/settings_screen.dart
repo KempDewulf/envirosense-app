@@ -66,11 +66,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   style: TextStyle(color: AppColors.whiteColor),
                 ),
                 subtitle: const Text(
-                  'Use Fahrenheit instead of Celsius',
-                  style: TextStyle(color: AppColors.whiteColor),
+                  'Use Fahrenheit',
+                  style: TextStyle(color: AppColors.lightGrayColor),
                 ),
                 value: _useImperialUnits,
                 activeColor: AppColors.accentColor,
+                activeTrackColor: AppColors.accentColor.withOpacity(0.5),
+                inactiveThumbColor: AppColors.whiteColor,
+                inactiveTrackColor: AppColors.whiteColor.withOpacity(0.3),
                 secondary: const Icon(
                   Icons.thermostat,
                   color: AppColors.whiteColor,
