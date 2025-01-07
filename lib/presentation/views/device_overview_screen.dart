@@ -12,7 +12,6 @@ import 'package:envirosense/presentation/widgets/tabs/device_actions_tab.dart';
 import 'package:envirosense/presentation/widgets/tabs/device_controls_tab.dart';
 import 'package:envirosense/services/device_service.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 // ignore: must_be_immutable
 class DeviceOverviewScreen extends StatefulWidget {
