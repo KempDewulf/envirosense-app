@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
 import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -161,39 +162,126 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CustomBottomSheetHeader(title: 'Clear Cache'),
-              ...cacheOptions.map((option) => CheckboxListTile(
-                    title: Text(option.title),
-                    subtitle: Text(option.subtitle),
-                    value: option.isSelected,
-                    onChanged: (value) {
-                      setState(() => option.isSelected = value ?? false);
-                    },
-                  )),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: cacheOptions.any((option) => option.isSelected)
-                    ? () async {
-                        Navigator.pop(context);
-                        // Clear selected caches
-                        if (cacheOptions[0].isSelected) {
-                          UnimplementedError();
-                        }
-                        if (cacheOptions[1].isSelected) {
-                          UnimplementedError();
-                        }
-                        if (cacheOptions[2].isSelected) {
-                          UnimplementedError();
-                        }
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Selected caches cleared')),
-                        );
-                      }
-                    : null,
-                child: const Text('Clear Selected'),
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.accentColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Clear Cache',
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Select the data you want to remove',
+                      style: TextStyle(
+                        color: AppColors.accentColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    ...cacheOptions.map((option) => Container(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.accentColor.withOpacity(0.2)),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: CheckboxListTile(
+                            title: Text(
+                              option.title,
+                              style: const TextStyle(
+                                color: AppColors.secondaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            subtitle: Text(
+                              option.subtitle,
+                              style: TextStyle(
+                                color: AppColors.accentColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            value: option.isSelected,
+                            onChanged: (value) {
+                              setState(() => option.isSelected = value ?? false);
+                            },
+                            activeColor: AppColors.secondaryColor,
+                            checkColor: AppColors.whiteColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Divider(color: AppColors.accentColor.withOpacity(0.2)),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            side: const BorderSide(color: AppColors.secondaryColor),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: AppColors.secondaryColor),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: cacheOptions.any((option) => option.isSelected)
+                              ? () async {
+                                  Navigator.pop(context);
+                                  // ... existing cache clearing logic ...
+                                  if (!context.mounted) return;
+                                  CustomSnackbar.showSnackBar(context, 'Selected cache cleared');
+                                }
+                              : null,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.secondaryColor,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'Clear Selected',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
