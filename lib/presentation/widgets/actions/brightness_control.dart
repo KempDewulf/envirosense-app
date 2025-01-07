@@ -56,66 +56,68 @@ class _BrightnessControlState extends State<BrightnessControl> {
             ),
             const Spacer(),
             if (!widget.isLoading) ...[
-                Text(
-                  '${widget.value}%',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppColors.accentColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                '${widget.value}%',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.accentColor,
+                  fontWeight: FontWeight.bold,
                 ),
-              ] else ...[
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(),
-                ),
-              ]
+              ),
+            ]
           ],
         ),
         const SizedBox(height: 16),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                if (widget.value > 20) {
-                  widget.onChanged(widget.value - 20);
-                } else {
-                  _handleMinimumBrightnessAttempt();
-                }
-              },
-              icon: const Icon(Icons.remove_circle),
-              color: AppColors.secondaryColor,
+        if (widget.isLoading)
+          const SizedBox(
+            height: 170,
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-            Expanded(
-              child: Row(
-                children: List.generate(5, (index) {
-                  return Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        final newValue = ((index + 1) * 20);
-                        widget.onChanged(newValue);
-                      },
-                      child: Container(
-                        height: 24,
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        decoration: BoxDecoration(
-                          color: index < activeBars ? AppColors.secondaryColor : AppColors.lightGrayColor,
-                          borderRadius: BorderRadius.circular(4),
+          )
+        else
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (widget.value > 20) {
+                    widget.onChanged(widget.value - 20);
+                  } else {
+                    _handleMinimumBrightnessAttempt();
+                  }
+                },
+                icon: const Icon(Icons.remove_circle),
+                color: AppColors.secondaryColor,
+              ),
+              Expanded(
+                child: Row(
+                  children: List.generate(5, (index) {
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          final newValue = ((index + 1) * 20);
+                          widget.onChanged(newValue);
+                        },
+                        child: Container(
+                          height: 24,
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          decoration: BoxDecoration(
+                            color: index < activeBars ? AppColors.secondaryColor : AppColors.lightGrayColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: widget.value < 100 ? () => widget.onChanged(widget.value + 20) : null,
-              icon: const Icon(Icons.add_circle),
-              color: AppColors.secondaryColor,
-            ),
-          ],
-        ),
+              IconButton(
+                onPressed: widget.value < 100 ? () => widget.onChanged(widget.value + 20) : null,
+                icon: const Icon(Icons.add_circle),
+                color: AppColors.secondaryColor,
+              ),
+            ],
+          ),
       ],
     );
   }
