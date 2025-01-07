@@ -16,6 +16,21 @@ extension DisplayModeExtension on DisplayMode {
     }
   }
 
+  String get toDisplayString {
+    switch (this) {
+      case DisplayMode.normal:
+        return 'Default View';
+      case DisplayMode.temperature:
+        return 'Temperature';
+      case DisplayMode.humidity:
+        return 'Humidity';
+      case DisplayMode.ppm:
+        return 'CO2 Level';
+      default:
+        return 'Default View';
+    }
+  }
+
   static DisplayMode fromString(String value) {
     switch (value) {
       case 'normal':
