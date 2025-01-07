@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 
@@ -55,13 +56,18 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() => tempValue = (tempValue! - 0.1).clamp(0, 80));
+                          setState(() => tempValue = (tempValue! - 0.5).clamp(0, 80));
                         },
                       ),
                       const SizedBox(width: 16),
-                      Text(
-                        '${tempValue?.toStringAsFixed(1)}°C',
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      FutureBuilder<String>(
+                        future: UnitConverter.formatTemperature(tempValue),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.data ?? 'Loading...',
+                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          );
+                        },
                       ),
                       const SizedBox(width: 16),
                       IconButton(
@@ -69,7 +75,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() => tempValue = (tempValue! + 0.1).clamp(0, 80));
+                          setState(() => tempValue = (tempValue! + 0.5).clamp(0, 80));
                         },
                       ),
                     ],
