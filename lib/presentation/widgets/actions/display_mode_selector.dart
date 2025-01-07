@@ -23,8 +23,8 @@ class DisplayModeSelector extends StatefulWidget {
 // ignore: must_be_immutable
 class _DisplayModeSelectorState extends State<DisplayModeSelector> {
   final ScrollController _scrollController = ScrollController();
+  List<Widget> displayModes = [];
 
-  late final List<Widget> displayModes;
   final List<DisplayMode> modeTypes = [
     DisplayMode.normal,
     DisplayMode.temperature,
@@ -35,30 +35,32 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
   @override
   void initState() {
     super.initState();
+    displayModes = _createDisplayModes();
 
-    displayModes = [
+    // Scroll to active card after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToSelectedMode();
+    });
+  }
+
+  List<Widget> _createDisplayModes() {
+    return [
       _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
       _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
       _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
       _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
     ];
+  }
 
-    // Scroll to active card after build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      try {
-        final selectedIndex = modeTypes.indexOf(widget.selectedMode);
-        if (selectedIndex != -1 && _scrollController.hasClients) {
-          _scrollController.animateTo(
-            selectedIndex * 170.0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        }
-      } catch (e) {
-        debugPrint('ScrollController error: $e');
-        debugPrint('Device did not respond and thus no configs were fetched');
-      }
-    });
+  void _scrollToSelectedMode() {
+    final selectedIndex = modeTypes.indexOf(widget.selectedMode);
+    if (selectedIndex != -1 && _scrollController.hasClients) {
+      _scrollController.animateTo(
+        selectedIndex * 170.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -127,10 +129,14 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
 
   Widget _buildModeCard(DisplayMode mode, String title, IconData icon) {
     final isSelected = widget.selectedMode == mode;
+    debugPrint('Building card for $mode, isSelected: $isSelected');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
-        onTap: () => widget.onModeSelected(mode),
+        onTap: () {
+          widget.onModeSelected(mode);
+        },
         child: Container(
           width: 150,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -164,5 +170,15 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
         ),
       ),
     );
+  }
+
+  @override
+  void didUpdateWidget(DisplayModeSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedMode != widget.selectedMode) {
+      setState(() {
+        displayModes = _createDisplayModes();
+      });
+    }
   }
 }
