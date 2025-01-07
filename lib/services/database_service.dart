@@ -216,4 +216,18 @@ class DatabaseService {
     await db.delete('device_names');
     await db.delete('cache');
   }
+
+  Future<void> clearDeviceDataCache() async {
+    final db = await database;
+    await db.delete(
+      'cache',
+    );
+  }
+
+  Future<void> clearDeviceNames() async {
+    final db = await database;
+    await db.delete(
+      'device_names',
+    );
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:envirosense/presentation/widgets/dialogs/clear_cache_warning_dialog.dart';
 import 'package:envirosense/presentation/widgets/models/cache_option.dart';
+import 'package:envirosense/services/auth_service.dart';
+import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../items/cache_option_item.dart';
@@ -142,6 +144,9 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
   void _handleClearCache() async {
     if (!cacheOptions.any((option) => option.isSelected)) return;
 
+    final DatabaseService dbService = DatabaseService();
+    final AuthService authService = AuthService();
+
     final hasHighImpactSelection = cacheOptions.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
 
     if (hasHighImpactSelection) {
@@ -154,10 +159,13 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
 
     for (final option in cacheOptions) {
       if (option.isSelected) {
-        if (option.isHighImpact) {
-          // Handle high impact clearing (logout, etc.)
-        } else {
-          // Handle regular cache clearing
+        if (option.title == 'Device Data') {
+          await dbService.clearDeviceDataCache();
+        } else if (option.title == 'Device Names') {
+          await dbService.clearDeviceNames();
+        } else if (option.title == 'All') {
+          await dbService.clearAll();
+          await authService.signOut(context);
         }
       }
     }
