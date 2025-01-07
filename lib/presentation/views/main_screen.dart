@@ -1,4 +1,5 @@
 import 'package:envirosense/presentation/widgets/layout/bottom_nav_bar.dart';
+import 'package:envirosense/services/notifications_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
@@ -20,8 +21,18 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeNotifications();
+    });
+
     //fetch user data..
     FirebaseMessaging.instance.subscribeToTopic("buildings-$buildingId");
+  }
+
+  Future<void> _initializeNotifications() async {
+    if (mounted) {
+      await NotificationsService().init();
+    }
   }
 
   // List of pages to navigate

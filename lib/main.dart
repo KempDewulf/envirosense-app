@@ -9,7 +9,6 @@ import 'package:envirosense/presentation/views/main_screen.dart';
 import 'package:envirosense/presentation/views/onboarding_screen.dart';
 import 'package:envirosense/presentation/views/statistics_screen.dart';
 import 'package:envirosense/services/database_service.dart';
-import 'package:envirosense/services/notifications_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -40,9 +39,7 @@ void main() async {
   final dbService = DatabaseService();
   bool isFirstTime = await dbService.getSetting<bool>('isFirstTime') ?? true;
   LoggingService.initialize();
-  if (isFirstTime) {
-    await NotificationsService().init();
-  }
+
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     Logger('FirebaseMessaging').info('Handling a message: ${message.messageId}');
   });
