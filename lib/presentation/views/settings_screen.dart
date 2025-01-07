@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
+import 'package:envirosense/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
   bool _useImperialUnits = false;
+  final AuthService _authService = AuthService();
 
   Future<void> _toggleUnits(bool value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -40,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () => UnimplementedError,
+                onTap: () => _authService.signOut(context),
                 child: const ListTile(
                   leading: Icon(Icons.logout, color: AppColors.whiteColor),
                   title: Text(
