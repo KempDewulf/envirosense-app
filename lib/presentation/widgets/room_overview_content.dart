@@ -83,7 +83,7 @@ class RoomOverviewContent extends StatelessWidget {
               else
                 FutureBuilder<String>(
                   future: targetTemperature != null
-                      ? UnitConverter.formatTemperature(targetTemperature)
+                      ? UnitConverter.formatTemperature(targetTemperature).then((temp) => 'Set Target Temperature ($temp)')
                       : Future.value('Temperature Limit Not Available'),
                   builder: (context, snapshot) {
                     return Text(
