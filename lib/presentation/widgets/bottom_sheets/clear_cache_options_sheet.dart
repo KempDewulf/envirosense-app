@@ -1,5 +1,5 @@
-import 'package:envirosense/presentation/views/settings_screen.dart';
 import 'package:envirosense/presentation/widgets/dialogs/clear_cache_warning_dialog.dart';
+import 'package:envirosense/presentation/widgets/models/cache_option.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 import '../items/cache_option_item.dart';
