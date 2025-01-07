@@ -86,7 +86,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                 ...cacheOptions.map(
                   (option) => CacheOptionItem(
                     option: option,
-                    onTap: () => setState(() => option.isSelected = !option.isSelected),
+                    onTap: () => _handleOptionSelection(option),
                   ),
                 ),
               ],
@@ -119,8 +119,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                     child: FilledButton(
                       onPressed: isSelected ? _handleClearCache : null,
                       style: FilledButton.styleFrom(
-                        backgroundColor:
-                            isSelected ? AppColors.secondaryColor : AppColors.secondaryColor.withOpacity(0.5),
+                        backgroundColor: isSelected ? AppColors.secondaryColor : AppColors.secondaryColor.withOpacity(0.5),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -142,6 +141,27 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
         ],
       ),
     );
+  }
+
+  void _handleOptionSelection(CacheOption option) {
+    setState(() {
+      if (option.title == 'All') {
+        // When "All" is selected/deselected, update all other options
+        bool newValue = !option.isSelected;
+        for (var opt in cacheOptions) {
+          opt.isSelected = newValue;
+        }
+      } else {
+        option.isSelected = !option.isSelected;
+        // If all individual options are selected, select "All" as well
+        CacheOption allOption = cacheOptions.firstWhere((opt) => opt.title == 'All');
+        if (cacheOptions.where((opt) => opt.title != 'All').every((opt) => opt.isSelected)) {
+          allOption.isSelected = true;
+        } else {
+          allOption.isSelected = false;
+        }
+      }
+    });
   }
 
   void _handleClearCache() async {
