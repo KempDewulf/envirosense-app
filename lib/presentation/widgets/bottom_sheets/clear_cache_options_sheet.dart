@@ -127,7 +127,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                         ),
                       ),
                       child: const Text(
-                        'Clear Selected',
+                        'Clear Cache',
                         style: TextStyle(
                           color: AppColors.whiteColor,
                           fontWeight: FontWeight.w500,
