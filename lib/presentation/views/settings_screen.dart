@@ -134,16 +134,60 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       CacheOption(
         title: 'Device Data',
         subtitle: 'Clear stored sensor readings',
+        isHighImpact: false,
       ),
       CacheOption(
         title: 'Device Names',
         subtitle: 'Reset device names to default',
+        isHighImpact: false,
       ),
       CacheOption(
         title: 'All',
         subtitle: 'Clear all stored data and preferences',
+        isHighImpact: true,
       ),
     ];
+
+    Future<bool> _showClearAllWarning(BuildContext context) async {
+      return await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              backgroundColor: AppColors.whiteColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              title: const Text(
+                'Warning',
+                style: TextStyle(
+                  color: AppColors.secondaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: const Text(
+                'This action will clear all cached data and log you out. Your account will remain intact but you will need to log in again.\n\nAre you sure you want to proceed?',
+                style: TextStyle(color: AppColors.accentColor),
+              ),
+              actions: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: AppColors.secondaryColor),
+                  ),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: AppColors.secondaryColor),
+                  ),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.secondaryColor,
+                  ),
+                  child: const Text('Clear All'),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+    }
 
     await showModalBottomSheet(
       context: context,
@@ -226,8 +270,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                         Text(
                                           option.subtitle,
                                           style: TextStyle(
-                                            color:
-                                                option.isSelected ? AppColors.whiteColor.withOpacity(0.8) : AppColors.accentColor,
+                                            color: option.isSelected ? AppColors.whiteColor.withOpacity(0.8) : AppColors.accentColor,
                                             fontSize: 14,
                                           ),
                                         ),
@@ -275,8 +318,23 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         child: FilledButton(
                           onPressed: cacheOptions.any((option) => option.isSelected)
                               ? () async {
+                                  //add logic here
+                                  final hasHighImpactSelection = cacheOptions.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
+
+                                  if (hasHighImpactSelection) {
+                                    final confirmed = await _showClearAllWarning(context);
+                                    if (!confirmed) return;
+                                  }
                                   Navigator.pop(context);
-                                  // ... existing cache clearing logic ...
+
+                                  for (final option in cacheOptions) {
+                                    if (option.isSelected && option.isHighImpact) {
+                                      //logout and logic
+                                    } else {
+                                      // Handle regular cache clearing
+                                    }
+                                  }
+
                                   if (!context.mounted) return;
                                   CustomSnackbar.showSnackBar(context, 'Selected cache cleared');
                                 }
@@ -335,10 +393,12 @@ class CacheOption {
   final String title;
   final String subtitle;
   bool isSelected;
+  final bool isHighImpact;
 
   CacheOption({
     required this.title,
     required this.subtitle,
     this.isSelected = false,
+    this.isHighImpact = false,
   });
 }
