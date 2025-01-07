@@ -36,10 +36,10 @@ class DeviceDataSource {
 
   Future<DeviceConfigModel> getDeviceConfig(String deviceId) async {
     try {
-      final response = await apiService.getRequest('devices/$deviceId/limits');
+      final response = await apiService.getRequest('devices/$deviceId/config');
       return DeviceConfigModel.fromJson(response.data);
     } catch (e) {
-      throw Exception('Failed to get device limits: $e');
+      throw Exception('Failed to get device config: $e');
     }
   }
 
