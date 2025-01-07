@@ -12,6 +12,7 @@ import 'package:envirosense/presentation/widgets/tabs/device_actions_tab.dart';
 import 'package:envirosense/presentation/widgets/tabs/device_controls_tab.dart';
 import 'package:envirosense/services/device_service.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 // ignore: must_be_immutable
 class DeviceOverviewScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
     'brightness': false,
   };
 
+  String? _deviceName;
   Device? _device;
   DeviceConfig? _deviceConfig;
   List<DeviceData> _deviceData = [];
@@ -86,7 +88,10 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
 
   Future<void> _loadData() async {
     try {
-      setState(() => _isLoading = true);
+      setState(() {
+        _isLoading = true;
+        _deviceName = widget.deviceName;
+      });
       final device = await _deviceController.getDevice(widget.deviceId, _buildingId);
       final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);
       setState(() {
@@ -106,7 +111,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: widget.deviceName,
+          title: _deviceName ?? _device?.identifier ?? 'Unknown device',
           tabController: _tabController,
           tabs: _tabs,
           onBackPressed: () => Navigator.pop(context),
@@ -162,7 +167,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
     }
 
     return DeviceActionsTab(
-      deviceCustomName: widget.deviceName,
+      deviceCustomName: _deviceName,
       deviceId: _device?.id,
       deviceIdentifier: _device?.identifier,
       buildingId: _buildingId,
@@ -172,7 +177,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
       currentRoomName: _device?.room?.name ?? 'Not assigned to a room',
       onDeviceRenamed: (newName) {
         setState(() {
-          widget.deviceName = newName;
+          _deviceName = newName;
         });
       },
       onDeviceRemoved: () => Navigator.pop(context),
