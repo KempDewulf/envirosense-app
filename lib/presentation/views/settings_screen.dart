@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,6 +42,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     setState(() {
       _useImperialUnits = value;
     });
+
+    if(!mounted) return;
+
+    CustomSnackbar.showSnackBar(context, "Units changed to ${value ? 'imperial' : 'metric'}");
 
     await Future.delayed(const Duration(milliseconds: 500));
 
