@@ -16,10 +16,18 @@ class DeviceConfigModel extends DeviceConfig {
       );
     }
 
+    final configMap = json['config'] as Map<String, dynamic>;
+    if (configMap.containsKey('brightness')) {
+      final brightness = configMap['brightness'];
+      if (brightness is String) {
+        configMap['brightness'] = int.parse(brightness);
+      }
+    }
+
     return DeviceConfigModel(
       id: json['documentId'] as String,
-      config: Map<String, dynamic>.from(json['config'] as Map),
-      failed: json['failed'] as bool,
+      config: configMap,
+      failed: json['failed'] as bool? ?? false,
     );
   }
 }
