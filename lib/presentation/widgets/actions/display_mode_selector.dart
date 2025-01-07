@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class DisplayModeSelector extends StatelessWidget {
   DisplayMode selectedMode;
   final Function(DisplayMode) onModeSelected;
+  final bool isLoading;
 
   DisplayModeSelector({
     super.key,
     required this.selectedMode,
     required this.onModeSelected,
+    this.isLoading = false,
   });
 
   @override
@@ -26,6 +28,14 @@ class DisplayModeSelector extends StatelessWidget {
               'Screen Mode',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            if (isLoading) ...[
+              const SizedBox(width: 8),
+              const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ],
           ],
         ),
         const SizedBox(height: 16),
