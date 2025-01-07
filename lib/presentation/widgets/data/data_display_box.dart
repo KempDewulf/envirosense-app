@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/air_data.dart';
@@ -13,10 +14,12 @@ class DataDisplayBox extends StatelessWidget {
     required this.data,
   });
 
-  List<MapEntry<String, Map<String, dynamic>>> _getDataEntries() {
+  Future<List<MapEntry<String, Map<String, dynamic>>>> _getDataEntries() async {
+    final temp = await UnitConverter.formatTemperature(data.temperature);
+
     return [
       MapEntry('Temperature', {
-        'value': '${data.temperature?.toStringAsFixed(1)}°C',
+        'value': temp,
         'status': DataStatusHelper.getTemperatureStatus(data.temperature ?? 0),
       }),
       MapEntry('Humidity', {
@@ -32,8 +35,6 @@ class DataDisplayBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataEntries = _getDataEntries();
-
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -48,51 +49,64 @@ class DataDisplayBox extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 24),
-          ...dataEntries.map(
-            (entry) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                children: [
-                  Text(
-                    entry.key,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      color: AppColors.blackColor,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    entry.value['value'],
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300,
-                      color: AppColors.blackColor,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: DataStatusHelper.getStatusColor(entry.value['status']),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ],
+      child: FutureBuilder<List<MapEntry<String, Map<String, dynamic>>>>(
+        future: _getDataEntries(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+
+          if (!snapshot.hasData) {
+            return const Text('No data available');
+          }
+
+          return Column(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ),
-        ],
+              const SizedBox(height: 24),
+              ...snapshot.data!.map(
+                (entry) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    children: [
+                      Text(
+                        entry.key,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        entry.value['value'],
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: DataStatusHelper.getStatusColor(entry.value['status']),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

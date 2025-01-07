@@ -18,6 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   Future<void> _toggleUnits(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('useImperialUnits', value);
+    print('Imperial Units: $value');
   }
 
   @override
