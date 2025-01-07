@@ -8,6 +8,7 @@ class ItemGridPage<T> extends StatefulWidget {
   final Widget Function(T item) itemBuilder;
   final String Function(T item) getItemName;
   final VoidCallback onAddPressed;
+  final VoidCallback onItemChanged;
 
   const ItemGridPage({
     super.key,
@@ -15,6 +16,7 @@ class ItemGridPage<T> extends StatefulWidget {
     required this.itemBuilder,
     required this.getItemName,
     required this.onAddPressed,
+    required this.onItemChanged,
   });
 
   @override

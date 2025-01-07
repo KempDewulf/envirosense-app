@@ -135,7 +135,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
         title: _room?.name ?? widget.roomName,
         tabController: _tabController,
         tabs: _tabs,
-        onBackPressed: () => Navigator.pop(context),
+        onBackPressed: () => Navigator.pop(context, true),
       ),
       body: LoadingErrorWidget(
         isLoading: _isLoading,
@@ -193,7 +193,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       onRoomRenamed: (newName) {
         _reloadRoomData();
       },
-      onRoomRemoved: () => Navigator.pop(context),
+      onRoomRemoved: () => Navigator.pop(context, true),
     );
   }
 

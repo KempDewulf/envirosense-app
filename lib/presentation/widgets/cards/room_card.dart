@@ -7,24 +7,29 @@ import 'package:envirosense/core/constants/colors.dart';
 
 class RoomCard extends StatelessWidget {
   final Room room;
+  final VoidCallback? onChanged;
 
   const RoomCard({
     super.key,
     required this.room,
+    required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
+        onTap: () { Navigator.pushNamed(
             context,
             '/roomOverview',
             arguments: {
               'roomName': room.name,
               'roomId': room.id,
             },
-          );
+          ).then((value) {
+            if (value == true) {
+              onChanged?.call();
+            }
+          });
         },
         child: Container(
           decoration: BoxDecoration(

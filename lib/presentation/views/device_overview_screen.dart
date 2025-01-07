@@ -113,7 +113,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
           title: _deviceName ?? _device?.identifier ?? 'Unknown device',
           tabController: _tabController,
           tabs: _tabs,
-          onBackPressed: () => Navigator.pop(context),
+          onBackPressed: () => Navigator.pop(context, true),
         ),
         body: LoadingErrorWidget(
           isLoading: _isLoading,
@@ -179,7 +179,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
           _deviceName = newName;
         });
       },
-      onDeviceRemoved: () => Navigator.pop(context),
+      onDeviceRemoved: () => Navigator.pop(context, true),
     );
   }
 

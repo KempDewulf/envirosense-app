@@ -5,10 +5,12 @@ import 'package:envirosense/domain/entities/device.dart';
 
 class DeviceCard extends StatefulWidget {
   final Device device;
+  final VoidCallback? onChanged;
 
   const DeviceCard({
     super.key,
     required this.device,
+    required this.onChanged,
   });
 
   @override
@@ -43,15 +45,19 @@ class _DeviceCardState extends State<DeviceCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
+      onTap: () { Navigator.pushNamed(
           context,
           '/deviceOverview',
           arguments: {
             'deviceName': _customDeviceName ?? widget.device.identifier,
             'deviceId': widget.device.id,
           },
-        );
+        ).then((value) {
+          if (value == true) {
+            widget.onChanged?.call();
+            _loadDeviceName();
+          }
+        });
       },
       child: Container(
         key: ValueKey(widget.device.identifier), // Ensure unique key

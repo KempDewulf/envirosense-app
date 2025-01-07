@@ -405,8 +405,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       await widget.deviceService.deleteDevice(widget.deviceId!, widget.buildingId);
 
       if (!mounted) return;
-      Navigator.pop(context);
-      Navigator.pop(context);
+      Navigator.pop(context, true);
+      Navigator.pop(context, true);
 
       CustomSnackbar.showSnackBar(
         context,
