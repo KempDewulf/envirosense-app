@@ -3,13 +3,15 @@ import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class BrightnessControl extends StatefulWidget {
-  final int value; // Now represents percentage (20-100)
+  final int value;
   final Function(int) onChanged;
+  final bool isLoading;
 
   const BrightnessControl({
     super.key,
     required this.value,
     required this.onChanged,
+    this.isLoading = false,
   });
 
   @override
@@ -52,6 +54,14 @@ class _BrightnessControlState extends State<BrightnessControl> {
               'Brightness',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            if (widget.isLoading) ...[
+              const SizedBox(width: 8),
+              const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ],
             const Spacer(),
             Text(
               '${widget.value}%',
