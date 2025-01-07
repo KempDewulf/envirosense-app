@@ -165,7 +165,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
                 icon: Icons.delete_outline,
                 label: 'Remove Room',
                 onPressed: () => _showRemoveRoomDialog(context),
-                color: AppColors.redColor,
+                color: AppColors.darkRedColor,
                 isDestructive: true,
               ),
             ],
