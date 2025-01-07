@@ -13,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
   bool _useImperialUnits = false;
+  bool _isToggling = false;
   final AuthService _authService = AuthService();
 
   @override
@@ -29,10 +30,22 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   }
 
   Future<void> _toggleUnits(bool value) async {
+    if (_isToggling) return;
+
+    setState(() {
+      _isToggling = true;
+    });
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('useImperialUnits', value);
     setState(() {
       _useImperialUnits = value;
+    });
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    setState(() {
+      _isToggling = false;
     });
   }
 
