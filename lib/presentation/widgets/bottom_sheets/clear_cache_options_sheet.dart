@@ -42,6 +42,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSelected = cacheOptions.any((option) => option.isSelected);
+
     return Container(
       decoration: const BoxDecoration(
         color: AppColors.whiteColor,
@@ -115,9 +117,10 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: FilledButton(
-                      onPressed: _handleClearCache,
+                      onPressed: isSelected ? _handleClearCache : null,
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.secondaryColor,
+                        backgroundColor:
+                            isSelected ? AppColors.secondaryColor : AppColors.secondaryColor.withOpacity(0.5),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
