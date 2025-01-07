@@ -110,6 +110,20 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
     }
   }
 
+  Future<void> _reloadRoomData() async {
+    try {
+      final room = await _roomController.getRoom(widget.roomId);
+
+      setState(() {
+        _room = room;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+    }
+  }
+
   bool isDeviceDataAvailable() {
     return _airQuality?.enviroScore != null;
   }
@@ -173,13 +187,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
 
   Widget _buildActionsTab() {
     return RoomActionsTab(
-      roomName: widget.roomName,
+      roomName: _room?.name ?? widget.roomName,
       roomId: _room?.id ?? '',
       roomService: RoomService(_roomController),
       onRoomRenamed: (newName) {
-        setState(() {
-          widget.roomName = newName; // This updates the header
-        });
+        _reloadRoomData();
       },
       onRoomRemoved: () => Navigator.pop(context),
     );
