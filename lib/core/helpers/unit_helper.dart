@@ -10,6 +10,17 @@ class UnitConverter {
     return (celsius * 9 / 5) + 32;
   }
 
+  static Future<String> formatButtonTemperature(double? celsius) async {
+    if (celsius == null) return 'N/A';
+
+    final useImperial = await getUseImperialUnits();
+    if (useImperial) {
+      final fahrenheit = celsiusToFahrenheit(celsius);
+      return '${fahrenheit.roundToDouble().toStringAsFixed(1)}°F';
+    }
+    return '${celsius.toStringAsFixed(1)}°C';
+  }
+
   static Future<String> formatTemperature(double? celsius) async {
     if (celsius == null) return 'N/A';
 

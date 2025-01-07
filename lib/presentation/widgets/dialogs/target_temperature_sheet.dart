@@ -28,7 +28,7 @@ class TargetTemperatureSheet extends StatelessWidget {
           setState(() {
             if (useImperial) {
               final fahrenheit = UnitConverter.celsiusToFahrenheit(tempValue!);
-              final newFahrenheit = fahrenheit.round();
+              final newFahrenheit = fahrenheit.round() + 1;
               tempValue = ((newFahrenheit - 32) * 5 / 9).clamp(0, 80);
             } else {
               tempValue = roundToNearestHalf((tempValue! + 0.5).clamp(0, 80));
@@ -41,7 +41,7 @@ class TargetTemperatureSheet extends StatelessWidget {
           setState(() {
             if (useImperial) {
               final fahrenheit = UnitConverter.celsiusToFahrenheit(tempValue!);
-              final newFahrenheit = fahrenheit.round();
+              final newFahrenheit = fahrenheit.round() - 1;
               tempValue = ((newFahrenheit - 32) * 5 / 9).clamp(0, 80);
             } else {
               tempValue = roundToNearestHalf((tempValue! - 0.5).clamp(0, 80));
@@ -91,7 +91,13 @@ class TargetTemperatureSheet extends StatelessWidget {
                         ),
                         const SizedBox(width: 16),
                         FutureBuilder<String>(
-                          future: UnitConverter.formatTemperature(tempValue),
+                          future: UnitConverter.getUseImperialUnits().then((useImperial) {
+                            if (useImperial) {
+                              return UnitConverter.formatButtonTemperature(tempValue);
+                            } else {
+                              return UnitConverter.formatTemperature(tempValue);
+                            }
+                          }),
                           builder: (context, snapshot) {
                             return Text(
                               snapshot.data ?? 'Loading...',
