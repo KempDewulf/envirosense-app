@@ -27,7 +27,9 @@ class TargetTemperatureSheet extends StatelessWidget {
           final useImperial = await UnitConverter.getUseImperialUnits();
           setState(() {
             if (useImperial) {
-              tempValue = roundToNearestHalf((tempValue! + (5 / 9)).clamp(0, 80));
+              final fahrenheit = UnitConverter.celsiusToFahrenheit(tempValue!);
+              final newFahrenheit = fahrenheit.round();
+              tempValue = ((newFahrenheit - 32) * 5 / 9).clamp(0, 80);
             } else {
               tempValue = roundToNearestHalf((tempValue! + 0.5).clamp(0, 80));
             }
@@ -38,7 +40,9 @@ class TargetTemperatureSheet extends StatelessWidget {
           final useImperial = await UnitConverter.getUseImperialUnits();
           setState(() {
             if (useImperial) {
-              tempValue = roundToNearestHalf((tempValue! - (5 / 9)).clamp(0, 80));
+              final fahrenheit = UnitConverter.celsiusToFahrenheit(tempValue!);
+              final newFahrenheit = fahrenheit.round();
+              tempValue = ((newFahrenheit - 32) * 5 / 9).clamp(0, 80);
             } else {
               tempValue = roundToNearestHalf((tempValue! - 0.5).clamp(0, 80));
             }
