@@ -72,7 +72,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                 icon: Icons.delete_outline,
                 label: 'Remove Device',
                 onPressed: _showRemoveDeviceDialog,
-                color: AppColors.redColor,
+                color: const Color.fromARGB(255, 253, 0, 0),
                 isDestructive: true,
               ),
             ],
