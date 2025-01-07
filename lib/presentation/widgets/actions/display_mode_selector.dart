@@ -45,13 +45,18 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
 
     // Scroll to active card after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final selectedIndex = modeTypes.indexOf(widget.selectedMode);
-      if (selectedIndex != -1) {
-        _scrollController.animateTo(
-          selectedIndex * 170.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+      try {
+        final selectedIndex = modeTypes.indexOf(widget.selectedMode);
+        if (selectedIndex != -1 && _scrollController.hasClients) {
+          _scrollController.animateTo(
+            selectedIndex * 170.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
+      } catch (e) {
+        debugPrint('ScrollController error: $e');
+        debugPrint('Device did not respond and thus no configs were fetched');
       }
     });
   }
