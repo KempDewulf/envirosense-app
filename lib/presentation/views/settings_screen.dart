@@ -148,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       ),
     ];
 
-    Future<bool> _showClearAllWarning(BuildContext context) async {
+    Future<bool> showClearAllWarning(BuildContext context) async {
       return await showDialog<bool>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -170,6 +170,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   onPressed: () => Navigator.pop(context, false),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: AppColors.secondaryColor),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   child: const Text(
                     'Cancel',
@@ -180,6 +183,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   onPressed: () => Navigator.pop(context, true),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.secondaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   child: const Text('Clear All'),
                 ),
@@ -322,7 +328,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                   final hasHighImpactSelection = cacheOptions.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
 
                                   if (hasHighImpactSelection) {
-                                    final confirmed = await _showClearAllWarning(context);
+                                    final confirmed = await showClearAllWarning(context);
                                     if (!confirmed) return;
                                   }
                                   Navigator.pop(context);
