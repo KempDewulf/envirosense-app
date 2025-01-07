@@ -1,6 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -14,6 +15,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   final List<Tab> _tabs = const [];
 
   bool _useImperialUnits = false;
+
+  Future<void> _toggleUnits(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('useImperialUnits', value);
+  }
 
   @override
   void initState() {
@@ -78,7 +84,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   Icons.thermostat,
                   color: AppColors.whiteColor,
                 ),
-                onChanged: (value) => UnimplementedError,
+                onChanged: (value) {
+                  setState(() {
+                    _useImperialUnits = value;
+                  });
+                  _toggleUnits;
+                },
               ),
             ),
           ),
