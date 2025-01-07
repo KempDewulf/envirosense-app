@@ -93,7 +93,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         FutureBuilder<String>(
                           future: UnitConverter.getUseImperialUnits().then((useImperial) {
                             if (useImperial) {
-                              return UnitConverter.formatButtonTemperature(tempValue);
+                              return UnitConverter.formatDisplayTemperature(tempValue);
                             } else {
                               return UnitConverter.formatTemperature(tempValue);
                             }
@@ -119,7 +119,8 @@ class TargetTemperatureSheet extends StatelessWidget {
                       width: 180,
                       child: FilledButton(
                         onPressed: () {
-                          onTemperatureChanged(tempValue!);
+                          final roundedTemp = roundToNearestHalf(tempValue!);
+                          onTemperatureChanged(roundedTemp);
                           Navigator.pop(context);
                         },
                         style: FilledButton.styleFrom(

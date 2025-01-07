@@ -10,7 +10,7 @@ class UnitConverter {
     return (celsius * 9 / 5) + 32;
   }
 
-  static Future<String> formatButtonTemperature(double? celsius) async {
+  static Future<String> formatDisplayTemperature(double? celsius) async {
     if (celsius == null) return 'N/A';
 
     final useImperial = await getUseImperialUnits();
