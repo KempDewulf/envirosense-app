@@ -154,7 +154,6 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
 
     for (final option in cacheOptions) {
       if (option.isSelected) {
-        // Handle cache clearing based on option
         if (option.isHighImpact) {
           // Handle high impact clearing (logout, etc.)
         } else {
