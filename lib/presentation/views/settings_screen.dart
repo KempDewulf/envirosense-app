@@ -67,17 +67,19 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(12),
               child: SwitchListTile(
-                title: const Text(
-                  'Imperial Units',
+                title: Text(
+                  _useImperialUnits ? 'Imperial Units' : 'Metric Units',
                   style: TextStyle(color: AppColors.whiteColor),
                 ),
-                subtitle: const Text(
-                  'Use Fahrenheit',
-                  style: TextStyle(color: AppColors.lightGrayColor),
+                subtitle: Text(
+                  _useImperialUnits ? 'Using Fahrenheit' : 'Using Celsius',
+                  style: TextStyle(
+                    color: AppColors.lightGrayColor,
+                  ),
                 ),
                 value: _useImperialUnits,
-                activeColor: AppColors.accentColor,
-                activeTrackColor: AppColors.accentColor.withOpacity(0.5),
+                activeColor: AppColors.whiteColor,
+                activeTrackColor: AppColors.whiteColor.withOpacity(0.3),
                 inactiveThumbColor: AppColors.whiteColor,
                 inactiveTrackColor: AppColors.whiteColor.withOpacity(0.3),
                 secondary: const Icon(
