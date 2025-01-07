@@ -23,6 +23,8 @@ import 'package:envirosense/presentation/views/login_screen.dart';
 import 'services/logging_service.dart';
 import 'presentation/views/room_overview_screen.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -109,6 +111,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'EnviroSense',
+      navigatorObservers: [routeObserver],
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: AppColors.secondaryColor,

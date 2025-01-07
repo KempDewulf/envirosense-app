@@ -1,9 +1,11 @@
 import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
+import 'package:envirosense/main.dart';
 import 'package:envirosense/presentation/controllers/building_controller.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:logging/logging.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -23,6 +25,24 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
   String? _error;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _loadData(); // Reload when returning to this screen
+    super.didPopNext();
+  }
+
+  @override
   void initState() {
     super.initState();
     _loadData();
@@ -33,7 +53,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
       setState(() => _isLoading = true);
 
       final buildingAirQuality = await _buildingController.getBuildingAirQuality(buildingId);
-
+      Logger.root.info('Building Air Quality fetched');
       setState(() {
         _buildingAirQuality = buildingAirQuality;
         _buildingHasData = isBuildingDataAvailable();
