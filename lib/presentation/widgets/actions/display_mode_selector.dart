@@ -2,20 +2,59 @@ import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class DisplayModeSelector extends StatelessWidget {
-  DisplayMode selectedMode;
+class DisplayModeSelector extends StatefulWidget {
+  final DisplayMode selectedMode;
   final Function(DisplayMode) onModeSelected;
   final bool isLoading;
   final bool hasError;
 
-  DisplayModeSelector({
+  const DisplayModeSelector({
     super.key,
     required this.selectedMode,
     required this.onModeSelected,
     this.isLoading = false,
     this.hasError = false,
   });
+
+  @override
+  State<DisplayModeSelector> createState() => _DisplayModeSelectorState();
+}
+
+// ignore: must_be_immutable
+class _DisplayModeSelectorState extends State<DisplayModeSelector> {
+  final ScrollController _scrollController = ScrollController();
+
+  late final List<Widget> displayModes;
+  final List<DisplayMode> modeTypes = [
+    DisplayMode.normal,
+    DisplayMode.temperature,
+    DisplayMode.humidity,
+    DisplayMode.ppm,
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    displayModes = [
+      _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
+      _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
+      _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
+      _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
+    ];
+
+    // Scroll to active card after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final selectedIndex = modeTypes.indexOf(widget.selectedMode);
+      if (selectedIndex != -1) {
+        _scrollController.animateTo(
+          selectedIndex * 170.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +64,8 @@ class DisplayModeSelector extends StatelessWidget {
         Row(
           children: [
             Icon(
-              hasError ? Icons.error_outline : Icons.screen_rotation,
-              color: hasError ? AppColors.redColor : AppColors.secondaryColor,
+              widget.hasError ? Icons.error_outline : Icons.screen_rotation,
+              color: widget.hasError ? AppColors.redColor : AppColors.secondaryColor,
             ),
             const SizedBox(width: 8),
             const Text(
@@ -36,7 +75,7 @@ class DisplayModeSelector extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        if (hasError)
+        if (widget.hasError)
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
@@ -47,7 +86,7 @@ class DisplayModeSelector extends StatelessWidget {
               ),
             ),
           )
-        else if (isLoading)
+        else if (widget.isLoading)
           const Center(
             child: SizedBox(
               height: 170,
@@ -72,13 +111,9 @@ class DisplayModeSelector extends StatelessWidget {
           SizedBox(
             height: 170,
             child: ListView(
+              controller: _scrollController,
               scrollDirection: Axis.horizontal,
-              children: [
-                _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
-                _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
-                _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
-                _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
-              ],
+              children: displayModes,
             ),
           ),
       ],
@@ -86,11 +121,11 @@ class DisplayModeSelector extends StatelessWidget {
   }
 
   Widget _buildModeCard(DisplayMode mode, String title, IconData icon) {
-    final isSelected = selectedMode == mode;
+    final isSelected = widget.selectedMode == mode;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
-        onTap: () => onModeSelected(mode),
+        onTap: () => widget.onModeSelected(mode),
         child: Container(
           width: 150,
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
