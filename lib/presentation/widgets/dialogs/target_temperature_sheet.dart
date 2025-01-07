@@ -12,6 +12,11 @@ class TargetTemperatureSheet extends StatelessWidget {
     required this.onTemperatureChanged,
   });
 
+  double roundToNearestHalf(double value) {
+    double rounded = (value * 2).round() / 2;
+    return double.parse(rounded.toStringAsFixed(1));
+  }
+
   @override
   Widget build(BuildContext context) {
     double? tempValue = currentTemperature;
@@ -22,11 +27,9 @@ class TargetTemperatureSheet extends StatelessWidget {
           final useImperial = await UnitConverter.getUseImperialUnits();
           setState(() {
             if (useImperial) {
-              // For Fahrenheit, use 1°F steps
-              tempValue = (tempValue! + (5 / 9)).clamp(0, 80);
+              tempValue = roundToNearestHalf((tempValue! + (5 / 9)).clamp(0, 80));
             } else {
-              // For Celsius, use 0.5°C steps
-              tempValue = (tempValue! + 0.5).clamp(0, 80);
+              tempValue = roundToNearestHalf((tempValue! + 0.5).clamp(0, 80));
             }
           });
         }
@@ -35,11 +38,9 @@ class TargetTemperatureSheet extends StatelessWidget {
           final useImperial = await UnitConverter.getUseImperialUnits();
           setState(() {
             if (useImperial) {
-              // For Fahrenheit, use 1°F steps
-              tempValue = (tempValue! - (5 / 9)).clamp(0, 80);
+              tempValue = roundToNearestHalf((tempValue! - (5 / 9)).clamp(0, 80));
             } else {
-              // For Celsius, use 0.5°C steps
-              tempValue = (tempValue! - 0.5).clamp(0, 80);
+              tempValue = roundToNearestHalf((tempValue! - 0.5).clamp(0, 80));
             }
           });
         }
