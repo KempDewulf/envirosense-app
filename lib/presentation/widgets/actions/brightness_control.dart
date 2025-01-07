@@ -41,6 +41,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
 
   @override
   Widget build(BuildContext context) {
+    final int activeBars = (widget.value ~/ 20).clamp(1, 5);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -53,63 +55,67 @@ class _BrightnessControlState extends State<BrightnessControl> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
-            //show widget.value if not loading, if loading shows nothing
-            if (!widget.isLoading)
-              Text(
-                '${widget.value}%',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.accentColor,
-                  fontWeight: FontWeight.bold,
+            if (!widget.isLoading) ...[
+                Text(
+                  '${widget.value}%',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.accentColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+              ] else ...[
+                const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(),
+                ),
+              ]
           ],
         ),
         const SizedBox(height: 16),
-        if (widget.isLoading)
-          const SizedBox(
-            height: 48,
-            child: Center(
-              child: SizedBox(
-                child: CircularProgressIndicator(),
-              ),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                if (widget.value > 20) {
+                  widget.onChanged(widget.value - 20);
+                } else {
+                  _handleMinimumBrightnessAttempt();
+                }
+              },
+              icon: const Icon(Icons.remove_circle),
+              color: AppColors.secondaryColor,
             ),
-          )
-        else
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  if (widget.value > 20) {
-                    widget.onChanged(widget.value - 20);
-                  }
-                },
-                icon: const Icon(Icons.remove_circle),
-                color: AppColors.secondaryColor,
-              ),
-              Expanded(
-                child: Row(
-                  children: List.generate(5, (index) {
-                    return Expanded(
+            Expanded(
+              child: Row(
+                children: List.generate(5, (index) {
+                  return Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        final newValue = ((index + 1) * 20);
+                        widget.onChanged(newValue);
+                      },
                       child: Container(
                         height: 24,
                         margin: const EdgeInsets.symmetric(horizontal: 2),
                         decoration: BoxDecoration(
-                          color: index < (widget.value ~/ 20) ? AppColors.secondaryColor : AppColors.lightGrayColor,
+                          color: index < activeBars ? AppColors.secondaryColor : AppColors.lightGrayColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
               ),
-              IconButton(
-                onPressed: widget.value < 100 ? () => widget.onChanged(widget.value + 20) : null,
-                icon: const Icon(Icons.add_circle),
-                color: AppColors.secondaryColor,
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              onPressed: widget.value < 100 ? () => widget.onChanged(widget.value + 20) : null,
+              icon: const Icon(Icons.add_circle),
+              color: AppColors.secondaryColor,
+            ),
+          ],
+        ),
       ],
     );
   }
