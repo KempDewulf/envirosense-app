@@ -68,9 +68,11 @@ class _BrightnessControlState extends State<BrightnessControl> {
         const SizedBox(height: 16),
         if (widget.isLoading)
           const SizedBox(
-            height: 24,
+            height: 48,
             child: Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+              ),
             ),
           )
         else
