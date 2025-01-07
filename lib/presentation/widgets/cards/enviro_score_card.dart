@@ -39,7 +39,7 @@ class EnviroScoreCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(255, 211, 211, 211),
+            color: AppColors.shadowColor,
             spreadRadius: 1,
             blurRadius: 10,
             offset: Offset(0, 2),

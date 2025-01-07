@@ -24,7 +24,7 @@ class PaginationControls extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(255, 211, 211, 211),
+            color: AppColors.shadowColor,
             spreadRadius: 1,
             blurRadius: 4,
             offset: Offset(0, 2),

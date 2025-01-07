@@ -33,25 +33,78 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         foregroundColor: AppColors.whiteColor,
       ),
       body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
           const _SectionHeader(title: 'Account'),
-          ListTile(
-            leading: const Icon(Icons.logout, color: AppColors.accentColor),
-            title: const Text('Sign Out'),
-            onTap: () => UnimplementedError(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => UnimplementedError,
+                child: ListTile(
+                  leading: const Icon(Icons.logout, color: AppColors.whiteColor),
+                  title: const Text(
+                    'Sign Out',
+                    style: TextStyle(color: AppColors.whiteColor),
+                  ),
+                ),
+              ),
+            ),
           ),
           const _SectionHeader(title: 'Preferences'),
-          SwitchListTile(
-            title: const Text('Imperial Units'),
-            subtitle: const Text('Use Fahrenheit instead of Celsius'),
-            value: _useImperialUnits,
-            onChanged: (value) => UnimplementedError(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: SwitchListTile(
+                title: const Text(
+                  'Imperial Units',
+                  style: TextStyle(color: AppColors.whiteColor),
+                ),
+                subtitle: const Text(
+                  'Use Fahrenheit instead of Celsius',
+                  style: TextStyle(color: AppColors.whiteColor),
+                ),
+                value: _useImperialUnits,
+                activeColor: AppColors.accentColor,
+                secondary: const Icon(
+                  Icons.thermostat,
+                  color: AppColors.whiteColor,
+                ),
+                onChanged: (value) => UnimplementedError,
+              ),
+            ),
           ),
           const _SectionHeader(title: 'Data'),
-          ListTile(
-            leading: const Icon(Icons.cleaning_services),
-            title: const Text('Clear Cache'),
-            onTap: () => _showClearCacheOptions(context),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => _showClearCacheOptions(context),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.cleaning_services,
+                    color: AppColors.whiteColor,
+                  ),
+                  title: const Text(
+                    'Clear Cache',
+                    style: TextStyle(color: AppColors.whiteColor),
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.whiteColor,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
