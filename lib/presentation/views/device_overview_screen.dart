@@ -151,6 +151,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
     return DeviceControlsTab(
       deviceId: widget.deviceId,
       deviceController: _deviceController,
+      deviceConfig: _deviceConfig,
+      loadingConfig: _loadingConfig,
     );
   }
 
