@@ -1,11 +1,13 @@
 import 'package:envirosense/data/datasources/room_data_source.dart';
 import 'package:envirosense/data/repositories/room_repository_impl.dart';
 import 'package:envirosense/domain/entities/room_air_quality.dart';
+import 'package:envirosense/domain/entities/room_limits.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/domain/repositories/room_repository.dart';
 import 'package:envirosense/domain/usecases/add_device_to_room.dart';
 import 'package:envirosense/domain/usecases/delete_room.dart';
 import 'package:envirosense/domain/usecases/get_room_air_quality.dart';
+import 'package:envirosense/domain/usecases/get_room_limits.dart';
 import 'package:envirosense/domain/usecases/get_room.dart';
 import 'package:envirosense/domain/usecases/remove_device_from_room.dart';
 import 'package:envirosense/domain/usecases/update_room.dart';
@@ -17,6 +19,7 @@ class RoomController {
   late final GetRoomsUseCase getRoomsUseCase;
   late final GetRoomUseCase getRoomUseCase;
   late final GetRoomAirQualityUseCase getRoomAirQualityUseCase;
+  late final GetRoomLimitsUseCase getRoomLimitsUseCase;
   late final AddRoomUseCase addRoomUseCase;
   late final DeleteRoomUseCase deleteRoomUseCase;
   late final UpdateRoomUseCase updateRoomUseCase;
@@ -31,6 +34,7 @@ class RoomController {
     getRoomsUseCase = GetRoomsUseCase(repository);
     getRoomUseCase = GetRoomUseCase(repository);
     getRoomAirQualityUseCase = GetRoomAirQualityUseCase(repository);
+    getRoomLimitsUseCase = GetRoomLimitsUseCase(repository);
     addRoomUseCase = AddRoomUseCase(repository);
     deleteRoomUseCase = DeleteRoomUseCase(repository);
     updateRoomUseCase = UpdateRoomUseCase(repository);
@@ -50,8 +54,11 @@ class RoomController {
     return await getRoomAirQualityUseCase(roomId);
   }
 
-  Future<void> addRoom(
-      String? name, String buildingId, String? roomTypeId) async {
+  Future<RoomLimits> getRoomLimits(String roomId) async {
+    return await getRoomLimitsUseCase(roomId);
+  }
+
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
     return await addRoomUseCase(name, buildingId, roomTypeId);
   }
 

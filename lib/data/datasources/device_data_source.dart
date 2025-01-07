@@ -1,6 +1,7 @@
 import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/models/add_device_request_model.dart';
+import 'package:envirosense/data/models/device_config_model.dart';
 import 'package:envirosense/data/models/device_model.dart';
 import '../../services/api_service.dart';
 
@@ -15,8 +16,7 @@ class DeviceDataSource {
 
       List<dynamic> data = response.data as List<dynamic>;
       List<DeviceModel> devices = data.map((deviceJson) {
-        return DeviceModel.fromJson(
-            deviceJson as Map<String, dynamic>, buildingId);
+        return DeviceModel.fromJson(deviceJson as Map<String, dynamic>, buildingId);
       }).toList();
 
       return devices;
@@ -31,6 +31,15 @@ class DeviceDataSource {
       return DeviceModel.fromJson(response.data, '');
     } catch (e) {
       throw Exception('Failed to load device: $e');
+    }
+  }
+
+  Future<DeviceConfigModel> getDeviceConfig(String deviceId) async {
+    try {
+      final response = await apiService.getRequest('devices/$deviceId/config');
+      return DeviceConfigModel.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to get device config: $e');
     }
   }
 
@@ -60,11 +69,9 @@ class DeviceDataSource {
     }
   }
 
-  Future<void> updateDeviceLimit(
-      String deviceId, LimitType limitType, double value) async {
+  Future<void> updateDeviceLimit(String deviceId, LimitType limitType, double value) async {
     try {
-      await apiService
-          .patchRequest('devices/$deviceId/limits/${limitType.toApiString}', {
+      await apiService.patchRequest('devices/$deviceId/limits/${limitType.toApiString}', {
         'value': value,
       });
     } catch (e) {

@@ -28,9 +28,7 @@ class EnvironmentDataToggle extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: showRoomData && roomHasDeviceData
-                      ? AppColors.secondaryColor
-                      : AppColors.transparent,
+                  color: showRoomData && roomHasDeviceData ? AppColors.secondaryColor : AppColors.transparent,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(
@@ -39,8 +37,7 @@ class EnvironmentDataToggle extends StatelessWidget {
                   style: TextStyle(
                     color: showRoomData && roomHasDeviceData
                         ? AppColors.whiteColor
-                        : AppColors.secondaryColor
-                            .withOpacity(roomHasDeviceData ? 1.0 : 0.5),
+                        : AppColors.secondaryColor.withOpacity(roomHasDeviceData ? 1.0 : 0.5),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -53,18 +50,14 @@ class EnvironmentDataToggle extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: !showRoomData
-                      ? AppColors.secondaryColor
-                      : AppColors.transparent,
+                  color: !showRoomData ? AppColors.secondaryColor : AppColors.transparent,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(
                   'Outside Data',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: !showRoomData
-                        ? AppColors.whiteColor
-                        : AppColors.secondaryColor,
+                    color: !showRoomData ? AppColors.whiteColor : AppColors.secondaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

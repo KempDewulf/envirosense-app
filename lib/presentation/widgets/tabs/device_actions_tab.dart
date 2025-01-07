@@ -83,8 +83,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   }
 
   Future<void> _showRenameDeviceDialog() async {
-    final TextEditingController inputController =
-        TextEditingController(text: widget.deviceCustomName);
+    final TextEditingController inputController = TextEditingController(text: widget.deviceCustomName);
 
     return showModalBottomSheet(
       context: context,
@@ -231,8 +230,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                               value: room.id,
                               child: Container(
                                 constraints: BoxConstraints(
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width * 0.8,
+                                  maxWidth: MediaQuery.of(context).size.width * 0.8,
                                 ),
                                 child: Text(
                                   room.name,
@@ -257,9 +255,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                                         style: TextStyle(
                                           color: AppColors.whiteColor,
                                           fontSize: 16,
-                                          fontWeight: room.id == _selectedRoomId
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
+                                          fontWeight: room.id == _selectedRoomId ? FontWeight.bold : FontWeight.normal,
                                         ),
                                       );
                                     },
@@ -272,8 +268,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.whiteColor
-                                            .withOpacity(0.4),
+                                        color: AppColors.whiteColor.withOpacity(0.4),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: const Text(
@@ -296,16 +291,13 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                           fontSize: 16,
                         ),
                         border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.secondaryColor),
+                          borderSide: BorderSide(color: AppColors.secondaryColor),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: AppColors.secondaryColor),
+                          borderSide: BorderSide(color: AppColors.secondaryColor),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: AppColors.secondaryColor, width: 2),
+                          borderSide: BorderSide(color: AppColors.secondaryColor, width: 2),
                         ),
                       ),
                     ),
@@ -323,8 +315,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
-                            side: const BorderSide(
-                                color: AppColors.secondaryColor),
+                            side: const BorderSide(color: AppColors.secondaryColor),
                           ),
                           child: const Text(
                             'Cancel',
@@ -409,8 +400,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
   Future<void> _handleDeviceRemoval() async {
     try {
-      await widget.deviceService
-          .deleteDevice(widget.deviceId!, widget.buildingId);
+      await widget.deviceService.deleteDevice(widget.deviceId!, widget.buildingId);
 
       if (!mounted) return;
       Navigator.pop(context);

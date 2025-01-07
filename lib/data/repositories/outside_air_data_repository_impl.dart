@@ -7,7 +7,7 @@ class OutsideAirDataRepositoryImpl extends OutsideAirDataRepository {
 
   OutsideAirDataRepositoryImpl({required this.remoteDataSource});
   @override
-  Future<OutsideAirData> getOutsideAirData(String city) async{
+  Future<OutsideAirData> getOutsideAirData(String city) async {
     return await remoteDataSource.getOutsideAir(city);
   }
 }

@@ -8,8 +8,7 @@ class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key, required this.email});
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
@@ -89,8 +88,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 ),
                 child: _isChecking
                     ? const CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
                       )
                     : const Text(
                         'I Verified My Email',
@@ -104,9 +102,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               child: Text(
                 'Resend Verification Email',
                 style: TextStyle(
-                  color: _canResendEmail
-                      ? AppColors.whiteColor
-                      : AppColors.lightGrayColor,
+                  color: _canResendEmail ? AppColors.whiteColor : AppColors.lightGrayColor,
                 ),
               ),
             ),

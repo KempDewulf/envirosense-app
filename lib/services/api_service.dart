@@ -43,8 +43,7 @@ class ApiService {
     }
   }
 
-  Future<ApiResponse> postRequest(
-      String endpoint, Map<String, dynamic> body) async {
+  Future<ApiResponse> postRequest(String endpoint, Map<String, dynamic> body) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/$endpoint'),
@@ -55,24 +54,21 @@ class ApiService {
       switch (response.statusCode) {
         case 200:
         case 201:
-          final dynamic responseData =
-              response.body.isNotEmpty ? jsonDecode(response.body) : null;
+          final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
           return ApiResponse(responseData, response.headers);
 
         case 409:
           throw Exception('Entity already assigned to another entity');
 
         default:
-          throw Exception(
-              'POST request failed with status: ${response.statusCode}');
+          throw Exception('POST request failed with status: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Request failed: $e');
     }
   }
 
-  Future<ApiResponse> putRequest(
-      String endpoint, Map<String, dynamic> body) async {
+  Future<ApiResponse> putRequest(String endpoint, Map<String, dynamic> body) async {
     try {
       final response = await http.put(
         Uri.parse('$baseUrl/$endpoint'),
@@ -83,24 +79,21 @@ class ApiService {
       switch (response.statusCode) {
         case 200:
         case 201:
-          final dynamic responseData =
-              response.body.isNotEmpty ? jsonDecode(response.body) : null;
+          final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
           return ApiResponse(responseData, response.headers);
 
         case 409:
           throw Exception('Entity already assigned to another entity');
 
         default:
-          throw Exception(
-              'PUT request failed with status: ${response.statusCode}');
+          throw Exception('PUT request failed with status: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Request failed: $e');
     }
   }
 
-  Future<ApiResponse> patchRequest(
-      String endpoint, Map<String, dynamic> body) async {
+  Future<ApiResponse> patchRequest(String endpoint, Map<String, dynamic> body) async {
     try {
       final response = await http.patch(
         Uri.parse('$baseUrl/$endpoint'),
@@ -111,16 +104,14 @@ class ApiService {
       switch (response.statusCode) {
         case 200:
         case 201:
-          final dynamic responseData =
-              response.body.isNotEmpty ? jsonDecode(response.body) : null;
+          final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
           return ApiResponse(responseData, response.headers);
 
         case 409:
           throw Exception('Entity already assigned to another entity');
 
         default:
-          throw Exception(
-              'PATCH request failed with status: ${response.statusCode}');
+          throw Exception('PATCH request failed with status: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Request failed: $e');
@@ -138,13 +129,11 @@ class ApiService {
       case 201:
       case 202:
       case 204:
-        final dynamic responseData =
-            response.body.isNotEmpty ? jsonDecode(response.body) : null;
+        final dynamic responseData = response.body.isNotEmpty ? jsonDecode(response.body) : null;
         return ApiResponse(responseData, response.headers);
 
       default:
-        throw Exception(
-            'PUT request failed with status: ${response.statusCode}');
+        throw Exception('PUT request failed with status: ${response.statusCode}');
     }
   }
 }

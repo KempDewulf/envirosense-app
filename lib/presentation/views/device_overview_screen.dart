@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/domain/entities/device.dart';
+import 'package:envirosense/domain/entities/device_config.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/device_data_controller.dart';
@@ -17,25 +18,27 @@ class DeviceOverviewScreen extends StatefulWidget {
   String deviceName;
   final String deviceId;
 
-  DeviceOverviewScreen(
-      {super.key, required this.deviceName, required this.deviceId});
+  DeviceOverviewScreen({super.key, required this.deviceName, required this.deviceId});
 
   @override
   State<DeviceOverviewScreen> createState() => _DeviceOverviewScreenState();
 }
 
-class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
-    with SingleTickerProviderStateMixin {
+class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with SingleTickerProviderStateMixin {
   late final DeviceController _deviceController = DeviceController();
   late final DeviceService _deviceService = DeviceService(_deviceController);
-  late final DeviceDataController _deviceDataController =
-      DeviceDataController();
+  late final DeviceDataController _deviceDataController = DeviceDataController();
   late final RoomController _roomController = RoomController();
-  late final TabController _tabController =
-      TabController(length: _tabs.length, vsync: this);
+  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
+  final Map<String, bool> _loadingConfig = {
+    'ui-mode': false,
+    'brightness': false,
+  };
+
   Device? _device;
+  DeviceConfig? _deviceConfig;
   List<DeviceData> _deviceData = [];
   String? _error;
   final String _buildingId =
@@ -51,15 +54,41 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
   void initState() {
     super.initState();
     _loadData();
+    _loadConfig();
+  }
+
+  Future<void> _loadConfig() async {
+    if (!mounted) return;
+
+    setState(() {
+      _loadingConfig['ui-mode'] = true;
+      _loadingConfig['brightness'] = true;
+    });
+
+    try {
+      final config = await _deviceController.getDeviceConfig(widget.deviceId);
+      if (!mounted) return;
+
+      setState(() {
+        _deviceConfig = config;
+        _loadingConfig['ui-mode'] = false;
+        _loadingConfig['brightness'] = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _deviceConfig = null;
+        _loadingConfig['ui-mode'] = false;
+        _loadingConfig['brightness'] = false;
+      });
+    }
   }
 
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
-      final device =
-          await _deviceController.getDevice(widget.deviceId, _buildingId);
-      final deviceData = await _deviceDataController
-          .getDeviceDataByDeviceId(device.identifier);
+      final device = await _deviceController.getDevice(widget.deviceId, _buildingId);
+      final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);
       setState(() {
         _device = device;
         _deviceData = deviceData;
@@ -85,12 +114,22 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
         body: LoadingErrorWidget(
           isLoading: _isLoading,
           error: _error,
-          onRetry: _loadData,
+          onRetry: () async {
+            await _loadData();
+            await _loadConfig();
+          },
           child: TabBarView(
             controller: _tabController,
             children: [
               RefreshIndicator(
-                onRefresh: _loadData,
+                onRefresh: () async {
+                  setState(() {
+                    _loadingConfig['ui-mode'] = true;
+                    _loadingConfig['brightness'] = true;
+                  });
+                  await _loadData();
+                  await _loadConfig();
+                },
                 color: AppColors.secondaryColor,
                 child: _buildOverviewTab(),
               ),
@@ -112,12 +151,14 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen>
     return DeviceControlsTab(
       deviceId: widget.deviceId,
       deviceController: _deviceController,
+      deviceConfig: _deviceConfig,
+      loadingConfig: _loadingConfig,
     );
   }
 
   Widget _buildActionsTab() {
     if (_device == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)));
     }
 
     return DeviceActionsTab(

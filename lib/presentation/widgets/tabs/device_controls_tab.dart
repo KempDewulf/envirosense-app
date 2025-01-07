@@ -1,6 +1,7 @@
 import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/helpers/debouncer.dart';
+import 'package:envirosense/domain/entities/device_config.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/widgets/actions/brightness_control.dart';
 import 'package:envirosense/presentation/widgets/actions/display_mode_selector.dart';
@@ -10,19 +11,42 @@ import 'package:flutter/material.dart';
 class DeviceControlsTab extends StatefulWidget {
   final String deviceId;
   final DeviceController deviceController;
+  final DeviceConfig? deviceConfig;
+  final Map<String, bool> loadingConfig;
 
   const DeviceControlsTab({
     super.key,
     required this.deviceId,
     required this.deviceController,
+    this.deviceConfig,
+    required this.loadingConfig,
   });
   @override
   State<DeviceControlsTab> createState() => _DeviceControlsTabState();
 }
 
 class _DeviceControlsTabState extends State<DeviceControlsTab> {
-  DisplayMode _selectedMode = DisplayMode.normal;
-  int _brightnessValue = 80;
+  late DisplayMode _selectedMode;
+  late int _brightnessValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeValues();
+  }
+
+  @override
+  void didUpdateWidget(DeviceControlsTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.deviceConfig != widget.deviceConfig) {
+      _initializeValues();
+    }
+  }
+
+  void _initializeValues() {
+    _selectedMode = widget.deviceConfig?.uiMode != null ? DisplayModeExtension.fromString(widget.deviceConfig!.uiMode) : DisplayMode.normal;
+    _brightnessValue = widget.deviceConfig?.brightness ?? 80;
+  }
 
   Future<void> _updateDeviceConfig<T>({
     required ConfigType configType,
@@ -49,8 +73,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
         }
       } catch (e) {
         if (mounted) {
-          CustomSnackbar.showSnackBar(
-              context, 'Failed to update ${configType.name.toLowerCase()}');
+          CustomSnackbar.showSnackBar(context, 'Failed to update ${configType.name.toLowerCase()}');
         }
       }
     });
@@ -83,17 +106,23 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasError = widget.deviceConfig?.failed ?? false;
+
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: [
         DisplayModeSelector(
           selectedMode: _selectedMode,
           onModeSelected: _updateDeviceUIMode,
+          isLoading: widget.loadingConfig['ui-mode'] ?? false,
+          hasError: hasError,
         ),
         const SizedBox(height: 36),
         BrightnessControl(
           value: _brightnessValue,
           onChanged: _updateBrightnessLimit,
+          isLoading: widget.loadingConfig['brightness'] ?? false,
+          hasError: hasError,
         ),
       ],
     );

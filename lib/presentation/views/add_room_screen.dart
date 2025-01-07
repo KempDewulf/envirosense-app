@@ -71,8 +71,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     });
 
     try {
-      await _roomController.addRoom(
-          _roomNameController.text, _buildingId, _selectedRoomType?.id);
+      await _roomController.addRoom(_roomNameController.text, _buildingId, _selectedRoomType?.id);
 
       if (mounted) {
         CustomSnackbar.showSnackBar(
@@ -104,7 +103,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppColors.secondaryColor,)),
+        body: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor))),
       );
     }
 
@@ -144,8 +143,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               floatingLabelBehaviour: FloatingLabelBehavior.never,
               onChanged: (value) => setState(() {}),
               labelColor: AppColors.accentColor,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
               borderColor: AppColors.accentColor,
               floatingLabelCustomStyle: const TextStyle(
                 color: AppColors.primaryColor,
@@ -190,15 +188,12 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                           width: 70,
                           height: 70,
                           decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.secondaryColor
-                                : AppColors.lightGrayColor,
+                            color: isSelected ? AppColors.secondaryColor : AppColors.lightGrayColor,
                             shape: BoxShape.circle,
                             boxShadow: isSelected
                                 ? [
                                     BoxShadow(
-                                      color: AppColors.secondaryColor
-                                          .withOpacity(0.6),
+                                      color: AppColors.secondaryColor.withOpacity(0.6),
                                       spreadRadius: 2,
                                       blurRadius: 6,
                                     ),
@@ -207,9 +202,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                           ),
                           child: Icon(
                             getIconData(roomType.icon),
-                            color: isSelected
-                                ? AppColors.whiteColor
-                                : AppColors.accentColor,
+                            color: isSelected ? AppColors.whiteColor : AppColors.accentColor,
                             size: 35,
                           ),
                         ),
@@ -218,12 +211,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                           capitalizeWords(roomType.icon),
                           style: TextStyle(
                             fontSize: 14,
-                            color: isSelected
-                                ? AppColors.secondaryColor
-                                : AppColors.accentColor,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                            color: isSelected ? AppColors.secondaryColor : AppColors.accentColor,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
                       ],
@@ -237,9 +226,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               child: ElevatedButton(
                 onPressed: _isFormComplete ? _saveRoom : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFormComplete
-                      ? AppColors.secondaryColor
-                      : AppColors.lightGrayColor,
+                  backgroundColor: _isFormComplete ? AppColors.secondaryColor : AppColors.lightGrayColor,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
@@ -247,8 +234,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                 ),
                 child: _isSaving
                     ? const CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
                       )
                     : const Text(
                         'SAVE',

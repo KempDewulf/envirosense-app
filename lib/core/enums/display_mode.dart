@@ -15,4 +15,19 @@ extension DisplayModeExtension on DisplayMode {
         return 'normal';
     }
   }
+
+  static DisplayMode fromString(String value) {
+    switch (value) {
+      case 'normal':
+        return DisplayMode.normal;
+      case 'temperature':
+        return DisplayMode.temperature;
+      case 'humidity':
+        return DisplayMode.humidity;
+      case 'ppm':
+        return DisplayMode.ppm;
+      default:
+        return DisplayMode.normal;
+    }
+  }
 }

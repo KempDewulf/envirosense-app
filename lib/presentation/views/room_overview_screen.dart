@@ -27,23 +27,24 @@ class RoomOverviewScreen extends StatefulWidget {
   State<RoomOverviewScreen> createState() => _RoomOverviewScreenState();
 }
 
-class _RoomOverviewScreenState extends State<RoomOverviewScreen>
-    with SingleTickerProviderStateMixin {
+class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTickerProviderStateMixin {
   late final RoomController _roomController = RoomController();
   late final DeviceController _deviceController = DeviceController();
-  late final OutsideAirDataController _outsideAirController =
-      OutsideAirDataController();
-  late final TabController _tabController =
-      TabController(length: _tabs.length, vsync: this);
+  late final OutsideAirDataController _outsideAirController = OutsideAirDataController();
+  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
 
   bool _isLoading = true;
+  final Map<String, bool> _loadingLimits = {
+    'temperature': false,
+  };
+
   bool _showRoomData = true;
   bool _roomHasDeviceData = false;
-  double _targetTemperature = 22.0; // hardcoded for now
 
   Room? _room;
   RoomAirQuality? _airQuality;
   AirData? _outsideAirData;
+  double? _targetTemperature;
   String? _error;
   String city = 'Brugge'; //TODO: later in poc we would get city from user
 
@@ -57,6 +58,33 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
   void initState() {
     super.initState();
     _loadData();
+    _loadLimits('temperature');
+  }
+
+  Future<void> _loadLimits(String limitType) async {
+    if (!mounted) return;
+
+    setState(() => _loadingLimits[limitType] = true);
+    try {
+      final limits = await _roomController.getRoomLimits(widget.roomId);
+      if (!mounted) return;
+
+      setState(() {
+        if (limitType == 'temperature') {
+          _targetTemperature = limits.temperature;
+        }
+        _loadingLimits[limitType] = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        if (limitType == 'temperature') {
+          _targetTemperature = null;
+        }
+        _loadingLimits[limitType] = false;
+      });
+    }
   }
 
   Future<void> _loadData() async {
@@ -64,8 +92,8 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       setState(() => _isLoading = true);
       final room = await _roomController.getRoom(widget.roomId);
       final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
-      final outsideAirData =
-          await _outsideAirController.getOutsideAirData(city);
+
+      final outsideAirData = await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
         _airQuality = airQuality;
@@ -98,12 +126,19 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       body: LoadingErrorWidget(
         isLoading: _isLoading,
         error: _error,
-        onRetry: _loadData,
+        onRetry: () async {
+          setState(() => _loadingLimits['temperature'] = true);
+          await _loadData();
+          await _loadLimits('temperature');
+        },
         child: TabBarView(
           controller: _tabController,
           children: [
             RefreshIndicator(
-              onRefresh: _loadData,
+              onRefresh: () async {
+                await _loadData();
+                await _loadLimits('temperature');
+              },
               color: AppColors.secondaryColor,
               child: _buildOverviewTab(),
             ),
@@ -121,7 +156,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
 
   Widget _buildOverviewTab() {
     if (_outsideAirData == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)));
     }
 
     return RoomOverviewContent(
@@ -132,6 +167,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       outsideAirData: _outsideAirData,
       onSetTemperature: () => _showTargetTemperatureSheet(context),
       onDataToggle: (value) => setState(() => _showRoomData = value),
+      isLoadingTemperature: _loadingLimits['temperature']!,
     );
   }
 
@@ -168,20 +204,17 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen>
       }
 
       allDeviceIds?.forEach((deviceId) async {
-        await _deviceController.updateDeviceLimit(
-            deviceId, LimitType.temperature, newTemperature);
+        await _deviceController.updateDeviceLimit(deviceId, LimitType.temperature, newTemperature);
       });
 
       setState(() => _targetTemperature = newTemperature);
 
       if (mounted) {
-        CustomSnackbar.showSnackBar(
-            context, 'Temperature limit updated to $newTemperature°C');
+        CustomSnackbar.showSnackBar(context, 'Temperature limit updated to $newTemperature°C');
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackbar.showSnackBar(
-            context, 'Failed to update temperature limit');
+        CustomSnackbar.showSnackBar(context, 'Failed to update temperature limit');
       }
     }
   }

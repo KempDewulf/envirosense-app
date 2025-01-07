@@ -17,7 +17,7 @@ class DeviceDataDataSource {
   }
 
   Future<List<DeviceDataModel>> _getDeviceData(
-    String deviceIdentifier,{
+    String deviceIdentifier, {
     Duration cacheDuration = const Duration(days: 1),
   }) async {
     final cachedTimestamp = await databaseService.getCacheTimestamp(deviceIdentifier);
@@ -45,13 +45,13 @@ class DeviceDataDataSource {
   }
 
   Future<List<DeviceDataModel>?> _retrieveCachedData(
-  String key,
-  DateTime? cachedTimestamp,
-) async {
-  if (cachedTimestamp == null) return null;
-  final List<DeviceDataModel>? cachedData = await databaseService.getCache<List<DeviceDataModel>>(key);
-  return cachedData;
-}
+    String key,
+    DateTime? cachedTimestamp,
+  ) async {
+    if (cachedTimestamp == null) return null;
+    final List<DeviceDataModel>? cachedData = await databaseService.getCache<List<DeviceDataModel>>(key);
+    return cachedData;
+  }
 
   String _buildEndpoint(String base, DateTime? cachedTimestamp, {String? deviceIdentifier}) {
     final buffer = StringBuffer(base);

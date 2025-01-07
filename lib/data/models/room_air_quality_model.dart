@@ -37,9 +37,7 @@ class RoomAirQualityModel extends RoomAirQuality {
               : (json['airQuality']['humidity'] as num?)?.toDouble())
           : null,
       ppm: json['airQuality']['ppm'] != null
-          ? (json['airQuality']['ppm'] is String
-              ? int.tryParse(json['airQuality']['ppm'])
-              : (json['airQuality']['ppm'] as num?)?.toInt())
+          ? (json['airQuality']['ppm'] is String ? int.tryParse(json['airQuality']['ppm']) : (json['airQuality']['ppm'] as num?)?.toInt())
           : null,
     );
 

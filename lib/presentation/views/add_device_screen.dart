@@ -19,8 +19,7 @@ class AddDeviceScreen extends StatefulWidget {
 }
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
-  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _deviceNameController = TextEditingController();
@@ -35,9 +34,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   bool _isSaving = false;
 
   bool get _isFormComplete {
-    return _deviceIdentifierCode != null &&
-        _selectedRoom != null &&
-        _deviceNameController.text.isNotEmpty;
+    return _deviceIdentifierCode != null && _selectedRoom != null && _deviceNameController.text.isNotEmpty;
   }
 
   @override
@@ -56,11 +53,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   void _filterRooms() {
     setState(() {
-      _filteredRooms = _rooms
-          .where((room) => room.name
-              .toLowerCase()
-              .contains(_searchController.text.toLowerCase()))
-          .toList();
+      _filteredRooms = _rooms.where((room) => room.name.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
     });
   }
 
@@ -92,8 +85,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     });
 
     try {
-      await _deviceController.addDevice(
-          _selectedRoom?.id, _deviceIdentifierCode);
+      await _deviceController.addDevice(_selectedRoom?.id, _deviceIdentifierCode);
       await _databaseService.setDeviceName(_deviceIdentifierCode!, _deviceNameController.text);
       await _databaseService.clearCacheForDevice(_deviceIdentifierCode!);
 
@@ -150,10 +142,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
             if (_deviceIdentifierCode == null)
               const Text(
                 'Scan the QR Code on the device.\nYour device will connect automatically.',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.accentColor,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, color: AppColors.accentColor, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             SizedBox(height: _deviceIdentifierCode == null ? 28.0 : 6.0),
@@ -198,8 +187,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             floatingLabelBehaviour: FloatingLabelBehavior.never,
                             onChanged: (value) => setState(() {}),
                             labelColor: AppColors.accentColor,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 16),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                             borderColor: AppColors.accentColor,
                             floatingLabelCustomStyle: const TextStyle(
                               color: AppColors.primaryColor,
@@ -223,8 +211,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             labelText: 'Search rooms',
                             floatingLabelBehaviour: FloatingLabelBehavior.never,
                             labelColor: AppColors.accentColor,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 16),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                             borderColor: AppColors.accentColor,
                             floatingLabelCustomStyle: const TextStyle(
                               color: AppColors.primaryColor,
@@ -237,8 +224,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           Expanded(
                             child: GridView.builder(
                               itemCount: _filteredRooms.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 mainAxisSpacing: 25,
                                 crossAxisSpacing: 15,
@@ -261,16 +247,12 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                         width: 70,
                                         height: 70,
                                         decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? AppColors.secondaryColor
-                                              : AppColors.lightGrayColor,
+                                          color: isSelected ? AppColors.secondaryColor : AppColors.lightGrayColor,
                                           shape: BoxShape.circle,
                                           boxShadow: isSelected
                                               ? [
                                                   BoxShadow(
-                                                    color: AppColors
-                                                        .secondaryColor
-                                                        .withOpacity(0.6),
+                                                    color: AppColors.secondaryColor.withOpacity(0.6),
                                                     spreadRadius: 2,
                                                     blurRadius: 6,
                                                   ),
@@ -279,17 +261,14 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                         ),
                                         child: Icon(
                                           getIconData(room.roomType.icon),
-                                          color: isSelected
-                                              ? AppColors.whiteColor
-                                              : AppColors.accentColor,
+                                          color: isSelected ? AppColors.whiteColor : AppColors.accentColor,
                                           size: 35,
                                         ),
                                       ),
                                       const SizedBox(height: 8),
                                       Tooltip(
                                         message: room.name,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 16),
+                                        margin: const EdgeInsets.symmetric(horizontal: 16),
                                         child: Text(
                                           room.name,
                                           textAlign: TextAlign.center,
@@ -297,12 +276,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color: isSelected
-                                                ? AppColors.secondaryColor
-                                                : AppColors.accentColor,
-                                            fontWeight: isSelected
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
+                                            color: isSelected ? AppColors.secondaryColor : AppColors.accentColor,
+                                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                                           ),
                                         ),
                                       )
@@ -317,29 +292,22 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: _isFormComplete
-                                    ? AppColors.secondaryColor
-                                    : AppColors.lightGrayColor,
+                                backgroundColor: _isFormComplete ? AppColors.secondaryColor : AppColors.lightGrayColor,
                                 foregroundColor: AppColors.whiteColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
-                                disabledBackgroundColor:
-                                    AppColors.lightGrayColor,
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                disabledBackgroundColor: AppColors.lightGrayColor,
                                 disabledForegroundColor: AppColors.accentColor,
                               ),
-                              onPressed:
-                                  !_isFormComplete ? null : _addDeviceToRoom,
+                              onPressed: !_isFormComplete ? null : _addDeviceToRoom,
                               child: Text(
                                 'Assign Device',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: _isFormComplete
-                                      ? AppColors.whiteColor
-                                      : AppColors.accentColor,
+                                  color: _isFormComplete ? AppColors.whiteColor : AppColors.accentColor,
                                 ),
                               ),
                             ),

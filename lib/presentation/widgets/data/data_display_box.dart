@@ -84,8 +84,7 @@ class DataDisplayBox extends StatelessWidget {
                     width: 12,
                     height: 12,
                     decoration: BoxDecoration(
-                      color: DataStatusHelper.getStatusColor(
-                          entry.value['status']),
+                      color: DataStatusHelper.getStatusColor(entry.value['status']),
                       shape: BoxShape.circle,
                     ),
                   ),

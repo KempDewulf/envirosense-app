@@ -38,9 +38,7 @@ class PaginationControls extends StatelessWidget {
           children: [
             Expanded(
               child: PaginationButton(
-                onPressed: currentPage > 1
-                    ? () => onPageChanged(currentPage - 1)
-                    : null,
+                onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
                 isNext: false,
                 text: 'Previous',
               ),
@@ -55,9 +53,7 @@ class PaginationControls extends StatelessWidget {
             ),
             Expanded(
               child: PaginationButton(
-                onPressed: currentPage < totalPages
-                    ? () => onPageChanged(currentPage + 1)
-                    : null,
+                onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
                 isNext: true,
                 text: 'Next',
               ),

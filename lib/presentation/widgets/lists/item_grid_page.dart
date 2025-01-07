@@ -69,8 +69,7 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
             labelText: 'Search a ${T.toString().toLowerCase()}',
             labelColor: AppColors.blackColor,
             prefixIcon: const Icon(Icons.search),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
             borderColor: AppColors.accentColor,
             floatingLabelCustomStyle: const TextStyle(
               color: AppColors.primaryColor,

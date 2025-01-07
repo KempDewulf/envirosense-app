@@ -12,9 +12,7 @@ class RoomTypeDataSource {
 
       List<dynamic> data = response.data as List<dynamic>;
       List<RoomTypeModel> roomTypes = data.map((roomTypeJson) {
-        return RoomTypeModel.fromJson(
-          roomTypeJson, buildingId
-        );
+        return RoomTypeModel.fromJson(roomTypeJson, buildingId);
       }).toList();
       return roomTypes;
     } catch (e) {

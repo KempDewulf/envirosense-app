@@ -5,13 +5,10 @@ import 'package:envirosense/domain/repositories/outside_air_data_repository.dart
 import 'package:envirosense/services/outside_air_api_service.dart';
 
 class OutsideAirDataController {
-
   final OutsideAirDataRepository outsideAirDataRepository;
 
-  OutsideAirDataController() 
-  : outsideAirDataRepository = OutsideAirDataRepositoryImpl(
-      remoteDataSource: OutsideAirDataSource(outsideAirApiService: OutsideAirApiService())
-  );
+  OutsideAirDataController()
+      : outsideAirDataRepository = OutsideAirDataRepositoryImpl(remoteDataSource: OutsideAirDataSource(outsideAirApiService: OutsideAirApiService()));
 
   Future<AirData> getOutsideAirData(String city) async {
     return outsideAirDataRepository.getOutsideAirData(city);

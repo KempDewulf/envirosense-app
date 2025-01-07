@@ -1,3 +1,4 @@
+import 'package:envirosense/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoadingErrorWidget extends StatelessWidget {
@@ -17,7 +18,9 @@ class LoadingErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
+      );
     }
 
     if (error != null) {

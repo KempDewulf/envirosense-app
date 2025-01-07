@@ -2,6 +2,7 @@ import 'package:envirosense/data/models/add_device_to_room_request_model.dart';
 import 'package:envirosense/data/models/add_room_request_model.dart';
 import 'package:envirosense/data/models/room_air_quality_model.dart';
 import 'package:envirosense/data/models/update_room_request_model.dart';
+import 'package:envirosense/data/models/room_limits_model.dart';
 
 import '../../services/api_service.dart';
 import '../models/room_model.dart';
@@ -47,8 +48,17 @@ class RoomDataSource {
     }
   }
 
-  Future<void> addRoom(
-      String? name, String buildingId, String? roomTypeId) async {
+  Future<RoomLimitsModel> getRoomLimits(String roomId) async {
+    try {
+      final response = await apiService.getRequest('rooms/$roomId/limits');
+      return RoomLimitsModel.fromJson(response.data);
+    } catch (e) {
+      // Handle errors
+      throw Exception('Failed to load room limits: $e');
+    }
+  }
+
+  Future<void> addRoom(String? name, String buildingId, String? roomTypeId) async {
     try {
       AddRoomRequest body = AddRoomRequest(name, buildingId, roomTypeId);
 

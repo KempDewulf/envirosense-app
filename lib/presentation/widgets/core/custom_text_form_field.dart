@@ -107,8 +107,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: focusClr, width: 2),
         ),
         floatingLabelBehavior: floatingLabelBehaviour,
-        floatingLabelStyle: floatingLabelCustomStyle ??
-            const TextStyle(color: AppColors.whiteColor),
+        floatingLabelStyle: floatingLabelCustomStyle ?? const TextStyle(color: AppColors.whiteColor),
       ),
     );
   }

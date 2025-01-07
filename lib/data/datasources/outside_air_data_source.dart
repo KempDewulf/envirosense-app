@@ -10,7 +10,6 @@ class OutsideAirDataSource {
     try {
       final response = await outsideAirApiService.getRequest(city);
       return OutsideAirDataModel.fromJson(response.data);
-
     } catch (e) {
       throw Exception('Failed to get outside air data');
     }

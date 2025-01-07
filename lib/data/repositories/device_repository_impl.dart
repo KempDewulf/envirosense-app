@@ -1,6 +1,8 @@
 import 'package:envirosense/core/enums/config_type.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/data/datasources/device_data_source.dart';
+import 'package:envirosense/data/models/device_config_model.dart';
+import 'package:envirosense/domain/entities/device_config.dart';
 
 import '../../domain/entities/device.dart';
 import '../../domain/repositories/device_repository.dart';
@@ -18,6 +20,11 @@ class DeviceRepositoryImpl implements DeviceRepository {
   @override
   Future<Device> getDevice(String deviceId, String buildingId) async {
     return await remoteDataSource.getDevice(deviceId, buildingId);
+  }
+
+  @override
+  Future<DeviceConfig> getDeviceConfig(String deviceId) async {
+    return await remoteDataSource.getDeviceConfig(deviceId);
   }
 
   @override
