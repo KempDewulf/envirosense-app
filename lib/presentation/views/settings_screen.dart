@@ -24,11 +24,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Settings',
-        tabController: _tabController,
-        tabs: _tabs,
-        onBackPressed: () => Navigator.pop(context, true),
+      appBar: AppBar(
+        title: Text(
+          'Settings',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        toolbarHeight: 70,
+        foregroundColor: AppColors.whiteColor,
       ),
       body: ListView(
         children: [
@@ -149,11 +151,7 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: AppColors.secondaryColor
-        ),
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.secondaryColor),
       ),
     );
   }
