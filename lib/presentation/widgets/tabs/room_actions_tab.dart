@@ -127,8 +127,8 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
 
       if (!mounted) return;
 
-      Navigator.pop(context);
-      Navigator.pop(context);
+      Navigator.pop(context, true);
+      Navigator.pop(context, true);
 
       CustomSnackbar.showSnackBar(
         context,

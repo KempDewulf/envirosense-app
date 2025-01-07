@@ -4,10 +4,12 @@ import '../../../core/constants/colors.dart';
 
 class AddOptionsBottomSheet extends StatelessWidget {
   final AddOptionType? preferredOption;
+  final VoidCallback? onItemAdded;
 
   const AddOptionsBottomSheet({
     super.key,
-    this.preferredOption, // Add this line
+    this.preferredOption,
+    this.onItemAdded,
   });
 
   @override
@@ -82,7 +84,9 @@ class AddOptionsBottomSheet extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, option.onTapRoute);
+                          Navigator.pushNamed(context, option.onTapRoute).then((value) => {
+                            if (value == true) {onItemAdded?.call()}
+                          });
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),

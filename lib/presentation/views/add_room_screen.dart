@@ -76,7 +76,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       if (mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Room added successfully. Drag down to refresh.',
+          'Room added successfully.',
         );
 
         Navigator.pop(context, true);

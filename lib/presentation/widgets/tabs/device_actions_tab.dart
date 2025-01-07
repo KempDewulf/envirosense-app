@@ -11,7 +11,7 @@ import '../../../services/device_service.dart';
 
 // ignore: must_be_immutable
 class DeviceActionsTab extends StatefulWidget {
-  String deviceCustomName;
+  String? deviceCustomName;
   String? deviceIdentifier;
   final String? deviceId;
   final String buildingId;
@@ -141,6 +141,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       setState(() {
         widget.deviceCustomName = newName;
       });
+
+      widget.onDeviceRenamed(newName);
 
       Navigator.pop(context);
       CustomSnackbar.showSnackBar(
@@ -390,7 +392,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       builder: (context) => CustomConfirmationDialog(
         title: 'Remove Device',
         message: 'Are you sure you want to remove ',
-        highlightedText: widget.deviceCustomName,
+        highlightedText: widget.deviceCustomName ?? widget.deviceIdentifier!,
         onConfirm: () async {
           await _handleDeviceRemoval();
         },
@@ -403,8 +405,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       await widget.deviceService.deleteDevice(widget.deviceId!, widget.buildingId);
 
       if (!mounted) return;
-      Navigator.pop(context);
-      Navigator.pop(context);
+      Navigator.pop(context, true);
+      Navigator.pop(context, true);
 
       CustomSnackbar.showSnackBar(
         context,

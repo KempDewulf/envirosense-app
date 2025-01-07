@@ -70,6 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.transparent,
       builder: (_) => AddOptionsBottomSheet(
         preferredOption: preferredOption,
+        onItemAdded: () {
+          _refreshData();
+        },
       ),
     );
   }
@@ -91,11 +94,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.secondaryColor,
                 child: ItemGridPage<Room>(
                   allItems: _allRooms,
-                  itemBuilder: (room) => RoomCard(room: room),
+                  itemBuilder: (room) => RoomCard(room: room, onChanged: _refreshData,
+                  ),
                   getItemName: (room) => room.name,
                   onAddPressed: () {
                     _showAddOptionsBottomSheet(AddOptionType.room);
                   },
+                  onItemChanged: _refreshData,
                 ),
               ),
             ),
@@ -106,11 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.secondaryColor,
                 child: ItemGridPage<Device>(
                   allItems: _allDevices,
-                  itemBuilder: (device) => DeviceCard(device: device),
+                  itemBuilder: (device) => DeviceCard(device: device,  onChanged: _refreshData),
                   getItemName: (device) => device.identifier,
                   onAddPressed: () {
                     _showAddOptionsBottomSheet(AddOptionType.device);
                   },
+                  onItemChanged: _refreshData,
                 ),
               ),
             ),
