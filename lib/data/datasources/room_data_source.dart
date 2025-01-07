@@ -51,6 +51,8 @@ class RoomDataSource {
   Future<RoomLimitsModel> getRoomLimits(String roomId) async {
     try {
       final response = await apiService.getRequest('rooms/$roomId/limits');
+      final res = RoomLimitsModel.fromJson(response.data);
+      print("res: $res");
       return RoomLimitsModel.fromJson(response.data);
     } catch (e) {
       // Handle errors

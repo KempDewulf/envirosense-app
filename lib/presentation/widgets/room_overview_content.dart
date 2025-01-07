@@ -1,9 +1,7 @@
-import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/presentation/widgets/actions/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
 import '../../../domain/entities/air_data.dart';
 import '../../../domain/entities/room_air_quality.dart';
 
