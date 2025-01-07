@@ -40,10 +40,10 @@ class DisplayModeSelector extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              'Not found',
+              'Failed to fetch display modes',
               style: TextStyle(
                 color: AppColors.accentColor,
-                fontSize: 16,
+                fontSize: 18,
               ),
             ),
           )
@@ -57,7 +57,7 @@ class DisplayModeSelector extends StatelessWidget {
                   CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
                   SizedBox(height: 16),
                   Text(
-                    'Fetching...',
+                    'Loading',
                     style: TextStyle(
                       color: AppColors.accentColor,
                       fontSize: 16,

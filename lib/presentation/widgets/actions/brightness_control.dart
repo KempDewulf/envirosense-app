@@ -77,10 +77,10 @@ class _BrightnessControlState extends State<BrightnessControl> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              'Not found',
+              'Failed to fetch brightness level',
               style: TextStyle(
                 color: AppColors.accentColor,
-                fontSize: 16,
+                fontSize: 18,
               ),
             ),
           )
@@ -94,7 +94,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
                   CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
                   SizedBox(height: 16),
                   Text(
-                    'Fetching...',
+                    'Loading',
                     style: TextStyle(
                       color: AppColors.accentColor,
                       fontSize: 16,
