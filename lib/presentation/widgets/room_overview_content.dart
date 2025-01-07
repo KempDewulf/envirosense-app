@@ -1,3 +1,4 @@
+import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:flutter/material.dart';
@@ -75,14 +76,21 @@ class RoomOverviewContent extends StatelessWidget {
                 ),
               const SizedBox(width: 8),
               if (isLoadingTemperature)
-                Text(
+                const Text(
                   'Loading Temperature Limit',
                   style: TextStyle(color: AppColors.accentColor, fontSize: 16),
                 )
               else
-                Text(
-                  targetTemperature == null ? 'Temperature Limit Not Available' : 'Set Target Temperature ($targetTemperature°C)',
-                  style: TextStyle(color: targetTemperature == null ? AppColors.accentColor : AppColors.whiteColor, fontSize: 16),
+                FutureBuilder<String>(
+                  future: targetTemperature != null
+                      ? UnitConverter.formatTemperature(targetTemperature)
+                      : Future.value('Temperature Limit Not Available'),
+                  builder: (context, snapshot) {
+                    return Text(
+                      snapshot.data ?? 'Loading...',
+                      style: TextStyle(color: targetTemperature == null ? AppColors.accentColor : AppColors.whiteColor, fontSize: 16),
+                    );
+                  },
                 ),
             ],
           ),

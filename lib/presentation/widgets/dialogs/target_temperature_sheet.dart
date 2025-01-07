@@ -55,7 +55,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() => tempValue = (tempValue! - 0.5).clamp(16, 30));
+                          setState(() => tempValue = (tempValue! - 0.1).clamp(0, 80));
                         },
                       ),
                       const SizedBox(width: 16),
@@ -69,7 +69,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                         iconSize: 28,
                         color: AppColors.secondaryColor,
                         onPressed: () {
-                          setState(() => tempValue = (tempValue! + 0.5).clamp(16, 30));
+                          setState(() => tempValue = (tempValue! + 0.1).clamp(0, 80));
                         },
                       ),
                     ],
