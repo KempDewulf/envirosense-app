@@ -132,15 +132,15 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   Future<void> _showClearCacheOptions(BuildContext context) async {
     final List<CacheOption> cacheOptions = [
       CacheOption(
-        title: 'Device Data Cache',
-        subtitle: 'Clear stored sensor readings and statistics',
+        title: 'Device Data',
+        subtitle: 'Clear stored sensor readings',
       ),
       CacheOption(
-        title: 'Device Names Cache',
-        subtitle: 'Reset custom device names to defaults',
+        title: 'Device Names',
+        subtitle: 'Reset device names to default',
       ),
       CacheOption(
-        title: 'All Cache',
+        title: 'All',
         subtitle: 'Clear all stored data and preferences',
       ),
     ];
@@ -186,43 +186,62 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Select the data you want to remove',
+                      'Select the cache you want to remove',
                       style: TextStyle(
                         color: AppColors.accentColor,
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 24),
-                    ...cacheOptions.map((option) => Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.accentColor.withOpacity(0.2)),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: CheckboxListTile(
-                            title: Text(
-                              option.title,
-                              style: const TextStyle(
-                                color: AppColors.secondaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                    ...cacheOptions.map((option) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: InkWell(
+                            onTap: () => setState(() => option.isSelected = !option.isSelected),
+                            borderRadius: BorderRadius.circular(12),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              decoration: BoxDecoration(
+                                color: option.isSelected ? AppColors.secondaryColor : AppColors.whiteColor,
+                                border: Border.all(
+                                  color: option.isSelected ? AppColors.secondaryColor : AppColors.accentColor.withOpacity(0.2),
+                                ),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                            ),
-                            subtitle: Text(
-                              option.subtitle,
-                              style: TextStyle(
-                                color: AppColors.accentColor,
-                                fontSize: 14,
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          option.title,
+                                          style: TextStyle(
+                                            color: option.isSelected ? AppColors.whiteColor : AppColors.secondaryColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          option.subtitle,
+                                          style: TextStyle(
+                                            color:
+                                                option.isSelected ? AppColors.whiteColor.withOpacity(0.8) : AppColors.secondaryColor.withOpacity(0.7),
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (option.isSelected)
+                                    const Icon(
+                                      Icons.check_rounded,
+                                      color: AppColors.whiteColor,
+                                      size: 24,
+                                    ),
+                                ],
                               ),
-                            ),
-                            value: option.isSelected,
-                            onChanged: (value) {
-                              setState(() => option.isSelected = value ?? false);
-                            },
-                            activeColor: AppColors.secondaryColor,
-                            checkColor: AppColors.whiteColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         )),
