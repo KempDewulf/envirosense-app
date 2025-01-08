@@ -5,7 +5,6 @@ import 'package:envirosense/presentation/controllers/building_controller.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:logging/logging.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
