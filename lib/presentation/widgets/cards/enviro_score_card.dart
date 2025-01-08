@@ -18,15 +18,34 @@ class EnviroScoreCard extends StatelessWidget {
     void showEnviroScoreInfo() {
       showDialog(
         context: context,
+        barrierDismissible: true,
+        useRootNavigator: true,
+        routeSettings: const RouteSettings(),
         builder: (context) => AlertDialog(
-          title: const Text('About EnviroScore'),
+          title: const Text(
+            'About EnviroScore',
+            style: TextStyle(color: AppColors.secondaryColor),
+          ),
           content: const Text(
             'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Got it'),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accentColor,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+              child: const Text(
+                'Got it',
+                style: TextStyle(
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
