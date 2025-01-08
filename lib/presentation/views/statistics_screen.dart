@@ -114,15 +114,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
       onRefresh: _loadData,
       child: Stack(
         children: [
-          // Background and content
           Column(
             children: [
-              // Top background container
               Container(
                 height: topBackgroundHeight,
                 color: AppColors.primaryColor,
               ),
-              // Rest of the content
               Expanded(
                 child: Container(
                   color: AppColors.whiteColor,
