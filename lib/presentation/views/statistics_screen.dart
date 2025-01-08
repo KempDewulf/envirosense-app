@@ -53,7 +53,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
       setState(() => _isLoading = true);
 
       final buildingAirQuality = await _buildingController.getBuildingAirQuality(buildingId);
-      Logger.root.info('Building Air Quality fetched');
       setState(() {
         _buildingAirQuality = buildingAirQuality;
         _buildingHasData = isBuildingDataAvailable();
