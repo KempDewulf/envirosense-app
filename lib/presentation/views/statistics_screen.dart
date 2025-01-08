@@ -135,7 +135,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
                             -
                             100 // EnviroScore card
                             -
-                            80 // Bottom navigation
+                            100 // Bottom navigation
                             -
                             50, // Additional padding/margins
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
