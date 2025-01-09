@@ -34,8 +34,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   List<Room> _rooms = [];
   List<Room> _filteredRooms = [];
   bool _isSaving = false;
-  bool _isLoading = true;
-  String? _error;
 
   bool get _isFormComplete {
     return _deviceIdentifierCode != null && _selectedRoom != null && _deviceNameController.text.isNotEmpty;
@@ -65,17 +63,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
     if (!mounted) return;
 
     try {
-      setState(() => _isLoading = true);
-
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
-
       final rooms = await _roomController.getRooms();
 
       if (!mounted) return;
@@ -86,11 +73,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       });
     } catch (e) {
       if (!mounted) return;
-
-      setState(() {
-        _error = 'no_connection';
-        _isLoading = false;
-      });
 
       CustomSnackbar.showSnackBar(
         context,
@@ -163,24 +145,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   }
 
   Widget _buildBody() {
-    if (_isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)),
-      );
-    }
-
-    if (_error != null) {
-      return NoConnectionWidget(
-        onRetry: () async {
-          // Clear error state before retrying
-          setState(() {
-            _error = null;
-          });
-          await _getRooms();
-        },
-      );
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
       child: Column(
