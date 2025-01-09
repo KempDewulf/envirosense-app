@@ -76,7 +76,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
             ),
             const SizedBox(width: 8),
             const Text(
-              'Screen Mode',
+              'Display Mode',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
@@ -134,6 +134,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: () {
+          if(isSelected) return;
           widget.onModeSelected(mode);
         },
         child: Container(
