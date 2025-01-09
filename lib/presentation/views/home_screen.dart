@@ -39,17 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refreshData() async {
     try {
-      final connectivityResult = await Connectivity().checkConnectivity();
-
       if (!mounted) return;
-
-      if (connectivityResult == ConnectivityResult.none) {
-        CustomSnackbar.showSnackBar(
-          context,
-          'No internet connection available',
-        );
-        return;
-      }
 
       await Future.wait([
         _getRooms(),
