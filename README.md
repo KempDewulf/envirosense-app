@@ -10,15 +10,6 @@ EnviroSense is a Flutter application designed to manage and monitor home devices
 - **Authentication**: Implemented using FirebaseAuth for secure sign-in and registration.
 - **Real-time Notifications**: Receive instant notifications for device activities and alerts.
 
-## Project Structure
-
-- **lib/**: Contains the main Dart code, widgets, controllers, and UI layouts.
-- **android/**: Hosts Android-specific files like the AndroidManifest.xml, Gradle configs, and Kotlin entry points.
-- **ios/**: Contains iOS-specific implementations including the AppDelegate.swift and Xcode project configuration.
-- **linux/**: Holds Linux platform code and the custom GApplication-based entry point.
-- **windows/**: Contains Windows platform code and configurations.
-- **macos/**: Contains macOS platform code and configurations.
-
 ## Architecture
 
 EnviroSense follows the Model-View-Controller (MVC) architecture pattern to separate concerns and improve code maintainability.
@@ -34,6 +25,15 @@ EnviroSense follows the Model-View-Controller (MVC) architecture pattern to sepa
 3. **Controllers**: Handle user interactions and update the View. For example, `DeviceController` manages device-related actions like adding or removing devices.
 
 By following the MVC pattern, we ensure a clear separation of concerns, making the codebase easier to understand, test, and maintain.
+
+## Project Structure
+
+- **lib/**: Contains the main Dart code, widgets, controllers, and UI layouts.
+- **android/**: Hosts Android-specific files like the AndroidManifest.xml, Gradle configs, and Kotlin entry points.
+- **ios/**: Contains iOS-specific implementations including the AppDelegate.swift and Xcode project configuration.
+- **linux/**: Holds Linux platform code and the custom GApplication-based entry point.
+- **windows/**: Contains Windows platform code and configurations.
+- **macos/**: Contains macOS platform code and configurations.
 
 ## Packages
 
