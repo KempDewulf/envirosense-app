@@ -1,9 +1,7 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/qr_code_scanner.dart';
