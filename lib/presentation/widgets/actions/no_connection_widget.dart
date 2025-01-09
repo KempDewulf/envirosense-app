@@ -18,7 +18,7 @@ class NoConnectionWidget extends StatelessWidget {
           const Icon(
             Icons.wifi_off_rounded,
             size: 64,
-            color: AppColors.primaryColor,
+            color: AppColors.secondaryColor,
           ),
           const SizedBox(height: 16),
           const Text(

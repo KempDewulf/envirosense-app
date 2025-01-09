@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
 import 'package:envirosense/main.dart';
 import 'package:envirosense/presentation/controllers/building_controller.dart';
+import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
@@ -48,19 +50,36 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
   }
 
   Future<void> _loadData() async {
+    if (!mounted) return;
+
     try {
       setState(() => _isLoading = true);
 
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _error = 'no_connection';
+          _isLoading = false;
+        });
+        return;
+      }
+
       final buildingAirQuality = await _buildingController.getBuildingAirQuality(buildingId);
+
+      if (!mounted) return;
+
       setState(() {
         _buildingAirQuality = buildingAirQuality;
         _buildingHasData = isBuildingDataAvailable();
         _buildingHasRooms = _buildingAirQuality.roomsAirQuality.isNotEmpty;
+        _error = null;
         _isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return;
+
       setState(() {
-        _error = e.toString();
+        _error = 'no_connection';
         _isLoading = false;
       });
     }
@@ -92,17 +111,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
     }
 
     if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Error: $_error'),
-            ElevatedButton(
-              onPressed: _loadData,
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
+      return NoConnectionWidget(
+        onRetry: () async {
+          // Clear error state before retrying
+          setState(() {
+            _error = null;
+          });
+          await _loadData();
+        },
       );
     }
 
