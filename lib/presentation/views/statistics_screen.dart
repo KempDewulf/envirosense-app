@@ -5,7 +5,6 @@ import 'package:envirosense/presentation/controllers/building_controller.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:logging/logging.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -115,15 +114,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
       onRefresh: _loadData,
       child: Stack(
         children: [
-          // Background and content
           Column(
             children: [
-              // Top background container
               Container(
                 height: topBackgroundHeight,
                 color: AppColors.primaryColor,
               ),
-              // Rest of the content
               Expanded(
                 child: Container(
                   color: AppColors.whiteColor,
@@ -139,7 +135,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
                             -
                             100 // EnviroScore card
                             -
-                            80 // Bottom navigation
+                            100 // Bottom navigation
                             -
                             50, // Additional padding/margins
                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
