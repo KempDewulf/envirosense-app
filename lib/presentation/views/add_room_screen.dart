@@ -87,6 +87,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
     setState(() {
       _isSaving = true;
+      _error = null;
     });
 
     try {
@@ -112,6 +113,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     } finally {
       if (mounted) {
         setState(() {
+          _error = 'no_connection';
           _isSaving = false;
         });
       }
