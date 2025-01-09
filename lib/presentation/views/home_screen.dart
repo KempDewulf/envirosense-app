@@ -4,6 +4,7 @@ import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/cards/device_card.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
@@ -29,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
+  bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -55,17 +58,61 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadRooms() async {
-    final rooms = await _roomController.getRooms();
-    setState(() {
-      _allRooms = rooms;
-    });
+    try {
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _error = 'no_connection';
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final rooms = await _roomController.getRooms();
+
+      if (!mounted) return;
+
+      setState(() {
+        _allRooms = rooms;
+        _error = null;
+        _isLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'no_connection';
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> _loadDevices() async {
-    final devices = await _deviceController.getDevices(_buildingId);
-    setState(() {
-      _allDevices = devices;
-    });
+    try {
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _error = 'no_connection';
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final devices = await _deviceController.getDevices(_buildingId);
+
+      if (!mounted) return;
+
+      setState(() {
+        _allDevices = devices;
+        _error = null;
+        _isLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'no_connection';
+        _isLoading = false;
+      });
+    }
   }
 
   void _onTabSelected(int index) {
@@ -94,6 +141,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)),
+      );
+    }
+
+    if (_error != null) {
+      return NoConnectionWidget(
+        onRetry: () async {
+          // Clear error state before retrying
+          setState(() {
+            _error = null;
+          });
+          await _refreshData();
+        },
+      );
+    }
+
     return Column(
       children: [
         Header(
