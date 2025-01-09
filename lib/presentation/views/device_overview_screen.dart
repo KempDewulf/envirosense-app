@@ -177,7 +177,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
 
   Widget _buildActionsTab() {
     if (_device == null) {
-      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)));
+      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)));
     }
 
     return DeviceActionsTab(

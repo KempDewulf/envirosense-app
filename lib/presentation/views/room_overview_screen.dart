@@ -186,7 +186,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
 
   Widget _buildOverviewTab() {
     if (_outsideAirData == null) {
-      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)));
+      return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)));
     }
 
     return RoomOverviewContent(

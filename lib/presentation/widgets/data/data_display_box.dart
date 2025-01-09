@@ -53,7 +53,7 @@ class DataDisplayBox extends StatelessWidget {
         future: _getDataEntries(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor));
           }
 
           if (!snapshot.hasData) {
