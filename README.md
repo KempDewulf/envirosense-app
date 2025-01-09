@@ -2,6 +2,14 @@
 
 EnviroSense is a Flutter application designed to manage and monitor home devices, providing real-time environmental insights and control.
 
+## Key Features
+
+- **Device Scanning and Configuration**: Manage device settings through the DeviceControlsTab.
+- **Room-based Device Assignment**: Assign devices to rooms using the AddDeviceScreen.
+- **Caching and Clearing Options**: Manage cache and stored data with database_service and ClearCacheOptionsSheet.
+- **Authentication**: Implemented using FirebaseAuth for secure sign-in and registration.
+- **Real-time Notifications**: Receive instant notifications for device activities and alerts.
+
 ## Project Structure
 
 - **lib/**: Contains the main Dart code, widgets, controllers, and UI layouts.
@@ -47,7 +55,7 @@ These packages are essential for implementing the core features of EnviroSense, 
 
 EnviroSense interacts with several APIs to provide its functionality. Below is an overview of the key APIs used:
 
-- **Deno Server API**: This custom API is used for managing and controlling home devices. It provides endpoints for device configuration, status updates, and other device-related operations.
+- **Deno Server API**: This custom API is used for managing and controlling home devices. It provides endpoints for device data & configuration, status updates, and other device-related operations.
     - The OpenAPI documenteation can be seen [here](http://94.130.75.173:8101/)
 - **Weather API**: This API is used to fetch real-time weather data, which is integrated into the app to provide environmental insights. The weather data includes temperature, humidity, and other relevant metrics.
     - We use [weatherapi.com](weatherapi.com)
@@ -63,14 +71,6 @@ EnviroSense interacts with several APIs to provide its functionality. Below is a
     ```
 3. Run `flutter pub get` to fetch all declared dependencies.
 4. Execute `flutter run` to build and launch the app on the desired platform.
-
-## Key Features
-
-- **Device Scanning and Configuration**: Manage device settings through the DeviceControlsTab.
-- **Room-based Device Assignment**: Assign devices to rooms using the AddDeviceScreen.
-- **Caching and Clearing Options**: Manage cache and stored data with database_service and ClearCacheOptionsSheet.
-- **Authentication**: Implemented using FirebaseAuth for secure sign-in and registration.
-- **Real-time Notifications**: Receive instant notifications for device activities and alerts.
 
 ## Firebase Configuration
 
