@@ -14,8 +14,13 @@ EnviroSense is a Flutter application designed to manage and monitor home devices
 ## Setup Instructions
 
 1. Ensure Flutter and Dart tools are installed.
-2. Run `flutter pub get` to fetch all declared dependencies.
-3. Execute `flutter run` to build and launch the app on the desired platform.
+2. Clone the repository:
+    ```sh
+    git clone git@gitlab.ti.howest.be:ti/2024-2025/s5/ccett/projects/group-14/flutter-app.git
+    cd flutter-app
+    ```
+3. Run `flutter pub get` to fetch all declared dependencies.
+4. Execute `flutter run` to build and launch the app on the desired platform.
 
 ## Key Features
 
@@ -31,12 +36,10 @@ Ensure you have the correct Firebase configuration files in place:
 - `android/app/google-services.json`
 - `ios/Runner/GoogleService-Info.plist`
 
-## Environment Variables
+### Environment Variables
+Create a `.env` file in the root directory of your project by copying the `.env.example` file:
+```sh
+cp .env.example .env
+```
 
-Create a `.env` file in the root directory with the following variables:
-```
-API_TOKEN=
-API_BASE_URL=
-WEATHER_API_BASE_URL=
-WEATHER_API_KEY=
-```
+Replace the placeholder values with your actual values.
