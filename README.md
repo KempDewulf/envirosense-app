@@ -83,5 +83,6 @@ Replace the placeholder values with your actual values.
     cd flutter-app
     ```
 3. Run `flutter pub get` to fetch all declared dependencies.
-4. Execute `flutter run` to build and launch the app on the desired platform.
+4. Run `flutter doctor` to make sure flutter can run on the desired platform (e.g. web, ios, macos, windows, android).
+5. Execute `flutter run` to build and launch the app on the desired platform.
 
