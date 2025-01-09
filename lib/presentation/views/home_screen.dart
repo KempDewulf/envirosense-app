@@ -33,8 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _getRooms();
-    _getDevices();
+    _loadRooms();
+    _loadDevices();
   }
 
   Future<void> _refreshData() async {
@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
 
       await Future.wait([
-        _getRooms(),
-        _getDevices(),
+        _loadRooms(),
+        _loadDevices(),
       ]);
     } catch (e) {
       if (!mounted) return;
@@ -54,14 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _getRooms() async {
+  Future<void> _loadRooms() async {
     final rooms = await _roomController.getRooms();
     setState(() {
       _allRooms = rooms;
     });
   }
 
-  Future<void> _getDevices() async {
+  Future<void> _loadDevices() async {
     final devices = await _deviceController.getDevices(_buildingId);
     setState(() {
       _allDevices = devices;
