@@ -1,4 +1,4 @@
-# EnviroSense
+# EnviroSense App
 
 EnviroSense is a Flutter application designed to manage and monitor home devices, providing real-time environmental insights and control.
 
