@@ -8,6 +8,7 @@ import 'package:envirosense/presentation/widgets/actions/no_connection_widget.da
 import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/cards/device_card.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
+import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.dart';
 import 'package:envirosense/presentation/widgets/layout/header.dart';
 import 'package:envirosense/presentation/widgets/lists/item_grid_page.dart';
 import 'package:envirosense/presentation/widgets/cards/room_card.dart';
@@ -141,66 +142,55 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody() {
-    if (_isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)),
-      );
-    }
-
-    if (_error != null) {
-      return NoConnectionWidget(
+    return LoadingErrorWidget(
+        isLoading: _isLoading,
+        error: _error,
         onRetry: () async {
-          // Clear error state before retrying
-          setState(() {
-            _error = null;
-          });
+          setState(() => _error = null);
           await _refreshData();
         },
-      );
-    }
-
-    return Column(
-      children: [
-        Header(
-          selectedTabIndex: _selectedTabIndex,
-          onTabSelected: _onTabSelected,
-        ),
-        if (_selectedTabIndex == 0)
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              color: AppColors.secondaryColor,
-              child: ItemGridPage<Room>(
-                allItems: _allRooms,
-                itemBuilder: (room) => RoomCard(
-                  room: room,
-                  onChanged: _refreshData,
+        child: Column(
+          children: [
+            Header(
+              selectedTabIndex: _selectedTabIndex,
+              onTabSelected: _onTabSelected,
+            ),
+            if (_selectedTabIndex == 0)
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _refreshData,
+                  color: AppColors.secondaryColor,
+                  child: ItemGridPage<Room>(
+                    allItems: _allRooms,
+                    itemBuilder: (room) => RoomCard(
+                      room: room,
+                      onChanged: _refreshData,
+                    ),
+                    getItemName: (room) => room.name,
+                    onAddPressed: () {
+                      _showAddOptionsBottomSheet(AddOptionType.room);
+                    },
+                    onItemChanged: _refreshData,
+                  ),
                 ),
-                getItemName: (room) => room.name,
-                onAddPressed: () {
-                  _showAddOptionsBottomSheet(AddOptionType.room);
-                },
-                onItemChanged: _refreshData,
               ),
-            ),
-          ),
-        if (_selectedTabIndex == 1)
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              color: AppColors.secondaryColor,
-              child: ItemGridPage<Device>(
-                allItems: _allDevices,
-                itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
-                getItemName: (device) => device.identifier,
-                onAddPressed: () {
-                  _showAddOptionsBottomSheet(AddOptionType.device);
-                },
-                onItemChanged: _refreshData,
+            if (_selectedTabIndex == 1)
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _refreshData,
+                  color: AppColors.secondaryColor,
+                  child: ItemGridPage<Device>(
+                    allItems: _allDevices,
+                    itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
+                    getItemName: (device) => device.identifier,
+                    onAddPressed: () {
+                      _showAddOptionsBottomSheet(AddOptionType.device);
+                    },
+                    onItemChanged: _refreshData,
+                  ),
+                ),
               ),
-            ),
-          ),
-      ],
-    );
+          ],
+        ));
   }
 }
