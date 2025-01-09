@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
@@ -5,6 +6,7 @@ import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/cards/device_card.dart';
+import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/layout/header.dart';
 import 'package:envirosense/presentation/widgets/lists/item_grid_page.dart';
 import 'package:envirosense/presentation/widgets/cards/room_card.dart';
@@ -36,11 +38,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _refreshData() async {
-    // get both rooms and devices
-    await Future.wait([
-      _getRooms(),
-      _getDevices(),
-    ]);
+    try {
+      final connectivityResult = await Connectivity().checkConnectivity();
+
+      if (!mounted) return;
+
+      if (connectivityResult == ConnectivityResult.none) {
+        CustomSnackbar.showSnackBar(
+          context,
+          'No internet connection available',
+        );
+        return;
+      }
+
+      await Future.wait([
+        _getRooms(),
+        _getDevices(),
+      ]);
+    } catch (e) {
+      if (!mounted) return;
+      CustomSnackbar.showSnackBar(
+        context,
+        'Failed to refresh data',
+      );
+    }
   }
 
   Future<void> _getRooms() async {
@@ -94,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.secondaryColor,
                 child: ItemGridPage<Room>(
                   allItems: _allRooms,
-                  itemBuilder: (room) => RoomCard(room: room, onChanged: _refreshData,
+                  itemBuilder: (room) => RoomCard(
+                    room: room,
+                    onChanged: _refreshData,
                   ),
                   getItemName: (room) => room.name,
                   onAddPressed: () {
@@ -111,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.secondaryColor,
                 child: ItemGridPage<Device>(
                   allItems: _allDevices,
-                  itemBuilder: (device) => DeviceCard(device: device,  onChanged: _refreshData),
+                  itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
                   getItemName: (device) => device.identifier,
                   onAddPressed: () {
                     _showAddOptionsBottomSheet(AddOptionType.device);
