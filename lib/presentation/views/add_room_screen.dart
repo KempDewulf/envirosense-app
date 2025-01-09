@@ -252,26 +252,25 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _isFormComplete ? _saveRoom : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _isFormComplete ? AppColors.secondaryColor : AppColors.lightGrayColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    foregroundColor: AppColors.whiteColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    disabledBackgroundColor: AppColors.lightGrayColor,
+                    disabledForegroundColor: AppColors.accentColor,
+                  ),
+                  onPressed: _isFormComplete ? _saveRoom : null,
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: _isFormComplete ? AppColors.whiteColor : AppColors.accentColor,
                     ),
                   ),
-                  child: _isSaving
-                      ? const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
-                        )
-                      : const Text(
-                          'SAVE',
-                          style: TextStyle(
-                            color: AppColors.whiteColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                 ),
               ),
             ],
