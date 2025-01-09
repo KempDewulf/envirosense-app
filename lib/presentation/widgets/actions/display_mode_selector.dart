@@ -134,6 +134,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: () {
+          if(isSelected) return;
           widget.onModeSelected(mode);
         },
         child: Container(
