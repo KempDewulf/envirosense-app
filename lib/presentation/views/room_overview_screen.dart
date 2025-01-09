@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/core/helpers/unit_helper.dart';
@@ -91,21 +92,35 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   Future<void> _loadData() async {
     try {
       setState(() => _isLoading = true);
+
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _error = 'no_connection';
+          _isLoading = false;
+        });
+        return;
+      }
+
       final room = await _roomController.getRoom(widget.roomId);
-      final airQuality = await _roomController.getRoomAirQuality(widget.roomId);
+      final roomAirQuality = await _roomController.getRoomAirQuality(widget.roomId);
+
+      if (!mounted) return;
 
       final outsideAirData = await _outsideAirController.getOutsideAirData(city);
       setState(() {
         _room = room;
-        _airQuality = airQuality;
+        _airQuality = roomAirQuality;
         _outsideAirData = outsideAirData;
-        _isLoading = false;
         _roomHasDeviceData = isDeviceDataAvailable();
         _showRoomData = _roomHasDeviceData;
+        _error = null;
+        _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _error = e.toString();
+        if (!mounted) return;
+        _error = 'no_connection';
         _isLoading = false;
       });
     }
@@ -208,8 +223,23 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
             ));
   }
 
+  Future<bool> _checkConnectivity() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      if (mounted) {
+        CustomSnackbar.showSnackBar(context, 'No internet connection available');
+      }
+      return false;
+    }
+    return true;
+  }
+
   void _handleTemperatureLimitChanged(double newTemperature) async {
     try {
+      if (!await _checkConnectivity()) return;
+
+      if (!mounted) return;
+
       final allDeviceIds = _room?.devices?.map((device) => device.id).toList();
 
       if (allDeviceIds == null) {
