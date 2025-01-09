@@ -55,9 +55,9 @@ These packages are essential for implementing the core features of EnviroSense, 
 
 EnviroSense interacts with several APIs to provide its functionality. Below is an overview of the key APIs used:
 
-- **Deno Server API**: This custom API is used for managing and controlling home devices. It provides endpoints for device data & configuration, status updates, and other device-related operations.
+- **Deno Server REST API**: This custom API is used for managing and controlling home devices. It provides endpoints for device data & configuration, status updates, and other device-related operations.
     - The OpenAPI documenteation can be seen [here](http://94.130.75.173:8101/)
-- **Weather API**: This API is used to fetch real-time weather data, which is integrated into the app to provide environmental insights. The weather data includes temperature, humidity, and other relevant metrics.
+- **Weather REST API**: This REST API is used to fetch real-time weather data, which is integrated into the app to provide environmental insights. The weather data includes temperature, humidity, and other relevant metrics.
     - We use [weatherapi.com](weatherapi.com)
 
 ## Firebase Configuration
