@@ -4,7 +4,6 @@ import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/cards/device_card.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
@@ -88,6 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadDevices() async {
+    if (!mounted) return;
+    
     try {
       final connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
