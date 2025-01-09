@@ -11,6 +11,48 @@ EnviroSense is a Flutter application designed to manage and monitor home devices
 - **windows/**: Contains Windows platform code and configurations.
 - **macos/**: Contains macOS platform code and configurations.
 
+## Architecture
+
+EnviroSense follows the Model-View-Controller (MVC) architecture pattern to separate concerns and improve code maintainability.
+
+- **Model**: Represents the data layer, including data structures and business logic. Models are located in the `lib/data/models/` directory.
+- **View**: Represents the UI layer, including widgets and layouts. Views are located in the `lib/presentation/views/` directory.
+- **Controller**: Acts as an intermediary between the Model and View, handling user input and updating the View. Controllers are located in the `lib/presentation/controllers/` directory.
+
+### Implementation
+
+1. **Models**: Define data structures and business logic. For example, `DeviceModel` represents a device with properties like `id`, `name`, and `status`.
+2. **Views**: Create UI components using Flutter widgets. For example, `DeviceListView` displays a list of devices.
+3. **Controllers**: Handle user interactions and update the View. For example, `DeviceController` manages device-related actions like adding or removing devices.
+
+By following the MVC pattern, we ensure a clear separation of concerns, making the codebase easier to understand, test, and maintain.
+
+## Packages
+
+EnviroSense uses several packages to enhance its functionality. Below is an overview of the key packages and their purposes:
+
+- **firebase_core**: Required for initializing Firebase in the Flutter app.
+- **firebase_auth**: Provides authentication features, allowing users to sign in and register securely.
+- **firebase_messaging**: Enables real-time notifications for device activities and alerts.
+- **connectivity_plus**: Used to check the network connectivity status of the device.
+- **shared_preferences**: Allows storing simple data persistently across app launches.
+- **sqflite**: Provides SQLite database support for local data storage.
+- **flutter_dotenv**: Loads environment variables from a `.env` file, useful for managing configuration settings.
+- **google_fonts**: Allows using Google Fonts in the app for a consistent and attractive typography.
+- **logging**: Provides logging capabilities to help with debugging and monitoring the app's behavior.
+
+These packages are essential for implementing the core features of EnviroSense, such as authentication, real-time notifications, data storage, and network connectivity checks.
+
+## APIs
+
+EnviroSense interacts with several APIs to provide its functionality. Below is an overview of the key APIs used:
+
+- **Deno Server API**: This custom API is used for managing and controlling home devices. It provides endpoints for device configuration, status updates, and other device-related operations.
+    - The OpenAPI documenteation can be seen [here](http://94.130.75.173:8101/)
+- **Weather API**: This API is used to fetch real-time weather data, which is integrated into the app to provide environmental insights. The weather data includes temperature, humidity, and other relevant metrics.
+    - We use [weatherapi.com](weatherapi.com)
+
+
 ## Setup Instructions
 
 1. Ensure Flutter and Dart tools are installed.
