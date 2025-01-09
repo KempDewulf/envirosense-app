@@ -60,6 +60,19 @@ EnviroSense interacts with several APIs to provide its functionality. Below is a
 - **Weather API**: This API is used to fetch real-time weather data, which is integrated into the app to provide environmental insights. The weather data includes temperature, humidity, and other relevant metrics.
     - We use [weatherapi.com](weatherapi.com)
 
+## Firebase Configuration
+
+Ensure you have the correct Firebase configuration files in place:
+- `android/app/google-services.json`
+- `ios/Runner/GoogleService-Info.plist`
+
+## Environment Variables
+Create a `.env` file in the root directory of your project by copying the `.env.example` file:
+```sh
+cp .env.example .env
+```
+
+Replace the placeholder values with your actual values.
 
 ## Setup Instructions
 
@@ -72,16 +85,3 @@ EnviroSense interacts with several APIs to provide its functionality. Below is a
 3. Run `flutter pub get` to fetch all declared dependencies.
 4. Execute `flutter run` to build and launch the app on the desired platform.
 
-## Firebase Configuration
-
-Ensure you have the correct Firebase configuration files in place:
-- `android/app/google-services.json`
-- `ios/Runner/GoogleService-Info.plist`
-
-### Environment Variables
-Create a `.env` file in the root directory of your project by copying the `.env.example` file:
-```sh
-cp .env.example .env
-```
-
-Replace the placeholder values with your actual values.
