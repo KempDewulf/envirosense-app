@@ -4,7 +4,6 @@ import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room_type.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/controllers/room_type_controller.dart';
-import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.dart';
@@ -42,7 +41,19 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     if (!mounted) return;
 
     try {
-      setState(() => _isLoading = true);
+      setState(() {
+        _isLoading = true;
+        _error = null;
+      });
+
+      final connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _error = 'no_connection';
+          _isLoading = false;
+        });
+        return;
+      }
 
       final roomTypes = await _roomTypesController.getRoomTypes(_buildingId);
 
@@ -50,6 +61,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
       setState(() {
         _roomTypes = roomTypes;
+        _error = null;
         _isLoading = false;
       });
     } catch (e) {
@@ -85,14 +97,14 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
     try {
       await _roomController.addRoom(_roomNameController.text, _buildingId, _selectedRoomType?.id);
 
-      if (mounted) {
-        CustomSnackbar.showSnackBar(
-          context,
-          'Room added successfully.',
-        );
+      if (!mounted) return;
 
-        Navigator.pop(context, true);
-      }
+      CustomSnackbar.showSnackBar(
+        context,
+        'Room added successfully.',
+      );
+
+      Navigator.pop(context, true);
     } catch (e, stackTrace) {
       LoggingService.logError('Exception caught: $e', e, stackTrace);
 
