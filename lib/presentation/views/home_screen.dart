@@ -90,51 +90,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: Column(
-        children: [
-          Header(
-            selectedTabIndex: _selectedTabIndex,
-            onTabSelected: _onTabSelected,
+    return Scaffold(backgroundColor: AppColors.whiteColor, body: _buildBody());
+  }
+
+  Widget _buildBody() {
+    return Column(
+      children: [
+        Header(
+          selectedTabIndex: _selectedTabIndex,
+          onTabSelected: _onTabSelected,
+        ),
+        if (_selectedTabIndex == 0)
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _refreshData,
+              color: AppColors.secondaryColor,
+              child: ItemGridPage<Room>(
+                allItems: _allRooms,
+                itemBuilder: (room) => RoomCard(
+                  room: room,
+                  onChanged: _refreshData,
+                ),
+                getItemName: (room) => room.name,
+                onAddPressed: () {
+                  _showAddOptionsBottomSheet(AddOptionType.room);
+                },
+                onItemChanged: _refreshData,
+              ),
+            ),
           ),
-          if (_selectedTabIndex == 0)
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: _refreshData,
-                color: AppColors.secondaryColor,
-                child: ItemGridPage<Room>(
-                  allItems: _allRooms,
-                  itemBuilder: (room) => RoomCard(
-                    room: room,
-                    onChanged: _refreshData,
-                  ),
-                  getItemName: (room) => room.name,
-                  onAddPressed: () {
-                    _showAddOptionsBottomSheet(AddOptionType.room);
-                  },
-                  onItemChanged: _refreshData,
-                ),
+        if (_selectedTabIndex == 1)
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _refreshData,
+              color: AppColors.secondaryColor,
+              child: ItemGridPage<Device>(
+                allItems: _allDevices,
+                itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
+                getItemName: (device) => device.identifier,
+                onAddPressed: () {
+                  _showAddOptionsBottomSheet(AddOptionType.device);
+                },
+                onItemChanged: _refreshData,
               ),
             ),
-          if (_selectedTabIndex == 1)
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: _refreshData,
-                color: AppColors.secondaryColor,
-                child: ItemGridPage<Device>(
-                  allItems: _allDevices,
-                  itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
-                  getItemName: (device) => device.identifier,
-                  onAddPressed: () {
-                    _showAddOptionsBottomSheet(AddOptionType.device);
-                  },
-                  onItemChanged: _refreshData,
-                ),
-              ),
-            ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
