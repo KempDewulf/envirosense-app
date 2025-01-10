@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/core/helpers/string_helper.dart';
 import 'package:envirosense/domain/entities/room_type.dart';
@@ -46,14 +47,13 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         _error = null;
       });
 
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final roomTypes = await _roomTypesController.getRoomTypes(_buildingId);
 

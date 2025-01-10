@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/add_option_type.dart';
+import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
@@ -59,14 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadRooms() async {
     try {
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final rooms = await _roomController.getRooms();
 
@@ -88,16 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadDevices() async {
     if (!mounted) return;
-    
+
     try {
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final devices = await _deviceController.getDevices(_buildingId);
 

@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/device_config.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
@@ -93,14 +94,13 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
         _deviceName = widget.deviceName;
       });
 
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final device = await _deviceController.getDevice(widget.deviceId, _buildingId);
       final deviceData = await _deviceDataController.getDeviceDataByDeviceId(device.identifier);

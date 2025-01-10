@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
+import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/domain/entities/air_data.dart';
 import 'package:envirosense/domain/entities/room_air_quality.dart';
@@ -93,14 +94,13 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
     try {
       setState(() => _isLoading = true);
 
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final room = await _roomController.getRoom(widget.roomId);
       final roomAirQuality = await _roomController.getRoomAirQuality(widget.roomId);
@@ -223,20 +223,15 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
             ));
   }
 
-  Future<bool> _checkConnectivity() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      if (mounted) {
-        CustomSnackbar.showSnackBar(context, 'No internet connection available');
-      }
-      return false;
-    }
-    return true;
-  }
-
   void _handleTemperatureLimitChanged(double newTemperature) async {
     try {
-      if (!await _checkConnectivity()) return;
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       if (!mounted) return;
 

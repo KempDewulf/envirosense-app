@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
 import 'package:envirosense/main.dart';
@@ -55,14 +56,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
     try {
       setState(() => _isLoading = true);
 
-      final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
-        setState(() {
-          _error = 'no_connection';
-          _isLoading = false;
-        });
-        return;
-      }
+      final hasConnection = await ConnectivityHelper.checkConnectivity(
+        context,
+        setError: (error) => setState(() => _error = error),
+        setLoading: (loading) => setState(() => _isLoading = loading),
+      );
+
+      if (!hasConnection) return;
 
       final buildingAirQuality = await _buildingController.getBuildingAirQuality(buildingId);
 
