@@ -1,3 +1,5 @@
+import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
+import 'package:envirosense/services/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/services/auth_service.dart';
@@ -18,6 +20,7 @@ class ForgotPasswordDialog extends StatefulWidget {
 class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
   final AuthService _authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -27,6 +30,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
   void _handleResetPassword(BuildContext context) async {
     try {
+      if (!_formKey.currentState!.validate()) return;
+
       String? emailToReset;
 
       if (widget.askEmail) {
@@ -74,33 +79,33 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         'Reset Password',
         style: TextStyle(color: AppColors.whiteColor, fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Are you sure you want to receive an email for resetting your password?',
-            style: TextStyle(
-              color: AppColors.whiteColor,
-            ),
-          ),
-          if (widget.askEmail) ...[
-            const SizedBox(height: 16),
-            TextField(
-              controller: _emailController,
-              style: const TextStyle(color: AppColors.whiteColor),
-              decoration: const InputDecoration(
-                hintText: 'Enter your email',
-                hintStyle: TextStyle(color: AppColors.lightGrayColor),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.lightGrayColor),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.accentColor),
-                ),
+      content: Form(
+        // Wrap content in Form
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Are you sure you want to receive an email for resetting your password?',
+              style: TextStyle(
+                color: AppColors.whiteColor,
               ),
             ),
+            if (widget.askEmail) ...[
+              const SizedBox(height: 16),
+              CustomTextFormField(
+                controller: _emailController,
+                labelText: 'Enter your email',
+                keyboardType: TextInputType.emailAddress,
+                validator: ValidationService.validateEmail,
+                textStyle: const TextStyle(color: AppColors.whiteColor),
+                labelColor: AppColors.whiteColor,
+                borderColor: AppColors.lightGrayColor,
+                focusColor: AppColors.accentColor,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
       actions: [
         TextButton(
