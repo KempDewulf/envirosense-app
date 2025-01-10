@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      showDialog(context: context, builder: (context) => ForgotPasswordDialog());
+                      showDialog(context: context, builder: (context) => ForgotPasswordDialog(askEmail: true));
                     },
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     child: RichText(
