@@ -11,8 +11,12 @@ class ForgotPasswordDialog extends StatelessWidget {
   void _handleResetPassword(BuildContext context) async {
     try {
       String? userEmail = _authService.getCurrentUser()?.email;
-      
+
       await _authService.resetPassword(userEmail!);
+
+      if (!context.mounted) return;
+
+      await _authService.signOut(context);
 
       if (!context.mounted) return;
 
