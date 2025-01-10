@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
       _initializeNotifications();
     });
 
-    //fetch user data..
+    //fetch user data later here..
     FirebaseMessaging.instance.subscribeToTopic("buildings-$buildingId");
   }
 
