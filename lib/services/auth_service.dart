@@ -11,13 +11,6 @@ class AuthService {
     );
   }
 
-  Future<UserCredential> register(String email, String password) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-  }
-
   Future<void> signOut(BuildContext context) async {
     try {
       await _firebaseAuth.signOut();
@@ -31,5 +24,20 @@ class AuthService {
     } catch (e) {
       throw Exception('Failed to sign out');
     }
+  }
+
+  Future<UserCredential> register(String email, String password) async {
+    return await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
   }
 }
