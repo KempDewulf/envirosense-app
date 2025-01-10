@@ -1,7 +1,8 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
+import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
+import 'package:envirosense/presentation/widgets/dialogs/sign_out_dialog.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
-import 'package:envirosense/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +16,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
   bool _useImperialUnits = false;
   bool _isToggling = false;
-  final AuthService _authService = AuthService();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       _useImperialUnits = value;
     });
 
-    if(!mounted) return;
+    if (!mounted) return;
 
     CustomSnackbar.showSnackBar(context, "Units changed to ${value ? 'imperial' : 'metric'}");
 
@@ -76,7 +76,28 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () => _authService.signOut(context),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => ForgotPasswordDialog(),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.lock_reset, color: AppColors.whiteColor),
+                  title: Text(
+                    'Forgot Password?',
+                    style: TextStyle(color: AppColors.whiteColor),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => showDialog(context: context, builder: (context) => SignOutDialog()),
                 child: const ListTile(
                   leading: Icon(Icons.logout, color: AppColors.whiteColor),
                   title: Text(
