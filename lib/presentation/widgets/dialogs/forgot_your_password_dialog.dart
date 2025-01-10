@@ -45,6 +45,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
       if (!context.mounted) return;
 
+      Navigator.pop(context);
+
       await _authService.signOut(context);
 
       if (!context.mounted) return;
