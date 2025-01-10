@@ -5,7 +5,7 @@ import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
-import 'package:envirosense/presentation/widgets/dialogs/add_options_bottom_sheet.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/add_options_bottom_sheet.dart';
 import 'package:envirosense/presentation/widgets/cards/device_card.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.dart';

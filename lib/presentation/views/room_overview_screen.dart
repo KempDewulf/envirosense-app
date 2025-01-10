@@ -15,7 +15,7 @@ import 'package:envirosense/presentation/widgets/feedback/loading_error_widget.d
 import 'package:envirosense/presentation/widgets/core/custom_app_bar.dart';
 import 'package:envirosense/presentation/widgets/room_overview_content.dart';
 import 'package:envirosense/presentation/widgets/tabs/room_actions_tab.dart';
-import 'package:envirosense/presentation/widgets/dialogs/target_temperature_sheet.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/target_temperature_sheet.dart';
 import 'package:envirosense/services/room_service.dart';
 import 'package:flutter/material.dart';
 
