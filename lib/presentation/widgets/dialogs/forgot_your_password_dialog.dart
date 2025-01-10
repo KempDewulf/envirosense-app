@@ -33,6 +33,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
       if (!_formKey.currentState!.validate()) return;
 
       String? emailToReset;
+      bool wasSignedIn = _authService.getCurrentUser() != null;
 
       if (widget.askEmail) {
         emailToReset = _emailController.text.trim();
@@ -50,16 +51,13 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
       if (!context.mounted) return;
 
-      Navigator.pop(context);
+      Navigator.pop(context); // Close dialog
 
-      await _authService.signOut(context);
-
+      if (wasSignedIn) await _authService.signOut(context);
       if (!context.mounted) return;
-
-      Navigator.pop(context);
       CustomSnackbar.showSnackBar(
         context,
-        'Password reset email sent. Please check your inbox.',
+        wasSignedIn ? 'Password reset email sent. Please login again with your new password.' : 'Password reset email sent. Please check your inbox.',
       );
     } catch (e) {
       if (context.mounted) {
