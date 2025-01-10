@@ -1,6 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_actions.dart';
-import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_actions.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
 import 'package:flutter/material.dart';
 
 class CustomConfirmationDialog extends StatelessWidget {

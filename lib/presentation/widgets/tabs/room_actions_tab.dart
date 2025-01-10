@@ -1,7 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/custom_action_button.dart';
-import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_actions.dart';
-import 'package:envirosense/presentation/widgets/dialogs/custom_bottom_sheet_header.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_actions.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
 import 'package:envirosense/presentation/widgets/core/custom_confirmation_dialog.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
