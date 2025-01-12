@@ -16,7 +16,7 @@ class RoomCard extends StatelessWidget {
 
   String _getDeviceText(BuildContext context, int count) {
     final l10n = AppLocalizations.of(context)!;
-    return '$count ${count == 1 ? l10n.device : l10n.devices}';
+    return '$count ${count == 1 ? l10n.device.toLowerCase() : l10n.devices.toLowerCase()}';
   }
 
   @override
