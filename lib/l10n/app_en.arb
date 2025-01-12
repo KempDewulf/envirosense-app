@@ -717,14 +717,6 @@
     "@selectLanguage": {
         "description": "Label for language selection"
     },
-    "english": "English",
-    "@english": {
-        "description": "English language option"
-    },
-    "dutch": "Dutch",
-    "@dutch": {
-        "description": "Dutch language option"
-    },
     "selectLanguagePrompt": "Choose the language you want to use in the app",
     "@selectLanguagePrompt": {
         "description": "Prompt message shown when selecting app language"
