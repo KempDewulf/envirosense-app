@@ -137,7 +137,6 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      locale: const Locale('nl'),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
