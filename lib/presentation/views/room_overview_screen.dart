@@ -35,7 +35,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   late final RoomController _roomController = RoomController();
   late final DeviceController _deviceController = DeviceController();
   late final OutsideAirDataController _outsideAirController = OutsideAirDataController();
-  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
+  late final TabController _tabController = TabController(length: 3, vsync: this);
 
   bool _isLoading = true;
   final Map<String, bool> _loadingLimits = {
@@ -52,11 +52,14 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   String? _error;
   String city = 'Brugge'; //TODO: later in poc we would get city from user
 
-  final List<Tab> _tabs = const [
-    Tab(text: 'Overview'),
-    Tab(text: 'Devices'),
-    Tab(text: 'Actions'),
-  ];
+  List<Tab> _buildTabs(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      Tab(text: l10n.overview),
+      Tab(text: l10n.devices),
+      Tab(text: l10n.actions),
+    ];
+  }
 
   @override
   void initState() {
@@ -151,7 +154,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       appBar: CustomAppBar(
         title: _room?.name ?? widget.roomName,
         tabController: _tabController,
-        tabs: _tabs,
+        tabs: _buildTabs(context),
         onBackPressed: () => Navigator.pop(context, true),
       ),
       body: LoadingErrorWidget(
@@ -225,6 +228,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
   }
 
   void _handleTemperatureLimitChanged(double newTemperature) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final hasConnection = await ConnectivityHelper.checkConnectivity(
         context,
@@ -239,7 +243,7 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       final allDeviceIds = _room?.devices?.map((device) => device.id).toList();
 
       if (allDeviceIds == null) {
-        CustomSnackbar.showSnackBar(context, 'No devices found in this room');
+        CustomSnackbar.showSnackBar(context, l10n.noDevicesInRoom);
       }
 
       allDeviceIds?.forEach((deviceId) async {
@@ -251,11 +255,11 @@ class _RoomOverviewScreenState extends State<RoomOverviewScreen> with SingleTick
       if (mounted) {
         final formattedTemp = await UnitConverter.formatTemperature(newTemperature);
 
-        CustomSnackbar.showSnackBar(context, 'Temperature limit updated to $formattedTemp');
+        CustomSnackbar.showSnackBar(context, l10n.temperatureLimitUpdated(formattedTemp));
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackbar.showSnackBar(context, 'Failed to update temperature limit');
+        CustomSnackbar.showSnackBar(context, l10n.temperatureLimitUpdateError);
       }
     }
   }

@@ -253,5 +253,35 @@
     "letsStart": "Let's start",
     "@letsStart": {
         "description": "Final button text for onboarding completion"
+    },
+    "overview": "Overview",
+    "@overview": {
+        "description": "Room overview section header"
+    },
+    "devices": "Devices",
+    "@devices": {
+        "description": "Devices section header"
+    },
+    "actions": "Actions",
+    "@actions": {
+        "description": "Actions section header"
+    },
+    "noDevicesInRoom": "No devices found in this room",
+    "@noDevicesInRoom": {
+        "description": "Message shown when room has no devices"
+    },
+    "temperatureLimitUpdated": "Temperature limit updated to {temp}",
+    "@temperatureLimitUpdated": {
+        "description": "Message shown when temperature limit is updated",
+        "placeholders": {
+            "temp": {
+                "type": "String",
+                "example": "24°C"
+            }
+        }
+    },
+    "temperatureLimitUpdateError": "Failed to update temperature limit",
+    "@temperatureLimitUpdateError": {
+        "description": "Error message when temperature limit update fails"
     }
 }
