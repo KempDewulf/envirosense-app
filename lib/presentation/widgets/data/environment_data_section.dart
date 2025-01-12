@@ -1,6 +1,7 @@
 import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../domain/entities/air_data.dart';
 
 class EnvironmentDataSection extends StatelessWidget {

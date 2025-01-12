@@ -462,10 +462,6 @@
     "@enviroScore": {
         "description": "EnviroScore label"
     },
-    "noDataAvailable": "No data available",
-    "@noDataAvailable": {
-        "description": "Message shown when no score data is available"
-    },
     "remove": "Remove",
     "@remove": {
         "description": "Remove action button text"
@@ -473,5 +469,29 @@
     "fromBuilding": " from this building?",
     "@fromBuilding": {
         "description": "Confirmation message suffix for removal"
+    },
+    "noDataAvailable": "No data available",
+    "@noDataAvailable": {
+        "description": "Generic no data message"
+    },
+    "noDeviceData": "No device data from this device.",
+    "@noDeviceData": {
+        "description": "Message when device has no data"
+    },
+    "outsideEnvironment": "Outside Environment",
+    "@outsideEnvironment": {
+        "description": "Label for outside environment section"
+    },
+    "roomEnvironment": "Room Environment",
+    "@roomEnvironment": {
+        "description": "Label for room environment section"
+    },
+    "roomData": "Room Data",
+    "@roomData": {
+        "description": "Label for room data toggle"
+    },
+    "outsideData": "Outside Data",
+    "@outsideData": {
+        "description": "Label for outside data toggle"
     }
 }

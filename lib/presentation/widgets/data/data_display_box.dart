@@ -1,5 +1,6 @@
 import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/air_data.dart';
 import '../../../../core/helpers/data_status_helper.dart';
@@ -14,19 +15,20 @@ class DataDisplayBox extends StatelessWidget {
     required this.data,
   });
 
-  Future<List<MapEntry<String, Map<String, dynamic>>>> _getDataEntries() async {
+  Future<List<MapEntry<String, Map<String, dynamic>>>> _getDataEntries(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final temp = await UnitConverter.formatTemperature(data.temperature);
 
     return [
-      MapEntry('Temperature', {
+      MapEntry(l10n.temperature, {
         'value': temp,
         'status': DataStatusHelper.getTemperatureStatus(data.temperature ?? 0),
       }),
-      MapEntry('Humidity', {
+      MapEntry(l10n.humidity, {
         'value': '${data.humidity?.toStringAsFixed(1)}%',
         'status': DataStatusHelper.getHumidityStatus(data.humidity ?? 0),
       }),
-      MapEntry('CO2 Level', {
+      MapEntry(l10n.co2Level, {
         'value': '${data.ppm} ppm',
         'status': DataStatusHelper.getPPMStatus(data.ppm ?? 0),
       }),
@@ -35,6 +37,8 @@ class DataDisplayBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -50,14 +54,14 @@ class DataDisplayBox extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(16),
       child: FutureBuilder<List<MapEntry<String, Map<String, dynamic>>>>(
-        future: _getDataEntries(),
+        future: _getDataEntries(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor));
           }
 
           if (!snapshot.hasData) {
-            return const Text('No data available');
+            return Text(l10n.noDataAvailable);
           }
 
           return Column(

@@ -1,6 +1,7 @@
 import 'package:envirosense/presentation/widgets/actions/pagination_controls.dart';
 import 'package:envirosense/presentation/widgets/cards/device_data_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/device_data.dart';
 
