@@ -63,5 +63,51 @@
     "enterRoomName": "Enter Room's name",
     "@enterRoomName": {
         "description": "Label for room name input"
+    },
+    "deviceAssignedSuccess": "Device assigned successfully",
+    "@deviceAssignedSuccess": {
+        "description": "Success message when device is assigned to a room"
+    },
+    "deviceAssignedError": "Failed to assign device: {error}",
+    "@deviceAssignedError": {
+        "description": "Error message when device assignment fails",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "example": "Connection timeout"
+            }
+        }
+    },
+    "failedToLoadRooms": "Failed to load rooms",
+    "@failedToLoadRooms": {
+        "description": "Error message when rooms cannot be loaded"
+    },
+    "scanQrCodeInstructions": "Scan the QR Code on the device.\nYour device will connect automatically.",
+    "@scanQrCodeInstructions": {
+        "description": "Instructions for scanning device QR code"
+    },
+    "enterDeviceName": "Enter device name",
+    "@enterDeviceName": {
+        "description": "Label for device name input field"
+    },
+    "deviceNameHint": "Enter a name for this device",
+    "@deviceNameHint": {
+        "description": "Hint text for device name input"
+    },
+    "selectRoom": "Select a room",
+    "@selectRoom": {
+        "description": "Label for room selection"
+    },
+    "searchRooms": "Search rooms",
+    "@searchRooms": {
+        "description": "Label for room search input"
+    },
+    "assignDevice": "Assign Device",
+    "@assignDevice": {
+        "description": "Button text for assigning device to a room"
+    },
+    "addDevice": "Add Device",
+    "@addDevice": {
+        "description": "Button text for adding a new device"
     }
 }

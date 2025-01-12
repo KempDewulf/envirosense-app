@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/controllers/device_controller.dart';
 import 'package:envirosense/presentation/controllers/room_controller.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
@@ -59,6 +62,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   Future<void> _getRooms() async {
     if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
 
     try {
       final rooms = await _roomController.getRooms();
@@ -74,7 +78,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to load rooms',
+        l10n.failedToLoadRooms,
       );
 
       LoggingService.logError('Failed to fetch rooms: $e', e);
@@ -83,6 +87,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   Future<void> _addDeviceToRoom() async {
     if (!_isFormComplete || _isSaving) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isSaving = true;
@@ -96,7 +101,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       if (mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Device assigned successfully',
+          l10n.deviceAssignedSuccess,
         );
         Navigator.pop(context, true);
       }
@@ -105,7 +110,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       if (mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Failed to assign device $e',
+          l10n.deviceAssignedError(e.toString()),
         );
       }
     } finally {
@@ -119,6 +124,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       key: _scaffoldMessengerKey,
       appBar: AppBar(
@@ -129,8 +136,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         ),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: AppColors.whiteColor,
-        title: const Text(
-          'Add Device',
+        title: Text(
+          l10n.addDevice,
           style: TextStyle(
             fontSize: 18,
           ),
@@ -143,14 +150,16 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
   }
 
   Widget _buildBody() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (_deviceIdentifierCode == null)
-            const Text(
-              'Scan the QR Code on the device.\nYour device will connect automatically.',
+            Text(
+              l10n.scanQrCodeInstructions,
               style: TextStyle(fontSize: 16, color: AppColors.accentColor, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -181,8 +190,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Enter device name',
+                        Text(
+                          l10n.enterDeviceName,
                           style: TextStyle(
                             fontSize: 18,
                             color: AppColors.accentColor,
@@ -192,7 +201,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         const SizedBox(height: 8),
                         CustomTextFormField(
                           controller: _deviceNameController,
-                          labelText: 'Enter a name for this device',
+                          labelText: l10n.deviceNameHint,
                           floatingLabelBehaviour: FloatingLabelBehavior.never,
                           onChanged: (value) => setState(() {}),
                           labelColor: AppColors.accentColor,
@@ -206,8 +215,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Select a room',
+                        Text(
+                          l10n.selectRoom,
                           style: TextStyle(
                             fontSize: 18,
                             color: AppColors.accentColor,
@@ -217,7 +226,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         const SizedBox(height: 8),
                         CustomTextFormField(
                           controller: _searchController,
-                          labelText: 'Search rooms',
+                          labelText: l10n.searchRooms,
                           floatingLabelBehaviour: FloatingLabelBehavior.never,
                           labelColor: AppColors.accentColor,
                           contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
@@ -312,7 +321,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             ),
                             onPressed: !_isFormComplete ? null : _addDeviceToRoom,
                             child: Text(
-                              'Assign Device',
+                              l10n.assignDevice,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
