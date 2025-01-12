@@ -89,6 +89,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   Future<void> _saveRoom() async {
     if (!_isFormComplete || _isSaving) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isSaving = true;
@@ -102,7 +103,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
       CustomSnackbar.showSnackBar(
         context,
-        'Room added successfully.',
+        l10n.roomAddedSuccess,
       );
 
       Navigator.pop(context, true);
@@ -112,7 +113,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       if (mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Failed to add room. Please try again later.',
+          l10n.roomAddedError,
         );
       }
     } finally {
