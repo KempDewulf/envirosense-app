@@ -708,5 +708,21 @@
     "removeRoomError": "Failed to remove room. Please try again later.",
     "@removeRoomError": {
         "description": "Error message for room removal failure"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "Language selection option"
+    },
+    "selectLanguage": "Select Language",
+    "@selectLanguage": {
+        "description": "Label for language selection"
+    },
+    "english": "English",
+    "@english": {
+        "description": "English language option"
+    },
+    "dutch": "Dutch",
+    "@dutch": {
+        "description": "Dutch language option"
     }
 }

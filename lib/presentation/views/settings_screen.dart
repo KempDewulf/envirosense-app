@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/data/models/language_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
@@ -59,6 +60,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    final supportedLanguages = [
+      Language('en', l10n.english),
+      Language('nl', l10n.dutch),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -141,6 +147,45 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 onChanged: (value) {
                   _toggleUnits(value);
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () async {
+                  final locale = await showDialog<Locale>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(l10n.selectLanguage),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: supportedLanguages
+                            .map((lang) => ListTile(
+                                  title: Text(lang.name),
+                                  onTap: () => Navigator.pop(context, Locale(lang.code)),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  leading: Icon(Icons.language, color: AppColors.whiteColor),
+                  title: Text(
+                    l10n.language,
+                    style: TextStyle(color: AppColors.whiteColor),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.whiteColor,
+                    size: 16,
+                  ),
+                ),
               ),
             ),
           ),
