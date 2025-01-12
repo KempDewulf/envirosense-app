@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:envirosense/core/interfaces/app_state_interface.dart';
 import 'package:envirosense/services/language_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -62,10 +60,6 @@ class EnviroSenseApp extends StatefulWidget {
   final bool isFirstTime;
 
   const EnviroSenseApp({super.key, required this.isFirstTime});
-
-  static AppStateInterface of(BuildContext context) {
-    return context.findAncestorStateOfType<_EnviroSenseAppState>()! as AppStateInterface;
-  }
 
   @override
   State<EnviroSenseApp> createState() => _EnviroSenseAppState();

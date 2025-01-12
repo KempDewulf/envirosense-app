@@ -179,11 +179,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       ),
                     ),
                   );
-
-                  if (locale != null) {
-                    final app = EnviroSenseApp.of(context);
-                    app.updateLocale(locale);
-                  }
                 },
                 child: ListTile(
                   leading: Icon(Icons.language, color: AppColors.whiteColor),
