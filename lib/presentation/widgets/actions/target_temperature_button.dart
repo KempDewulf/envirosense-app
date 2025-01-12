@@ -17,6 +17,8 @@ class TargetTemperatureButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ElevatedButton(
       onPressed: isLoadingTemperature || targetTemperature == null ? null : onSetTemperature,
       style: ButtonStyle(
@@ -53,15 +55,15 @@ class TargetTemperatureButton extends StatelessWidget {
             ),
           const SizedBox(width: 8),
           if (isLoadingTemperature)
-            const Text(
-              'Loading Temperature Limit',
+            Text(
+              l10n.loadingTemperature,
               style: TextStyle(color: AppColors.accentColor, fontSize: 16),
             )
           else
             FutureBuilder<String>(
               future: targetTemperature != null
-                  ? UnitConverter.formatDisplayTemperature(targetTemperature).then((temp) => 'Set Target Temperature ($temp)')
-                  : Future.value('Temperature Limit Not Available'),
+                  ? UnitConverter.formatDisplayTemperature(targetTemperature).then((temp) => l10n.setTargetTemperature(temp))
+                  : Future.value(l10n.temperatureLimitUnavailable),
               builder: (context, snapshot) {
                 return Text(
                   snapshot.data ?? l10n.loading,
