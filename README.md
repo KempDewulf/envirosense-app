@@ -48,6 +48,10 @@ EnviroSense uses several packages to enhance its functionality. Below is an over
 - **flutter_dotenv**: Loads environment variables from a `.env` file, useful for managing configuration settings.
 - **google_fonts**: Allows using Google Fonts in the app for a consistent and attractive typography.
 - **logging**: Provides logging capabilities to help with debugging and monitoring the app's behavior.
+- **country-flags**: This package provides access to country flags as image assets.
+- **provider**: Provider is a state management solution for Flutter. It simplifies the way data is passed through the widget tree and ensures efficient updates when the data changes.
+- **intl**: The intl package is used for internationalization and localization.
+- **flutter_localizations**: This package is part of the Flutter SDK and supports app localization by providing localized text, dates, and other resources. It integrates with the intl package and enables apps to adapt to different languages and regions automatically.
 
 These packages are essential for implementing the core features of EnviroSense, such as authentication, real-time notifications, data storage, and network connectivity checks.
 
