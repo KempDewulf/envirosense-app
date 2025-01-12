@@ -52,13 +52,13 @@ class Header extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TabButton(
-                text: 'ROOMS',
+                text: 'Rooms',
                 isSelected: selectedTabIndex == 0,
                 onTap: () => onTabSelected(0),
               ),
               const SizedBox(width: 32),
               TabButton(
-                text: 'DEVICES',
+                text: 'Devices',
                 isSelected: selectedTabIndex == 1,
                 onTap: () => onTabSelected(1),
               ),

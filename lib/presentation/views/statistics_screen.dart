@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/data_status_helper.dart';
 import 'package:envirosense/domain/entities/building_air_quality.dart';
@@ -91,11 +92,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.whiteColor, // All white underneath
       appBar: AppBar(
         title: Text(
-          "Building Statistics",
+          l10n.statisticsTitle,
           style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.whiteColor, fontSize: 22),
         ),
       ),
@@ -104,6 +107,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
   }
 
   Widget _buildBody() {
+    final l10n = AppLocalizations.of(context)!;
     double screenHeight = MediaQuery.of(context).size.height;
     double topBackgroundHeight = screenHeight * 0.10;
 
@@ -165,7 +169,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
                                   ),
                                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                                   child: Text(
-                                    _buildingHasRooms ? 'Rooms' : 'No rooms in building',
+                                    _buildingHasRooms ? l10n.rooms : l10n.noRoomsInBuilding,
                                     style: TextStyle(
                                       color: AppColors.whiteColor,
                                       fontSize: 20,
@@ -209,7 +213,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> with RouteAware {
                                                 ),
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  room?.enviroScore != null ? '${room?.enviroScore?.toDouble()}%' : 'N/A',
+                                                  room?.enviroScore != null ? '${room?.enviroScore?.toDouble()}%' : l10n.notAvailable,
                                                   style: const TextStyle(
                                                     color: AppColors.whiteColor,
                                                     fontSize: 16,

@@ -60,11 +60,15 @@
     "@passwordRequirements": {
         "description": "Password requirements explanation"
     },
-    "rooms": "ROOMS",
+    "rooms": "Rooms",
     "@rooms": {
         "description": "Navigation label for rooms section"
     },
-    "devices": "DEVICES",
+    "noRoomsInBuilding": "No rooms in this building",
+    "@noRoomsInBuilding": {
+        "description": "Message shown when no rooms are available in the current building"
+    },
+    "devices": "Devices",
     "@devices": {
         "description": "Navigation label for devices section"
     },
@@ -72,9 +76,25 @@
     "@settings": {
         "description": "Navigation label for settings section"
     },
-    "statistics": "Statistics",
-    "@statistics": {
-        "description": "Navigation label for statistics section"
+    "notAvailable": "N/A",
+    "@notAvailable": {
+        "description": "Label for not available data"
+    },
+    "statisticsTitle": "Building Statistics",
+    "@statisticsTitle": {
+        "description": "Title for statistics screen"
+    },
+    "noData": "No data available",
+    "@noData": {
+        "description": "Message shown when no statistics data is available"
+    },
+    "noRooms": "No rooms available",
+    "@noRooms": {
+        "description": "Message shown when no rooms are available"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Label for retry button"
     },
     "buildingTitle": "Campus Brugge Station - Building A",
     "@buildingTitle": {
