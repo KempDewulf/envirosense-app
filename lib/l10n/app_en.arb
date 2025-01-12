@@ -493,5 +493,57 @@
     "outsideData": "Outside Data",
     "@outsideData": {
         "description": "Label for outside data toggle"
+    },
+    "clearCacheMessage": "This action will clear all cached data and log you out. Your account will remain intact but you will need to log in again.\n\nAre you sure you want to proceed?",
+    "@clearCacheMessage": {
+        "description": "Clear cache confirmation message"
+    },
+    "clearAll": "Clear All",
+    "@clearAll": {
+        "description": "Clear all button text"
+    },
+    "enterEmail": "Please enter an email",
+    "@enterEmail": {
+        "description": "Email input validation message"
+    },
+    "noEmailFound": "No email found",
+    "@noEmailFound": {
+        "description": "Email not found error message"
+    },
+    "resetEmailSentLogin": "Password reset email sent. Please login again with your new password.",
+    "@resetEmailSentLogin": {
+        "description": "Reset email sent confirmation for logged in users"
+    },
+    "resetEmailSent": "Password reset email sent. Please check your inbox.",
+    "@resetEmailSent": {
+        "description": "Reset email sent confirmation for non-logged users"
+    },
+    "resetEmailFailed": "Failed to send reset email. Please try again.",
+    "@resetEmailFailed": {
+        "description": "Reset email failure message"
+    },
+    "resetPassword": "Reset Password",
+    "@resetPassword": {
+        "description": "Reset password dialog title"
+    },
+    "resetPasswordConfirm": "Are you sure you want to receive an email for resetting your password?",
+    "@resetPasswordConfirm": {
+        "description": "Reset password confirmation message"
+    },
+    "emailInputLabel": "Enter your email",
+    "@emailInputLabel": {
+        "description": "Email input field label"
+    },
+    "sendEmail": "Yes, Send Email",
+    "@sendEmail": {
+        "description": "Send reset email confirmation button"
+    },
+    "signOutConfirm": "Are you sure you want to sign out?",
+    "@signOutConfirm": {
+        "description": "Sign out confirmation message"
+    },
+    "yesSignOut": "Yes, Sign Out",
+    "@yesSignOut": {
+        "description": "Sign out confirmation button"
     }
 }

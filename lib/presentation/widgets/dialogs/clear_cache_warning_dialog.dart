@@ -1,4 +1,5 @@
 import 'package:envirosense/presentation/widgets/actions/dialog_filled_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/actions/dialog_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'base_dialog.dart';
@@ -16,17 +17,18 @@ class ClearCacheWarningDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BaseDialog(
-      title: 'Clear Cache',
-      content:
-          'This action will clear all cached data and log you out. Your account will remain intact but you will need to log in again.\n\nAre you sure you want to proceed?',
+      title: l10n.clearCache,
+      content: l10n.clearCacheMessage,
       actions: [
         DialogOutlinedButton(
-          text: 'Cancel',
+          text: l10n.cancel,
           onPressed: () => Navigator.pop(context, false),
         ),
         DialogFilledButton(
-          text: 'Clear All',
+          text: l10n.clearAll,
           onPressed: () => Navigator.pop(context, true),
         ),
       ],
