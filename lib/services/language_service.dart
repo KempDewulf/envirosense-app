@@ -15,6 +15,7 @@ class LanguageService extends ChangeNotifier {
   static const List<Language> supportedLanguages = [
     Language('en', 'English'),
     Language('nl', 'Nederlands'),
+    Language('fr', 'Français'),
   ];
 
   static List<Locale> get supportedLocales => supportedLanguages.map((lang) => Locale(lang.code)).toList();
