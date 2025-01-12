@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _refreshData() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       if (!mounted) return;
 
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to refresh data',
+        l10n.refreshError,
       );
     }
   }

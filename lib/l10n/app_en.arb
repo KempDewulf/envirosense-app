@@ -283,5 +283,9 @@
     "temperatureLimitUpdateError": "Failed to update temperature limit",
     "@temperatureLimitUpdateError": {
         "description": "Error message when temperature limit update fails"
+    },
+    "refreshError": "Failed to refresh data",
+    "@refreshError": {
+        "description": "Error message shown when data refresh fails"
     }
 }
