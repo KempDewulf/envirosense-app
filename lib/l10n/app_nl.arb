@@ -1,5 +1,6 @@
 {
     "@@locale": "nl",
+    "@@author": "EnviroSense",
     "appTitle": "EnviroSense",
     "roomAddedSuccess": "Kamer succesvol toegevoegd",
     "roomAddedError": "Kamer toevoegen mislukt. Probeer het later opnieuw",
@@ -155,5 +156,7 @@
     "renameRoomSuccess": "Kamer succesvol hernoemd",
     "renameRoomError": "Hernoemen kamer mislukt. Probeer het later opnieuw",
     "removeRoomSuccess": "Kamer succesvol verwijderd",
-    "removeRoomError": "Verwijderen kamer mislukt. Probeer het later opnieuw"
+    "removeRoomError": "Verwijderen kamer mislukt. Probeer het later opnieuw",
+    "searchTypedEntity": "Zoek een {type}",
+    "addTypedEntity": "Voeg een {type} toe"
 }

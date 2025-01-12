@@ -1,5 +1,6 @@
 {
     "@@locale": "en",
+    "@@author": "EnviroSense",
     "appTitle": "EnviroSense",
     "@appTitle": {
         "description": "The title of the application"
@@ -105,6 +106,26 @@
     "searchRooms": "Search rooms",
     "@searchRooms": {
         "description": "Label for room search input"
+    },
+    "searchTypedEntity": "Search a {type}",
+    "@searchTypedEntity": {
+        "description": "Placeholder for searching a specific entity",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "room"
+            }
+        }
+    },
+    "addTypedEntity": "Add a {type}",
+    "@addTypedEntity": {
+        "description": "Button text for adding a specific entity type",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "room"
+            }
+        }
     },
     "assignDevice": "Assign Device",
     "@assignDevice": {

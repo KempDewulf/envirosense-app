@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:envirosense/core/enums/searchable.type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/add_option_type.dart';
@@ -164,6 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.secondaryColor,
                   child: ItemGridPage<Room>(
                     allItems: _allRooms,
+                    searchableType: SearchableType.room,
                     itemBuilder: (room) => RoomCard(
                       room: room,
                       onChanged: _refreshData,
@@ -183,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.secondaryColor,
                   child: ItemGridPage<Device>(
                     allItems: _allDevices,
+                    searchableType: SearchableType.device,
                     itemBuilder: (device) => DeviceCard(device: device, onChanged: _refreshData),
                     getItemName: (device) => device.identifier,
                     onAddPressed: () {

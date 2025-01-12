@@ -1,5 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/core/enums/searchable.type.dart';
 import 'package:envirosense/presentation/widgets/cards/add_item_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class ItemGridPage<T> extends StatefulWidget {
   final String Function(T item) getItemName;
   final VoidCallback onAddPressed;
   final VoidCallback onItemChanged;
+  final SearchableType searchableType;
 
   const ItemGridPage({
     super.key,
@@ -17,6 +20,7 @@ class ItemGridPage<T> extends StatefulWidget {
     required this.getItemName,
     required this.onAddPressed,
     required this.onItemChanged,
+    required this.searchableType,
   });
 
   @override
@@ -62,13 +66,15 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           CustomTextFormField(
             controller: _searchController,
-            labelText: 'Search a ${T.toString().toLowerCase()}',
+            labelText: l10n.searchTypedEntity(widget.searchableType.getTranslation(context)),
             labelColor: AppColors.blackColor,
             prefixIcon: const Icon(Icons.search),
             contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
@@ -97,7 +103,7 @@ class ItemGridPageState<T> extends State<ItemGridPage<T>> {
                 } else {
                   return AddItemCard(
                     onTap: widget.onAddPressed,
-                    title: 'Add a ${T.toString().toLowerCase()}',
+                    title: l10n.addTypedEntity(widget.searchableType.getTranslation(context)),
                     backgroundColor: AppColors.secondaryColor,
                     iconColor: AppColors.whiteColor,
                     textColor: AppColors.whiteColor,
