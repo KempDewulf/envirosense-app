@@ -158,5 +158,5 @@
     "removeRoomSuccess": "Kamer succesvol verwijderd",
     "removeRoomError": "Verwijderen kamer mislukt. Probeer het later opnieuw",
     "searchTypedEntity": "Zoek een {type}",
-    "addTypedEntity": "Voeg een {type} toe"
+    "addTypedEntity": "een {type} toevoegen"
 }
