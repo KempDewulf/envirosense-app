@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/data/models/language_model.dart';
 import 'package:envirosense/main.dart';
@@ -159,23 +161,41 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () async {
-                  final locale = await showDialog<Locale>(
+                onTap: () {
+                  showModalBottomSheet(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text(l10n.selectLanguage),
-                      content: Column(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (context) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: supportedLanguages
-                            .map((lang) => ListTile(
-                                  title: Text(lang.name),
-                                  onTap: () async {
-                                    await LanguageService.setLanguage(lang.code);
-                                    if (!mounted) return;
-                                    Navigator.pop(context, Locale(lang.code));
-                                  },
-                                ))
-                            .toList(),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              l10n.selectLanguage,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          ...supportedLanguages.map(
+                            (lang) => RadioListTile<String>(
+                              title: Text(lang.name),
+                              value: lang.code,
+                              groupValue: LanguageService.instance.locale.languageCode,
+                              onChanged: (_) async {
+                                await LanguageService.instance.changeLocale(
+                                  locale: Locale(lang.code),
+                                );
+                                if (!context.mounted) return;
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );

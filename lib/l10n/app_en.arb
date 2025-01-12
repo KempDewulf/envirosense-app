@@ -724,5 +724,9 @@
     "dutch": "Dutch",
     "@dutch": {
         "description": "Dutch language option"
+    },
+    "systemDefault": "System Default",
+    "@systemDefault": {
+        "description": "System default language option"
     }
 }

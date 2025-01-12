@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<v
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LanguageService.instance.initialize();
 
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
@@ -48,7 +50,12 @@ void main() async {
     Logger('FirebaseMessaging').info('Handling a message: ${message.messageId}');
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(EnviroSenseApp(isFirstTime: isFirstTime));
+  runApp(
+    ChangeNotifierProvider.value(
+      value: LanguageService.instance,
+      child: EnviroSenseApp(isFirstTime: isFirstTime),
+    ),
+  );
 }
 
 @pragma('vm:entry-point')
@@ -66,27 +73,12 @@ class EnviroSenseApp extends StatefulWidget {
 }
 
 class _EnviroSenseAppState extends State<EnviroSenseApp> {
-  Locale? _locale;
   Widget _initialScreen = const LoginScreen();
 
   @override
   void initState() {
     super.initState();
     _determineInitialScreen();
-    _loadSavedLanguage();
-  }
-
-  Future<void> _loadSavedLanguage() async {
-    final languageCode = await LanguageService.getLanguage();
-    setState(() {
-      _locale = Locale(languageCode);
-    });
-  }
-
-  void updateLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
   }
 
   Future<void> _determineInitialScreen() async {
@@ -126,62 +118,61 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EnviroSense',
-      navigatorObservers: [routeObserver],
-      theme: ThemeData(
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: AppColors.secondaryColor,
-          selectionColor: AppColors.secondaryColor,
-          selectionHandleColor: AppColors.secondaryColor,
+    return Consumer<LanguageService>(builder: (context, utils, child) {
+      return MaterialApp(
+        title: 'EnviroSense',
+        navigatorObservers: [routeObserver],
+        theme: ThemeData(
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColors.secondaryColor,
+            selectionColor: AppColors.secondaryColor,
+            selectionHandleColor: AppColors.secondaryColor,
+          ),
+          primaryColor: AppColors.primaryColor,
+          scaffoldBackgroundColor: AppColors.whiteColor,
+          appBarTheme: const AppBarTheme(
+            color: AppColors.primaryColor,
+            iconTheme: IconThemeData(color: AppColors.whiteColor),
+            toolbarTextStyle: TextStyle(color: AppColors.whiteColor, fontSize: 20),
+          ),
+          buttonTheme: const ButtonThemeData(
+            buttonColor: AppColors.secondaryColor,
+            textTheme: ButtonTextTheme.primary,
+          ),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: AppColors.primaryColor,
+            secondary: AppColors.secondaryColor,
+          ),
+          textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        primaryColor: AppColors.primaryColor,
-        scaffoldBackgroundColor: AppColors.whiteColor,
-        appBarTheme: const AppBarTheme(
-          color: AppColors.primaryColor,
-          iconTheme: IconThemeData(color: AppColors.whiteColor),
-          toolbarTextStyle: TextStyle(color: AppColors.whiteColor, fontSize: 20),
-        ),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: AppColors.secondaryColor,
-          textTheme: ButtonTextTheme.primary,
-        ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: AppColors.primaryColor,
-          secondary: AppColors.secondaryColor,
-        ),
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: _locale,
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('nl'), // Dutch
-      ],
-      home: _initialScreen,
-      routes: {
-        '/main': (context) => const MainScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/emailVerification': (context) => EmailVerificationScreen(
-              email: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['email'],
-            ),
-        '/addRoom': (context) => const AddRoomScreen(),
-        '/addDevice': (context) => const AddDeviceScreen(),
-        '/statisticsDetail': (context) => const StatisticsScreen(),
-        '/roomOverview': (context) => RoomOverviewScreen(
-              roomName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomName'],
-              roomId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomId'],
-            ),
-        '/deviceOverview': (context) => DeviceOverviewScreen(
-              deviceName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceName'],
-              deviceId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceId'],
-            ),
-      },
-    );
+        locale: utils.locale,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: LanguageService.supportedLocales,
+        home: _initialScreen,
+        routes: {
+          '/main': (context) => const MainScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/emailVerification': (context) => EmailVerificationScreen(
+                email: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['email'],
+              ),
+          '/addRoom': (context) => const AddRoomScreen(),
+          '/addDevice': (context) => const AddDeviceScreen(),
+          '/statisticsDetail': (context) => const StatisticsScreen(),
+          '/roomOverview': (context) => RoomOverviewScreen(
+                roomName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomName'],
+                roomId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['roomId'],
+              ),
+          '/deviceOverview': (context) => DeviceOverviewScreen(
+                deviceName: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceName'],
+                deviceId: (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>)['deviceId'],
+              ),
+        },
+      );
+    });
   }
 }

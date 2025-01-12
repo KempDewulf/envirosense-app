@@ -162,5 +162,6 @@
     "language": "Taal",
     "selectLanguage": "Selecteer een taal",
     "english": "Engels",
-    "dutch": "Nederlands"
+    "dutch": "Nederlands",
+    "systemDefault": "Systeemstandaard"
 }
