@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/domain/entities/room.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

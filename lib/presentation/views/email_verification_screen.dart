@@ -1,4 +1,5 @@
 import 'package:envirosense/presentation/controllers/email_verification_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
 
@@ -58,6 +59,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Padding(
@@ -66,7 +69,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'A verification email has been sent to ${widget.email}.',
+              l10n.verificationEmailSent(widget.email),
               style: const TextStyle(
                 fontSize: 18,
                 color: AppColors.whiteColor,
@@ -90,8 +93,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     ? const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(AppColors.whiteColor),
                       )
-                    : const Text(
-                        'I Verified My Email',
+                    : Text(
+                        l10n.verifiedEmailButton,
                         style: TextStyle(fontSize: 16),
                       ),
               ),
@@ -100,7 +103,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             TextButton(
               onPressed: _canResendEmail ? _resendVerificationEmail : null,
               child: Text(
-                'Resend Verification Email',
+                l10n.resendVerificationEmail,
                 style: TextStyle(
                   color: _canResendEmail ? AppColors.whiteColor : AppColors.lightGrayColor,
                 ),
@@ -109,8 +112,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             const SizedBox(height: 16),
             TextButton(
               onPressed: _cancelRegistration,
-              child: const Text(
-                'Cancel Registration',
+              child: Text(
+                l10n.cancelRegistration,
                 style: TextStyle(color: AppColors.whiteColor),
               ),
             ),

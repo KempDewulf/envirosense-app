@@ -109,5 +109,27 @@
     "addDevice": "Add Device",
     "@addDevice": {
         "description": "Button text for adding a new device"
+    },
+    "verificationEmailSent": "A verification email has been sent to {email}.",
+    "@verificationEmailSent": {
+        "description": "Message shown when verification email is sent",
+        "placeholders": {
+            "email": {
+                "type": "String",
+                "example": "user@example.com"
+            }
+        }
+    },
+    "verifiedEmailButton": "I Verified My Email",
+    "@verifiedEmailButton": {
+        "description": "Button text for email verification"
+    },
+    "resendVerificationEmail": "Resend Verification Email",
+    "@resendVerificationEmail": {
+        "description": "Button text for resending verification email"
+    },
+    "cancelRegistration": "Cancel Registration",
+    "@cancelRegistration": {
+        "description": "Button text for cancelling registration"
     }
 }
