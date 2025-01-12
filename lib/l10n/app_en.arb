@@ -565,5 +565,61 @@
     "error": "Error",
     "@error": {
         "description": "Generic error message"
+    },
+    "deviceRename": "Rename Device",
+    "@deviceRename": {
+        "description": "Title for device rename action"
+    },
+    "deviceChangeRoom": "Change Room",
+    "@deviceChangeRoom": {
+        "description": "Title for room change action"
+    },
+    "deviceRemove": "Remove Device",
+    "@deviceRemove": {
+        "description": "Title for device removal action"
+    },
+    "deviceNameLabel": "Device Name",
+    "@deviceNameLabel": {
+        "description": "Label for device name input field"
+    },
+    "renameSuccess": "Device renamed successfully",
+    "@renameSuccess": {
+        "description": "Success message for device rename"
+    },
+    "renameFailed": "Failed to rename device. Please try again later.",
+    "@renameFailed": {
+        "description": "Error message for device rename failure"
+    },
+    "currentRoom": "Current Room",
+    "@currentRoom": {
+        "description": "Label for current room display"
+    },
+    "unknownRoom": "Unknown room",
+    "@unknownRoom": {
+        "description": "Fallback text for unknown room"
+    },
+    "selectNewRoom": "Select New Room",
+    "@selectNewRoom": {
+        "description": "Label for room selection"
+    },
+    "roomChangeSuccess": "Room changed successfully",
+    "@roomChangeSuccess": {
+        "description": "Success message for room change"
+    },
+    "roomChangeFailed": "Failed to change room. Please try again later.",
+    "@roomChangeFailed": {
+        "description": "Error message for room change failure"
+    },
+    "removeDeviceConfirm": "Are you sure you want to remove ",
+    "@removeDeviceConfirm": {
+        "description": "Confirmation message prefix for device removal"
+    },
+    "removeSuccess": "Device removed successfully",
+    "@removeSuccess": {
+        "description": "Success message for device removal"
+    },
+    "removeFailed": "Failed to remove device. Please try again later.",
+    "@removeFailed": {
+        "description": "Error message for device removal failure"
     }
 }
