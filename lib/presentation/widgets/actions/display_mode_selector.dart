@@ -36,7 +36,6 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
   @override
   void initState() {
     super.initState();
-    displayModes = _createDisplayModes();
 
     // Scroll to active card after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -139,7 +138,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: () {
-          if(isSelected) return;
+          if (isSelected) return;
           widget.onModeSelected(mode);
         },
         child: Container(
@@ -175,6 +174,12 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    displayModes = _createDisplayModes();
   }
 
   @override
