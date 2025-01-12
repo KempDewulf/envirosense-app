@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,8 @@ class PaginationControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -40,7 +43,7 @@ class PaginationControls extends StatelessWidget {
               child: PaginationButton(
                 onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
                 isNext: false,
-                text: 'Previous',
+                text: l10n.previous,
               ),
             ),
             Expanded(
@@ -55,7 +58,7 @@ class PaginationControls extends StatelessWidget {
               child: PaginationButton(
                 onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
                 isNext: true,
-                text: 'Next',
+                text: l10n.next,
               ),
             ),
           ],

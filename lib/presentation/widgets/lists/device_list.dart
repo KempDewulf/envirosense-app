@@ -1,6 +1,7 @@
 import 'package:envirosense/domain/entities/device.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/constants/colors.dart';
 
 class DevicesList extends StatelessWidget {
@@ -18,14 +19,15 @@ class DevicesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         const SizedBox(height: 16),
         if (devices.isEmpty)
-          const Center(
+          Center(
             child: Text(
-              'No devices in this room.',
+              l10n.noDevicesInRoom,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.accentColor,
@@ -67,13 +69,13 @@ class DevicesList extends StatelessWidget {
                                 future: _databaseService.getDeviceName(device.identifier),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return const Text(
-                                      'Loading device name...',
+                                    return Text(
+                                      l10n.loadingDeviceName,
                                       style: TextStyle(fontSize: 16, color: AppColors.accentColor),
                                     );
                                   } else if (snapshot.hasError) {
-                                    return const Text(
-                                      'Error',
+                                    return Text(
+                                      l10n.error,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,

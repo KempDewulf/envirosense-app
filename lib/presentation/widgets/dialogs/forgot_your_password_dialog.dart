@@ -1,5 +1,6 @@
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/services/validation_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/services/auth_service.dart';
@@ -29,6 +30,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
   }
 
   void _handleResetPassword(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       if (!_formKey.currentState!.validate()) return;
 
@@ -38,12 +41,12 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
       if (widget.askEmail) {
         emailToReset = _emailController.text.trim();
         if (emailToReset.isEmpty) {
-          throw Exception('Please enter an email');
+          throw Exception(l10n.enterEmail);
         }
       } else {
         emailToReset = _authService.getCurrentUser()?.email;
         if (emailToReset == null) {
-          throw Exception('No email found');
+          throw Exception(l10n.noEmailFound);
         }
       }
 
@@ -57,13 +60,13 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
       if (!context.mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        wasSignedIn ? 'Password reset email sent. Please login again with your new password.' : 'Password reset email sent. Please check your inbox.',
+        wasSignedIn ? l10n.resetEmailSentLogin : l10n.resetEmailSent,
       );
     } catch (e) {
       if (context.mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Failed to send reset email. Please try again.',
+          l10n.resetEmailFailed,
         );
       }
     }
@@ -71,10 +74,12 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AlertDialog(
       backgroundColor: AppColors.primaryColor,
-      title: const Text(
-        'Reset Password',
+      title: Text(
+        l10n.resetPassword,
         style: TextStyle(color: AppColors.whiteColor, fontSize: 20, fontWeight: FontWeight.bold),
       ),
       content: Form(
@@ -83,8 +88,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Are you sure you want to receive an email for resetting your password?',
+            Text(
+              l10n.resetPasswordConfirm,
               style: TextStyle(
                 color: AppColors.whiteColor,
               ),
@@ -93,7 +98,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
               const SizedBox(height: 16),
               CustomTextFormField(
                 controller: _emailController,
-                labelText: 'Enter your email',
+                labelText: l10n.emailInputLabel,
                 keyboardType: TextInputType.emailAddress,
                 validator: ValidationService.validateEmail,
                 textStyle: const TextStyle(color: AppColors.whiteColor),
@@ -108,8 +113,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
+          child: Text(
+            l10n.cancel,
             style: TextStyle(color: AppColors.accentColor),
           ),
         ),
@@ -118,8 +123,8 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.secondaryColor,
           ),
-          child: const Text(
-            'Yes, Send Email',
+          child: Text(
+            l10n.sendEmail,
             style: TextStyle(color: AppColors.whiteColor),
           ),
         ),

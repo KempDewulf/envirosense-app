@@ -1,4 +1,5 @@
 import 'package:envirosense/core/enums/config_type.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:envirosense/core/helpers/debouncer.dart';
 import 'package:envirosense/domain/entities/device_config.dart';
@@ -55,6 +56,7 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
     required Duration debounceDelay,
     required void Function(T) onSuccess,
   }) async {
+    final l10n = AppLocalizations.of(context)!;
     final debouncer = Debouncer(delay: debounceDelay);
 
     debouncer.call(() async {
@@ -73,27 +75,30 @@ class _DeviceControlsTabState extends State<DeviceControlsTab> {
         }
       } catch (e) {
         if (mounted) {
-          CustomSnackbar.showSnackBar(context, 'Failed to update ${configType.name.toLowerCase()}');
+          CustomSnackbar.showSnackBar(context, l10n.configUpdateError(configType.name.toLowerCase()));
         }
       }
     });
   }
 
   Future<void> _updateDeviceUIMode(DisplayMode mode) async {
+    final l10n = AppLocalizations.of(context)!;
     await _updateDeviceConfig<DisplayMode>(
       configType: ConfigType.uiMode,
       value: mode,
-      successMessage: 'Display mode successfully updated to ${mode.toDisplayString}',
+      successMessage: l10n.displayModeUpdateSuccess(mode.toDisplayString),
       debounceDelay: const Duration(milliseconds: 1500),
       onSuccess: (value) => _selectedMode = value,
     );
   }
 
   Future<void> _updateBrightnessLimit(int value) async {
+    final l10n = AppLocalizations.of(context)!;
+
     await _updateDeviceConfig<int>(
       configType: ConfigType.brightness,
       value: value,
-      successMessage: 'Brightness successfully updated to $value',
+      successMessage: l10n.brightnessUpdateSuccess(value),
       debounceDelay: const Duration(milliseconds: 1500),
       onSuccess: (value) => _brightnessValue = value,
     );

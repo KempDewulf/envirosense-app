@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/actions/no_connection_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class LoadingErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (isLoading) {
       return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)));
     }
@@ -46,7 +48,7 @@ class LoadingErrorWidget extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: onRetry,
-              child: const Text('Retry'),
+              child: Text(l10n.retry),
             ),
           ],
         ),

@@ -1,8 +1,7 @@
-// header.dart
-
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/tab_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Header extends StatelessWidget {
   final int selectedTabIndex;
@@ -16,6 +15,8 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       color: AppColors.primaryColor,
       padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
@@ -52,13 +53,13 @@ class Header extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TabButton(
-                text: 'ROOMS',
+                text: l10n.rooms,
                 isSelected: selectedTabIndex == 0,
                 onTap: () => onTabSelected(0),
               ),
               const SizedBox(width: 32),
               TabButton(
-                text: 'DEVICES',
+                text: l10n.devices,
                 isSelected: selectedTabIndex == 1,
                 onTap: () => onTabSelected(1),
               ),

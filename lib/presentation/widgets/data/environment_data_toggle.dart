@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EnvironmentDataToggle extends StatelessWidget {
   final bool showRoomData;
@@ -15,6 +16,8 @@ class EnvironmentDataToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.accentColor.withOpacity(0.1),
@@ -32,7 +35,7 @@ class EnvironmentDataToggle extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(
-                  'Room Data',
+                  l10n.roomData,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: showRoomData && roomHasDeviceData
@@ -54,7 +57,7 @@ class EnvironmentDataToggle extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Text(
-                  'Outside Data',
+                  l10n.outsideData,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: !showRoomData ? AppColors.whiteColor : AppColors.secondaryColor,

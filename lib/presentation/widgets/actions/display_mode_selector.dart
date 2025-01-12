@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/enums/display_mode.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,6 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
   @override
   void initState() {
     super.initState();
-    displayModes = _createDisplayModes();
 
     // Scroll to active card after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -44,11 +44,13 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
   }
 
   List<Widget> _createDisplayModes() {
+    final l10n = AppLocalizations.of(context)!;
+
     return [
-      _buildModeCard(DisplayMode.normal, 'Default View', Icons.dashboard_outlined),
-      _buildModeCard(DisplayMode.temperature, 'Temperature', Icons.thermostat_outlined),
-      _buildModeCard(DisplayMode.humidity, 'Humidity', Icons.water_drop_outlined),
-      _buildModeCard(DisplayMode.ppm, 'CO2 Level', Icons.air_outlined),
+      _buildModeCard(DisplayMode.normal, l10n.defaultView, Icons.dashboard_outlined),
+      _buildModeCard(DisplayMode.temperature, l10n.temperature, Icons.thermostat_outlined),
+      _buildModeCard(DisplayMode.humidity, l10n.humidity, Icons.water_drop_outlined),
+      _buildModeCard(DisplayMode.ppm, l10n.co2Level, Icons.air_outlined),
     ];
   }
 
@@ -65,6 +67,8 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,18 +79,18 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
               color: widget.hasError ? AppColors.redColor : AppColors.secondaryColor,
             ),
             const SizedBox(width: 8),
-            const Text(
-              'Display Mode',
+            Text(
+              l10n.displayModeLabel,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),
         const SizedBox(height: 16),
         if (widget.hasError)
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              'Failed to fetch display modes',
+              l10n.displayModeFetchError,
               style: TextStyle(
                 color: AppColors.accentColor,
                 fontSize: 18,
@@ -94,7 +98,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
             ),
           )
         else if (widget.isLoading)
-          const Center(
+          Center(
             child: SizedBox(
               height: 170,
               child: Column(
@@ -103,7 +107,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
                   CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
                   SizedBox(height: 16),
                   Text(
-                    'Loading',
+                    l10n.loading,
                     style: TextStyle(
                       color: AppColors.accentColor,
                       fontSize: 16,
@@ -134,7 +138,7 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: () {
-          if(isSelected) return;
+          if (isSelected) return;
           widget.onModeSelected(mode);
         },
         child: Container(
@@ -170,6 +174,12 @@ class _DisplayModeSelectorState extends State<DisplayModeSelector> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    displayModes = _createDisplayModes();
   }
 
   @override

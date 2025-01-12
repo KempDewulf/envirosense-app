@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/icon_helper.dart';
 import 'package:envirosense/core/helpers/string_helper.dart';
@@ -88,6 +88,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   Future<void> _saveRoom() async {
     if (!_isFormComplete || _isSaving) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isSaving = true;
@@ -101,7 +102,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
       CustomSnackbar.showSnackBar(
         context,
-        'Room added successfully.',
+        l10n.roomAddedSuccess,
       );
 
       Navigator.pop(context, true);
@@ -111,7 +112,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
       if (mounted) {
         CustomSnackbar.showSnackBar(
           context,
-          'Failed to add room. Please try again later.',
+          l10n.roomAddedError,
         );
       }
     } finally {
@@ -126,6 +127,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -135,8 +138,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
         ),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: AppColors.whiteColor,
-        title: const Text(
-          'Add Room',
+        title: Text(
+          l10n.appTitle,
           style: TextStyle(fontSize: 18),
         ),
         centerTitle: true,
@@ -147,6 +150,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
   }
 
   Widget _buildBody() {
+    final l10n = AppLocalizations.of(context)!;
+
     return LoadingErrorWidget(
         isLoading: _isLoading,
         error: _error,
@@ -156,8 +161,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Enter Room's name",
+              Text(
+                l10n.enterRoomName,
                 style: TextStyle(
                   fontSize: 18,
                   color: AppColors.accentColor,
@@ -167,7 +172,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               const SizedBox(height: 8),
               CustomTextFormField(
                 controller: _roomNameController,
-                labelText: 'e.g. Living Room',
+                labelText: l10n.roomNameHint,
                 floatingLabelBehaviour: FloatingLabelBehavior.never,
                 onChanged: (value) => setState(() {}),
                 labelColor: AppColors.accentColor,
@@ -181,8 +186,8 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                 ),
               ),
               const SizedBox(height: 28),
-              const Text(
-                "Select Room's icon",
+              Text(
+                l10n.selectRoomIcon,
                 style: TextStyle(
                   fontSize: 18,
                   color: AppColors.accentColor,
@@ -264,7 +269,7 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
                   ),
                   onPressed: _isFormComplete ? _saveRoom : null,
                   child: Text(
-                    'Save',
+                    l10n.save,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

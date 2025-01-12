@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/services/auth_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignOutDialog extends StatelessWidget {
   final AuthService _authService = AuthService();
@@ -19,14 +20,16 @@ class SignOutDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AlertDialog(
       backgroundColor: AppColors.primaryColor,
-      title: const Text(
-        'Sign Out',
+      title: Text(
+        l10n.signOut,
         style: TextStyle(color: AppColors.whiteColor, fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      content: const Text(
-        'Are you sure you want to sign out?',
+      content: Text(
+        l10n.signOutConfirm,
         style: TextStyle(
           color: AppColors.whiteColor,
         ),
@@ -34,8 +37,8 @@ class SignOutDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
+          child: Text(
+            l10n.cancel,
             style: TextStyle(color: AppColors.accentColor),
           ),
         ),
@@ -44,8 +47,8 @@ class SignOutDialog extends StatelessWidget {
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.secondaryColor,
           ),
-          child: const Text(
-            'Yes, Sign Out',
+          child: Text(
+            l10n.yesSignOut,
             style: TextStyle(color: AppColors.whiteColor),
           ),
         ),

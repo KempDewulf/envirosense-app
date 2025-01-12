@@ -1,4 +1,5 @@
 import 'package:envirosense/presentation/controllers/room_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/actions/custom_action_button.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_actions.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
@@ -44,6 +45,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -54,7 +57,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
             children: [
               CustomActionButton(
                 icon: Icons.edit,
-                label: 'Rename Device',
+                label: l10n.deviceRename,
                 onPressed: _showRenameDeviceDialog,
                 color: AppColors.accentColor,
                 isNeutral: true,
@@ -62,7 +65,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
               const SizedBox(height: 16),
               CustomActionButton(
                 icon: Icons.swap_horiz,
-                label: 'Change Room',
+                label: l10n.deviceChangeRoom,
                 onPressed: _showChangeRoomDialog,
                 color: AppColors.secondaryColor,
                 isWarning: true,
@@ -70,7 +73,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
               const SizedBox(height: 16),
               CustomActionButton(
                 icon: Icons.delete_outline,
-                label: 'Remove Device',
+                label: l10n.deviceRemove,
                 onPressed: _showRemoveDeviceDialog,
                 color: const Color.fromARGB(255, 253, 0, 0),
                 isDestructive: true,
@@ -83,6 +86,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   }
 
   Future<void> _showRenameDeviceDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     final TextEditingController inputController = TextEditingController(text: widget.deviceCustomName);
 
     return showModalBottomSheet(
@@ -101,12 +105,12 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const CustomBottomSheetHeader(title: 'Rename Device'),
+            CustomBottomSheetHeader(title: l10n.deviceRename),
             Padding(
               padding: const EdgeInsets.all(16),
               child: CustomTextFormField(
                 controller: inputController,
-                labelText: 'Device Name',
+                labelText: l10n.deviceNameLabel,
                 floatingLabelCustomStyle: const TextStyle(
                   color: AppColors.secondaryColor,
                 ),
@@ -123,7 +127,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                   await _handleDeviceRename(inputController.text);
                 }
               },
-              saveButtonText: 'Save',
+              saveButtonText: l10n.save,
             ),
           ],
         ),
@@ -132,6 +136,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   }
 
   Future<void> _handleDeviceRename(String newName) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final deviceIdentifier = widget.deviceIdentifier!;
 
@@ -147,18 +152,19 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       Navigator.pop(context);
       CustomSnackbar.showSnackBar(
         context,
-        'Device renamed successfully',
+        l10n.renameSuccess,
       );
     } catch (e) {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to rename device. Please try again later.',
+        l10n.renameFailed,
       );
     }
   }
 
   Future<void> _showChangeRoomDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _selectedRoomId = widget.currentRoomId;
     });
@@ -194,8 +200,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Current Room',
+                    Text(
+                      l10n.currentRoom,
                       style: TextStyle(
                         color: AppColors.accentColor,
                         fontSize: 18,
@@ -204,7 +210,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      widget.currentRoomName ?? "Unknown room",
+                      widget.currentRoomName ?? l10n.unknownRoom,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 24,
@@ -273,8 +279,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                                         color: AppColors.whiteColor.withOpacity(0.4),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      child: const Text(
-                                        'Current room',
+                                      child: Text(
+                                        l10n.currentRoom,
                                         style: TextStyle(
                                           color: AppColors.whiteColor,
                                           fontSize: 12,
@@ -286,8 +292,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                               ),
                             )),
                       ],
-                      decoration: const InputDecoration(
-                        labelText: 'Select New Room',
+                      decoration: InputDecoration(
+                        labelText: l10n.selectNewRoom,
                         labelStyle: TextStyle(
                           color: AppColors.secondaryColor,
                           fontSize: 16,
@@ -319,8 +325,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             side: const BorderSide(color: AppColors.secondaryColor),
                           ),
-                          child: const Text(
-                            'Cancel',
+                          child: Text(
+                            l10n.cancel,
                             style: TextStyle(color: AppColors.secondaryColor),
                           ),
                         ),
@@ -337,7 +343,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
                             backgroundColor: AppColors.secondaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
-                          child: const Text('Save'),
+                          child: Text(l10n.save),
                         ),
                       ),
                     ],
@@ -352,6 +358,7 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   }
 
   Future<void> handleRoomChange() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedRoomId == null || _selectedRoomId == widget.currentRoomId) {
       return;
     }
@@ -372,26 +379,27 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
       Navigator.pop(context);
       CustomSnackbar.showSnackBar(
         context,
-        'Room changed successfully',
+        l10n.roomChangeSuccess,
       );
     } catch (e) {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to change room. Please try again later.',
+        l10n.roomChangeFailed,
       );
     }
   }
 
   Future<void> _showRemoveDeviceDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => CustomConfirmationDialog(
-        title: 'Remove Device',
-        message: 'Are you sure you want to remove ',
+        title: l10n.deviceRemove,
+        message: l10n.removeDeviceConfirm,
         highlightedText: widget.deviceCustomName ?? widget.deviceIdentifier!,
         onConfirm: () async {
           await _handleDeviceRemoval();
@@ -401,6 +409,8 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
   }
 
   Future<void> _handleDeviceRemoval() async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       await widget.deviceService.deleteDevice(widget.deviceId!, widget.buildingId);
 
@@ -410,13 +420,13 @@ class _DeviceActionsTabState extends State<DeviceActionsTab> {
 
       CustomSnackbar.showSnackBar(
         context,
-        'Device removed successfully',
+        l10n.removeSuccess,
       );
     } catch (e) {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to remove device. Please try again later.',
+        l10n.removeFailed,
       );
     }
   }

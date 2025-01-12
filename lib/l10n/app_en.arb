@@ -1,0 +1,724 @@
+{
+    "@@locale": "en",
+    "@@author": "EnviroSense",
+    "appTitle": "EnviroSense",
+    "@appTitle": {
+        "description": "The title of the application"
+    },
+    "roomAddedSuccess": "Room added successfully.",
+    "@roomAddedSuccess": {
+        "description": "Success message when room is added"
+    },
+    "roomAddedError": "Failed to add room. Please try again later.",
+    "@roomAddedError": {
+        "description": "Error message when room addition fails"
+    },
+    "roomNameHint": "e.g. Living Room",
+    "@roomNameHint": {
+        "description": "Hint text for room name input"
+    },
+    "selectRoomIcon": "Select Room's icon",
+    "@selectRoomIcon": {
+        "description": "Label for room icon selection"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "Standard save button text"
+    },
+    "deviceDataHistory": "Data History",
+    "@deviceDataHistory": {
+        "description": "Tab label for device data history"
+    },
+    "deviceControls": "Controls",
+    "@deviceControls": {
+        "description": "Tab label for device controls"
+    },
+    "deviceActions": "Actions",
+    "@deviceActions": {
+        "description": "Tab label for device actions"
+    },
+    "unknownDevice": "Unknown Device",
+    "@unknownDevice": {
+        "description": "Default name for unknown devices"
+    },
+    "notAssignedToRoom": "Not assigned to a room",
+    "@notAssignedToRoom": {
+        "description": "Message shown when a device is not assigned to a room"
+    },
+    "notAvailable": "N/A",
+    "@notAvailable": {
+        "description": "Label for not available data"
+    },
+    "notAssigned": "Not Assigned",
+    "@notAssigned": {
+        "description": "Label for not assigned data"
+    },
+    "statisticsTitle": "Building Statistics",
+    "@statisticsTitle": {
+        "description": "Title for statistics screen"
+    },
+    "noRoomsInBuilding": "No rooms in this building",
+    "@noRoomsInBuilding": {
+        "description": "Message shown when no rooms are available in the current building"
+    },
+    "rooms": "Rooms",
+    "@rooms": {
+        "description": "Navigation label for rooms section"
+    },
+    "enterRoomName": "Enter Room's name",
+    "@enterRoomName": {
+        "description": "Label for room name input"
+    },
+    "deviceAssignedSuccess": "Device assigned successfully",
+    "@deviceAssignedSuccess": {
+        "description": "Success message when device is assigned to a room"
+    },
+    "deviceAssignedError": "Failed to assign device: {error}",
+    "@deviceAssignedError": {
+        "description": "Error message when device assignment fails",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "example": "Connection timeout"
+            }
+        }
+    },
+    "failedToLoadRooms": "Failed to load rooms",
+    "@failedToLoadRooms": {
+        "description": "Error message when rooms cannot be loaded"
+    },
+    "scanQrCodeInstructions": "Scan the QR Code on the device.\nYour device will connect automatically.",
+    "@scanQrCodeInstructions": {
+        "description": "Instructions for scanning device QR code"
+    },
+    "enterDeviceName": "Enter device name",
+    "@enterDeviceName": {
+        "description": "Label for device name input field"
+    },
+    "deviceNameHint": "Enter a name for this device",
+    "@deviceNameHint": {
+        "description": "Hint text for device name input"
+    },
+    "selectRoom": "Select a room",
+    "@selectRoom": {
+        "description": "Label for room selection"
+    },
+    "searchRooms": "Search rooms",
+    "@searchRooms": {
+        "description": "Label for room search input"
+    },
+    "searchTypedEntity": "Search a {type}",
+    "@searchTypedEntity": {
+        "description": "Placeholder for searching a specific entity",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "room"
+            }
+        }
+    },
+    "addTypedEntity": "Add a {type}",
+    "@addTypedEntity": {
+        "description": "Button text for adding a specific entity type",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "room"
+            }
+        }
+    },
+    "assignDevice": "Assign Device",
+    "@assignDevice": {
+        "description": "Button text for assigning device to a room"
+    },
+    "verificationEmailSent": "A verification email has been sent to {email}.",
+    "@verificationEmailSent": {
+        "description": "Message shown when verification email is sent",
+        "placeholders": {
+            "email": {
+                "type": "String",
+                "example": "user@example.com"
+            }
+        }
+    },
+    "verifiedEmailButton": "I Verified My Email",
+    "@verifiedEmailButton": {
+        "description": "Button text for email verification"
+    },
+    "resendVerificationEmail": "Resend Verification Email",
+    "@resendVerificationEmail": {
+        "description": "Button text for resending verification email"
+    },
+    "cancelRegistration": "Cancel Registration",
+    "@cancelRegistration": {
+        "description": "Button text for cancelling registration"
+    },
+    "signInError": "An error occurred during sign-in.",
+    "@signInError": {
+        "description": "Error message shown when sign-in fails"
+    },
+    "unexpectedError": "An unexpected error occurred.",
+    "@unexpectedError": {
+        "description": "Generic error message for unexpected errors"
+    },
+    "registrationError": "An error occurred during registration.",
+    "@registrationError": {
+        "description": "Error message shown when registration fails"
+    },
+    "forgotPasswordPrompt": "Forgot your password? ",
+    "@forgotPasswordPrompt": {
+        "description": "Text for forgot password link"
+    },
+    "clickHere": "Click here",
+    "@clickHere": {
+        "description": "Text for clickable link"
+    },
+    "enterHouse": "Enter your house",
+    "@enterHouse": {
+        "description": "Prompt for entering house/building"
+    },
+    "newResident": "New resident",
+    "@newResident": {
+        "description": "Label for new resident registration option"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Label for email input field"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Label for password input field"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings screen title"
+    },
+    "account": "Account",
+    "@account": {
+        "description": "Account section header"
+    },
+    "signOut": "Sign Out",
+    "@signOut": {
+        "description": "Sign out button text"
+    },
+    "preferences": "Preferences",
+    "@preferences": {
+        "description": "Preferences section header"
+    },
+    "imperialUnits": "Imperial Units",
+    "@imperialUnits": {
+        "description": "Label for imperial units option"
+    },
+    "metricUnits": "Metric Units",
+    "@metricUnits": {
+        "description": "Label for metric units option"
+    },
+    "usingFahrenheit": "Using Fahrenheit",
+    "@usingFahrenheit": {
+        "description": "Status text for Fahrenheit temperature unit"
+    },
+    "usingCelsius": "Using Celsius",
+    "@usingCelsius": {
+        "description": "Status text for Celsius temperature unit"
+    },
+    "data": "Data",
+    "@data": {
+        "description": "Data section header"
+    },
+    "clearCache": "Clear Cache",
+    "@clearCache": {
+        "description": "Clear cache button text"
+    },
+    "unitsChanged": "Units changed to {unitSystem}",
+    "@unitsChanged": {
+        "description": "Message shown when measurement units are changed",
+        "placeholders": {
+            "unitSystem": {
+                "type": "String",
+                "example": "metric"
+            }
+        }
+    },
+    "onboardingConvenienceTitle": "Convenience",
+    "@onboardingConvenienceTitle": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingConvenienceDesc": "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
+    "@onboardingConvenienceDesc": {
+        "description": "Description for first onboarding screen"
+    },
+    "onboardingAutomateTitle": "Automate",
+    "@onboardingAutomateTitle": {
+        "description": "Title for second onboarding screen"
+    },
+    "onboardingAutomateDesc": "Effortlessly manage quick actions for control and real-time environmental insights.",
+    "@onboardingAutomateDesc": {
+        "description": "Description for second onboarding screen"
+    },
+    "onboardingInformedTitle": "Stay Informed",
+    "@onboardingInformedTitle": {
+        "description": "Title for third onboarding screen"
+    },
+    "onboardingInformedDesc": "Get instant notifications and react quickly to any activity or alerts",
+    "@onboardingInformedDesc": {
+        "description": "Description for third onboarding screen"
+    },
+    "skip": "Skip",
+    "@skip": {
+        "description": "Skip button text for onboarding"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Next button text for onboarding"
+    },
+    "letsStart": "Let's start",
+    "@letsStart": {
+        "description": "Final button text for onboarding completion"
+    },
+    "overview": "Overview",
+    "@overview": {
+        "description": "Room overview section header"
+    },
+    "devices": "Devices",
+    "@devices": {
+        "description": "Devices section header"
+    },
+    "actions": "Actions",
+    "@actions": {
+        "description": "Actions section header"
+    },
+    "noDevicesInRoom": "No devices found in this room",
+    "@noDevicesInRoom": {
+        "description": "Message shown when room has no devices"
+    },
+    "temperatureLimitUpdated": "Temperature limit updated to {temp}",
+    "@temperatureLimitUpdated": {
+        "description": "Message shown when temperature limit is updated",
+        "placeholders": {
+            "temp": {
+                "type": "String",
+                "example": "24°C"
+            }
+        }
+    },
+    "temperatureLimitUpdateError": "Failed to update temperature limit",
+    "@temperatureLimitUpdateError": {
+        "description": "Error message when temperature limit update fails"
+    },
+    "refreshError": "Failed to refresh data",
+    "@refreshError": {
+        "description": "Error message shown when data refresh fails"
+    },
+    "room": "Room",
+    "@room": {
+        "description": "Label for room section"
+    },
+    "device": "Device",
+    "@device": {
+        "description": "Label for device section"
+    },
+    "brightnessMinWarning": "Minimum brightness is 20%",
+    "@brightnessMinWarning": {
+        "description": "Warning message when brightness is set below minimum"
+    },
+    "brightnessLabel": "Brightness",
+    "@brightnessLabel": {
+        "description": "Label for brightness control"
+    },
+    "brightnessFetchError": "Failed to fetch brightness level",
+    "@brightnessFetchError": {
+        "description": "Error message when brightness level cannot be fetched"
+    },
+    "loading": "Loading",
+    "@loading": {
+        "description": "Generic loading text"
+    },
+    "displayModeFetchError": "Failed to fetch display modes",
+    "@displayModeFetchError": {
+        "description": "Error message when display modes cannot be fetched"
+    },
+    "displayModeLabel": "Display Mode",
+    "@displayModeLabel": {
+        "description": "Label for display mode selector"
+    },
+    "defaultView": "Default View",
+    "@defaultView": {
+        "description": "Label for default display mode"
+    },
+    "temperature": "Temperature",
+    "@temperature": {
+        "description": "Label for temperature display mode"
+    },
+    "humidity": "Humidity",
+    "@humidity": {
+        "description": "Label for humidity display mode"
+    },
+    "co2Level": "CO2 Level",
+    "@co2Level": {
+        "description": "Label for CO2 level display mode"
+    },
+    "noConnection": "No Internet Connection",
+    "@noConnection": {
+        "description": "Message shown when internet connection is lost"
+    },
+    "checkConnection": "Please check your connection and try again",
+    "@checkConnection": {
+        "description": "Prompt to check internet connection"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Retry button text"
+    },
+    "previous": "Previous",
+    "@previous": {
+        "description": "Previous page navigation button"
+    },
+    "pageCount": "Page {current} of {total}",
+    "@pageCount": {
+        "description": "Page counter text",
+        "placeholders": {
+            "current": {
+                "type": "int",
+                "example": "1"
+            },
+            "total": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "loadingTemperature": "Loading Temperature Limit",
+    "@loadingTemperature": {
+        "description": "Loading message for temperature limit"
+    },
+    "setTargetTemperature": "Set Target Temperature ({temp})",
+    "@setTargetTemperature": {
+        "description": "Temperature setting button text",
+        "placeholders": {
+            "temp": {
+                "type": "String",
+                "example": "24°C"
+            }
+        }
+    },
+    "temperatureLimitUnavailable": "Temperature Limit Not Available",
+    "@temperatureLimitUnavailable": {
+        "description": "Message when temperature limit cannot be retrieved"
+    },
+    "addRoom": "Add a room",
+    "@addRoom": {
+        "description": "Button text for adding new room"
+    },
+    "addDevice": "Add a device",
+    "@addDevice": {
+        "description": "Button text for adding new device"
+    },
+    "addNew": "Add new",
+    "@addNew": {
+        "description": "Generic add new button text"
+    },
+    "deviceData": "Device Data",
+    "@deviceData": {
+        "description": "Header for device data section"
+    },
+    "clearSensorReadings": "Clear stored sensor readings",
+    "@clearSensorReadings": {
+        "description": "Option to clear sensor data"
+    },
+    "deviceNames": "Device Names",
+    "@deviceNames": {
+        "description": "Header for device names section"
+    },
+    "resetDeviceNames": "Reset device names to default",
+    "@resetDeviceNames": {
+        "description": "Option to reset device names"
+    },
+    "all": "All",
+    "@all": {
+        "description": "Label for selecting all items"
+    },
+    "clearAllData": "Clear all stored data and preferences",
+    "@clearAllData": {
+        "description": "Option to clear all data"
+    },
+    "selectCachePrompt": "Select the cache you want to remove",
+    "@selectCachePrompt": {
+        "description": "Prompt for cache selection"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "targetTemperature": "Target Temperature",
+    "@targetTemperature": {
+        "description": "Header for temperature setting"
+    },
+    "mostRecent": "Most Recent",
+    "@mostRecent": {
+        "description": "Label for most recent data"
+    },
+    "enviroScoreAboutTitle": "About EnviroScore",
+    "@enviroScoreAboutTitle": {
+        "description": "Title for EnviroScore information dialog"
+    },
+    "enviroScoreDescription": "EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.",
+    "@enviroScoreDescription": {
+        "description": "Detailed description of what EnviroScore means"
+    },
+    "gotIt": "Got it",
+    "@gotIt": {
+        "description": "Confirmation button text"
+    },
+    "typedEnviroScore": "{type} EnviroScore",
+    "@typedEnviroScore": {
+        "description": "EnviroScore with type prefix",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "Daily"
+            }
+        }
+    },
+    "enviroScore": "EnviroScore",
+    "@enviroScore": {
+        "description": "EnviroScore label"
+    },
+    "remove": "Remove",
+    "@remove": {
+        "description": "Remove action button text"
+    },
+    "fromBuilding": " from this building?",
+    "@fromBuilding": {
+        "description": "Confirmation message suffix for removal"
+    },
+    "noDataAvailable": "No data available",
+    "@noDataAvailable": {
+        "description": "Generic no data message"
+    },
+    "noDeviceData": "No device data from this device.",
+    "@noDeviceData": {
+        "description": "Message when device has no data"
+    },
+    "outsideEnvironment": "Outside Environment",
+    "@outsideEnvironment": {
+        "description": "Label for outside environment section"
+    },
+    "roomEnvironment": "Room Environment",
+    "@roomEnvironment": {
+        "description": "Label for room environment section"
+    },
+    "roomData": "Room Data",
+    "@roomData": {
+        "description": "Label for room data toggle"
+    },
+    "outsideData": "Outside Data",
+    "@outsideData": {
+        "description": "Label for outside data toggle"
+    },
+    "clearCacheMessage": "This action will clear all cached data and log you out. Your account will remain intact but you will need to log in again.\n\nAre you sure you want to proceed?",
+    "@clearCacheMessage": {
+        "description": "Clear cache confirmation message"
+    },
+    "clearAll": "Clear All",
+    "@clearAll": {
+        "description": "Clear all button text"
+    },
+    "enterEmail": "Please enter an email",
+    "@enterEmail": {
+        "description": "Email input validation message"
+    },
+    "noEmailFound": "No email found",
+    "@noEmailFound": {
+        "description": "Email not found error message"
+    },
+    "resetEmailSentLogin": "Password reset email sent. Please login again with your new password.",
+    "@resetEmailSentLogin": {
+        "description": "Reset email sent confirmation for logged in users"
+    },
+    "resetEmailSent": "Password reset email sent. Please check your inbox.",
+    "@resetEmailSent": {
+        "description": "Reset email sent confirmation for non-logged users"
+    },
+    "resetEmailFailed": "Failed to send reset email. Please try again.",
+    "@resetEmailFailed": {
+        "description": "Reset email failure message"
+    },
+    "resetPassword": "Reset Password",
+    "@resetPassword": {
+        "description": "Reset password dialog title"
+    },
+    "resetPasswordConfirm": "Are you sure you want to receive an email for resetting your password?",
+    "@resetPasswordConfirm": {
+        "description": "Reset password confirmation message"
+    },
+    "emailInputLabel": "Enter your email",
+    "@emailInputLabel": {
+        "description": "Email input field label"
+    },
+    "sendEmail": "Yes, Send Email",
+    "@sendEmail": {
+        "description": "Send reset email confirmation button"
+    },
+    "signOutConfirm": "Are you sure you want to sign out?",
+    "@signOutConfirm": {
+        "description": "Sign out confirmation message"
+    },
+    "yesSignOut": "Yes, Sign Out",
+    "@yesSignOut": {
+        "description": "Sign out confirmation button"
+    },
+    "navHome": "Home",
+    "@navHome": {
+        "description": "Navigation label for home tab"
+    },
+    "navStatistics": "Statistics",
+    "@navStatistics": {
+        "description": "Navigation label for statistics tab"
+    },
+    "navSettings": "Settings",
+    "@navSettings": {
+        "description": "Navigation label for settings tab"
+    },
+    "loadingDeviceName": "Loading device name...",
+    "@loadingDeviceName": {
+        "description": "Loading message while fetching device name"
+    },
+    "error": "Error",
+    "@error": {
+        "description": "Generic error message"
+    },
+    "deviceRename": "Rename Device",
+    "@deviceRename": {
+        "description": "Title for device rename action"
+    },
+    "deviceChangeRoom": "Change Room",
+    "@deviceChangeRoom": {
+        "description": "Title for room change action"
+    },
+    "deviceRemove": "Remove Device",
+    "@deviceRemove": {
+        "description": "Title for device removal action"
+    },
+    "deviceNameLabel": "Device Name",
+    "@deviceNameLabel": {
+        "description": "Label for device name input field"
+    },
+    "renameSuccess": "Device renamed successfully",
+    "@renameSuccess": {
+        "description": "Success message for device rename"
+    },
+    "renameFailed": "Failed to rename device. Please try again later.",
+    "@renameFailed": {
+        "description": "Error message for device rename failure"
+    },
+    "currentRoom": "Current Room",
+    "@currentRoom": {
+        "description": "Label for current room display"
+    },
+    "unknownRoom": "Unknown room",
+    "@unknownRoom": {
+        "description": "Fallback text for unknown room"
+    },
+    "selectNewRoom": "Select New Room",
+    "@selectNewRoom": {
+        "description": "Label for room selection"
+    },
+    "roomChangeSuccess": "Room changed successfully",
+    "@roomChangeSuccess": {
+        "description": "Success message for room change"
+    },
+    "roomChangeFailed": "Failed to change room. Please try again later.",
+    "@roomChangeFailed": {
+        "description": "Error message for room change failure"
+    },
+    "removeDeviceConfirm": "Are you sure you want to remove ",
+    "@removeDeviceConfirm": {
+        "description": "Confirmation message prefix for device removal"
+    },
+    "removeSuccess": "Device removed successfully",
+    "@removeSuccess": {
+        "description": "Success message for device removal"
+    },
+    "removeFailed": "Failed to remove device. Please try again later.",
+    "@removeFailed": {
+        "description": "Error message for device removal failure"
+    },
+    "configUpdateError": "Failed to update {configType}",
+    "@configUpdateError": {
+        "description": "Error message for config update failure",
+        "placeholders": {
+            "configType": {
+                "type": "String",
+                "example": "brightness"
+            }
+        }
+    },
+    "displayModeUpdateSuccess": "Display mode successfully updated to {mode}",
+    "@displayModeUpdateSuccess": {
+        "description": "Success message for display mode update",
+        "placeholders": {
+            "mode": {
+                "type": "String",
+                "example": "temperature"
+            }
+        }
+    },
+    "brightnessUpdateSuccess": "Brightness successfully updated to {value}",
+    "@brightnessUpdateSuccess": {
+        "description": "Success message for brightness update",
+        "placeholders": {
+            "value": {
+                "type": "int",
+                "example": "80%"
+            }
+        }
+    },
+    "renameRoom": "Rename Room",
+    "@renameRoom": {
+        "description": "Title for room rename action"
+    },
+    "roomName": "Room Name",
+    "@roomName": {
+        "description": "Title for room name input"
+    },
+    "removeRoom": "Remove Room",
+    "@removeRoom": {
+        "description": "Title for room removal action"
+    },
+    "removeRoomConfirm": "Are you sure you want to remove ",
+    "@removeRoomConfirm": {
+        "description": "Confirmation message prefix for room removal"
+    },
+    "roomIdNotFound": "Room id not found",
+    "@roomIdNotFound": {
+        "description": "Error message when room ID is missing"
+    },
+    "renameRoomSuccess": "Room renamed successfully",
+    "@renameRoomSuccess": {
+        "description": "Success message for room rename"
+    },
+    "renameRoomError": "Failed to rename room. Please try again later.",
+    "@renameRoomError": {
+        "description": "Error message for room rename failure"
+    },
+    "removeRoomSuccess": "Room removed successfully",
+    "@removeRoomSuccess": {
+        "description": "Success message for room removal"
+    },
+    "removeRoomError": "Failed to remove room. Please try again later.",
+    "@removeRoomError": {
+        "description": "Error message for room removal failure"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "Language selection option"
+    },
+    "selectLanguage": "Select Language",
+    "@selectLanguage": {
+        "description": "Label for language selection"
+    },
+    "selectLanguagePrompt": "Choose the language you want to use in the app",
+    "@selectLanguagePrompt": {
+        "description": "Prompt message shown when selecting app language"
+    }
+}

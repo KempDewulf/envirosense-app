@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/domain/entities/device.dart';
@@ -31,7 +31,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   late final DeviceService _deviceService = DeviceService(_deviceController);
   late final DeviceDataController _deviceDataController = DeviceDataController();
   late final RoomController _roomController = RoomController();
-  late final TabController _tabController = TabController(length: _tabs.length, vsync: this);
+  late final TabController _tabController = TabController(length: 3, vsync: this);
 
   bool _isLoading = true;
   final Map<String, bool> _loadingConfig = {
@@ -47,11 +47,14 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   final String _buildingId =
       "gox5y6bsrg640qb11ak44dh0"; //hardcoded here, but later outside PoC we would retrieve this from user that is linked to what building
 
-  final List<Tab> _tabs = const [
-    Tab(text: 'Data History'),
-    Tab(text: 'Controls'),
-    Tab(text: 'Actions'),
-  ];
+  List<Tab> _buildTabs(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      Tab(text: l10n.deviceDataHistory),
+      Tab(text: l10n.deviceControls),
+      Tab(text: l10n.deviceActions),
+    ];
+  }
 
   @override
   void initState() {
@@ -123,11 +126,13 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
         appBar: CustomAppBar(
-          title: _deviceName ?? _device?.identifier ?? 'Unknown device',
+          title: _deviceName ?? _device?.identifier ?? l10n.unknownDevice,
           tabController: _tabController,
-          tabs: _tabs,
+          tabs: _buildTabs(context),
           onBackPressed: () => Navigator.pop(context, true),
         ),
         body: LoadingErrorWidget(
@@ -176,6 +181,8 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
   }
 
   Widget _buildActionsTab() {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_device == null) {
       return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondaryColor)));
     }
@@ -188,7 +195,7 @@ class _DeviceOverviewScreenState extends State<DeviceOverviewScreen> with Single
       deviceService: _deviceService,
       roomController: _roomController,
       currentRoomId: _device?.room?.id,
-      currentRoomName: _device?.room?.name ?? 'Not assigned to a room',
+      currentRoomName: _device?.room?.name ?? l10n.notAssignedToRoom,
       onDeviceRenamed: (newName) {
         setState(() {
           _deviceName = newName;

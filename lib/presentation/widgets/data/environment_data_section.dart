@@ -1,6 +1,7 @@
 import 'package:envirosense/presentation/widgets/data/data_display_box.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_toggle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../domain/entities/air_data.dart';
 
 class EnvironmentDataSection extends StatelessWidget {
@@ -21,6 +22,7 @@ class EnvironmentDataSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -33,7 +35,7 @@ class EnvironmentDataSection extends StatelessWidget {
           const SizedBox(height: 32),
           DataDisplayBox(
             key: ValueKey(showRoomData),
-            title: showRoomData ? 'Room Environment' : 'Outside Environment',
+            title: showRoomData ? l10n.roomEnvironment : l10n.outsideEnvironment,
             data: showRoomData && roomHasDeviceData ? roomData : outsideData,
           )
         ],

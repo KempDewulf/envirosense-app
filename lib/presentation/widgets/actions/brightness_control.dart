@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
@@ -25,13 +26,15 @@ class _BrightnessControlState extends State<BrightnessControl> {
   DateTime? _lastAttemptTime;
 
   void _handleMinimumBrightnessAttempt() {
+    final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
+    
     if (_lastAttemptTime != null && now.difference(_lastAttemptTime!).inSeconds < 2) {
       _minimumAttempts++;
       if (_minimumAttempts >= 3) {
         CustomSnackbar.showSnackBar(
           context,
-          'Minimum brightness is 20%',
+          l10n.brightnessMinWarning,
         );
         _minimumAttempts = 0;
       }
@@ -44,6 +47,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
   @override
   Widget build(BuildContext context) {
     final int activeBars = (widget.value ~/ 20).clamp(1, 5);
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +59,8 @@ class _BrightnessControlState extends State<BrightnessControl> {
               color: widget.hasError ? AppColors.redColor : AppColors.secondaryColor,
             ),
             const SizedBox(width: 8),
-            const Text(
-              'Brightness',
+            Text(
+              l10n.brightnessLabel,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
@@ -74,10 +78,10 @@ class _BrightnessControlState extends State<BrightnessControl> {
         ),
         const SizedBox(height: 16),
         if (widget.hasError)
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              'Failed to fetch brightness level',
+              l10n.brightnessFetchError,
               style: TextStyle(
                 color: AppColors.accentColor,
                 fontSize: 18,
@@ -85,7 +89,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
             ),
           )
         else if (widget.isLoading)
-          const Center(
+          Center(
             child: SizedBox(
               height: 170,
               child: Column(
@@ -94,7 +98,7 @@ class _BrightnessControlState extends State<BrightnessControl> {
                   CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentColor)),
                   SizedBox(height: 16),
                   Text(
-                    'Loading',
+                    l10n.loading,
                     style: TextStyle(
                       color: AppColors.accentColor,
                       fontSize: 16,

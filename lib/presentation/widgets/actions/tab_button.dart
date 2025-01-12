@@ -24,7 +24,7 @@ class TabButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            text,
+            text.toUpperCase(),
             style: TextStyle(
               color: isSelected ? AppColors.whiteColor : AppColors.accentColor,
               fontSize: 16,

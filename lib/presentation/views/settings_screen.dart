@@ -1,4 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/select_language_options_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
 import 'package:envirosense/presentation/widgets/dialogs/sign_out_dialog.dart';
@@ -31,6 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   }
 
   Future<void> _toggleUnits(bool value) async {
+    final l10n = AppLocalizations.of(context)!;
     if (_isToggling) return;
 
     setState(() {
@@ -45,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
 
     if (!mounted) return;
 
-    CustomSnackbar.showSnackBar(context, "Units changed to ${value ? 'imperial' : 'metric'}");
+    CustomSnackbar.showSnackBar(context, l10n.unitsChanged(value ? 'imperial' : 'metric'));
 
     await Future.delayed(const Duration(milliseconds: 500));
 
@@ -56,10 +59,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Settings',
+        title: Text(
+          l10n.settings,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         toolbarHeight: 70,
@@ -68,7 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
-          const _SectionHeader(title: 'Account'),
+          _SectionHeader(title: l10n.account),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Material(
@@ -80,10 +85,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   context: context,
                   builder: (context) => ForgotPasswordDialog(),
                 ),
-                child: const ListTile(
+                child: ListTile(
                   leading: Icon(Icons.lock_reset, color: AppColors.whiteColor),
                   title: Text(
-                    'Forgot Password?',
+                    l10n.forgotPasswordPrompt,
                     style: TextStyle(color: AppColors.whiteColor),
                   ),
                 ),
@@ -98,17 +103,17 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () => showDialog(context: context, builder: (context) => SignOutDialog()),
-                child: const ListTile(
+                child: ListTile(
                   leading: Icon(Icons.logout, color: AppColors.whiteColor),
                   title: Text(
-                    'Sign Out',
+                    l10n.signOut,
                     style: TextStyle(color: AppColors.whiteColor),
                   ),
                 ),
               ),
             ),
           ),
-          const _SectionHeader(title: 'Preferences'),
+          _SectionHeader(title: l10n.preferences),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Material(
@@ -116,11 +121,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(12),
               child: SwitchListTile(
                 title: Text(
-                  _useImperialUnits ? 'Imperial Units' : 'Metric Units',
+                  _useImperialUnits ? l10n.imperialUnits : l10n.metricUnits,
                   style: const TextStyle(color: AppColors.whiteColor),
                 ),
                 subtitle: Text(
-                  _useImperialUnits ? 'Using Fahrenheit' : 'Using Celsius',
+                  _useImperialUnits ? l10n.usingFahrenheit : l10n.usingCelsius,
                   style: const TextStyle(
                     color: AppColors.lightGrayColor,
                   ),
@@ -140,7 +145,30 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               ),
             ),
           ),
-          const _SectionHeader(title: 'Data'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Material(
+              color: AppColors.secondaryColor,
+              borderRadius: BorderRadius.circular(12),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => SelectLanguageOptionsSheet.show(context),
+                child: ListTile(
+                  leading: Icon(Icons.language, color: AppColors.whiteColor),
+                  title: Text(
+                    l10n.language,
+                    style: TextStyle(color: AppColors.whiteColor),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.whiteColor,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          _SectionHeader(title: l10n.data),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Material(
@@ -149,10 +177,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () => ClearCacheOptionsSheet.show(context),
-                child: const ListTile(
+                child: ListTile(
                   leading: Icon(Icons.cleaning_services, color: AppColors.whiteColor),
                   title: Text(
-                    'Clear Cache',
+                    l10n.clearCache,
                     style: TextStyle(color: AppColors.whiteColor),
                   ),
                   trailing: Icon(

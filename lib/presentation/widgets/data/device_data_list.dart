@@ -1,6 +1,7 @@
 import 'package:envirosense/presentation/widgets/actions/pagination_controls.dart';
 import 'package:envirosense/presentation/widgets/cards/device_data_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../domain/entities/device_data.dart';
 
@@ -35,6 +36,7 @@ class _DeviceDataListState extends State<DeviceDataList> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
       color: AppColors.secondaryColor,
@@ -45,9 +47,9 @@ class _DeviceDataListState extends State<DeviceDataList> {
               padding: const EdgeInsets.all(16),
               children: [
                 if (widget.deviceData.isEmpty)
-                  const Center(
+                  Center(
                     child: Text(
-                      'No device data from this device.',
+                      l10n.noDeviceData,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.accentColor,

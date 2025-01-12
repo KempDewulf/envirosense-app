@@ -1,14 +1,12 @@
-import 'package:envirosense/presentation/widgets/dialogs/clear_cache_warning_dialog.dart';
-import 'package:envirosense/presentation/widgets/models/cache_option.dart';
-import 'package:envirosense/services/auth_service.dart';
+import 'package:envirosense/core/constants/colors.dart';
+import 'package:envirosense/presentation/widgets/items/language_option_item.dart';
+import 'package:envirosense/presentation/widgets/models/language_option.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:envirosense/services/database_service.dart';
+import 'package:envirosense/services/language_service.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/colors.dart';
-import '../items/cache_option_item.dart';
 
-class ClearCacheOptionsSheet extends StatefulWidget {
-  const ClearCacheOptionsSheet({super.key});
+class SelectLanguageOptionsSheet extends StatefulWidget {
+  const SelectLanguageOptionsSheet({super.key});
 
   static Future<void> show(BuildContext context) {
     return showModalBottomSheet(
@@ -16,48 +14,32 @@ class ClearCacheOptionsSheet extends StatefulWidget {
       isScrollControlled: true,
       useSafeArea: true,
       backgroundColor: AppColors.transparent,
-      builder: (context) => const ClearCacheOptionsSheet(),
+      builder: (context) => SelectLanguageOptionsSheet(),
     );
   }
 
   @override
-  State<ClearCacheOptionsSheet> createState() => _ClearCacheOptionsSheetState();
+  State<SelectLanguageOptionsSheet> createState() => _SelectLanguageOptionsSheetState();
 }
 
-class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
-  List<CacheOption>? cacheOptions;
+class _SelectLanguageOptionsSheetState extends State<SelectLanguageOptionsSheet> {
+  late final List<LanguageOption> languageOptions;
 
   @override
   void initState() {
     super.initState();
-    cacheOptions = [];
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final l10n = AppLocalizations.of(context)!;
-      setState(() {
-        cacheOptions = [
-          CacheOption(
-            title: l10n.deviceData,
-            subtitle: l10n.clearSensorReadings,
-          ),
-          CacheOption(
-            title: l10n.deviceNames,
-            subtitle: l10n.resetDeviceNames,
-          ),
-          CacheOption(
-            title: l10n.all,
-            subtitle: l10n.clearAllData,
-            isHighImpact: true,
-          ),
-        ];
-      });
-    });
+    languageOptions = LanguageService.supportedLanguages
+        .map((lang) => LanguageOption(
+              code: lang.code,
+              name: lang.name,
+              isSelected: lang.code == LanguageService.instance.locale.languageCode,
+            ))
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    bool isSelected = cacheOptions!.any((option) => option.isSelected);
 
     return Container(
       decoration: const BoxDecoration(
@@ -82,7 +64,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.clearCache,
+                  l10n.selectLanguage,
                   style: TextStyle(
                     color: AppColors.primaryColor,
                     fontSize: 24,
@@ -91,17 +73,22 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  l10n.selectCachePrompt,
+                  l10n.selectLanguagePrompt,
                   style: TextStyle(
                     color: AppColors.accentColor,
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 24),
-                ...cacheOptions!.map(
-                  (option) => CacheOptionItem(
-                    option: option,
-                    onTap: () => _handleOptionSelection(option),
+                ...languageOptions.map(
+                  (option) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: LanguageOptionItem(
+                      code: option.code,
+                      name: option.name,
+                      isSelected: option.isSelected,
+                      onTap: () => _handleLanguageSelection(option),
+                    ),
                   ),
                 ),
               ],
@@ -132,17 +119,17 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: FilledButton(
-                      onPressed: isSelected ? _handleClearCache : null,
+                      onPressed: () => _handleSave(),
                       style: FilledButton.styleFrom(
-                        backgroundColor: isSelected ? AppColors.secondaryColor : AppColors.secondaryColor.withOpacity(0.5),
+                        backgroundColor: AppColors.secondaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Text(
-                        l10n.clearCache,
-                        style: TextStyle(
+                        l10n.save,
+                        style: const TextStyle(
                           color: AppColors.whiteColor,
                           fontWeight: FontWeight.w500,
                         ),
@@ -158,57 +145,18 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
     );
   }
 
-  void _handleOptionSelection(CacheOption option) {
-    final l10n = AppLocalizations.of(context)!;
-
+  void _handleLanguageSelection(LanguageOption selected) {
     setState(() {
-      if (option.title == l10n.all) {
-        // When "All" is selected/deselected, update all other options
-        bool newValue = !option.isSelected;
-        for (var opt in cacheOptions!) {
-          opt.isSelected = newValue;
-        }
-      } else {
-        option.isSelected = !option.isSelected;
-        // If all individual options are selected, select "All" as well
-        CacheOption allOption = cacheOptions!.firstWhere((opt) => opt.title == l10n.all);
-        if (cacheOptions!.where((opt) => opt.title != l10n.all).every((opt) => opt.isSelected)) {
-          allOption.isSelected = true;
-        } else {
-          allOption.isSelected = false;
-        }
+      for (var option in languageOptions) {
+        option.isSelected = option == selected;
       }
     });
   }
 
-  void _handleClearCache() async {
-    final l10n = AppLocalizations.of(context)!;
-    if (!cacheOptions!.any((option) => option.isSelected)) return;
-
-    final DatabaseService dbService = DatabaseService();
-    final AuthService authService = AuthService();
-
-    final hasHighImpactSelection = cacheOptions!.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
-
-    if (hasHighImpactSelection) {
-      final confirmed = await ClearCacheWarningDialog.show(context);
-      if (!confirmed) return;
-    }
-
+  void _handleSave() async {
+    final selected = languageOptions.firstWhere((option) => option.isSelected);
+    await LanguageService.instance.changeLocale(locale: Locale(selected.code));
     if (!mounted) return;
     Navigator.pop(context);
-
-    for (final option in cacheOptions!) {
-      if (option.isSelected) {
-        if (option.title == l10n.deviceData) {
-          await dbService.clearDeviceDataCache();
-        } else if (option.title == l10n.deviceNames) {
-          await dbService.clearDeviceNames();
-        } else if (option.title == l10n.all) {
-          await dbService.clearAll();
-          await authService.signOut(context);
-        }
-      }
-    }
   }
 }

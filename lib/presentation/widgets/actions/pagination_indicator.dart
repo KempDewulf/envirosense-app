@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PageIndicator extends StatelessWidget {
@@ -13,8 +14,10 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Text(
-      'Page $currentPage of $totalPages',
+      l10n.pageCount(currentPage, totalPages),
       style: const TextStyle(
         fontSize: 14,
         color: AppColors.accentColor,

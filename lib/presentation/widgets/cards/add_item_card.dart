@@ -37,6 +37,7 @@ class AddItemCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 title,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
                   color: textColor,
