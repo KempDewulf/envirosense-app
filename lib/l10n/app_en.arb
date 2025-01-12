@@ -621,5 +621,71 @@
     "removeFailed": "Failed to remove device. Please try again later.",
     "@removeFailed": {
         "description": "Error message for device removal failure"
+    },
+    "configUpdateError": "Failed to update {configType}",
+    "@configUpdateError": {
+        "description": "Error message for config update failure",
+        "placeholders": {
+            "configType": {
+                "type": "String",
+                "example": "brightness"
+            }
+        }
+    },
+    "displayModeUpdateSuccess": "Display mode successfully updated to {mode}",
+    "@displayModeUpdateSuccess": {
+        "description": "Success message for display mode update",
+        "placeholders": {
+            "mode": {
+                "type": "String",
+                "example": "temperature"
+            }
+        }
+    },
+    "brightnessUpdateSuccess": "Brightness successfully updated to {value}",
+    "@brightnessUpdateSuccess": {
+        "description": "Success message for brightness update",
+        "placeholders": {
+            "value": {
+                "type": "int",
+                "example": "80%"
+            }
+        }
+    },
+    "renameRoom": "Rename Room",
+    "@renameRoom": {
+        "description": "Title for room rename action"
+    },
+    "roomName": "Room Name",
+    "@roomName": {
+        "description": "Title for room name input"
+    },
+    "removeRoom": "Remove Room",
+    "@removeRoom": {
+        "description": "Title for room removal action"
+    },
+    "removeRoomConfirm": "Are you sure you want to remove ",
+    "@removeRoomConfirm": {
+        "description": "Confirmation message prefix for room removal"
+    },
+    "roomIdNotFound": "Room id not found",
+    "@roomIdNotFound": {
+        "description": "Error message when room ID is missing"
+    },
+    "renameRoomSuccess": "Room renamed successfully",
+    "@renameRoomSuccess": {
+        "description": "Success message for room rename"
+    },
+    "renameRoomError": "Failed to rename room. Please try again later.",
+    "@renameRoomError": {
+        "description": "Error message for room rename failure"
+    },
+    "removeRoomSuccess": "Room removed successfully",
+    "@removeRoomSuccess": {
+        "description": "Success message for room removal"
+    },
+    "removeRoomError": "Failed to remove room. Please try again later.",
+    "@removeRoomError": {
+        "description": "Error message for room removal failure"
     }
 }

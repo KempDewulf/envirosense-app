@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/custom_action_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_actions.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
 import 'package:envirosense/presentation/widgets/core/custom_confirmation_dialog.dart';
@@ -31,6 +32,7 @@ class RoomActionsTab extends StatefulWidget {
 
 class _RoomActionsTabState extends State<RoomActionsTab> {
   Future<void> _showRenameRoomDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final TextEditingController inputController = TextEditingController(text: widget.roomName);
 
     return showModalBottomSheet(
@@ -49,12 +51,12 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const CustomBottomSheetHeader(title: 'Rename Room'),
+            CustomBottomSheetHeader(title: l10n.renameRoom),
             Padding(
               padding: const EdgeInsets.all(16),
               child: CustomTextFormField(
                 controller: inputController,
-                labelText: 'Room Name',
+                labelText: l10n.roomNameLabel,
                 floatingLabelCustomStyle: const TextStyle(
                   color: AppColors.secondaryColor,
                 ),
@@ -71,7 +73,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
                   await _handleRoomRename(inputController.text);
                 }
               },
-              saveButtonText: 'Save',
+              saveButtonText: l10n.save,
             ),
           ],
         ),
@@ -80,14 +82,16 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
   }
 
   Future<void> _showRemoveRoomDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       backgroundColor: AppColors.transparent,
       builder: (context) => CustomConfirmationDialog(
-        title: 'Remove Room',
-        message: 'Are you sure you want to remove ',
+        title: l10n.removeRoom,
+        message: l10n.removeDeviceConfirm,
         highlightedText: widget.roomName,
         onConfirm: () async {
           await _handleRoomRemoval();
@@ -97,9 +101,11 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
   }
 
   Future<void> _handleRoomRename(String newRoomName) async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       if (widget.roomId.isEmpty) {
-        throw Exception('Room id not found');
+        throw Exception(l10n.roomIdNotFound);
       }
 
       await widget.roomService.renameRoom(widget.roomId, newRoomName);
@@ -108,7 +114,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Room renamed successfully',
+        l10n.renameRoomSuccess,
       );
 
       Navigator.pop(context);
@@ -116,12 +122,14 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to rename room. Please try again later.',
+        l10n.renameRoomError,
       );
     }
   }
 
   Future<void> _handleRoomRemoval() async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       await widget.roomService.deleteRoom(widget.roomId);
 
@@ -132,19 +140,20 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
 
       CustomSnackbar.showSnackBar(
         context,
-        'Room removed successfully',
+        l10n.removeRoomSuccess,
       );
     } catch (e) {
       if (!mounted) return;
       CustomSnackbar.showSnackBar(
         context,
-        'Failed to remove room. Please try again later.',
+        l10n.removeRoomError,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -155,7 +164,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
             children: [
               CustomActionButton(
                 icon: Icons.edit,
-                label: 'Rename Room',
+                label: l10n.renameRoom,
                 onPressed: () => _showRenameRoomDialog(context),
                 color: AppColors.accentColor,
                 isNeutral: true,
@@ -163,7 +172,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
               const SizedBox(height: 16),
               CustomActionButton(
                 icon: Icons.delete_outline,
-                label: 'Remove Room',
+                label: l10n.removeRoom,
                 onPressed: () => _showRemoveRoomDialog(context),
                 color: AppColors.darkRedColor,
                 isDestructive: true,
