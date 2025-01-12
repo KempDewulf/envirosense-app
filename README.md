@@ -9,6 +9,7 @@ EnviroSense is a Flutter application designed to manage and monitor home devices
 - **Caching and Clearing Options**: Manage cache and stored data with database_service and ClearCacheOptionsSheet.
 - **Authentication**: Implemented using FirebaseAuth for secure sign-in and registration.
 - **Real-time Notifications**: Receive instant notifications for device activities and alerts.
+- **Multilingual Support**: Switch between English, French, and Dutch languages throughout the app with persistent language preferences.
 
 ## Architecture
 
