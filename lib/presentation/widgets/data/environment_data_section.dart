@@ -22,6 +22,7 @@ class EnvironmentDataSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -34,7 +35,7 @@ class EnvironmentDataSection extends StatelessWidget {
           const SizedBox(height: 32),
           DataDisplayBox(
             key: ValueKey(showRoomData),
-            title: showRoomData ? 'Room Environment' : 'Outside Environment',
+            title: showRoomData ? l10n.roomEnvironment : l10n.outsideEnvironment,
             data: showRoomData && roomHasDeviceData ? roomData : outsideData,
           )
         ],
