@@ -20,6 +20,7 @@ class TargetTemperatureSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n  = AppLocalizations.of(context)!;
     double? tempValue = currentTemperature;
 
     return StatefulBuilder(
@@ -72,8 +73,8 @@ class TargetTemperatureSheet extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Target Temperature',
+                    Text(
+                      l10n.targetTemperature,
                       style: TextStyle(
                         color: AppColors.accentColor,
                         fontSize: 24,
@@ -101,7 +102,7 @@ class TargetTemperatureSheet extends StatelessWidget {
                           }),
                           builder: (context, snapshot) {
                             return Text(
-                              snapshot.data ?? 'Loading...',
+                              snapshot.data ?? l10n.loading,
                               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                             );
                           },
@@ -131,8 +132,8 @@ class TargetTemperatureSheet extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text(
-                          'Save',
+                        child: Text(
+                          l10n.save,
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),

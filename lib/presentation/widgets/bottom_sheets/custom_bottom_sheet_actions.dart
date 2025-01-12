@@ -12,12 +12,14 @@ class CustomBottomSheetActions extends StatelessWidget {
     super.key,
     required this.onCancel,
     required this.onSave,
+    required this.saveButtonText,
     this.isDestructive = false,
-    this.saveButtonText = 'Save',
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -30,8 +32,8 @@ class CustomBottomSheetActions extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   side: const BorderSide(color: AppColors.secondaryColor),
                 ),
-                child: const Text(
-                  'Cancel',
+                child: Text(
+                  l10n.cancel,
                   style: TextStyle(color: AppColors.secondaryColor),
                 ),
               ),
