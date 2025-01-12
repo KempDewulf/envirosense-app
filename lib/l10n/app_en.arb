@@ -465,5 +465,13 @@
     "noDataAvailable": "No data available",
     "@noDataAvailable": {
         "description": "Message shown when no score data is available"
+    },
+    "remove": "Remove",
+    "@remove": {
+        "description": "Remove action button text"
+    },
+    "fromBuilding": " from this building?",
+    "@fromBuilding": {
+        "description": "Confirmation message suffix for removal"
     }
 }

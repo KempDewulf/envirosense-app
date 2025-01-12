@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_actions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,8 @@ class CustomConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       decoration: const BoxDecoration(
         color: AppColors.whiteColor,
@@ -48,7 +51,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                       color: AppColors.secondaryColor,
                     ),
                   ),
-                  const TextSpan(text: ' from this building?'),
+                  TextSpan(text: l10n.fromBuilding),
                 ],
               ),
             ),
@@ -57,7 +60,7 @@ class CustomConfirmationDialog extends StatelessWidget {
           CustomBottomSheetActions(
             onCancel: () => Navigator.pop(context),
             onSave: onConfirm,
-            saveButtonText: 'Remove',
+            saveButtonText: l10n.remove,
             isDestructive: isDestructive,
           ),
         ],
