@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/views/add_device_screen.dart';
 import 'package:envirosense/presentation/views/add_room_screen.dart';
@@ -135,6 +137,16 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('nl'), // Dutch
+      ],
       home: _initialScreen,
       routes: {
         '/main': (context) => const MainScreen(),
