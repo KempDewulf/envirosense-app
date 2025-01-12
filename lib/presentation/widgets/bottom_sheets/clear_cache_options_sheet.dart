@@ -25,24 +25,35 @@ class ClearCacheOptionsSheet extends StatefulWidget {
 }
 
 class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
-  final List<CacheOption> cacheOptions = [
-    CacheOption(
-      title: 'Device Data',
-      subtitle: 'Clear stored sensor readings',
-    ),
-    CacheOption(
-      title: 'Device Names',
-      subtitle: 'Reset device names to default',
-    ),
-    CacheOption(
-      title: 'All',
-      subtitle: 'Clear all stored data and preferences',
-      isHighImpact: true,
-    ),
-  ];
+  late List<CacheOption> cacheOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final l10n = AppLocalizations.of(context)!;
+      cacheOptions = [
+        CacheOption(
+          title: l10n.deviceData,
+          subtitle: l10n.clearSensorReadings,
+        ),
+        CacheOption(
+          title: l10n.deviceNames,
+          subtitle: l10n.resetDeviceNames,
+        ),
+        CacheOption(
+          title: l10n.all,
+          subtitle: l10n.clearAllData,
+          isHighImpact: true,
+        ),
+      ];
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     bool isSelected = cacheOptions.any((option) => option.isSelected);
 
     return Container(
@@ -67,8 +78,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Clear Cache',
+                Text(
+                  l10n.clearCache,
                   style: TextStyle(
                     color: AppColors.primaryColor,
                     fontSize: 24,
@@ -76,8 +87,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Select the cache you want to remove',
+                Text(
+                  l10n.selectCachePrompt,
                   style: TextStyle(
                     color: AppColors.accentColor,
                     fontSize: 16,
@@ -109,8 +120,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        'Cancel',
+                      child: Text(
+                        l10n.cancel,
                         style: TextStyle(color: AppColors.secondaryColor),
                       ),
                     ),
@@ -126,8 +137,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        'Clear Cache',
+                      child: Text(
+                        l10n.clearCache,
                         style: TextStyle(
                           color: AppColors.whiteColor,
                           fontWeight: FontWeight.w500,
@@ -145,8 +156,10 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
   }
 
   void _handleOptionSelection(CacheOption option) {
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
-      if (option.title == 'All') {
+      if (option.title == l10n.all) {
         // When "All" is selected/deselected, update all other options
         bool newValue = !option.isSelected;
         for (var opt in cacheOptions) {
@@ -155,8 +168,8 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
       } else {
         option.isSelected = !option.isSelected;
         // If all individual options are selected, select "All" as well
-        CacheOption allOption = cacheOptions.firstWhere((opt) => opt.title == 'All');
-        if (cacheOptions.where((opt) => opt.title != 'All').every((opt) => opt.isSelected)) {
+        CacheOption allOption = cacheOptions.firstWhere((opt) => opt.title == l10n.all);
+        if (cacheOptions.where((opt) => opt.title != l10n.all).every((opt) => opt.isSelected)) {
           allOption.isSelected = true;
         } else {
           allOption.isSelected = false;
@@ -166,6 +179,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
   }
 
   void _handleClearCache() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!cacheOptions.any((option) => option.isSelected)) return;
 
     final DatabaseService dbService = DatabaseService();
@@ -183,11 +197,11 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
 
     for (final option in cacheOptions) {
       if (option.isSelected) {
-        if (option.title == 'Device Data') {
+        if (option.title == l10n.deviceData) {
           await dbService.clearDeviceDataCache();
-        } else if (option.title == 'Device Names') {
+        } else if (option.title == l10n.deviceNames) {
           await dbService.clearDeviceNames();
-        } else if (option.title == 'All') {
+        } else if (option.title == l10n.all) {
           await dbService.clearAll();
           await authService.signOut(context);
         }
