@@ -1,205 +1,221 @@
 {
-  "appTitle": "EnviroSense",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
-
-  "ok": "OK",
-  "@ok": {
-    "description": "Standard confirmation button text"
-  },
-  "cancel": "Cancel",
-  "@cancel": {
-    "description": "Standard cancellation button text"
-  },
-  "save": "Save",
-  "@save": {
-    "description": "Standard save button text"
-  },
-  "remove": "Remove",
-  "@remove": {
-    "description": "Standard remove button text"
-  },
-  "error": "Error",
-  "@error": {
-    "description": "General error message header"
-  },
-  "success": "Success",
-  "@success": {
-    "description": "General success message header"
-  },
-  "loading": "Loading...",
-  "@loading": {
-    "description": "Loading state message"
-  },
-  "unknown": "Unknown",
-  "@unknown": {
-    "description": "Default text for unknown values"
-  },
-
-  "signOut": "Sign Out",
-  "@signOut": {
-    "description": "Sign out button text"
-  },
-  "emailVerification": "Email Verification",
-  "@emailVerification": {
-    "description": "Email verification screen title"
-  },
-  "pleaseEnterEmail": "Please enter your email",
-  "@pleaseEnterEmail": {
-    "description": "Email input validation message"
-  },
-  "pleaseEnterValidEmail": "Please enter a valid email",
-  "@pleaseEnterValidEmail": {
-    "description": "Invalid email validation message"
-  },
-  "pleaseEnterPassword": "Please enter your password",
-  "@pleaseEnterPassword": {
-    "description": "Password input validation message"
-  },
-  "passwordRequirements": "Password must be at least 8 characters long, contain uppercase, lowercase, number and special character",
-  "@passwordRequirements": {
-    "description": "Password requirements explanation"
-  },
-
-  "rooms": "ROOMS",
-  "@rooms": {
-    "description": "Navigation label for rooms section"
-  },
-  "devices": "DEVICES",
-  "@devices": {
-    "description": "Navigation label for devices section"
-  },
-  "settings": "Settings",
-  "@settings": {
-    "description": "Navigation label for settings section"
-  },
-  "statistics": "Statistics",
-  "@statistics": {
-    "description": "Navigation label for statistics section"
-  },
-
-  "buildingTitle": "Campus Brugge Station - Building A",
-  "@buildingTitle": {
-    "description": "Title of the current building"
-  },
-  "currentRoom": "Current room",
-  "@currentRoom": {
-    "description": "Label for current room display"
-  },
-  "selectNewRoom": "Select New Room",
-  "@selectNewRoom": {
-    "description": "Label for room selection action"
-  },
-
-  "roomEnvironment": "Room Environment",
-  "@roomEnvironment": {
-    "description": "Header for room environment section"
-  },
-  "outsideEnvironment": "Outside Environment",
-  "@outsideEnvironment": {
-    "description": "Header for outside environment section"
-  },
-  "temperature": "Temperature",
-  "@temperature": {
-    "description": "Label for temperature readings"
-  },
-  "humidity": "Humidity",
-  "@humidity": {
-    "description": "Label for humidity readings"
-  },
-  "co2Level": "CO2 Level",
-  "@co2Level": {
-    "description": "Label for CO2 level readings"
-  },
-  "ppm": "PPM",
-  "@ppm": {
-    "description": "Unit label for parts per million"
-  },
-
-  "preferences": "Preferences",
-  "@preferences": {
-    "description": "Settings section header"
-  },
-  "unitsMetric": "Metric Units",
-  "@unitsMetric": {
-    "description": "Label for metric units option"
-  },
-  "unitsImperial": "Imperial Units",
-  "@unitsImperial": {
-    "description": "Label for imperial units option"
-  },
-  "unitsUsingCelsius": "Using Celsius",
-  "@unitsUsingCelsius": {
-    "description": "Message indicating Celsius units"
-  },
-  "unitsUsingFahrenheit": "Using Fahrenheit",
-  "@unitsUsingFahrenheit": {
-    "description": "Message indicating Fahrenheit units"
-  },
-  "unitsChanged": "Units changed to {units}",
-  "@unitsChanged": {
-    "description": "Message shown when units are changed",
-    "placeholders": {
-      "units": {
-        "type": "String"
-      }
+    "@@locale": "en",
+    "appTitle": "EnviroSense",
+    "@appTitle": {
+        "description": "The title of the application"
+    },
+    "ok": "OK",
+    "@ok": {
+        "description": "Standard confirmation button text"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Standard cancellation button text"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "Standard save button text"
+    },
+    "remove": "Remove",
+    "@remove": {
+        "description": "Standard remove button text"
+    },
+    "error": "Error",
+    "@error": {
+        "description": "General error message header"
+    },
+    "success": "Success",
+    "@success": {
+        "description": "General success message header"
+    },
+    "loading": "Loading...",
+    "@loading": {
+        "description": "Loading state message"
+    },
+    "unknown": "Unknown",
+    "@unknown": {
+        "description": "Default text for unknown values"
+    },
+    "signOut": "Sign Out",
+    "@signOut": {
+        "description": "Sign out button text"
+    },
+    "emailVerification": "Email Verification",
+    "@emailVerification": {
+        "description": "Email verification screen title"
+    },
+    "pleaseEnterEmail": "Please enter your email",
+    "@pleaseEnterEmail": {
+        "description": "Email input validation message"
+    },
+    "pleaseEnterValidEmail": "Please enter a valid email",
+    "@pleaseEnterValidEmail": {
+        "description": "Invalid email validation message"
+    },
+    "pleaseEnterPassword": "Please enter your password",
+    "@pleaseEnterPassword": {
+        "description": "Password input validation message"
+    },
+    "passwordRequirements": "Password must be at least 8 characters long, contain uppercase, lowercase, number and special character",
+    "@passwordRequirements": {
+        "description": "Password requirements explanation"
+    },
+    "rooms": "ROOMS",
+    "@rooms": {
+        "description": "Navigation label for rooms section"
+    },
+    "devices": "DEVICES",
+    "@devices": {
+        "description": "Navigation label for devices section"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Navigation label for settings section"
+    },
+    "statistics": "Statistics",
+    "@statistics": {
+        "description": "Navigation label for statistics section"
+    },
+    "buildingTitle": "Campus Brugge Station - Building A",
+    "@buildingTitle": {
+        "description": "Title of the current building"
+    },
+    "currentRoom": "Current room",
+    "@currentRoom": {
+        "description": "Label for current room display"
+    },
+    "selectNewRoom": "Select New Room",
+    "@selectNewRoom": {
+        "description": "Label for room selection action"
+    },
+    "roomEnvironment": "Room Environment",
+    "@roomEnvironment": {
+        "description": "Header for room environment section"
+    },
+    "outsideEnvironment": "Outside Environment",
+    "@outsideEnvironment": {
+        "description": "Header for outside environment section"
+    },
+    "temperature": "Temperature",
+    "@temperature": {
+        "description": "Label for temperature readings"
+    },
+    "humidity": "Humidity",
+    "@humidity": {
+        "description": "Label for humidity readings"
+    },
+    "co2Level": "CO2 Level",
+    "@co2Level": {
+        "description": "Label for CO2 level readings"
+    },
+    "ppm": "PPM",
+    "@ppm": {
+        "description": "Unit label for parts per million"
+    },
+    "preferences": "Preferences",
+    "@preferences": {
+        "description": "Settings section header"
+    },
+    "unitsMetric": "Metric Units",
+    "@unitsMetric": {
+        "description": "Label for metric units option"
+    },
+    "unitsImperial": "Imperial Units",
+    "@unitsImperial": {
+        "description": "Label for imperial units option"
+    },
+    "unitsUsingCelsius": "Using Celsius",
+    "@unitsUsingCelsius": {
+        "description": "Message indicating Celsius units"
+    },
+    "unitsUsingFahrenheit": "Using Fahrenheit",
+    "@unitsUsingFahrenheit": {
+        "description": "Message indicating Fahrenheit units"
+    },
+    "unitsChanged": "Units changed to {units}",
+    "@unitsChanged": {
+        "description": "Message shown when units are changed",
+        "placeholders": {
+            "units": {
+                "type": "String"
+            }
+        }
+    },
+    "displayModesDefaultView": "Default View",
+    "@displayModesDefaultView": {
+        "description": "Label for default view mode"
+    },
+    "displayModesTemperatureView": "Temperature",
+    "@displayModesTemperatureView": {
+        "description": "Label for temperature view mode"
+    },
+    "displayModesHumidityView": "Humidity",
+    "@displayModesHumidityView": {
+        "description": "Label for humidity view mode"
+    },
+    "displayModesCo2View": "CO2 Level",
+    "@displayModesCo2View": {
+        "description": "Label for CO2 view mode"
+    },
+    "clearCache": "Clear Cache",
+    "@clearCache": {
+        "description": "Button to clear application cache"
+    },
+    "addRoomTitle": "Add Room",
+    "@addRoomTitle": {
+        "description": "Title for add room screen"
+    },
+    "enterRoomName": "Enter Room's name",
+    "@enterRoomName": {
+        "description": "Label for room name input"
+    },
+    "roomNameHint": "e.g. Living Room",
+    "@roomNameHint": {
+        "description": "Hint text for room name input"
+    },
+    "selectRoomIcon": "Select Room's icon",
+    "@selectRoomIcon": {
+        "description": "Label for room icon selection"
+    },
+    "roomAddedSuccess": "Room added successfully.",
+    "@roomAddedSuccess": {
+        "description": "Success message when room is added"
+    },
+    "roomAddedError": "Failed to add room. Please try again later.",
+    "@roomAddedError": {
+        "description": "Error message when room addition fails"
+    },
+    "noConnection": "No connection",
+    "@noConnection": {
+        "description": "Error message for no internet connection"
+    },
+    "addDevice": "Add Device",
+    "@addDevice": {
+        "description": "Button to add a new device"
+    },
+    "confirmationPrompt": "Are you sure you want to remove {item} from this building?",
+    "@confirmationPrompt": {
+        "description": "Confirmation message when removing an item",
+        "placeholders": {
+            "item": {
+                "type": "String"
+            }
+        }
+    },
+    "statusGood": "Good",
+    "@statusGood": {
+        "description": "Status indicator for good conditions"
+    },
+    "statusMedium": "Medium",
+    "@statusMedium": {
+        "description": "Status indicator for medium conditions"
+    },
+    "statusBad": "Bad",
+    "@statusBad": {
+        "description": "Status indicator for bad conditions"
+    },
+    "statusUnknown": "Unknown",
+    "@statusUnknown": {
+        "description": "Status indicator for unknown conditions"
     }
-  },
-
-  "displayModesDefaultView": "Default View",
-  "@displayModesDefaultView": {
-    "description": "Label for default view mode"
-  },
-  "displayModesTemperatureView": "Temperature",
-  "@displayModesTemperatureView": {
-    "description": "Label for temperature view mode"
-  },
-  "displayModesHumidityView": "Humidity",
-  "@displayModesHumidityView": {
-    "description": "Label for humidity view mode"
-  },
-  "displayModesCo2View": "CO2 Level",
-  "@displayModesCo2View": {
-    "description": "Label for CO2 view mode"
-  },
-
-  "clearCache": "Clear Cache",
-  "@clearCache": {
-    "description": "Button to clear application cache"
-  },
-  "addRoom": "Add Room",
-  "@addRoom": {
-    "description": "Button to add a new room"
-  },
-  "addDevice": "Add Device",
-  "@addDevice": {
-    "description": "Button to add a new device"
-  },
-  "confirmationPrompt": "Are you sure you want to remove {item} from this building?",
-  "@confirmationPrompt": {
-    "description": "Confirmation message when removing an item",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-
-  "statusGood": "Good",
-  "@statusGood": {
-    "description": "Status indicator for good conditions"
-  },
-  "statusMedium": "Medium",
-  "@statusMedium": {
-    "description": "Status indicator for medium conditions"
-  },
-  "statusBad": "Bad",
-  "@statusBad": {
-    "description": "Status indicator for bad conditions"
-  },
-  "statusUnknown": "Unknown",
-  "@statusUnknown": {
-    "description": "Status indicator for unknown conditions"
-  }
 }
