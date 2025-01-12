@@ -48,6 +48,10 @@
     "@notAvailable": {
         "description": "Label for not available data"
     },
+    "notAssigned": "Not Assigned",
+    "@notAssigned": {
+        "description": "Label for not assigned data"
+    },
     "statisticsTitle": "Building Statistics",
     "@statisticsTitle": {
         "description": "Title for statistics screen"
@@ -427,5 +431,9 @@
     "targetTemperature": "Target Temperature",
     "@targetTemperature": {
         "description": "Header for temperature setting"
+    },
+    "mostRecent": "Most Recent",
+    "@mostRecent": {
+        "description": "Label for most recent data"
     }
 }

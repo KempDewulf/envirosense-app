@@ -1,5 +1,6 @@
 import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:envirosense/domain/entities/device_data.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../core/constants/colors.dart';
@@ -68,6 +69,8 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -118,8 +121,8 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
                   future: UnitConverter.formatTemperature(widget.data.airData.temperature),
                   builder: (context, snapshot) {
                     return _buildDataRow(
-                      label: 'Temperature',
-                      value: snapshot.data ?? 'Loading...',
+                      label: l10n.temperature,
+                      value: snapshot.data ?? l10n.loading,
                       status: DataStatusHelper.getTemperatureStatus(
                         widget.data.airData.temperature ?? 0,
                       ),
@@ -129,7 +132,7 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
                 ),
                 const SizedBox(height: 12),
                 _buildDataRow(
-                  label: 'Humidity',
+                  label: l10n.humidity,
                   value: '${widget.data.airData.humidity?.toStringAsFixed(1)}%',
                   status: DataStatusHelper.getHumidityStatus(
                     widget.data.airData.humidity ?? 0,
@@ -138,7 +141,7 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
                 ),
                 const SizedBox(height: 12),
                 _buildDataRow(
-                  label: 'CO2 Level',
+                  label: l10n.co2Level,
                   value: '${widget.data.airData.ppm?.toStringAsFixed(0)} ppm',
                   status: DataStatusHelper.getPPMStatus(
                     widget.data.airData.ppm ?? 0,
@@ -161,8 +164,8 @@ class _DeviceDataCardState extends State<DeviceDataCard> with SingleTickerProvid
                   color: AppColors.secondaryColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
-                  'Most Recent',
+                child: Text(
+                  l10n.mostRecent,
                   style: TextStyle(
                     color: AppColors.whiteColor,
                     fontSize: 12,
