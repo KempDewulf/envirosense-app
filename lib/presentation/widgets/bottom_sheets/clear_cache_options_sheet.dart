@@ -25,36 +25,39 @@ class ClearCacheOptionsSheet extends StatefulWidget {
 }
 
 class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
-  late List<CacheOption> cacheOptions;
+  List<CacheOption>? cacheOptions;
 
   @override
   void initState() {
     super.initState();
+    cacheOptions = [];
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final l10n = AppLocalizations.of(context)!;
-      cacheOptions = [
-        CacheOption(
-          title: l10n.deviceData,
-          subtitle: l10n.clearSensorReadings,
-        ),
-        CacheOption(
-          title: l10n.deviceNames,
-          subtitle: l10n.resetDeviceNames,
-        ),
-        CacheOption(
-          title: l10n.all,
-          subtitle: l10n.clearAllData,
-          isHighImpact: true,
-        ),
-      ];
-      setState(() {});
+      setState(() {
+        cacheOptions = [
+          CacheOption(
+            title: l10n.deviceData,
+            subtitle: l10n.clearSensorReadings,
+          ),
+          CacheOption(
+            title: l10n.deviceNames,
+            subtitle: l10n.resetDeviceNames,
+          ),
+          CacheOption(
+            title: l10n.all,
+            subtitle: l10n.clearAllData,
+            isHighImpact: true,
+          ),
+        ];
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    bool isSelected = cacheOptions.any((option) => option.isSelected);
+    bool isSelected = cacheOptions!.any((option) => option.isSelected);
 
     return Container(
       decoration: const BoxDecoration(
@@ -95,7 +98,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                ...cacheOptions.map(
+                ...cacheOptions!.map(
                   (option) => CacheOptionItem(
                     option: option,
                     onTap: () => _handleOptionSelection(option),
@@ -162,14 +165,14 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
       if (option.title == l10n.all) {
         // When "All" is selected/deselected, update all other options
         bool newValue = !option.isSelected;
-        for (var opt in cacheOptions) {
+        for (var opt in cacheOptions!) {
           opt.isSelected = newValue;
         }
       } else {
         option.isSelected = !option.isSelected;
         // If all individual options are selected, select "All" as well
-        CacheOption allOption = cacheOptions.firstWhere((opt) => opt.title == l10n.all);
-        if (cacheOptions.where((opt) => opt.title != l10n.all).every((opt) => opt.isSelected)) {
+        CacheOption allOption = cacheOptions!.firstWhere((opt) => opt.title == l10n.all);
+        if (cacheOptions!.where((opt) => opt.title != l10n.all).every((opt) => opt.isSelected)) {
           allOption.isSelected = true;
         } else {
           allOption.isSelected = false;
@@ -180,12 +183,12 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
 
   void _handleClearCache() async {
     final l10n = AppLocalizations.of(context)!;
-    if (!cacheOptions.any((option) => option.isSelected)) return;
+    if (!cacheOptions!.any((option) => option.isSelected)) return;
 
     final DatabaseService dbService = DatabaseService();
     final AuthService authService = AuthService();
 
-    final hasHighImpactSelection = cacheOptions.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
+    final hasHighImpactSelection = cacheOptions!.where((opt) => opt.isSelected).any((opt) => opt.isHighImpact);
 
     if (hasHighImpactSelection) {
       final confirmed = await ClearCacheWarningDialog.show(context);
@@ -195,7 +198,7 @@ class _ClearCacheOptionsSheetState extends State<ClearCacheOptionsSheet> {
     if (!mounted) return;
     Navigator.pop(context);
 
-    for (final option in cacheOptions) {
+    for (final option in cacheOptions!) {
       if (option.isSelected) {
         if (option.title == l10n.deviceData) {
           await dbService.clearDeviceDataCache();
