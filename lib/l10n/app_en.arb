@@ -217,5 +217,41 @@
                 "example": "metric"
             }
         }
+    },
+    "onboardingConvenienceTitle": "Convenience",
+    "@onboardingConvenienceTitle": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingConvenienceDesc": "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
+    "@onboardingConvenienceDesc": {
+        "description": "Description for first onboarding screen"
+    },
+    "onboardingAutomateTitle": "Automate",
+    "@onboardingAutomateTitle": {
+        "description": "Title for second onboarding screen"
+    },
+    "onboardingAutomateDesc": "Effortlessly manage quick actions for control and real-time environmental insights.",
+    "@onboardingAutomateDesc": {
+        "description": "Description for second onboarding screen"
+    },
+    "onboardingInformedTitle": "Stay Informed",
+    "@onboardingInformedTitle": {
+        "description": "Title for third onboarding screen"
+    },
+    "onboardingInformedDesc": "Get instant notifications and react quickly to any activity or alerts",
+    "@onboardingInformedDesc": {
+        "description": "Description for third onboarding screen"
+    },
+    "skip": "Skip",
+    "@skip": {
+        "description": "Skip button text for onboarding"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Next button text for onboarding"
+    },
+    "letsStart": "Let's start",
+    "@letsStart": {
+        "description": "Final button text for onboarding completion"
     }
 }

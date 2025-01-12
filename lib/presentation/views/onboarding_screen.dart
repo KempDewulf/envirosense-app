@@ -42,23 +42,27 @@ class OnboardingScreen extends StatelessWidget {
   }
 
   // List of onboarding pages data
-  List<PageViewModel> get _pages => [
-        _buildPageModel(
-          title: "Convenience",
-          body: "Manage your home devices from anywhere and monitor vital stats and environmental conditions with ease.",
-          imagePath: 'assets/images/convenience.png',
-        ),
-        _buildPageModel(
-          title: "Automate",
-          body: "Effortlessly manage quick actions for control and real-time environmental insights.",
-          imagePath: 'assets/images/automate.png',
-        ),
-        _buildPageModel(
-          title: "Stay Informed",
-          body: "Get instant notifications and react quickly to any activity or alerts",
-          imagePath: 'assets/images/stay_informed.png',
-        ),
-      ];
+  List<PageViewModel> _buildPages(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return [
+      _buildPageModel(
+        title: l10n.onboardingConvenienceTitle,
+        body: l10n.onboardingConvenienceDesc,
+        imagePath: 'assets/images/convenience.png',
+      ),
+      _buildPageModel(
+        title: l10n.onboardingAutomateTitle,
+        body: l10n.onboardingAutomateDesc,
+        imagePath: 'assets/images/automate.png',
+      ),
+      _buildPageModel(
+        title: l10n.onboardingInformedTitle,
+        body: l10n.onboardingInformedDesc,
+        imagePath: 'assets/images/stay_informed.png',
+      ),
+    ];
+  }
 
   void _onIntroEnd(context) async {
     final dbService = DatabaseService();
@@ -71,27 +75,29 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return IntroductionScreen(
-      pages: _pages,
+      pages: _buildPages(context),
       onDone: () => _onIntroEnd(context),
       onSkip: () => _onIntroEnd(context),
       showSkipButton: true,
-      skip: const Text(
-        'Skip',
+      skip: Text(
+        l10n.skip,
         style: TextStyle(
           color: AppColors.accentColor,
           fontWeight: FontWeight.bold,
         ),
       ),
-      next: const Text(
-        'Next',
+      next: Text(
+        l10n.next,
         style: TextStyle(
           color: AppColors.secondaryColor,
           fontWeight: FontWeight.bold,
         ),
       ),
-      done: const Text(
-        "Let's start",
+      done: Text(
+        l10n.letsStart,
         style: TextStyle(
           color: AppColors.secondaryColor,
           fontWeight: FontWeight.bold,
