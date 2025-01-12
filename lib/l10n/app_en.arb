@@ -295,5 +295,21 @@
     "device": "Device",
     "@device": {
         "description": "Label for device section"
+    },
+    "brightnessMinWarning": "Minimum brightness is 20%",
+    "@brightnessMinWarning": {
+        "description": "Warning message when brightness is set below minimum"
+    },
+    "brightnessLabel": "Brightness",
+    "@brightnessLabel": {
+        "description": "Label for brightness control"
+    },
+    "brightnessFetchError": "Failed to fetch brightness level",
+    "@brightnessFetchError": {
+        "description": "Error message when brightness level cannot be fetched"
+    },
+    "loading": "Loading",
+    "@loading": {
+        "description": "Generic loading text"
     }
 }
