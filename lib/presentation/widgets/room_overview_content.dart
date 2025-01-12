@@ -1,5 +1,6 @@
 import 'package:envirosense/presentation/widgets/actions/target_temperature_button.dart';
 import 'package:envirosense/presentation/widgets/cards/enviro_score_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/data/environment_data_section.dart';
 import 'package:flutter/material.dart';
 import '../../../domain/entities/air_data.dart';
@@ -30,13 +31,14 @@ class RoomOverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         EnviroScoreCard(
           score: airQuality?.enviroScore ?? 0,
           isDataAvailable: roomHasDeviceData,
-          type: 'Room',
+          type: l10n.room,
         ),
         const SizedBox(height: 24),
         TargetTemperatureButton(

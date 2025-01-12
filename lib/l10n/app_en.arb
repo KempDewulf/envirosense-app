@@ -287,5 +287,13 @@
     "refreshError": "Failed to refresh data",
     "@refreshError": {
         "description": "Error message shown when data refresh fails"
+    },
+    "room": "Room",
+    "@room": {
+        "description": "Label for room section"
+    },
+    "device": "Device",
+    "@device": {
+        "description": "Label for device section"
     }
 }
