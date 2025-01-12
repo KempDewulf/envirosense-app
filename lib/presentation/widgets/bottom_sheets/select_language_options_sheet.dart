@@ -81,9 +81,14 @@ class _SelectLanguageOptionsSheetState extends State<SelectLanguageOptionsSheet>
                 ),
                 const SizedBox(height: 24),
                 ...languageOptions.map(
-                  (option) => LanguageOptionItem(
-                    option: option,
-                    onTap: () => _handleLanguageSelection(option),
+                  (option) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: LanguageOptionItem(
+                      code: option.code,
+                      name: option.name,
+                      isSelected: option.isSelected,
+                      onTap: () => _handleLanguageSelection(option),
+                    ),
                   ),
                 ),
               ],
