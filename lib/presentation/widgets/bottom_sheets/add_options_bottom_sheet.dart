@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:envirosense/core/enums/add_option_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,9 +17,11 @@ class AddOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     List<_AddOption> options = [
       _AddOption(
-        title: 'Add a room',
+        title: l10n.addRoom,
         icon: Icons.meeting_room,
         backgroundColor: preferredOption == AddOptionType.room ? AppColors.secondaryColor : AppColors.lightGrayColor,
         onTapRoute: '/addRoom',
@@ -26,7 +30,7 @@ class AddOptionsBottomSheet extends StatelessWidget {
         type: AddOptionType.room,
       ),
       _AddOption(
-        title: 'Add a device',
+        title: l10n.addDevice,
         icon: Icons.devices,
         backgroundColor: preferredOption == AddOptionType.device ? AppColors.secondaryColor : AppColors.lightGrayColor,
         onTapRoute: '/addDevice',
@@ -58,10 +62,10 @@ class AddOptionsBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Title with padding
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(top: 28.0, bottom: 16.0, left: 32),
               child: Text(
-                'Add new',
+                l10n.addNew,
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,

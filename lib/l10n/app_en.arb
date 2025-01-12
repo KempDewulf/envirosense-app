@@ -106,10 +106,6 @@
     "@assignDevice": {
         "description": "Button text for assigning device to a room"
     },
-    "addDevice": "Add Device",
-    "@addDevice": {
-        "description": "Button text for adding a new device"
-    },
     "verificationEmailSent": "A verification email has been sent to {email}.",
     "@verificationEmailSent": {
         "description": "Message shown when verification email is sent",
@@ -383,5 +379,53 @@
     "temperatureLimitUnavailable": "Temperature Limit Not Available",
     "@temperatureLimitUnavailable": {
         "description": "Message when temperature limit cannot be retrieved"
+    },
+    "addRoom": "Add a room",
+    "@addRoom": {
+        "description": "Button text for adding new room"
+    },
+    "addDevice": "Add a device",
+    "@addDevice": {
+        "description": "Button text for adding new device"
+    },
+    "addNew": "Add new",
+    "@addNew": {
+        "description": "Generic add new button text"
+    },
+    "deviceData": "Device Data",
+    "@deviceData": {
+        "description": "Header for device data section"
+    },
+    "clearSensorReadings": "Clear stored sensor readings",
+    "@clearSensorReadings": {
+        "description": "Option to clear sensor data"
+    },
+    "deviceNames": "Device Names",
+    "@deviceNames": {
+        "description": "Header for device names section"
+    },
+    "resetDeviceNames": "Reset device names to default",
+    "@resetDeviceNames": {
+        "description": "Option to reset device names"
+    },
+    "all": "All",
+    "@all": {
+        "description": "Label for selecting all items"
+    },
+    "clearAllData": "Clear all stored data and preferences",
+    "@clearAllData": {
+        "description": "Option to clear all data"
+    },
+    "selectCachePrompt": "Select the cache you want to remove",
+    "@selectCachePrompt": {
+        "description": "Prompt for cache selection"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "targetTemperature": "Target Temperature",
+    "@targetTemperature": {
+        "description": "Header for temperature setting"
     }
 }
