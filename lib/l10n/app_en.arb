@@ -72,6 +72,18 @@
     "@devices": {
         "description": "Navigation label for devices section"
     },
+    "deviceDataHistory": "Data History",
+    "@deviceDataHistory": {
+        "description": "Tab label for device data history"
+    },
+    "deviceControls": "Controls",
+    "@deviceControls": {
+        "description": "Tab label for device controls"
+    },
+    "deviceActions": "Actions",
+    "@deviceActions": {
+        "description": "Tab label for device actions"
+    },
     "settings": "Settings",
     "@settings": {
         "description": "Navigation label for settings section"
@@ -91,6 +103,10 @@
     "noRooms": "No rooms available",
     "@noRooms": {
         "description": "Message shown when no rooms are available"
+    },
+    "notAssignedToRoom": "Not assigned to a room",
+    "@notAssignedToRoom": {
+        "description": "Message shown when a device is not assigned to a room"
     },
     "retry": "Retry",
     "@retry": {
@@ -237,5 +253,9 @@
     "statusUnknown": "Unknown",
     "@statusUnknown": {
         "description": "Status indicator for unknown conditions"
+    },
+    "unknownDevice": "Unknown Device",
+    "@unknownDevice": {
+        "description": "Default name for unknown devices"
     }
 }
