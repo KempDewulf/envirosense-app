@@ -435,5 +435,35 @@
     "mostRecent": "Most Recent",
     "@mostRecent": {
         "description": "Label for most recent data"
+    },
+    "enviroScoreAboutTitle": "About EnviroScore",
+    "@enviroScoreAboutTitle": {
+        "description": "Title for EnviroScore information dialog"
+    },
+    "enviroScoreDescription": "EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.",
+    "@enviroScoreDescription": {
+        "description": "Detailed description of what EnviroScore means"
+    },
+    "gotIt": "Got it",
+    "@gotIt": {
+        "description": "Confirmation button text"
+    },
+    "typedEnviroScore": "{type} EnviroScore",
+    "@typedEnviroScore": {
+        "description": "EnviroScore with type prefix",
+        "placeholders": {
+            "type": {
+                "type": "String",
+                "example": "Daily"
+            }
+        }
+    },
+    "enviroScore": "EnviroScore",
+    "@enviroScore": {
+        "description": "EnviroScore label"
+    },
+    "noDataAvailable": "No data available",
+    "@noDataAvailable": {
+        "description": "Message shown when no score data is available"
     }
 }

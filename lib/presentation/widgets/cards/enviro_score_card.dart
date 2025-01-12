@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/constants/colors.dart';
 
 class EnviroScoreCard extends StatelessWidget {
@@ -15,6 +16,8 @@ class EnviroScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     void showEnviroScoreInfo() {
       showDialog(
         context: context,
@@ -22,12 +25,12 @@ class EnviroScoreCard extends StatelessWidget {
         useRootNavigator: true,
         routeSettings: const RouteSettings(),
         builder: (context) => AlertDialog(
-          title: const Text(
-            'About EnviroScore',
+          title: Text(
+            l10n.enviroScoreAboutTitle,
             style: TextStyle(color: AppColors.secondaryColor),
           ),
-          content: const Text(
-            'EnviroScore is a measure of environmental quality based on various factors including air quality, temperature, and humidity levels in your space.',
+          content: Text(
+            l10n.enviroScoreDescription,
           ),
           actions: [
             ElevatedButton(
@@ -39,8 +42,8 @@ class EnviroScoreCard extends StatelessWidget {
                 ),
               ),
               onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-              child: const Text(
-                'Got it',
+              child: Text(
+                l10n.gotIt,
                 style: TextStyle(
                   color: AppColors.whiteColor,
                   fontWeight: FontWeight.bold,
@@ -74,14 +77,14 @@ class EnviroScoreCard extends StatelessWidget {
               children: [
                 type.isNotEmpty
                     ? Text(
-                        '$type EnviroScore',
+                        l10n.typedEnviroScore(type),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       )
                     : Text(
-                        'EnviroScore',
+                        l10n.enviroScore,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -99,7 +102,7 @@ class EnviroScoreCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  isDataAvailable ? '$score' : 'No data available',
+                  isDataAvailable ? '$score' : l10n.noDataAvailable,
                   style: TextStyle(
                     fontSize: isDataAvailable ? 48 : 18,
                     fontWeight: FontWeight.bold,
