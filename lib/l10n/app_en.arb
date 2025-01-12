@@ -545,5 +545,25 @@
     "yesSignOut": "Yes, Sign Out",
     "@yesSignOut": {
         "description": "Sign out confirmation button"
+    },
+    "navHome": "Home",
+    "@navHome": {
+        "description": "Navigation label for home tab"
+    },
+    "navStatistics": "Statistics",
+    "@navStatistics": {
+        "description": "Navigation label for statistics tab"
+    },
+    "navSettings": "Settings",
+    "@navSettings": {
+        "description": "Navigation label for settings tab"
+    },
+    "loadingDeviceName": "Loading device name...",
+    "@loadingDeviceName": {
+        "description": "Loading message while fetching device name"
+    },
+    "error": "Error",
+    "@error": {
+        "description": "Generic error message"
     }
 }
