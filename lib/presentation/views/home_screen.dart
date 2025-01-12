@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:envirosense/core/enums/searchable.type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';

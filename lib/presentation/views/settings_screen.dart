@@ -1,5 +1,7 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/data/models/language_model.dart';
+import 'package:envirosense/main.dart';
+import 'package:envirosense/services/language_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
@@ -167,12 +169,21 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         children: supportedLanguages
                             .map((lang) => ListTile(
                                   title: Text(lang.name),
-                                  onTap: () => Navigator.pop(context, Locale(lang.code)),
+                                  onTap: () async {
+                                    await LanguageService.setLanguage(lang.code);
+                                    if (!mounted) return;
+                                    Navigator.pop(context, Locale(lang.code));
+                                  },
                                 ))
                             .toList(),
                       ),
                     ),
                   );
+
+                  if (locale != null) {
+                    final app = EnviroSenseApp.of(context);
+                    app.updateLocale(locale);
+                  }
                 },
                 child: ListTile(
                   leading: Icon(Icons.language, color: AppColors.whiteColor),

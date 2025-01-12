@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
 import 'package:envirosense/core/helpers/icon_helper.dart';

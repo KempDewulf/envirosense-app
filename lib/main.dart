@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:envirosense/core/interfaces/app_state_interface.dart';
+import 'package:envirosense/services/language_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
@@ -61,17 +63,36 @@ class EnviroSenseApp extends StatefulWidget {
 
   const EnviroSenseApp({super.key, required this.isFirstTime});
 
+  static AppStateInterface of(BuildContext context) {
+    return context.findAncestorStateOfType<_EnviroSenseAppState>()! as AppStateInterface;
+  }
+
   @override
   State<EnviroSenseApp> createState() => _EnviroSenseAppState();
 }
 
 class _EnviroSenseAppState extends State<EnviroSenseApp> {
+  Locale? _locale;
   Widget _initialScreen = const LoginScreen();
 
   @override
   void initState() {
     super.initState();
     _determineInitialScreen();
+    _loadSavedLanguage();
+  }
+
+  Future<void> _loadSavedLanguage() async {
+    final languageCode = await LanguageService.getLanguage();
+    setState(() {
+      _locale = Locale(languageCode);
+    });
+  }
+
+  void updateLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
   }
 
   Future<void> _determineInitialScreen() async {
@@ -143,6 +164,7 @@ class _EnviroSenseAppState extends State<EnviroSenseApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: _locale,
       supportedLocales: const [
         Locale('en'), // English
         Locale('nl'), // Dutch
