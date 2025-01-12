@@ -1,5 +1,6 @@
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/actions/pagination_indicator.dart';
 import 'package:flutter/material.dart';
 

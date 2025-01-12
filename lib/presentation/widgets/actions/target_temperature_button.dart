@@ -1,4 +1,5 @@
 import 'package:envirosense/core/helpers/unit_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
 
@@ -63,7 +64,7 @@ class TargetTemperatureButton extends StatelessWidget {
                   : Future.value('Temperature Limit Not Available'),
               builder: (context, snapshot) {
                 return Text(
-                  snapshot.data ?? 'Loading...',
+                  snapshot.data ?? l10n.loading,
                   style: TextStyle(color: targetTemperature == null ? AppColors.accentColor : AppColors.whiteColor, fontSize: 16),
                 );
               },

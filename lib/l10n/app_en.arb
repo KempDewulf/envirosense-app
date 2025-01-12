@@ -335,5 +335,53 @@
     "co2Level": "CO2 Level",
     "@co2Level": {
         "description": "Label for CO2 level display mode"
+    },
+    "noConnection": "No Internet Connection",
+    "@noConnection": {
+        "description": "Message shown when internet connection is lost"
+    },
+    "checkConnection": "Please check your connection and try again",
+    "@checkConnection": {
+        "description": "Prompt to check internet connection"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Retry button text"
+    },
+    "previous": "Previous",
+    "@previous": {
+        "description": "Previous page navigation button"
+    },
+    "pageCount": "Page {current} of {total}",
+    "@pageCount": {
+        "description": "Page counter text",
+        "placeholders": {
+            "current": {
+                "type": "int",
+                "example": "1"
+            },
+            "total": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "loadingTemperature": "Loading Temperature Limit",
+    "@loadingTemperature": {
+        "description": "Loading message for temperature limit"
+    },
+    "setTargetTemperature": "Set Target Temperature ({temp})",
+    "@setTargetTemperature": {
+        "description": "Temperature setting button text",
+        "placeholders": {
+            "temp": {
+                "type": "String",
+                "example": "24°C"
+            }
+        }
+    },
+    "temperatureLimitUnavailable": "Temperature Limit Not Available",
+    "@temperatureLimitUnavailable": {
+        "description": "Message when temperature limit cannot be retrieved"
     }
 }

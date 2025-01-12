@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoConnectionWidget extends StatelessWidget {
   final VoidCallback onRetry;
@@ -11,6 +12,7 @@ class NoConnectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -21,8 +23,8 @@ class NoConnectionWidget extends StatelessWidget {
             color: AppColors.secondaryColor,
           ),
           const SizedBox(height: 16),
-          const Text(
-            'No Internet Connection',
+          Text(
+            l10n.noConnection,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -30,15 +32,15 @@ class NoConnectionWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Please check your connection and try again',
+          Text(
+            l10n.checkConnection,
             style: TextStyle(color: Colors.grey),
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondaryColor,
               foregroundColor: AppColors.whiteColor,
