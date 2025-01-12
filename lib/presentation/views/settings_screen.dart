@@ -1,4 +1,5 @@
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
 import 'package:envirosense/presentation/widgets/dialogs/sign_out_dialog.dart';

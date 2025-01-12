@@ -131,5 +131,41 @@
     "cancelRegistration": "Cancel Registration",
     "@cancelRegistration": {
         "description": "Button text for cancelling registration"
+    },
+    "signInError": "An error occurred during sign-in.",
+    "@signInError": {
+        "description": "Error message shown when sign-in fails"
+    },
+    "unexpectedError": "An unexpected error occurred.",
+    "@unexpectedError": {
+        "description": "Generic error message for unexpected errors"
+    },
+    "registrationError": "An error occurred during registration.",
+    "@registrationError": {
+        "description": "Error message shown when registration fails"
+    },
+    "forgotPasswordPrompt": "Forgot your password? ",
+    "@forgotPasswordPrompt": {
+        "description": "Text for forgot password link"
+    },
+    "clickHere": "Click here",
+    "@clickHere": {
+        "description": "Text for clickable link"
+    },
+    "enterHouse": "Enter your house",
+    "@enterHouse": {
+        "description": "Prompt for entering house/building"
+    },
+    "newResident": "New resident",
+    "@newResident": {
+        "description": "Label for new resident registration option"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Label for email input field"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Label for password input field"
     }
 }

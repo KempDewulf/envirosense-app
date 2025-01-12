@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:envirosense/core/constants/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/core/custom_button.dart';
 import 'package:envirosense/presentation/widgets/core/custom_text_form_field.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
@@ -61,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _signIn() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _formSubmitted = true;
     });
@@ -97,15 +101,17 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacementNamed(context, '/main');
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        _showErrorDialog(e.message ?? 'An error occurred during sign-in.');
+        _showErrorDialog(e.message ?? l10n.signInError);
       } catch (e) {
         if (!mounted) return;
-        _showErrorDialog('An unexpected error occurred.');
+        _showErrorDialog(l10n.unexpectedError);
       }
     }
   }
 
   Future<void> _register() async {
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
       _formSubmitted = true;
     });
@@ -127,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        _showErrorDialog(e.message ?? 'An error occurred during registration.');
+        _showErrorDialog(e.message ?? l10n.registrationError);
       }
     }
   }
@@ -141,6 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(
@@ -154,14 +162,14 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 // Custom Image
                 Image.asset(
-                  'assets/logos/envirosense_logo.png', // Replace with your image path
+                  'assets/logos/envirosense_logo.png',
                   width: 200.0,
                   height: 200.0,
                 ),
                 const SizedBox(height: 40.0),
                 // Email field
                 CustomTextFormField(
-                  labelText: 'Email',
+                  labelText: l10n.email,
                   labelColor: AppColors.whiteColor,
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
@@ -173,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 14.0),
                 // Password field
                 CustomTextFormField(
-                  labelText: 'Password',
+                  labelText: l10n.password,
                   labelColor: AppColors.whiteColor,
                   borderColor: AppColors.secondaryColor,
                   focusColor: AppColors.secondaryColor,
@@ -199,12 +207,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     child: RichText(
-                      text: const TextSpan(
-                        text: 'Forgot your password? ',
+                      text: TextSpan(
+                        text: l10n.forgotPasswordPrompt,
                         style: TextStyle(color: AppColors.whiteColor),
                         children: [
                           TextSpan(
-                            text: 'Click here',
+                            text: l10n.clickHere,
                             style: TextStyle(
                               color: AppColors.whiteColor,
                               decoration: TextDecoration.underline,
@@ -218,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20.0),
                 // Sign In button
                 CustomButton(
-                  text: 'Enter your house',
+                  text: l10n.enterHouse,
                   backgroundColor: AppColors.secondaryColor,
                   textColor: AppColors.whiteColor,
                   onPressed: _signIn,
@@ -226,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 10.0),
                 // Register button
                 CustomButton(
-                  text: 'New resident',
+                  text: l10n.newResident,
                   backgroundColor: AppColors.whiteColor,
                   textColor: AppColors.blackColor,
                   onPressed: _register,

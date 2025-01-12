@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 import 'package:envirosense/core/enums/limit_type.dart';
 import 'package:envirosense/core/helpers/connectivity_helper.dart';
