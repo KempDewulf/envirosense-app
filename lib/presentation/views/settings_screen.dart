@@ -1,11 +1,5 @@
-import 'dart:io';
-
-import 'package:country_flags/country_flags.dart';
 import 'package:envirosense/core/constants/colors.dart';
-import 'package:envirosense/data/models/language_model.dart';
-import 'package:envirosense/main.dart';
-import 'package:envirosense/presentation/widgets/bottom_sheets/custom_bottom_sheet_header.dart';
-import 'package:envirosense/services/language_service.dart';
+import 'package:envirosense/presentation/widgets/bottom_sheets/select_language_options_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/presentation/widgets/bottom_sheets/clear_cache_options_sheet.dart';
 import 'package:envirosense/presentation/widgets/dialogs/forgot_your_password_dialog.dart';
@@ -66,11 +60,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
-    final supportedLanguages = [
-      Language('en', l10n.english),
-      Language('nl', l10n.dutch),
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -163,70 +152,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: AppColors.transparent,
-                    builder: (context) => Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomBottomSheetHeader(title: l10n.selectLanguage),
-                          ...supportedLanguages.map(
-                            (lang) => Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  leading: SizedBox(
-                                    width: 32,
-                                    child: CountryFlag.fromLanguageCode(
-                                      lang.code,
-                                      height: 24,
-                                      width: 24,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    lang.name,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  trailing: Radio<String>(
-                                    value: lang.code,
-                                    groupValue: LanguageService.instance.locale.languageCode,
-                                    activeColor: AppColors.secondaryColor,
-                                    onChanged: (_) async {
-                                      await LanguageService.instance.changeLocale(
-                                        locale: Locale(lang.code),
-                                      );
-                                      if (!context.mounted) return;
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  onTap: () async {
-                                    await LanguageService.instance.changeLocale(
-                                      locale: Locale(lang.code),
-                                    );
-                                    if (!context.mounted) return;
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                if (lang != supportedLanguages.last) const Divider(height: 1),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+                onTap: () => SelectLanguageOptionsSheet.show(context),
                 child: ListTile(
                   leading: Icon(Icons.language, color: AppColors.whiteColor),
                   title: Text(

@@ -725,8 +725,8 @@
     "@dutch": {
         "description": "Dutch language option"
     },
-    "systemDefault": "System Default",
-    "@systemDefault": {
-        "description": "System default language option"
+    "selectLanguagePrompt": "Choose the language you want to use in the app",
+    "@selectLanguagePrompt": {
+        "description": "Prompt message shown when selecting app language"
     }
 }

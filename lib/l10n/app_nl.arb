@@ -161,7 +161,5 @@
     "addTypedEntity": "een {type} toevoegen",
     "language": "Taal",
     "selectLanguage": "Selecteer een taal",
-    "english": "Engels",
-    "dutch": "Nederlands",
-    "systemDefault": "Systeemstandaard"
+    "selectLanguagePrompt": "Selecteer de taal die u wilt gebruiken"
 }

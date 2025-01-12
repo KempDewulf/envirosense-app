@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:envirosense/data/models/language_model.dart';
+import 'package:envirosense/presentation/widgets/models/language_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
