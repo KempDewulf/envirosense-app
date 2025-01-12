@@ -56,7 +56,7 @@ class _RoomActionsTabState extends State<RoomActionsTab> {
               padding: const EdgeInsets.all(16),
               child: CustomTextFormField(
                 controller: inputController,
-                labelText: l10n.roomNameLabel,
+                labelText: l10n.roomName,
                 floatingLabelCustomStyle: const TextStyle(
                   color: AppColors.secondaryColor,
                 ),
