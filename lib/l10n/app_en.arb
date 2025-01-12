@@ -167,5 +167,55 @@
     "password": "Password",
     "@password": {
         "description": "Label for password input field"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings screen title"
+    },
+    "account": "Account",
+    "@account": {
+        "description": "Account section header"
+    },
+    "signOut": "Sign Out",
+    "@signOut": {
+        "description": "Sign out button text"
+    },
+    "preferences": "Preferences",
+    "@preferences": {
+        "description": "Preferences section header"
+    },
+    "imperialUnits": "Imperial Units",
+    "@imperialUnits": {
+        "description": "Label for imperial units option"
+    },
+    "metricUnits": "Metric Units",
+    "@metricUnits": {
+        "description": "Label for metric units option"
+    },
+    "usingFahrenheit": "Using Fahrenheit",
+    "@usingFahrenheit": {
+        "description": "Status text for Fahrenheit temperature unit"
+    },
+    "usingCelsius": "Using Celsius",
+    "@usingCelsius": {
+        "description": "Status text for Celsius temperature unit"
+    },
+    "data": "Data",
+    "@data": {
+        "description": "Data section header"
+    },
+    "clearCache": "Clear Cache",
+    "@clearCache": {
+        "description": "Clear cache button text"
+    },
+    "unitsChanged": "Units changed to {unitSystem}",
+    "@unitsChanged": {
+        "description": "Message shown when measurement units are changed",
+        "placeholders": {
+            "unitSystem": {
+                "type": "String",
+                "example": "metric"
+            }
+        }
     }
 }
