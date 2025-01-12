@@ -1,5 +1,6 @@
 import 'package:envirosense/core/helpers/unit_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/core/constants/colors.dart';
 
 class TargetTemperatureSheet extends StatelessWidget {

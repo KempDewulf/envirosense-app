@@ -1,6 +1,7 @@
 import 'package:envirosense/presentation/widgets/dialogs/clear_cache_warning_dialog.dart';
 import 'package:envirosense/presentation/widgets/models/cache_option.dart';
 import 'package:envirosense/services/auth_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:envirosense/services/database_service.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/colors.dart';
