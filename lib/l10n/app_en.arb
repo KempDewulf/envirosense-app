@@ -311,5 +311,29 @@
     "loading": "Loading",
     "@loading": {
         "description": "Generic loading text"
+    },
+    "displayModeFetchError": "Failed to fetch display modes",
+    "@displayModeFetchError": {
+        "description": "Error message when display modes cannot be fetched"
+    },
+    "displayModeLabel": "Display Mode",
+    "@displayModeLabel": {
+        "description": "Label for display mode selector"
+    },
+    "defaultView": "Default View",
+    "@defaultView": {
+        "description": "Label for default display mode"
+    },
+    "temperature": "Temperature",
+    "@temperature": {
+        "description": "Label for temperature display mode"
+    },
+    "humidity": "Humidity",
+    "@humidity": {
+        "description": "Label for humidity display mode"
+    },
+    "co2Level": "CO2 Level",
+    "@co2Level": {
+        "description": "Label for CO2 level display mode"
     }
 }
