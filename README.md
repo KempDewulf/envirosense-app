@@ -84,7 +84,7 @@ Replace the placeholder values with your actual values.
 1. Ensure Flutter and Dart tools are installed.
 2. Clone the repository:
     ```sh
-    git clone git@gitlab.ti.howest.be:ti/2024-2025/s5/ccett/projects/group-14/flutter-app.git
+    git clone git@github.com:KempDewulf/envirosense-app.git
     cd flutter-app
     ```
 3. Run `flutter pub get` to fetch all declared dependencies.
