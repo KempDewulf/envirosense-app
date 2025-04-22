@@ -46,33 +46,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBAil7T00MVx7NN7jYHXROsVWDmiD6fGRw',
-    appId: '1:88539640615:web:dd06b901b2ab82119daf02',
-    messagingSenderId: '88539640615',
-    projectId: 'envirosense-heartbeat',
-    authDomain: 'envirosense-heartbeat.firebaseapp.com',
-    databaseURL: 'https://envirosense-heartbeat-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'envirosense-heartbeat.firebasestorage.app',
-    measurementId: 'G-HKRMW1H1X1',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    databaseURL: '',
+    storageBucket: '',
+    measurementId: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC-kojo1we0TCulwQtzwUSj5WwJst3dDvo',
-    appId: '1:88539640615:android:8c5df3498058ff609daf02',
-    messagingSenderId: '88539640615',
-    projectId: 'envirosense-heartbeat',
-    databaseURL: 'https://envirosense-heartbeat-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'envirosense-heartbeat.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    databaseURL: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBAil7T00MVx7NN7jYHXROsVWDmiD6fGRw',
-    appId: '1:88539640615:web:cbb08bcf07ce5a259daf02',
-    messagingSenderId: '88539640615',
-    projectId: 'envirosense-heartbeat',
-    authDomain: 'envirosense-heartbeat.firebaseapp.com',
-    databaseURL: 'https://envirosense-heartbeat-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'envirosense-heartbeat.firebasestorage.app',
-    measurementId: 'G-K1STRVZPEP',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    databaseURL: '',
+    storageBucket: '',
+    measurementId: '',
   );
 }
